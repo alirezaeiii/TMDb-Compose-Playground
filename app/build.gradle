@@ -1,0 +1,94 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        applicationId AppMetaData.id
+        minSdk AppMetaData.minSdkVersion
+        targetSdk AppMetaData.targetSdkVersion
+        versionCode AppMetaData.versionCode
+        versionName AppMetaData.versionName
+
+        buildConfigField "String", "TMDB_API_KEY", "\"${getProperty("local.properties", "tmdb_api_key")}\""
+        buildConfigField "String", "TMDB_BASE_URL", "\"http://api.themoviedb.org/\""
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.2.0-rc02'
+    }
+}
+
+dependencies {
+
+    implementation Deps.androidxCore
+    implementation Deps.lifecycle
+
+    implementation Deps.appCompat
+    implementation Deps.material
+
+    implementation Deps.composeUi
+    implementation Deps.composeMaterial
+    implementation Deps.composeUiToolingPreview
+    implementation Deps.composeActivity
+    implementation Deps.navigationCompose
+    debugImplementation Deps.composeUiTooling
+
+    implementation Deps.hilt
+    kapt Deps.hilt_compiler
+    implementation Deps.hilt_compose
+
+    implementation Deps.retrofit
+    implementation Deps.retrofitMoshi
+    implementation Deps.okhttpInterceptor
+    implementation Deps.moshi
+    implementation Deps.moshiKotlin
+    implementation Deps.coroutinesCore
+    implementation Deps.coroutinesAndroid
+
+    implementation Deps.coil
+    implementation Deps.lottie
+    implementation Deps.gson
+}
+
+def getProperty(String filename, String propName) {
+    def propsFile = rootProject.file(filename)
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        if (props[propName] != null) {
+            return props[propName]
+        } else {
+            print("No such property " + propName + " in file " + filename)
+        }
+    } else {
+        print(filename + " does not exist!")
+    }
+}
