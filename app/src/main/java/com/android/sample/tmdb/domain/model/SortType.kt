@@ -1,4 +1,4 @@
-package com.android.sample.tmdb.utils
+package com.android.sample.tmdb.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

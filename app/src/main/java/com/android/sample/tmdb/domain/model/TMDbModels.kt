@@ -1,7 +1,6 @@
-package com.android.sample.tmdb.data
+package com.android.sample.tmdb.domain.model
 
 import android.os.Parcelable
-import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 interface TMDbItem : Parcelable {
@@ -18,27 +17,18 @@ interface TMDbItem : Parcelable {
 data class Movie(
     override val id: Int,
     override val overview: String,
-    @Json(name = "release_date")
     override val releaseDate: String?,
-    @Json(name = "poster_path")
     override val posterPath: String?,
-    @Json(name = "backdrop_path")
     override val backdropPath: String?,
-    @Json(name = "title")
     override val name: String,
-    @Json(name = "vote_average")
     override val voteAverage: Double) : TMDbItem
 
 @Parcelize
 data class TVShow(
     override val id: Int,
     override val overview: String,
-    @Json(name = "first_air_date")
     override val releaseDate: String?,
-    @Json(name = "poster_path")
     override val posterPath: String?,
-    @Json(name = "backdrop_path")
     override val backdropPath: String?,
     override val name: String,
-    @Json(name = "vote_average")
     override val voteAverage: Double) : TMDbItem

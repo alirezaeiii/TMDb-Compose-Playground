@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -24,9 +23,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.android.sample.tmdb.R
-import com.android.sample.tmdb.data.FeedWrapper
-import com.android.sample.tmdb.data.Movie
-import com.android.sample.tmdb.data.TMDbItem
+import com.android.sample.tmdb.domain.model.FeedWrapper
+import com.android.sample.tmdb.domain.model.Movie
+import com.android.sample.tmdb.domain.model.TMDbItem
 import com.android.sample.tmdb.ui.common.Dimens
 import com.android.sample.tmdb.ui.theme.TmdbPagingComposeTheme
 
@@ -55,7 +54,6 @@ private fun <T : TMDbItem> FeedCollection(
     itemWidth: Dp,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
     Column(modifier = modifier) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

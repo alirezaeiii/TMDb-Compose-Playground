@@ -2,11 +2,10 @@ package com.android.sample.tmdb.domain
 
 import android.content.Context
 import com.android.sample.tmdb.R
-import com.android.sample.tmdb.data.FeedWrapper
-import com.android.sample.tmdb.data.ItemWrapper
-import com.android.sample.tmdb.data.TMDbItem
+import com.android.sample.tmdb.domain.model.FeedWrapper
+import com.android.sample.tmdb.domain.model.SortType
+import com.android.sample.tmdb.domain.model.TMDbItem
 import com.android.sample.tmdb.utils.Resource
-import com.android.sample.tmdb.utils.SortType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -19,15 +18,15 @@ abstract class BaseFeedRepository<T : TMDbItem>(
     ioDispatcher: CoroutineDispatcher
 ) {
 
-    protected abstract suspend fun popularItems(): ItemWrapper<T>
+    protected abstract suspend fun popularItems(): List<T>
 
-    protected abstract suspend fun nowPlayingItems(): ItemWrapper<T>
+    protected abstract suspend fun nowPlayingItems(): List<T>
 
-    protected abstract suspend fun latestItems(): ItemWrapper<T>
+    protected abstract suspend fun latestItems(): List<T>
 
-    protected abstract suspend fun topRatedItems(): ItemWrapper<T>
+    protected abstract suspend fun topRatedItems(): List<T>
 
-    protected abstract suspend fun trendingItems(): ItemWrapper<T>
+    protected abstract suspend fun trendingItems(): List<T>
 
     protected abstract fun getNowPlayingResId(): Int
 
@@ -37,37 +36,37 @@ abstract class BaseFeedRepository<T : TMDbItem>(
         emit(Resource.Loading)
         try {
             coroutineScope {
-                val trendingDeferred: Deferred<ItemWrapper<T>> = async { trendingItems() }
-                val nowPlayingDeferred: Deferred<ItemWrapper<T>> = async { nowPlayingItems() }
-                val popularDeferred: Deferred<ItemWrapper<T>> = async { popularItems() }
-                val latestDeferred: Deferred<ItemWrapper<T>> = async { latestItems() }
-                val topRatedDeferred: Deferred<ItemWrapper<T>> = async { topRatedItems() }
+                val trendingDeferred: Deferred<List<T>> = async { trendingItems() }
+                val nowPlayingDeferred: Deferred<List<T>> = async { nowPlayingItems() }
+                val popularDeferred: Deferred<List<T>> = async { popularItems() }
+                val latestDeferred: Deferred<List<T>> = async { latestItems() }
+                val topRatedDeferred: Deferred<List<T>> = async { topRatedItems() }
 
                 emit(
                     Resource.Success(
                         listOf(
                             FeedWrapper(
-                                trendingDeferred.await().items,
+                                trendingDeferred.await(),
                                 R.string.text_trending,
                                 SortType.TRENDING
                             ),
                             FeedWrapper(
-                                popularDeferred.await().items,
+                                popularDeferred.await(),
                                 R.string.text_popular,
                                 SortType.MOST_POPULAR
                             ),
                             FeedWrapper(
-                                nowPlayingDeferred.await().items,
+                                nowPlayingDeferred.await(),
                                 getNowPlayingResId(),
                                 SortType.NOW_PLAYING
                             ),
                             FeedWrapper(
-                                latestDeferred.await().items,
+                                latestDeferred.await(),
                                 getLatestResId(),
                                 SortType.UPCOMING
                             ),
                             FeedWrapper(
-                                topRatedDeferred.await().items,
+                                topRatedDeferred.await(),
                                 R.string.text_highest_rate,
                                 SortType.HIGHEST_RATED
                             )

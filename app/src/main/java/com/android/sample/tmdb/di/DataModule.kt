@@ -1,8 +1,8 @@
 package com.android.sample.tmdb.di
 
 import com.android.sample.tmdb.BuildConfig
-import com.android.sample.tmdb.network.MovieService
-import com.android.sample.tmdb.network.TVShowService
+import com.android.sample.tmdb.data.network.MovieService
+import com.android.sample.tmdb.data.network.TVShowService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
