@@ -3,17 +3,22 @@ package com.android.sample.tmdb.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
+import com.android.sample.tmdb.ui.detail.DetailScreenContent
 import com.android.sample.tmdb.ui.feed.FeedMovieScreen
 import com.android.sample.tmdb.ui.feed.FeedTVShowScreen
 import com.android.sample.tmdb.ui.theme.TmdbPagingComposeTheme
@@ -26,69 +31,108 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TmdbPagingComposeTheme {
-                MainScreenView()
+                HomeScreen()
             }
         }
     }
 
     @Composable
-    private fun MainScreenView(){
-        val navController = rememberNavController()
+    private fun HomeScreen(navController: NavHostController = rememberNavController()) {
         Scaffold(
-            bottomBar = { val items = listOf(
-                BottomNavItem.Movie,
-                BottomNavItem.TVShow
-            )
-                BottomNavigation(
-                    backgroundColor = MaterialTheme.colors.surface,
-                    contentColor = MaterialTheme.colors.onSurface
-                ) {
-                    val navBackStackEntry by navController.currentBackStackEntryAsState()
-                    val currentRoute = navBackStackEntry?.destination?.route
-                    items.forEach { item ->
-                        BottomNavigationItem(
-                            icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
-                            label = { Text(text = item.title,
-                                fontSize = TmdbPagingComposeTheme.fontSizes.sp_11) },
-                            selectedContentColor = MaterialTheme.colors.onSurface,
-                            unselectedContentColor = MaterialTheme.colors.onSurface.copy(0.4f),
-                            alwaysShowLabel = true,
-                            selected = currentRoute == item.title,
-                            onClick = {
-                                navController.navigate(item.title) {
-
-                                    navController.graph.startDestinationRoute?.let { screen_route ->
-                                        popUpTo(screen_route) {
-                                            saveState = true
-                                        }
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            }
-                        )
-                    }
-                } }
+            bottomBar = { BottomBar(navController = navController) }
         ) {
             NavigationGraph(navController = navController, it.calculateBottomPadding())
         }
     }
 
     @Composable
-    private fun NavigationGraph(navController: NavHostController, bottomPadding: Dp) {
-        NavHost(navController, startDestination = BottomNavItem.Movie.title) {
-            composable(BottomNavItem.Movie.title) {
-                FeedMovieScreen(navController, bottomPadding)
-            }
-            composable(BottomNavItem.TVShow.title) {
-                FeedTVShowScreen(navController, bottomPadding)
+    private fun BottomBar(navController: NavHostController) {
+        val screens = listOf(
+            BottomNavItem.Movie,
+            BottomNavItem.TVShow
+        )
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+
+        val bottomBarDestination = screens.any { it.route == currentDestination?.route }
+        if (bottomBarDestination) {
+            BottomNavigation {
+                screens.forEach { screen ->
+                    AddItem(
+                        screen = screen,
+                        currentDestination = currentDestination,
+                        navController = navController
+                    )
+                }
             }
         }
     }
 
-    @Preview(showBackground = true)
     @Composable
-    private fun BottomNavigationPreview() {
-        MainScreenView()
+    private fun RowScope.AddItem(
+        screen: BottomNavItem,
+        currentDestination: NavDestination?,
+        navController: NavHostController
+    ) {
+        BottomNavigationItem(
+            label = {
+                Text(text = screen.title)
+            },
+            icon = {
+                Icon(
+                    painterResource(id = screen.icon),
+                    contentDescription = screen.title
+                )
+            },
+            selected = currentDestination?.hierarchy?.any {
+                it.route == screen.route
+            } == true,
+            unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
+            onClick = {
+                navController.navigate(screen.route) {
+                    navController.graph.startDestinationRoute?.let { screen_route ->
+                        popUpTo(screen_route) {
+                            saveState = true
+                        }
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
+        )
+    }
+
+    @Composable
+    private fun NavigationGraph(navController: NavHostController, bottomPadding: Dp) {
+        NavHost(
+            navController = navController,
+            route = Graph.HOME,
+            startDestination = BottomNavItem.Movie.route
+        ) {
+            composable(BottomNavItem.Movie.route) {
+                FeedMovieScreen(bottomPadding, onClick = {
+                    navController.navigate(Graph.DETAILS)
+                })
+            }
+            composable(BottomNavItem.TVShow.route) {
+                FeedTVShowScreen(bottomPadding, onClick = {
+                    navController.navigate(Graph.DETAILS)
+                })
+            }
+            detailsNavGraph(navController = navController)
+        }
+    }
+
+    private fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
+        navigation(
+            route = Graph.DETAILS,
+            startDestination = "detail"
+        ) {
+            composable(route = "detail") {
+                DetailScreenContent(name = "detail") {
+                    navController.navigate(Graph.HOME)
+                }
+            }
+        }
     }
 }

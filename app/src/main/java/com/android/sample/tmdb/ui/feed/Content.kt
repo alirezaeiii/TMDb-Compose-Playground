@@ -25,22 +25,22 @@ fun <T : TMDbItem> Content(
 
 @Composable
 fun FeedMovieScreen(
-    navController: NavHostController,
     bottomPadding: Dp,
+    onClick: (TMDbItem) -> Unit,
     viewModel: MovieFeedViewModel = hiltViewModel()
 ) {
     Content(viewModel) {
-        FeedCollectionList(it, bottomPadding) {}
+        FeedCollectionList(it, bottomPadding, onClick)
     }
 }
 
 @Composable
 fun FeedTVShowScreen(
-    navController: NavHostController,
     bottomPadding: Dp,
+    onClick: (TMDbItem) -> Unit,
     viewModel: TVShowFeedViewModel = hiltViewModel()
 ) {
     Content(viewModel) {
-        FeedCollectionList(it, bottomPadding) {}
+        FeedCollectionList(it, bottomPadding, onClick)
     }
 }
