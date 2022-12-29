@@ -48,8 +48,8 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun BottomBar(navController: NavHostController) {
         val screens = listOf(
-            BottomNavItem.Movie,
-            BottomNavItem.TVShow
+            BottomNavScreen.MovieNavItem,
+            BottomNavScreen.TVShowNavItem
         )
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun RowScope.AddItem(
-        screen: BottomNavItem,
+        screen: BottomNavScreen,
         currentDestination: NavDestination?,
         navController: NavHostController
     ) {
@@ -107,14 +107,14 @@ class MainActivity : ComponentActivity() {
         NavHost(
             navController = navController,
             route = Graph.HOME,
-            startDestination = BottomNavItem.Movie.route
+            startDestination = BottomNavScreen.MovieNavItem.route
         ) {
-            composable(BottomNavItem.Movie.route) {
+            composable(BottomNavScreen.MovieNavItem.route) {
                 FeedMovieScreen(bottomPadding, onClick = {
                     navController.navigate(Graph.DETAILS)
                 })
             }
-            composable(BottomNavItem.TVShow.route) {
+            composable(BottomNavScreen.TVShowNavItem.route) {
                 FeedTVShowScreen(bottomPadding, onClick = {
                     navController.navigate(Graph.DETAILS)
                 })
@@ -130,7 +130,7 @@ class MainActivity : ComponentActivity() {
         ) {
             composable(route = "detail") {
                 DetailScreenContent(name = "detail") {
-                    navController.navigate(Graph.HOME)
+                    navController.navigateUp()
                 }
             }
         }
