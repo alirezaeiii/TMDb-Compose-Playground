@@ -1,8 +1,10 @@
 package com.android.sample.tmdb.data.network
 
+import com.android.sample.tmdb.data.response.NetworkCreditWrapper
 import com.android.sample.tmdb.data.response.TMDbWrapper
 import com.android.sample.tmdb.data.response.NetworkTVShow
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface TVShowService {
 
@@ -20,4 +22,7 @@ interface TVShowService {
 
     @GET("3/tv/top_rated")
     suspend fun topRatedTVSeries(): TMDbWrapper<NetworkTVShow>
+
+    @GET("3/tv/{tvId}/credits")
+    fun tvCredit(@Path("tvId") tvId: Int): NetworkCreditWrapper
 }

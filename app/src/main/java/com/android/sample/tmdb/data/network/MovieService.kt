@@ -1,8 +1,10 @@
 package com.android.sample.tmdb.data.network
 
+import com.android.sample.tmdb.data.response.NetworkCreditWrapper
 import com.android.sample.tmdb.data.response.TMDbWrapper
 import com.android.sample.tmdb.data.response.NetworkMovie
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface MovieService {
 
@@ -20,4 +22,7 @@ interface MovieService {
 
     @GET("3/movie/top_rated")
     suspend fun topRatedMovies(): TMDbWrapper<NetworkMovie>
+
+    @GET("3/movie/{movieId}/credits")
+    fun movieCredit(@Path("movieId") movieId: Int): NetworkCreditWrapper
 }

@@ -19,13 +19,13 @@ data class NetworkMovie(
     override val overview: String,
     @Json(name = "release_date")
     override val releaseDate: String?,
-    @Json(name = "poster_path")
+    @Json(name = POSTER_PATH)
     override val posterPath: String?,
-    @Json(name = "backdrop_path")
+    @Json(name = BACKDROP_PATH)
     override val backdropPath: String?,
     @Json(name = "title")
     override val name: String,
-    @Json(name = "vote_average")
+    @Json(name = VOTE_AVERAGE)
     override val voteAverage: Double) : NetworkTMDbItem
 
 data class NetworkTVShow(
@@ -33,12 +33,12 @@ data class NetworkTVShow(
     override val overview: String,
     @Json(name = "first_air_date")
     override val releaseDate: String?,
-    @Json(name = "poster_path")
+    @Json(name = POSTER_PATH)
     override val posterPath: String?,
-    @Json(name = "backdrop_path")
+    @Json(name = BACKDROP_PATH)
     override val backdropPath: String?,
     override val name: String,
-    @Json(name = "vote_average")
+    @Json(name = VOTE_AVERAGE)
     override val voteAverage: Double) : NetworkTMDbItem
 
 fun List<NetworkMovie>.asMovieDomainModel(): List<Movie> =
@@ -66,3 +66,7 @@ fun List<NetworkTVShow>.asTVShowDomainModel(): List<TVShow> =
             it.voteAverage
         )
     }
+
+private const val POSTER_PATH = "poster_path"
+private const val BACKDROP_PATH = "backdrop_path"
+private const val VOTE_AVERAGE = "vote_average"
