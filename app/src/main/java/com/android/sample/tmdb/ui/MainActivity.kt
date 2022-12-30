@@ -9,19 +9,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
-import androidx.navigation.NavDestination
+import androidx.navigation.*
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
+import com.android.sample.tmdb.ui.DetailScreens.Companion.TMDb_ITEM
 import com.android.sample.tmdb.ui.detail.DetailScreenContent
 import com.android.sample.tmdb.ui.feed.FeedMovieScreen
 import com.android.sample.tmdb.ui.feed.FeedTVShowScreen
+import com.android.sample.tmdb.ui.theme.Graph
 import com.android.sample.tmdb.ui.theme.TmdbPagingComposeTheme
+import com.android.sample.tmdb.utils.TMDbItemNavType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,8 +48,8 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun BottomBar(navController: NavHostController) {
         val screens = listOf(
-            BottomNavScreen.MovieNavItem,
-            BottomNavScreen.TVShowNavItem
+            BottomNavScreens.MovieNavItem,
+            BottomNavScreens.TVShowNavItem
         )
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun RowScope.AddItem(
-        screen: BottomNavScreen,
+        screen: BottomNavScreens,
         currentDestination: NavDestination?,
         navController: NavHostController
     ) {
@@ -107,29 +107,51 @@ class MainActivity : ComponentActivity() {
         NavHost(
             navController = navController,
             route = Graph.HOME,
-            startDestination = BottomNavScreen.MovieNavItem.route
+            startDestination = BottomNavScreens.MovieNavItem.route
         ) {
-            composable(BottomNavScreen.MovieNavItem.route) {
+            composable(BottomNavScreens.MovieNavItem.route) {
                 FeedMovieScreen(bottomPadding, onClick = {
-                    navController.navigate(Graph.DETAILS)
+                    navController.navigate(DetailScreens.MovieDetails.title)
                 })
             }
-            composable(BottomNavScreen.TVShowNavItem.route) {
+            composable(BottomNavScreens.TVShowNavItem.route) {
                 FeedTVShowScreen(bottomPadding, onClick = {
-                    navController.navigate(Graph.DETAILS)
+                    navController.navigate(DetailScreens.TVShowDetails.title)
                 })
             }
-            detailsNavGraph(navController = navController)
+            movieDetailsNavGraph(navController = navController)
+            tvShowDetailsNavGraph(navController = navController)
         }
     }
 
-    private fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
+    private fun NavGraphBuilder.movieDetailsNavGraph(navController: NavHostController) {
         navigation(
-            route = Graph.DETAILS,
-            startDestination = "detail"
+            route = Graph.MOVIE_DETAILS,
+            startDestination = DetailScreens.MovieDetails.title
         ) {
-            composable(route = "detail") {
-                DetailScreenContent(name = "detail") {
+            composable(route = DetailScreens.MovieDetails.title, arguments = listOf(
+                navArgument(TMDb_ITEM) {
+                    type = TMDbItemNavType()
+                }
+            )) {
+                DetailScreenContent(DetailScreens.MovieDetails.title) {
+                    navController.navigateUp()
+                }
+            }
+        }
+    }
+
+    private fun NavGraphBuilder.tvShowDetailsNavGraph(navController: NavHostController) {
+        navigation(
+            route = Graph.TV_SHOW_DETAILS,
+            startDestination = DetailScreens.TVShowDetails.title
+        ) {
+            composable(route = DetailScreens.TVShowDetails.title, arguments = listOf(
+                navArgument(TMDb_ITEM) {
+                    type = TMDbItemNavType()
+                }
+            )) {
+                DetailScreenContent(DetailScreens.TVShowDetails.title) {
                     navController.navigateUp()
                 }
             }

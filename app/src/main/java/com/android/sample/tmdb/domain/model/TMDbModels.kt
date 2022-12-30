@@ -1,10 +1,10 @@
 package com.android.sample.tmdb.domain.model
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 interface TMDbItem : Parcelable {
-    val id : Int
+    val id: Int
     val overview: String
     val releaseDate: String?
     val posterPath: String?
@@ -21,7 +21,8 @@ data class Movie(
     override val posterPath: String?,
     override val backdropPath: String?,
     override val name: String,
-    override val voteAverage: Double) : TMDbItem
+    override val voteAverage: Double
+) : TMDbItem
 
 @Parcelize
 data class TVShow(
@@ -31,4 +32,5 @@ data class TVShow(
     override val posterPath: String?,
     override val backdropPath: String?,
     override val name: String,
-    override val voteAverage: Double) : TMDbItem
+    override val voteAverage: Double
+) : TMDbItem

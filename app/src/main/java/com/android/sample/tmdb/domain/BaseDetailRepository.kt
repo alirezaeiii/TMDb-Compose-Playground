@@ -16,16 +16,16 @@ import kotlinx.coroutines.flow.flowOn
 
 abstract class BaseDetailRepository(
     private val context: Context,
-    ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher
 ) : BaseRepository<DetailWrapper>() {
 
-    protected abstract suspend fun getCredit(): NetworkCreditWrapper
+    protected abstract suspend fun getCredit(id: Int): NetworkCreditWrapper
 
-    override val result = flow {
+    override fun getResult(id: Any?) = flow {
         emit(Resource.Loading)
         try {
             coroutineScope {
-                val creditDeferred: Deferred<NetworkCreditWrapper> = async { getCredit() }
+                val creditDeferred: Deferred<NetworkCreditWrapper> = async { getCredit(id as Int) }
                 val networkCreditWrapper = creditDeferred.await()
 
                 val cast = networkCreditWrapper.cast.asCastDomainModel()

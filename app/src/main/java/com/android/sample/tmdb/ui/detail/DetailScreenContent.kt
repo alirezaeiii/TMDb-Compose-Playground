@@ -17,7 +17,7 @@ fun DetailScreenContent(name: String, onClick: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier = Modifier.clickable { onClick() },
+            modifier = Modifier.clickable { onClick.invoke() },
             text = name,
             fontSize = MaterialTheme.typography.h3.fontSize,
             fontWeight = FontWeight.Bold

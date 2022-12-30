@@ -11,11 +11,10 @@ import javax.inject.Singleton
 
 @Singleton
 class TVShowDetailRepository @Inject constructor(
-    private val tvId: Int,
     private val tvShowApi: TVShowService,
     context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
 ) : BaseDetailRepository(context, ioDispatcher) {
 
-    override suspend fun getCredit(): NetworkCreditWrapper = tvShowApi.tvCredit(tvId)
+    override suspend fun getCredit(id: Int): NetworkCreditWrapper = tvShowApi.tvCredit(id)
 }

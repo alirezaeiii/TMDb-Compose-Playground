@@ -10,11 +10,10 @@ import javax.inject.Singleton
 
 @Singleton
 class MovieDetailRepository @Inject constructor(
-    private val movieId: Int,
     private val movieApi: MovieService,
     context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
 ) : BaseDetailRepository(context, ioDispatcher) {
 
-    override suspend fun getCredit() = movieApi.movieCredit(movieId)
+    override suspend fun getCredit(id: Int) = movieApi.movieCredit(id)
 }
