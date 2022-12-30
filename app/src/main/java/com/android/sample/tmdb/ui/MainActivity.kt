@@ -19,7 +19,6 @@ import com.android.sample.tmdb.ui.DetailScreens.Companion.TMDb_ITEM
 import com.android.sample.tmdb.ui.detail.DetailScreenContent
 import com.android.sample.tmdb.ui.feed.FeedMovieScreen
 import com.android.sample.tmdb.ui.feed.FeedTVShowScreen
-import com.android.sample.tmdb.ui.theme.Graph
 import com.android.sample.tmdb.ui.theme.TmdbPagingComposeTheme
 import com.android.sample.tmdb.utils.TMDbItemNavType
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,8 +47,8 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun BottomBar(navController: NavHostController) {
         val screens = listOf(
-            BottomNavScreens.MovieNavItem,
-            BottomNavScreens.TVShowNavItem
+            BottomNavScreen.MovieNavItem,
+            BottomNavScreen.TVShowNavItem
         )
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
@@ -70,7 +69,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun RowScope.AddItem(
-        screen: BottomNavScreens,
+        screen: BottomNavScreen,
         currentDestination: NavDestination?,
         navController: NavHostController
     ) {
@@ -107,14 +106,14 @@ class MainActivity : ComponentActivity() {
         NavHost(
             navController = navController,
             route = Graph.HOME,
-            startDestination = BottomNavScreens.MovieNavItem.route
+            startDestination = BottomNavScreen.MovieNavItem.route
         ) {
-            composable(BottomNavScreens.MovieNavItem.route) {
+            composable(BottomNavScreen.MovieNavItem.route) {
                 FeedMovieScreen(bottomPadding, onClick = {
                     navController.navigate(DetailScreens.MovieDetails.title)
                 })
             }
-            composable(BottomNavScreens.TVShowNavItem.route) {
+            composable(BottomNavScreen.TVShowNavItem.route) {
                 FeedTVShowScreen(bottomPadding, onClick = {
                     navController.navigate(DetailScreens.TVShowDetails.title)
                 })

@@ -1,4 +1,4 @@
-package com.android.sample.tmdb.ui.theme
+package com.android.sample.tmdb.ui
 
 object Graph {
     const val HOME = "home_graph"
