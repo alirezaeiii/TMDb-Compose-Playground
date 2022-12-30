@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flowOn
 abstract class BaseFeedRepository<T : TMDbItem>(
     private val context: Context,
     ioDispatcher: CoroutineDispatcher
-) {
+): BaseRepository<List<FeedWrapper<T>>>() {
 
     protected abstract suspend fun popularItems(): List<T>
 
@@ -32,7 +32,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(
 
     protected abstract fun getLatestResId(): Int
 
-    val result = flow {
+    override val result = flow {
         emit(Resource.Loading)
         try {
             coroutineScope {
