@@ -5,9 +5,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.navigation.NavDestination
@@ -51,8 +53,8 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun BottomBar(navController: NavHostController) {
         val screens = listOf(
-            BottomNavScreen.MovieNavItem,
-            BottomNavScreen.TVShowNavItem
+            BottomNavScreens.MovieNavItem,
+            BottomNavScreens.TVShowNavItem
         )
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
@@ -73,7 +75,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun RowScope.AddItem(
-        screen: BottomNavScreen,
+        screen: BottomNavScreens,
         currentDestination: NavDestination?,
         navController: NavHostController
     ) {
@@ -109,11 +111,11 @@ class MainActivity : ComponentActivity() {
     private fun NavigationGraph(navController: NavHostController, bottomPadding: Dp) {
         NavHost(
             navController = navController,
-            route = Graph.HOME,
-            startDestination = BottomNavScreen.MovieNavItem.route
+            startDestination = BottomNavScreens.MovieNavItem.route,
+            Modifier.padding(bottom = bottomPadding)
         ) {
-            composable(route = BottomNavScreen.MovieNavItem.route) {
-                FeedMovieScreen(bottomPadding, onClick = {
+            composable(route = BottomNavScreens.MovieNavItem.route) {
+                FeedMovieScreen( onClick = {
                     val json = Uri.encode(Gson().toJson(it))
                     navController.navigate(
                         DetailScreens.MovieDetails.route.replace(

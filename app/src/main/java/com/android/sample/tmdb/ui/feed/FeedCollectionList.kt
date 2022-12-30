@@ -32,11 +32,9 @@ import com.android.sample.tmdb.ui.theme.TmdbPagingComposeTheme
 @Composable
 fun <T : TMDbItem> FeedCollectionList(
     collection: List<FeedWrapper<T>>,
-    bottomPadding: Dp,
     onFeedClick: (TMDbItem) -> Unit
 ) {
-    LazyColumn(modifier = Modifier.padding(bottom = bottomPadding)) {
-
+    LazyColumn {
         itemsIndexed(collection) { index, feedCollection ->
             FeedCollection(
                 feedCollection = feedCollection,
