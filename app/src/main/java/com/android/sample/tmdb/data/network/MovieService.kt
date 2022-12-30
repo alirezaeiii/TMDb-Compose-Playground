@@ -24,5 +24,5 @@ interface MovieService {
     suspend fun topRatedMovies(): TMDbWrapper<NetworkMovie>
 
     @GET("3/movie/{movieId}/credits")
-    fun movieCredit(@Path("movieId") movieId: Int): NetworkCreditWrapper
+    suspend fun movieCredit(@Path("movieId") movieId: Int): NetworkCreditWrapper
 }

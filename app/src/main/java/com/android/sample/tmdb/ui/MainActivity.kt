@@ -1,5 +1,6 @@
 package com.android.sample.tmdb.ui
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,18 +10,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
-import androidx.navigation.*
+import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.android.sample.tmdb.ui.DetailScreens.Companion.TMDb_ITEM
 import com.android.sample.tmdb.ui.detail.DetailScreenContent
 import com.android.sample.tmdb.ui.feed.FeedMovieScreen
-import com.android.sample.tmdb.ui.feed.FeedTVShowScreen
 import com.android.sample.tmdb.ui.theme.TmdbPagingComposeTheme
 import com.android.sample.tmdb.utils.TMDbItemNavType
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -108,52 +112,28 @@ class MainActivity : ComponentActivity() {
             route = Graph.HOME,
             startDestination = BottomNavScreen.MovieNavItem.route
         ) {
-            composable(BottomNavScreen.MovieNavItem.route) {
+            composable(route = BottomNavScreen.MovieNavItem.route) {
                 FeedMovieScreen(bottomPadding, onClick = {
-                    navController.navigate(DetailScreens.MovieDetails.title)
+                    val json = Uri.encode(Gson().toJson(it))
+                    navController.navigate(
+                        DetailScreens.MovieDetails.route.replace(
+                            "{${TMDb_ITEM}}",
+                            json
+                        )
+                    )
                 })
             }
-            composable(BottomNavScreen.TVShowNavItem.route) {
-                FeedTVShowScreen(bottomPadding, onClick = {
-                    navController.navigate(DetailScreens.TVShowDetails.title)
-                })
-            }
-            movieDetailsNavGraph(navController = navController)
-            tvShowDetailsNavGraph(navController = navController)
+            movieDetailsNavGraph()
         }
     }
 
-    private fun NavGraphBuilder.movieDetailsNavGraph(navController: NavHostController) {
-        navigation(
-            route = Graph.MOVIE_DETAILS,
-            startDestination = DetailScreens.MovieDetails.title
-        ) {
-            composable(route = DetailScreens.MovieDetails.title, arguments = listOf(
-                navArgument(TMDb_ITEM) {
-                    type = TMDbItemNavType()
-                }
-            )) {
-                DetailScreenContent(DetailScreens.MovieDetails.title) {
-                    navController.navigateUp()
-                }
+    private fun NavGraphBuilder.movieDetailsNavGraph() {
+        composable(route = DetailScreens.MovieDetails.route, arguments = listOf(
+            navArgument(TMDb_ITEM) {
+                type = TMDbItemNavType()
             }
-        }
-    }
-
-    private fun NavGraphBuilder.tvShowDetailsNavGraph(navController: NavHostController) {
-        navigation(
-            route = Graph.TV_SHOW_DETAILS,
-            startDestination = DetailScreens.TVShowDetails.title
-        ) {
-            composable(route = DetailScreens.TVShowDetails.title, arguments = listOf(
-                navArgument(TMDb_ITEM) {
-                    type = TMDbItemNavType()
-                }
-            )) {
-                DetailScreenContent(DetailScreens.TVShowDetails.title) {
-                    navController.navigateUp()
-                }
-            }
+        )) {
+            DetailScreenContent()
         }
     }
 }

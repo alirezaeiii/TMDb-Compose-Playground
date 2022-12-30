@@ -2,27 +2,20 @@ package com.android.sample.tmdb.utils
 
 import android.os.Bundle
 import androidx.navigation.NavType
-import com.android.sample.tmdb.domain.model.TMDbItem
+import com.android.sample.tmdb.domain.model.Movie
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 
-class TMDbItemNavType : NavType<TMDbItem>(isNullableAllowed = false) {
+class TMDbItemNavType : NavType<Movie>(isNullableAllowed = false) {
 
-    private val gsonForTMDbItem: Gson by lazy {
-        GsonBuilder()
-            .registerTypeAdapter(TMDbItem::class.java, TMDbItemTypeAdapter())
-            .create()
-    }
-
-    override fun get(bundle: Bundle, key: String): TMDbItem? {
+    override fun get(bundle: Bundle, key: String): Movie? {
         return bundle.getParcelable(key)
     }
 
-    override fun parseValue(value: String): TMDbItem {
-        return gsonForTMDbItem.fromJson(value, TMDbItem::class.java)
+    override fun parseValue(value: String): Movie {
+        return Gson().fromJson(value, Movie::class.java)
     }
 
-    override fun put(bundle: Bundle, key: String, value: TMDbItem) {
+    override fun put(bundle: Bundle, key: String, value: Movie) {
         bundle.putParcelable(key, value)
     }
 }

@@ -1,6 +1,6 @@
 package com.android.sample.tmdb.ui
 
-sealed class DetailScreens(val title: String) {
+sealed class DetailScreens(val route: String) {
     object MovieDetails : DetailScreens("movie_detail_screen/{$TMDb_ITEM}")
     object TVShowDetails : DetailScreens("tv_show_detail_screen/{$TMDb_ITEM}")
 

@@ -24,5 +24,5 @@ interface TVShowService {
     suspend fun topRatedTVSeries(): TMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/{tvId}/credits")
-    fun tvCredit(@Path("tvId") tvId: Int): NetworkCreditWrapper
+    suspend fun tvCredit(@Path("tvId") tvId: Int): NetworkCreditWrapper
 }
