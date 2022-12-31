@@ -44,18 +44,3 @@ fun DetailScreenContent(
         }
     }
 }
-
-@Composable
-fun DetailScreenContent(
-) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "Detail",
-            fontSize = MaterialTheme.typography.h3.fontSize,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}

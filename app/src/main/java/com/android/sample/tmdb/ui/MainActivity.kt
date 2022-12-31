@@ -1,27 +1,23 @@
 package com.android.sample.tmdb.ui
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.navigation.*
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.compose.*
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.android.sample.tmdb.ui.DetailScreens.Companion.TMDb_ITEM
+import androidx.navigation.navArgument
 import com.android.sample.tmdb.ui.detail.DetailScreenContent
 import com.android.sample.tmdb.ui.feed.FeedMovieScreen
+import com.android.sample.tmdb.ui.feed.TMDbBottomBar
 import com.android.sample.tmdb.ui.theme.TmdbPagingComposeTheme
-import com.android.sample.tmdb.utils.TMDbItemNavType
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,104 +33,49 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun HomeScreen(navController: NavHostController = rememberNavController()) {
+    private fun HomeScreen() {
+        val appState = rememberTMDbkAppState()
         Scaffold(
-            bottomBar = { BottomBar(navController = navController) }
-        ) {
-            NavigationGraph(navController = navController, it)
-        }
-    }
-
-    @Composable
-    private fun BottomBar(navController: NavHostController) {
-        val screens = listOf(
-            BottomNavScreens.MovieNavItem,
-            BottomNavScreens.TVShowNavItem
-        )
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
-
-        val bottomBarDestination = screens.any { it.route == currentDestination?.route }
-        if (bottomBarDestination) {
-            BottomNavigation {
-                screens.forEach { screen ->
-                    AddItem(
-                        screen = screen,
-                        currentDestination = currentDestination,
-                        navController = navController
+            bottomBar = {
+                if (appState.shouldShowBottomBar) {
+                    TMDbBottomBar(
+                        tabs = appState.bottomBarTabs,
+                        currentRoute = appState.currentRoute!!,
+                        navigateToRoute = appState::navigateToBottomBarRoute
                     )
                 }
             }
-        }
-    }
-
-    @Composable
-    private fun RowScope.AddItem(
-        screen: BottomNavScreens,
-        currentDestination: NavDestination?,
-        navController: NavHostController
-    ) {
-        BottomNavigationItem(
-            label = {
-                Text(text = screen.title)
-            },
-            icon = {
-                Icon(
-                    painterResource(id = screen.icon),
-                    contentDescription = screen.title
+        ) { innerPaddingModifier ->
+            NavHost(
+                navController = appState.navController,
+                startDestination = MainDestinations.HOME_ROUTE,
+                modifier = Modifier.padding(innerPaddingModifier)
+            ) {
+                movieDetailsNavGraph(
+                    onSnackSelected = appState::navigateToTMDbDetail
                 )
-            },
-            selected = currentDestination?.hierarchy?.any {
-                it.route == screen.route
-            } == true,
-            unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
-            onClick = {
-                navController.navigate(screen.route) {
-                    navController.graph.startDestinationRoute?.let { screen_route ->
-                        popUpTo(screen_route) {
-                            saveState = true
-                        }
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
             }
-        )
-    }
-
-    @Composable
-    private fun NavigationGraph(
-        navController: NavHostController,
-        innerPaddingValues: PaddingValues
-    ) {
-        NavHost(
-            navController = navController,
-            startDestination = "HOME",
-            modifier = Modifier.padding(innerPaddingValues)
-        ) {
-            movieDetailsNavGraph(navController)
         }
     }
 
-    private fun NavGraphBuilder.movieDetailsNavGraph(navController: NavHostController) {
+    private fun NavGraphBuilder.movieDetailsNavGraph(
+        onSnackSelected: (Int, NavBackStackEntry) -> Unit
+    ) {
         navigation(
-            route = "HOME",
-            startDestination = BottomNavScreens.MovieNavItem.route
+            route = MainDestinations.HOME_ROUTE,
+            startDestination = HomeSections.MOVIE_SECTION.route
         ) {
-            composable(route = BottomNavScreens.MovieNavItem.route) {
+            composable(route = HomeSections.MOVIE_SECTION.route) { from ->
                 FeedMovieScreen(onClick = {
-                    val json = Uri.encode(Gson().toJson(it))
-                    navController.navigate(
-                    DetailScreens.MovieDetails.route.replace(
-                        "{${TMDb_ITEM}}", json))
+                    onSnackSelected(it.id, from)
                 })
             }
         }
-        composable(route = DetailScreens.MovieDetails.route, arguments = listOf(
-            navArgument(TMDb_ITEM) {
-                type = TMDbItemNavType()
-            }
-        )) {
+        composable(
+            route = "${MainDestinations.TMDB_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
+            arguments = listOf(
+                navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType })
+        ) {
             DetailScreenContent()
         }
     }
