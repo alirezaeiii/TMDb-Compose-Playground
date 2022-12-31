@@ -96,13 +96,13 @@ private fun <T : TMDbItem> Feeds(
         contentPadding = PaddingValues(start = Dimens.paddingMicro, end = Dimens.paddingMicro)
     ) {
         items(feeds) { feed ->
-            TmdbItem(feed, onFeedClick, tmdbItemWidth)
+            TMDbItem(feed, onFeedClick, tmdbItemWidth)
         }
     }
 }
 
 @Composable
-private fun <T : TMDbItem> TmdbItem(
+private fun <T : TMDbItem> TMDbItem(
     tmdbItem: T,
     onFeedClick: (TMDbItem) -> Unit,
     itemWidth: Dp
@@ -141,7 +141,7 @@ private fun <T : TMDbItem> TmdbItem(
 fun FeedCardPreview() {
     TmdbPagingComposeTheme {
         val movie = Movie(1, "", null, null, null, "Movie", 1.0)
-        TmdbItem(
+        TMDbItem(
             tmdbItem = movie,
             onFeedClick = {},
             120.dp
