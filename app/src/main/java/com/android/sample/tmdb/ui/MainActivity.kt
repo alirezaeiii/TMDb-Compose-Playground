@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -11,16 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Dp
-import androidx.navigation.NavDestination
+import androidx.navigation.*
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.navigation.compose.*
+import androidx.navigation.compose.navigation
 import com.android.sample.tmdb.ui.DetailScreens.Companion.TMDb_ITEM
 import com.android.sample.tmdb.ui.detail.DetailScreenContent
 import com.android.sample.tmdb.ui.feed.FeedMovieScreen
@@ -46,7 +41,7 @@ class MainActivity : ComponentActivity() {
         Scaffold(
             bottomBar = { BottomBar(navController = navController) }
         ) {
-            NavigationGraph(navController = navController, it.calculateBottomPadding())
+            NavigationGraph(navController = navController, it)
         }
     }
 
@@ -108,28 +103,33 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun NavigationGraph(navController: NavHostController, bottomPadding: Dp) {
+    private fun NavigationGraph(
+        navController: NavHostController,
+        innerPaddingValues: PaddingValues
+    ) {
         NavHost(
             navController = navController,
-            startDestination = BottomNavScreens.MovieNavItem.route,
-            Modifier.padding(bottom = bottomPadding)
+            startDestination = "HOME",
+            modifier = Modifier.padding(innerPaddingValues)
         ) {
-            composable(route = BottomNavScreens.MovieNavItem.route) {
-                FeedMovieScreen( onClick = {
-                    val json = Uri.encode(Gson().toJson(it))
-                    navController.navigate(
-                        DetailScreens.MovieDetails.route.replace(
-                            "{${TMDb_ITEM}}",
-                            json
-                        )
-                    )
-                })
-            }
-            movieDetailsNavGraph()
+            movieDetailsNavGraph(navController)
         }
     }
 
-    private fun NavGraphBuilder.movieDetailsNavGraph() {
+    private fun NavGraphBuilder.movieDetailsNavGraph(navController: NavHostController) {
+        navigation(
+            route = "HOME",
+            startDestination = BottomNavScreens.MovieNavItem.route
+        ) {
+            composable(route = BottomNavScreens.MovieNavItem.route) {
+                FeedMovieScreen(onClick = {
+                    val json = Uri.encode(Gson().toJson(it))
+                    navController.navigate(
+                    DetailScreens.MovieDetails.route.replace(
+                        "{${TMDb_ITEM}}", json))
+                })
+            }
+        }
         composable(route = DetailScreens.MovieDetails.route, arguments = listOf(
             navArgument(TMDb_ITEM) {
                 type = TMDbItemNavType()
