@@ -12,11 +12,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
 /**
- * Destinations used in the [HomeScreen].
+ * Destinations used in the [TMDbApp].
  */
 object MainDestinations {
     const val HOME_ROUTE = "home"
-    const val TMDB_DETAIL_ROUTE = "tmdb"
+    const val TMDB_MOVIE_DETAIL_ROUTE = "movie"
+    const val TMDB_TV_SHOW_DETAIL_ROUTE = "tv_show"
     const val TMDB_ID_KEY = "snackId"
 }
 
@@ -74,10 +75,17 @@ class TMDbAppState(
         }
     }
 
-    fun navigateToTMDbDetail(id: Int, from: NavBackStackEntry) {
+    fun navigateToMovieDetail(id: Int, from: NavBackStackEntry) {
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.TMDB_DETAIL_ROUTE}/$id")
+            navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/$id")
+        }
+    }
+
+    fun navigateToTVShowDetail(id: Int, from: NavBackStackEntry) {
+        // In order to discard duplicated navigation events, we check the Lifecycle
+        if (from.lifecycleIsResumed()) {
+            navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/$id")
         }
     }
 }
