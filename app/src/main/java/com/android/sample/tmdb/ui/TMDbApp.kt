@@ -1,9 +1,10 @@
 package com.android.sample.tmdb.ui
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -16,7 +17,6 @@ import com.android.sample.tmdb.ui.detail.MovieDetailScreenContent
 import com.android.sample.tmdb.ui.detail.TVShowDetailScreenContent
 import com.android.sample.tmdb.ui.feed.FeedMovieScreen
 import com.android.sample.tmdb.ui.feed.FeedTVShowScreen
-import com.android.sample.tmdb.ui.feed.TMDbBottomBar
 
 @Composable
 fun TMDbApp() {
@@ -40,6 +40,36 @@ fun TMDbApp() {
             tmdbNavGraph(
                 onMovieSelected = appState::navigateToMovieDetail,
                 onTVShowSelected = appState::navigateToTVShowDetail
+            )
+        }
+    }
+}
+
+@Composable
+private fun TMDbBottomBar(
+    tabs: Array<HomeSections>,
+    currentRoute: String,
+    navigateToRoute: (String) -> Unit
+) {
+    val currentSection = tabs.first { it.route == currentRoute }
+
+    BottomNavigation {
+        tabs.forEach { section ->
+            val selected = section == currentSection
+
+            BottomNavigationItem(
+                label = {
+                    Text(text = section.title)
+                },
+                icon = {
+                    Icon(
+                        painterResource(id = section.icon),
+                        contentDescription = section.title
+                    )
+                },
+                selected = selected,
+                unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
+                onClick = { navigateToRoute(section.route) }
             )
         }
     }
