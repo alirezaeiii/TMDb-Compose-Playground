@@ -1,5 +1,6 @@
 package com.android.sample.tmdb.data.network
 
+import com.android.sample.tmdb.data.response.MovieDetailResponse
 import com.android.sample.tmdb.data.response.NetworkCreditWrapper
 import com.android.sample.tmdb.data.response.TMDbWrapper
 import com.android.sample.tmdb.data.response.NetworkMovie
@@ -25,4 +26,7 @@ interface MovieService {
 
     @GET("3/movie/{movieId}/credits")
     suspend fun movieCredit(@Path("movieId") movieId: Int): NetworkCreditWrapper
+
+    @GET("3/movie/{movie_id}")
+    suspend fun fetchMovieDetail(@Path("movie_id") movieId: Int): MovieDetailResponse
 }
