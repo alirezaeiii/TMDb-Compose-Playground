@@ -10,13 +10,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 
 abstract class BaseFeedRepository<T : TMDbItem>(
-    private val context: Context,
-    private val ioDispatcher: CoroutineDispatcher
-): BaseRepository<List<FeedWrapper<T>>>() {
+    context: Context,
+    ioDispatcher: CoroutineDispatcher
+) : BaseRepository<List<FeedWrapper<T>>>(context, ioDispatcher) {
 
     protected abstract suspend fun popularItems(): List<T>
 
@@ -32,51 +30,47 @@ abstract class BaseFeedRepository<T : TMDbItem>(
 
     protected abstract fun getLatestResId(): Int
 
-    override fun getResult(id: Any?) = flow {
-        emit(Resource.Loading)
-        try {
-            coroutineScope {
-                val trendingDeferred: Deferred<List<T>> = async { trendingItems() }
-                val nowPlayingDeferred: Deferred<List<T>> = async { nowPlayingItems() }
-                val popularDeferred: Deferred<List<T>> = async { popularItems() }
-                val latestDeferred: Deferred<List<T>> = async { latestItems() }
-                val topRatedDeferred: Deferred<List<T>> = async { topRatedItems() }
-
-                emit(
-                    Resource.Success(
-                        listOf(
-                            FeedWrapper(
-                                trendingDeferred.await(),
-                                R.string.text_trending,
-                                SortType.TRENDING
-                            ),
-                            FeedWrapper(
-                                popularDeferred.await(),
-                                R.string.text_popular,
-                                SortType.MOST_POPULAR
-                            ),
-                            FeedWrapper(
-                                nowPlayingDeferred.await(),
-                                getNowPlayingResId(),
-                                SortType.NOW_PLAYING
-                            ),
-                            FeedWrapper(
-                                latestDeferred.await(),
-                                getLatestResId(),
-                                SortType.UPCOMING
-                            ),
-                            FeedWrapper(
-                                topRatedDeferred.await(),
-                                R.string.text_highest_rate,
-                                SortType.HIGHEST_RATED
-                            )
-                        )
-                    )
-                )
-            }
-        } catch (t: Throwable) {
-            emit(Resource.Error(context.getString(R.string.failed_loading_msg)))
+    override suspend fun successResult(id: Any?): Resource<List<FeedWrapper<T>>> {
+        val trendingDeferred: Deferred<List<T>>
+        val nowPlayingDeferred: Deferred<List<T>>
+        val popularDeferred: Deferred<List<T>>
+        val latestDeferred: Deferred<List<T>>
+        val topRatedDeferred: Deferred<List<T>>
+        coroutineScope {
+            trendingDeferred = async { trendingItems() }
+            nowPlayingDeferred = async { nowPlayingItems() }
+            popularDeferred = async { popularItems() }
+            latestDeferred = async { latestItems() }
+            topRatedDeferred = async { topRatedItems() }
         }
-
-    }.flowOn(ioDispatcher)
+        return Resource.Success(
+            listOf(
+                FeedWrapper(
+                    trendingDeferred.await(),
+                    R.string.text_trending,
+                    SortType.TRENDING
+                ),
+                FeedWrapper(
+                    popularDeferred.await(),
+                    R.string.text_popular,
+                    SortType.MOST_POPULAR
+                ),
+                FeedWrapper(
+                    nowPlayingDeferred.await(),
+                    getNowPlayingResId(),
+                    SortType.NOW_PLAYING
+                ),
+                FeedWrapper(
+                    latestDeferred.await(),
+                    getLatestResId(),
+                    SortType.UPCOMING
+                ),
+                FeedWrapper(
+                    topRatedDeferred.await(),
+                    R.string.text_highest_rate,
+                    SortType.HIGHEST_RATED
+                )
+            )
+        )
+    }
 }
