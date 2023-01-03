@@ -13,6 +13,7 @@ android {
         applicationId AppMetaData.id
         minSdk AppMetaData.minSdkVersion
         targetSdk AppMetaData.targetSdkVersion
+        compileSdk AppMetaData.compileSdkVersion
         versionCode AppMetaData.versionCode
         versionName AppMetaData.versionName
 
@@ -53,12 +54,16 @@ dependencies {
 
     implementation Deps.appCompat
     implementation Deps.material
+    implementation Deps.palette
+    implementation Deps.browser
 
     implementation Deps.composeUi
     implementation Deps.composeMaterial
     implementation Deps.composeUiToolingPreview
     implementation Deps.composeActivity
     implementation Deps.navigationCompose
+    implementation Deps.composeConstraintLayout
+    implementation Deps.iconExtended
     debugImplementation Deps.composeUiTooling
 
     implementation Deps.hilt

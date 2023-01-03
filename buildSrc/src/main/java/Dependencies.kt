@@ -2,6 +2,7 @@ object Versions {
     //Core
     const val kotlin = "1.6.21"
     const val compose = "1.2.0"
+    const val constraint_layout = "1.0.1"
     const val accompanist = "0.25.0"
     const val compose_activity = "1.3.1"
     const val nav_version = "2.5.2"
@@ -16,14 +17,18 @@ object Versions {
     const val moshi = "1.11.0"
     const val converterMoshi = "2.9.0"
     const val coroutines = "1.5.2"
-    const val coil = "1.4.0"
+    const val coil = "2.2.2"
     const val lottie = "5.0.3"
     const val gson = "2.9.1"
+    const val palette = "1.0.0"
+    const val icon_extended = "1.4.0-alpha02"
+    const val browser = "1.5.0-alpha01"
 }
 
 object AppMetaData {
     const val id = "com.android.sample.tmdb"
-    const val targetSdkVersion = 32
+    const val targetSdkVersion = 33
+    const val compileSdkVersion = 33
     const val minSdkVersion = 21
     const val versionCode = 1
     const val versionName = "1.0.0"
@@ -38,10 +43,14 @@ object Deps {
     const val  composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val  accompanist = "com.google.accompanist:accompanist-navigation-animation:${Versions.accompanist}"
     const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.nav_version}"
+    const val composeConstraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraint_layout}"
+    const val iconExtended = "androidx.compose.material:material-icons-extended:${Versions.icon_extended}"
 
     //UI
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val material = "com.google.android.material:material:${Versions.material}"
+    const val palette = "androidx.palette:palette-ktx:${Versions.palette}"
+    const val browser = "androidx.browser:browser:${Versions.browser}"
 
     //Core
     const val androidxCore = "androidx.core:core-ktx:${Versions.androidx_core}"

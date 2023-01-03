@@ -13,4 +13,13 @@
     <string name="retry">Retry</string>
 
     <string name="base_poster_path">http://image.tmdb.org/t/p/w342%s</string>
+
+    <string name="release_date">Release Date</string>
+    <string name="vote_average">Vote Avg</string>
+    <string name="votes">Votes</string>
+    <string name="see_all">See All(%1$d)</string>
+    <string name="cast">Cast</string>
+    <string name="crew">Crew</string>
+    <string name="person_content_description">Photo of %1$s the %2$s</string>
+
 </resources>

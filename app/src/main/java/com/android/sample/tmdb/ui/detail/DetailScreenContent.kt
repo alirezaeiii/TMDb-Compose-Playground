@@ -16,16 +16,7 @@ fun MovieDetailScreenContent(
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     Content(viewModel = viewModel) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = it.cast.toString(),
-                fontSize = MaterialTheme.typography.h3.fontSize,
-                fontWeight = FontWeight.Bold
-            )
-        }
+        DetailScreen(detailWrapper = it)
     }
 }
 
@@ -34,15 +25,6 @@ fun TVShowDetailScreenContent(
     viewModel: TVShowDetailViewModel = hiltViewModel()
 ) {
     Content(viewModel = viewModel) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = it.cast.toString(),
-                fontSize = MaterialTheme.typography.h3.fontSize,
-                fontWeight = FontWeight.Bold
-            )
-        }
+        DetailScreen(detailWrapper = it)
     }
 }
