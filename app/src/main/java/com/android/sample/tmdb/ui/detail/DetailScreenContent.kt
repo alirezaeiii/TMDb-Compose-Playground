@@ -13,18 +13,20 @@ import com.android.sample.tmdb.ui.Content
 
 @Composable
 fun MovieDetailScreenContent(
+    upPress: () -> Unit,
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     Content(viewModel = viewModel) {
-        DetailScreen(detailWrapper = it)
+        DetailScreen(detailWrapper = it, upPress = upPress)
     }
 }
 
 @Composable
 fun TVShowDetailScreenContent(
+    upPress: () -> Unit,
     viewModel: TVShowDetailViewModel = hiltViewModel()
 ) {
     Content(viewModel = viewModel) {
-        DetailScreen(detailWrapper = it)
+        DetailScreen(detailWrapper = it, upPress = upPress)
     }
 }

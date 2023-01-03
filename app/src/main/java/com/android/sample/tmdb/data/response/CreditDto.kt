@@ -3,11 +3,12 @@ package com.android.sample.tmdb.data.response
 import com.android.sample.tmdb.domain.model.Cast
 import com.android.sample.tmdb.domain.model.Crew
 import com.android.sample.tmdb.domain.model.Gender
+import com.android.sample.tmdb.utils.Constants.BASE_WIDTH_342_PATH
 import com.squareup.moshi.Json
 
 class NetworkCast(
     @Json(name = "character")
-    val credit: String,
+    val role: String,
     val name: String,
     @Json(name = PROFILE_PATH)
     val profilePath: String?,
@@ -17,7 +18,7 @@ class NetworkCast(
 
 class NetworkCrew(
     @Json(name = "job")
-    val credit: String,
+    val role: String,
     val name: String,
     @Json(name = PROFILE_PATH)
     val profilePath: String?,
@@ -26,11 +27,33 @@ class NetworkCrew(
 )
 
 fun List<NetworkCast>.asCastDomainModel(): List<Cast> = map {
-    Cast(it.credit, it.name, it.profilePath, it.gender.toGender(), it.id)
+    Cast(
+        it.role,
+        it.name,
+        it.profilePath?.let { profilePath ->
+            String.format(
+                BASE_WIDTH_342_PATH,
+                profilePath
+            )
+        },
+        it.gender.toGender(),
+        it.id
+    )
 }
 
 fun List<NetworkCrew>.asCrewDomainModel(): List<Crew> = map {
-    Crew(it.credit, it.name, it.profilePath, it.gender.toGender(), it.id)
+    Crew(
+        it.role,
+        it.name,
+        it.profilePath?.let { profilePath ->
+            String.format(
+                BASE_WIDTH_342_PATH,
+                profilePath
+            )
+        },
+        it.gender.toGender(),
+        it.id
+    )
 }
 
 private fun Int.toGender() = if (this == 1) Gender.FEMALE else Gender.MALE

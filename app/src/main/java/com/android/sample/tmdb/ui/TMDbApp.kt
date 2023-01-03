@@ -39,7 +39,8 @@ fun TMDbApp() {
         ) {
             tmdbNavGraph(
                 onMovieSelected = appState::navigateToMovieDetail,
-                onTVShowSelected = appState::navigateToTVShowDetail
+                onTVShowSelected = appState::navigateToTVShowDetail,
+                upPress = appState::upPress
             )
         }
     }
@@ -77,7 +78,8 @@ private fun TMDbBottomBar(
 
 private fun NavGraphBuilder.tmdbNavGraph(
     onMovieSelected: (Int, NavBackStackEntry) -> Unit,
-    onTVShowSelected: (Int, NavBackStackEntry) -> Unit
+    onTVShowSelected: (Int, NavBackStackEntry) -> Unit,
+    upPress: () -> Unit
 ) {
     navigation(
         route = MainDestinations.HOME_ROUTE,
@@ -99,14 +101,14 @@ private fun NavGraphBuilder.tmdbNavGraph(
         arguments = listOf(
             navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType })
     ) {
-        MovieDetailScreenContent()
+        MovieDetailScreenContent(upPress)
     }
     composable(
         route = "${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments = listOf(
             navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType })
     ) {
-        TVShowDetailScreenContent()
+        TVShowDetailScreenContent(upPress)
     }
 }
 

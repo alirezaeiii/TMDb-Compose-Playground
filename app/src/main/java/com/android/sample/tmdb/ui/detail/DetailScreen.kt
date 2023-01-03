@@ -1,14 +1,6 @@
 package com.android.sample.tmdb.ui.detail
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
-import android.net.Uri
 import androidx.annotation.StringRes
-import androidx.browser.customtabs.CustomTabColorSchemeParams
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -30,7 +22,6 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -44,16 +35,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.core.graphics.applyCanvas
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import coil.transform.Transformation
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.*
 import com.android.sample.tmdb.ui.theme.GetVibrantColorFromPoster
 import com.android.sample.tmdb.ui.theme.imageTint
+import com.android.sample.tmdb.utils.CircleTopCropTransformation
+import com.android.sample.tmdb.utils.dpToPx
+import com.android.sample.tmdb.utils.openInChromeCustomTab
 
 val LocalVibrantColor =
     compositionLocalOf<Animatable<Color, AnimationVector4D>> { error("No vibrant color defined") }
@@ -64,7 +56,7 @@ val springAnimation = spring(
 )
 
 @Composable
-fun <T : TMDbItemDetails> DetailScreen(detailWrapper: DetailWrapper<T>) {
+fun <T : TMDbItemDetails> DetailScreen(detailWrapper: DetailWrapper<T>, upPress: () -> Unit) {
     val defaultTextColor = MaterialTheme.colors.onBackground
     val vibrantColor = remember { Animatable(defaultTextColor) }
     CompositionLocalProvider(
@@ -96,6 +88,7 @@ fun <T : TMDbItemDetails> DetailScreen(detailWrapper: DetailWrapper<T>) {
             val posterWidth = 160.dp
             AppBar(
                 homepage = detailWrapper.details.homepage,
+                upPress = upPress,
                 modifier = Modifier
                     .requiredWidth(posterWidth * 2.2f)
                     .constrainAs(appbar) { centerTo(poster) }
@@ -253,14 +246,14 @@ private fun Backdrop(backdropUrl: String, movieName: String, modifier: Modifier)
 }
 
 @Composable
-private fun AppBar(modifier: Modifier, homepage: String?) {
+private fun AppBar(modifier: Modifier, homepage: String?, upPress: () -> Unit) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
     ) {
         val vibrantColor = LocalVibrantColor.current.value
         val scaleModifier = Modifier.scale(1.1f)
-        IconButton(onClick = {  }) {
+        IconButton(onClick = { upPress.invoke() }) {
             Icon(
                 Icons.Filled.ArrowBack,
                 contentDescription = "back",
@@ -280,13 +273,6 @@ private fun AppBar(modifier: Modifier, homepage: String?) {
             }
         }
     }
-}
-
-fun String.openInChromeCustomTab(context: Context, color: Color) {
-    val schemeParams = CustomTabColorSchemeParams.Builder().setToolbarColor(color.toArgb()).build()
-    val customTabsIntent =
-        CustomTabsIntent.Builder().setDefaultColorSchemeParams(schemeParams).build()
-    customTabsIntent.launchUrl(context, Uri.parse(this))
 }
 
 class BottomArcShape(private val arcHeight: Float) : Shape {
@@ -478,7 +464,7 @@ fun Person(person: Credit, modifier: Modifier = Modifier) {
     ) {
         Card(shape = CircleShape, elevation = 8.dp, modifier = Modifier.size(120.dp)) {
             val request = ImageRequest.Builder(LocalContext.current)
-                .data(person.profilePath)
+                .data(person.profileUrl)
                 .crossfade(true)
                 .transformations(CircleTopCropTransformation())
                 .build()
@@ -501,7 +487,7 @@ fun Person(person: Credit, modifier: Modifier = Modifier) {
                 contentDescription = stringResource(
                     id = R.string.person_content_description,
                     person.name,
-                    person.credit
+                    person.role
                 ),
                 contentScale = ContentScale.FillHeight
             )
@@ -514,7 +500,7 @@ fun Person(person: Credit, modifier: Modifier = Modifier) {
             modifier = Modifier.padding(top = 4.dp)
         )
         Text(
-            text = person.credit,
+            text = person.role,
             style = MaterialTheme.typography.subtitle2.copy(
                 fontWeight = FontWeight.Normal,
                 fontStyle = FontStyle.Italic
@@ -524,32 +510,4 @@ fun Person(person: Credit, modifier: Modifier = Modifier) {
             modifier = Modifier.padding(top = 2.dp)
         )
     }
-}
-
-class CircleTopCropTransformation : Transformation {
-
-    override val cacheKey: String = CircleTopCropTransformation::class.java.name
-
-    override suspend fun transform(input: Bitmap, size: coil.size.Size): Bitmap {
-        val minSize = kotlin.math.min(input.width, input.height)
-        val radius = minSize / 2f
-        val output = Bitmap.createBitmap(minSize, minSize, input.config)
-        val top = if (input.height == input.width) 0f else -20f
-        return output.applyCanvas {
-            val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
-            drawCircle(radius, radius, radius, paint)
-            paint.xfermode = MODE
-            drawBitmap(input, radius - input.width / 2f, top, paint)
-        }
-    }
-
-    companion object {
-        private val MODE = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
-    }
-}
-
-@Composable
-fun Int.dpToPx(): Float {
-    val density = LocalDensity.current.density
-    return remember(this) { this * density }
 }

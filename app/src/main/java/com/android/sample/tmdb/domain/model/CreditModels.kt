@@ -8,26 +8,26 @@ import kotlinx.parcelize.Parcelize
 
 interface Credit : Parcelable {
     val id: Any
-    val credit: String
+    val role: String
     val name: String
-    val profilePath: String?
+    val profileUrl: String?
     val gender: Gender
 }
 
 @Parcelize
 class Cast(
-    override val credit: String,
+    override val role: String,
     override val name: String,
-    override val profilePath: String?,
+    override val profileUrl: String?,
     override val gender: Gender,
     override val id: Int
 ) : Credit
 
 @Parcelize
 class Crew(
-    override val credit: String,
+    override val role: String,
     override val name: String,
-    override val profilePath: String?,
+    override val profileUrl: String?,
     override val gender: Gender,
     override val id: String
 ) : Credit

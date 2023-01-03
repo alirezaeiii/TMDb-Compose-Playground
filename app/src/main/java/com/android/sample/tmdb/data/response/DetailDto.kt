@@ -4,6 +4,8 @@ import com.android.sample.tmdb.domain.model.Genre
 import com.android.sample.tmdb.domain.model.MovieDetails
 import com.android.sample.tmdb.domain.model.SpokenLanguage
 import com.android.sample.tmdb.domain.model.TvDetails
+import com.android.sample.tmdb.utils.Constants.BASE_WIDTH_342_PATH
+import com.android.sample.tmdb.utils.Constants.BASE_WIDTH_780_PATH
 import com.squareup.moshi.Json
 
 interface TMDbItemDetailsResponse {
@@ -62,7 +64,7 @@ data class TvDetailResponse(
     @Json(name = "vote_average") override val voteAverage: Double,
     @Json(name = "vote_count") override val voteCount: Int,
 
-) : TMDbItemDetailsResponse
+    ) : TMDbItemDetailsResponse
 
 data class GenreResponse(
     @Json(name = "id") val id: Int,
@@ -75,15 +77,48 @@ data class SpokenLanguageResponse(
 )
 
 fun MovieDetailResponse.asDomainModel(): MovieDetails = MovieDetails(
-    backdropPath, genres.asGenreDomainModel(),
-    homepage, id, originalLanguage, originalTitle, overview, popularity, posterPath, releaseDate,
+    backdropPath?.let {
+        String.format(
+            BASE_WIDTH_780_PATH,
+            it
+        )
+    }, genres.asGenreDomainModel(),
+    homepage, id, originalLanguage, originalTitle, overview, popularity, posterPath?.let {
+        String.format(
+            BASE_WIDTH_342_PATH,
+            it
+        )
+    }, releaseDate,
     spokenLanguages.asLanguageDomainModel(), status, tagline, title, voteAverage, voteCount
 )
 
 fun TvDetailResponse.asDomainModel(): TvDetails = TvDetails(
-    backdropPath, genres.asGenreDomainModel(),
-    homepage, id, originalLanguage, originalTitle, overview, popularity, posterPath, releaseDate,
-    spokenLanguages.asLanguageDomainModel(), status, tagline, title, voteAverage, voteCount
+    backdropPath?.let {
+        String.format(
+            BASE_WIDTH_780_PATH,
+            it
+        )
+    },
+    genres.asGenreDomainModel(),
+    homepage,
+    id,
+    originalLanguage,
+    originalTitle,
+    overview,
+    popularity,
+    posterPath?.let {
+        String.format(
+            BASE_WIDTH_342_PATH,
+            it
+        )
+    },
+    releaseDate,
+    spokenLanguages.asLanguageDomainModel(),
+    status,
+    tagline,
+    title,
+    voteAverage,
+    voteCount
 )
 
 private fun List<GenreResponse>.asGenreDomainModel(): List<Genre> = map {

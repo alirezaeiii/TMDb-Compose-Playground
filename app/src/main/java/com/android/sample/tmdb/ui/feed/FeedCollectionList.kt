@@ -1,6 +1,5 @@
 package com.android.sample.tmdb.ui.feed
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,7 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.FeedWrapper
 import com.android.sample.tmdb.domain.model.Movie
@@ -113,15 +112,13 @@ private fun <T : TMDbItem> TMDbItem(
             .clickable(onClick = { onFeedClick(tmdbItem) })
             .padding(Dimens.PaddingSmall)
     ) {
-        Image(
-            painter = rememberImagePainter(tmdbItem.posterPath?.let { url ->
-                stringResource(R.string.base_poster_path, url)
-            }),
+        AsyncImage(
+            model = tmdbItem.posterUrl,
             contentDescription = null,
             modifier = Modifier
                 .size(width = itemWidth, height = 180.dp)
                 .border(.3.dp, MaterialTheme.colors.onSurface, RectangleShape),
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Crop
         )
         Text(
             text = tmdbItem.name,
