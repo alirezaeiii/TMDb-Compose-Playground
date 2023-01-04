@@ -16,9 +16,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -29,8 +28,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -41,19 +38,16 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.*
+import com.android.sample.tmdb.ui.common.BottomArcShape
 import com.android.sample.tmdb.ui.theme.GetVibrantColorFromPoster
 import com.android.sample.tmdb.ui.theme.imageTint
 import com.android.sample.tmdb.utils.CircleTopCropTransformation
 import com.android.sample.tmdb.utils.dpToPx
 import com.android.sample.tmdb.utils.openInChromeCustomTab
+import com.android.sample.tmdb.utils.springAnimation
 
 val LocalVibrantColor =
     compositionLocalOf<Animatable<Color, AnimationVector4D>> { error("No vibrant color defined") }
-val springAnimation = spring(
-    dampingRatio = Spring.DampingRatioMediumBouncy,
-    stiffness = Spring.StiffnessLow,
-    visibilityThreshold = 0.001f
-)
 
 @Composable
 fun <T : TMDbItemDetails> DetailScreen(detailWrapper: DetailWrapper<T>, upPress: () -> Unit) {
@@ -152,7 +146,7 @@ fun <T : TMDbItemDetails> DetailScreen(detailWrapper: DetailWrapper<T>, upPress:
                 }
             )
 
-            MovieFields(
+            TMDbItemFields(
                 detailWrapper.details,
                 modifier = Modifier.constrainAs(specs) {
                     top.linkTo(genres.bottom, 12.dp)
@@ -198,7 +192,6 @@ fun <T : TMDbItemDetails> DetailScreen(detailWrapper: DetailWrapper<T>, upPress:
                         linkTo(startGuideline, endGuideline)
                     }
             )
-
             CreditSection(
                 items = detailWrapper.cast,
                 headerResId = R.string.cast,
@@ -221,14 +214,16 @@ fun <T : TMDbItemDetails> DetailScreen(detailWrapper: DetailWrapper<T>, upPress:
             Spacer(
                 modifier = Modifier
                     .windowInsetsBottomHeight(WindowInsets.navigationBars)
-                    .constrainAs(space) { top.linkTo(crewSection.bottom) }
+                    .constrainAs(space) {
+                        top.linkTo(crewSection.bottom)
+                    }
             )
         }
     }
 }
 
 @Composable
-private fun Backdrop(backdropUrl: String, movieName: String, modifier: Modifier) {
+private fun Backdrop(backdropUrl: String, tmdbItemName: String, modifier: Modifier) {
     Card(
         elevation = 16.dp,
         shape = BottomArcShape(arcHeight = 120.dpToPx()),
@@ -239,7 +234,7 @@ private fun Backdrop(backdropUrl: String, movieName: String, modifier: Modifier)
             model = ImageRequest.Builder(LocalContext.current).data(data = backdropUrl)
                 .crossfade(1500).build(),
             contentScale = ContentScale.FillHeight,
-            contentDescription = movieName,
+            contentDescription = tmdbItemName,
             modifier = modifier.fillMaxWidth()
         )
     }
@@ -275,33 +270,9 @@ private fun AppBar(modifier: Modifier, homepage: String?, upPress: () -> Unit) {
     }
 }
 
-class BottomArcShape(private val arcHeight: Float) : Shape {
-    override fun createOutline(
-        size: Size,
-        layoutDirection: LayoutDirection,
-        density: Density
-    ): Outline {
-        val path = Path().apply {
-            moveTo(size.width, 0f)
-            lineTo(size.width, size.height)
-            val arcOffset = arcHeight / 10
-            val rect = Rect(
-                left = 0f - arcOffset,
-                top = size.height - arcHeight,
-                right = size.width + arcOffset,
-                bottom = size.height
-            )
-            arcTo(rect, 0f, 180f, false)
-            lineTo(0f, 0f)
-            close()
-        }
-        return Outline.Generic(path)
-    }
-}
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun Poster(posterUrl: String?, movieName: String, modifier: Modifier) {
+private fun Poster(posterUrl: String?, tmdbItemName: String, modifier: Modifier) {
     val isScaled = remember { mutableStateOf(false) }
     val scale =
         animateFloatAsState(
@@ -317,7 +288,7 @@ private fun Poster(posterUrl: String?, movieName: String, modifier: Modifier) {
     ) {
         AsyncImage(
             model = posterUrl,
-            contentDescription = movieName,
+            contentDescription = tmdbItemName,
             contentScale = ContentScale.FillHeight
         )
     }
@@ -347,17 +318,17 @@ private fun GenreChips(genres: List<Genre>, modifier: Modifier) {
 }
 
 @Composable
-private fun MovieFields(movieDetail: TMDbItemDetails, modifier: Modifier) {
+private fun TMDbItemFields(tmdbItemDetails: TMDbItemDetails, modifier: Modifier) {
     Row(horizontalArrangement = Arrangement.spacedBy(20.dp), modifier = modifier) {
         val context = LocalContext.current
-        movieDetail.releaseDate?.let { MovieField(context.getString(R.string.release_date), it) }
-        MovieField(context.getString(R.string.vote_average), movieDetail.voteAverage.toString())
-        MovieField(context.getString(R.string.votes), movieDetail.voteCount.toString())
+        tmdbItemDetails.releaseDate?.let { TMDbItemField(context.getString(R.string.release_date), it) }
+        TMDbItemField(context.getString(R.string.vote_average), tmdbItemDetails.voteAverage.toString())
+        TMDbItemField(context.getString(R.string.votes), tmdbItemDetails.voteCount.toString())
     }
 }
 
 @Composable
-private fun MovieField(name: String, value: String) {
+private fun TMDbItemField(name: String, value: String) {
     Column {
         Text(
             text = name,
@@ -403,19 +374,21 @@ private fun <T : Credit> CreditSection(
     itemContent: @Composable (T, Int) -> Unit,
     modifier: Modifier
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
-        SectionHeader(headerResId, items.size)
-        LazyRow(
-            modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
-            contentPadding = PaddingValues(16.dp)
-        ) {
-            items(
-                count = items.size,
-                itemContent = { index ->
-                    itemContent(items[index], index)
-                    Spacer(modifier = Modifier.width(16.dp))
-                }
-            )
+    if(items.isNotEmpty()) {
+        Column(modifier = modifier.fillMaxWidth()) {
+            SectionHeader(headerResId, items.size)
+            LazyRow(
+                modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
+                contentPadding = PaddingValues(16.dp)
+            ) {
+                items(
+                    count = items.size,
+                    itemContent = { index ->
+                        itemContent(items[index], index)
+                        Spacer(modifier = Modifier.width(16.dp))
+                    }
+                )
+            }
         }
     }
 }
