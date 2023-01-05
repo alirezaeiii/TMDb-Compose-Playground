@@ -1,6 +1,12 @@
 # TMDb-Compose
 ### 🚧 Construction in progress 👷‍♀️⛏👷🔧️👷🔧 🚧
 
+## Screenshots
+<p float="left">
+  <img src="https://github.com/alirezaeiii/TMDb-Compose/blob/main/screenshots/screenshot1.gif" width="250" />
+  <img src="https://github.com/alirezaeiii/TMDb-Compose/blob/main/screenshots/screenshot2.gif" width="250" />
+</p>
+
 ## Features
 * MVVM Architecture + Repository design Pattern.
 * Jetpack Libraries and Architecture Components.
