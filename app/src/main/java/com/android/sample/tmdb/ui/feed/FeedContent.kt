@@ -6,7 +6,7 @@ import com.android.sample.tmdb.domain.model.TMDbItem
 import com.android.sample.tmdb.ui.Content
 
 @Composable
-fun FeedMovieScreen(
+fun MovieFeedScreen(
     onClick: (TMDbItem) -> Unit,
     viewModel: MovieFeedViewModel = hiltViewModel()
 ) {
@@ -16,7 +16,7 @@ fun FeedMovieScreen(
 }
 
 @Composable
-fun FeedTVShowScreen(
+fun TVShowFeedScreen(
     onClick: (TMDbItem) -> Unit,
     viewModel: TVShowFeedViewModel = hiltViewModel()
 ) {

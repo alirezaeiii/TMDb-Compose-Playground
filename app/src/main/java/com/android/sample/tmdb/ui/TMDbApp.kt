@@ -13,10 +13,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.android.sample.tmdb.R
-import com.android.sample.tmdb.ui.detail.MovieDetailScreenContent
-import com.android.sample.tmdb.ui.detail.TVShowDetailScreenContent
-import com.android.sample.tmdb.ui.feed.FeedMovieScreen
-import com.android.sample.tmdb.ui.feed.FeedTVShowScreen
+import com.android.sample.tmdb.ui.detail.MovieDetailScreen
+import com.android.sample.tmdb.ui.detail.TVShowDetailScreen
+import com.android.sample.tmdb.ui.feed.MovieFeedScreen
+import com.android.sample.tmdb.ui.feed.TVShowFeedScreen
 
 @Composable
 fun TMDbApp() {
@@ -86,12 +86,12 @@ private fun NavGraphBuilder.tmdbNavGraph(
         startDestination = HomeSections.MOVIE_SECTION.route
     ) {
         composable(route = HomeSections.MOVIE_SECTION.route) { from ->
-            FeedMovieScreen(onClick = {
+            MovieFeedScreen(onClick = {
                 onMovieSelected(it.id, from)
             })
         }
         composable(route = HomeSections.TV_SHOW_SECTION.route) { from ->
-            FeedTVShowScreen(onClick = {
+            TVShowFeedScreen(onClick = {
                 onTVShowSelected(it.id, from)
             })
         }
@@ -101,14 +101,14 @@ private fun NavGraphBuilder.tmdbNavGraph(
         arguments = listOf(
             navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType })
     ) {
-        MovieDetailScreenContent(upPress)
+        MovieDetailScreen(upPress)
     }
     composable(
         route = "${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments = listOf(
             navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType })
     ) {
-        TVShowDetailScreenContent(upPress)
+        TVShowDetailScreen(upPress)
     }
 }
 
