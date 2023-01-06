@@ -1,6 +1,9 @@
 package com.android.sample.tmdb.ui.common
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -12,9 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.android.sample.tmdb.R
 
 @Composable
-fun ErrorScreen(message: String, refresh: () -> Unit) {
+fun ErrorScreen(message: String, modifier: Modifier = Modifier, refresh: () -> Unit) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

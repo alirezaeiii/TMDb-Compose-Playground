@@ -5,18 +5,16 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import androidx.navigation.navArgument
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.ui.detail.MovieDetailScreen
 import com.android.sample.tmdb.ui.detail.TVShowDetailScreen
 import com.android.sample.tmdb.ui.feed.MovieFeedScreen
 import com.android.sample.tmdb.ui.feed.TVShowFeedScreen
+import com.android.sample.tmdb.ui.paging.*
 
 @Composable
 fun TMDbApp() {
@@ -38,6 +36,7 @@ fun TMDbApp() {
             modifier = Modifier.padding(innerPaddingModifier)
         ) {
             tmdbNavGraph(
+                navController = appState.navController,
                 onMovieSelected = appState::navigateToMovieDetail,
                 onTVShowSelected = appState::navigateToTVShowDetail,
                 upPress = appState::upPress
@@ -77,6 +76,7 @@ private fun TMDbBottomBar(
 }
 
 private fun NavGraphBuilder.tmdbNavGraph(
+    navController: NavController,
     onMovieSelected: (Int, NavBackStackEntry) -> Unit,
     onTVShowSelected: (Int, NavBackStackEntry) -> Unit,
     upPress: () -> Unit
@@ -86,12 +86,12 @@ private fun NavGraphBuilder.tmdbNavGraph(
         startDestination = HomeSections.MOVIE_SECTION.route
     ) {
         composable(route = HomeSections.MOVIE_SECTION.route) { from ->
-            MovieFeedScreen(onClick = {
+            MovieFeedScreen(navController = navController, onClick = {
                 onMovieSelected(it.id, from)
             })
         }
         composable(route = HomeSections.TV_SHOW_SECTION.route) { from ->
-            TVShowFeedScreen(onClick = {
+            TVShowFeedScreen(navController = navController, onClick = {
                 onTVShowSelected(it.id, from)
             })
         }
@@ -110,9 +110,39 @@ private fun NavGraphBuilder.tmdbNavGraph(
     ) {
         TVShowDetailScreen(upPress)
     }
+    composable(route = MainDestinations.TMDB_TRENDING_MOVIES_ROUTE) {
+        TrendingMovieScreen()
+    }
+    composable(route = MainDestinations.TMDB_POPULAR_MOVIES_ROUTE) {
+        PopularMovieScreen()
+    }
+    composable(route = MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE) {
+        NowPlayingMovieScreen()
+    }
+    composable(route = MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE) {
+        UpcomingMovieScreen()
+    }
+    composable(route = MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE) {
+        TopRatedMovieScreen()
+    }
+    composable(route = MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE) {
+        TrendingTVShowScreen()
+    }
+    composable(route = MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE) {
+        PopularTVShowScreen()
+    }
+    composable(route = MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE) {
+        AiringTodayTVShowScreen()
+    }
+    composable(route = MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE) {
+        OnTheAirTVShowScreen()
+    }
+    composable(route = MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE) {
+        TopRatedTVShowScreen()
+    }
 }
 
 enum class HomeSections(val route: String, val title: String, val icon: Int) {
     MOVIE_SECTION("Movie", "Movie", R.drawable.ic_movie),
-    TV_SHOW_SECTION("TVShow","TVShow", R.drawable.ic_tv_series)
+    TV_SHOW_SECTION("TVShow", "TVShow", R.drawable.ic_tv_series)
 }

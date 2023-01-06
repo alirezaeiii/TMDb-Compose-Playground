@@ -6,6 +6,7 @@ import com.android.sample.tmdb.data.response.TMDbWrapper
 import com.android.sample.tmdb.data.response.TvDetailResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface TVShowService {
 
@@ -23,6 +24,21 @@ interface TVShowService {
 
     @GET("3/tv/top_rated")
     suspend fun topRatedTVSeries(): TMDbWrapper<NetworkTVShow>
+
+    @GET("3/trending/tv/day")
+    suspend fun trendingTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
+
+    @GET("3/tv/popular")
+    suspend fun popularTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
+
+    @GET("3/tv/airing_today")
+    suspend fun airingTodayTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
+
+    @GET("3/tv/on_the_air")
+    suspend fun onTheAirTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
+
+    @GET("3/tv/top_rated")
+    suspend fun topRatedTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/{tvId}/credits")
     suspend fun tvCredit(@Path("tvId") tvId: Int): NetworkCreditWrapper

@@ -64,6 +64,7 @@ dependencies {
     implementation Deps.navigationCompose
     implementation Deps.composeConstraintLayout
     implementation Deps.iconExtended
+    implementation Deps.composePaging
     debugImplementation Deps.composeUiTooling
 
     implementation Deps.hilt

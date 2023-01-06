@@ -20,22 +20,33 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.FeedWrapper
 import com.android.sample.tmdb.domain.model.Movie
+import com.android.sample.tmdb.domain.model.SortType
 import com.android.sample.tmdb.domain.model.TMDbItem
+import com.android.sample.tmdb.ui.MainDestinations
 import com.android.sample.tmdb.ui.common.Dimens
 import com.android.sample.tmdb.ui.theme.TmdbPagingComposeTheme
 
+enum class TMDbType {
+    MOVIES, TV_SERIES
+}
+
 @Composable
 fun <T : TMDbItem> FeedCollectionList(
+    tmdbType: TMDbType,
+    navController: NavController,
     collection: List<FeedWrapper<T>>,
     onFeedClick: (TMDbItem) -> Unit
 ) {
     LazyColumn {
         itemsIndexed(collection) { index, feedCollection ->
             FeedCollection(
+                tmdbType = tmdbType,
+                navController = navController,
                 feedCollection = feedCollection,
                 onFeedClick = onFeedClick,
                 itemWidth = if (index == 0) 220.dp else 120.dp
@@ -46,6 +57,8 @@ fun <T : TMDbItem> FeedCollectionList(
 
 @Composable
 private fun <T : TMDbItem> FeedCollection(
+    tmdbType: TMDbType,
+    navController: NavController,
     feedCollection: FeedWrapper<T>,
     onFeedClick: (TMDbItem) -> Unit,
     itemWidth: Dp,
@@ -77,6 +90,48 @@ private fun <T : TMDbItem> FeedCollection(
                         top = Dimens.PaddingMedium,
                         bottom = Dimens.paddingBottom
                     )
+                    .clickable {
+                        when (tmdbType) {
+                            TMDbType.MOVIES -> {
+                                when (feedCollection.sortType) {
+                                    SortType.TRENDING -> {
+                                        navController.navigate(MainDestinations.TMDB_TRENDING_MOVIES_ROUTE)
+                                    }
+                                    SortType.MOST_POPULAR -> {
+                                        navController.navigate(MainDestinations.TMDB_POPULAR_MOVIES_ROUTE)
+                                    }
+                                    SortType.NOW_PLAYING -> {
+                                        navController.navigate(MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE)
+                                    }
+                                    SortType.UPCOMING -> {
+                                        navController.navigate(MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE)
+                                    }
+                                    SortType.HIGHEST_RATED -> {
+                                        navController.navigate(MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE)
+                                    }
+                                }
+                            }
+                            TMDbType.TV_SERIES -> {
+                                when (feedCollection.sortType) {
+                                    SortType.TRENDING -> {
+                                        navController.navigate(MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE)
+                                    }
+                                    SortType.MOST_POPULAR -> {
+                                        navController.navigate(MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE)
+                                    }
+                                    SortType.NOW_PLAYING -> {
+                                        navController.navigate(MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE)
+                                    }
+                                    SortType.UPCOMING -> {
+                                        navController.navigate(MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE)
+                                    }
+                                    SortType.HIGHEST_RATED -> {
+                                        navController.navigate(MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE)
+                                    }
+                                }
+                            }
+                        }
+                    }
             )
         }
         Feeds(feedCollection.feeds, onFeedClick, itemWidth)

@@ -6,6 +6,7 @@ import com.android.sample.tmdb.data.response.TMDbWrapper
 import com.android.sample.tmdb.data.response.NetworkMovie
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MovieService {
 
@@ -23,6 +24,21 @@ interface MovieService {
 
     @GET("3/movie/top_rated")
     suspend fun topRatedMovies(): TMDbWrapper<NetworkMovie>
+
+    @GET("3/trending/movie/day")
+    suspend fun trendingMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
+
+    @GET("3/movie/popular")
+    suspend fun popularMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
+
+    @GET("3/movie/now_playing")
+    suspend fun nowPlayingMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
+
+    @GET("3/movie/upcoming")
+    suspend fun upcomingMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
+
+    @GET("3/movie/top_rated")
+    suspend fun topRatedMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
 
     @GET("3/movie/{movieId}/credits")
     suspend fun movieCredit(@Path("movieId") movieId: Int): NetworkCreditWrapper
