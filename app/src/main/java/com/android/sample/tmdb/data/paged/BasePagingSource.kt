@@ -1,14 +1,16 @@
 package com.android.sample.tmdb.data.paged
 
+import android.content.Context
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.TMDbItem
 import retrofit2.HttpException
 import java.io.IOException
 
 private const val STARTING_PAGE_INDEX = 1
 
-abstract class BasePagingSource<T : TMDbItem> : PagingSource<Int, T>() {
+abstract class BasePagingSource<T : TMDbItem>(private val context: Context) : PagingSource<Int, T>() {
 
     protected abstract suspend fun fetchItems(page: Int): List<T>
 
@@ -21,9 +23,9 @@ abstract class BasePagingSource<T : TMDbItem> : PagingSource<Int, T>() {
                 nextKey = page + 1
             )
         } catch (exception: IOException) {
-            LoadResult.Error(exception)
+            LoadResult.Error(Exception(context.getString(R.string.failed_loading_msg)))
         } catch (exception: HttpException) {
-            LoadResult.Error(exception)
+            LoadResult.Error(Exception(context.getString(R.string.failed_loading_msg)))
         }
     }
 

@@ -128,6 +128,9 @@ fun <T : TMDbItem> PagingScreen(viewModel: BasePagingViewModel<T>) {
                     item {
                         ErrorScreen(
                             message = e.error.localizedMessage!!,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
                             refresh = { retry() }
                         )
                     }

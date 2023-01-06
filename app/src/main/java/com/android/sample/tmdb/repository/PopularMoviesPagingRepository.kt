@@ -1,5 +1,6 @@
 package com.android.sample.tmdb.repository
 
+import android.content.Context
 import com.android.sample.tmdb.data.network.MovieService
 import com.android.sample.tmdb.data.paged.BasePagingSource
 import com.android.sample.tmdb.data.paged.movie.PopularMoviesPagingSource
@@ -9,9 +10,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PopularMoviesPagingRepository @Inject constructor(private val movieApi: MovieService) :
-    BasePagingRepository<Movie>() {
+class PopularMoviesPagingRepository @Inject constructor(
+    private val context: Context,
+    private val movieApi: MovieService
+) : BasePagingRepository<Movie>() {
 
     override val pagingSource: BasePagingSource<Movie>
-        get() = PopularMoviesPagingSource(movieApi)
+        get() = PopularMoviesPagingSource(context, movieApi)
 }

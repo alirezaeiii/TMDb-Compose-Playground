@@ -1,5 +1,6 @@
 package com.android.sample.tmdb.repository
 
+import android.content.Context
 import com.android.sample.tmdb.data.network.TVShowService
 import com.android.sample.tmdb.data.paged.BasePagingSource
 import com.android.sample.tmdb.data.paged.tvshow.AiringTodayTvSeriesPagingSource
@@ -9,9 +10,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AiringTodayTvSeriesPagingRepository @Inject constructor(private val tvShowApi: TVShowService) :
+class AiringTodayTvSeriesPagingRepository @Inject constructor(
+    private val context: Context,
+    private val tvShowApi: TVShowService) :
     BasePagingRepository<TVShow>() {
 
     override val pagingSource: BasePagingSource<TVShow>
-        get() = AiringTodayTvSeriesPagingSource(tvShowApi)
+        get() = AiringTodayTvSeriesPagingSource(context, tvShowApi)
 }
