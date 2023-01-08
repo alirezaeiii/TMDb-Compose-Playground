@@ -11,7 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.android.sample.tmdb.R
 
 @Composable
@@ -23,7 +26,13 @@ fun ErrorScreen(message: String, modifier: Modifier = Modifier, refresh: () -> U
     ) {
         Text(
             text = message,
-            color = MaterialTheme.colors.onSurface
+            style = MaterialTheme.typography.subtitle1.copy(
+                color = MaterialTheme.colors.onSurface,
+                letterSpacing = 1.5.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.W400
+            )
+
         )
         Spacer(Modifier.height(16.dp))
         Button(onClick = refresh) {
