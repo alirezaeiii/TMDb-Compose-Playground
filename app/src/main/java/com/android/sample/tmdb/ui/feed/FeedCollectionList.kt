@@ -192,7 +192,7 @@ private fun <T : TMDbItem> TMDbItem(
 @Composable
 fun FeedCardPreview() {
     TmdbPagingComposeTheme {
-        val movie = Movie(1, "", null, null, null, "Movie", 1.0)
+        val movie = Movie(1, "", null, null, null, "Movie", 1.0, 2)
         TMDbItem(
             tmdbItem = movie,
             onFeedClick = {},

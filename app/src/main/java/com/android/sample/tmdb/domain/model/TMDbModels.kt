@@ -11,6 +11,7 @@ interface TMDbItem : Parcelable {
     val backdropUrl: String?
     val name: String
     val voteAverage: Double
+    val voteCount: Int
 }
 
 @Parcelize
@@ -21,7 +22,8 @@ data class Movie(
     override val posterUrl: String?,
     override val backdropUrl: String?,
     override val name: String,
-    override val voteAverage: Double
+    override val voteAverage: Double,
+    override val voteCount: Int
 ) : TMDbItem
 
 @Parcelize
@@ -32,5 +34,6 @@ data class TVShow(
     override val posterUrl: String?,
     override val backdropUrl: String?,
     override val name: String,
-    override val voteAverage: Double
+    override val voteAverage: Double,
+    override val voteCount: Int
 ) : TMDbItem

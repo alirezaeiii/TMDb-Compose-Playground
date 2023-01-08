@@ -2,7 +2,7 @@ object Versions {
     //Core
     const val kotlin = "1.6.21"
     const val compose = "1.2.0"
-    const val compose_paging = "1.0.0-alpha15"
+    const val compose_paging = "1.0.0-alpha17"
     const val constraint_layout = "1.0.1"
     const val accompanist = "0.25.0"
     const val compose_activity = "1.3.1"

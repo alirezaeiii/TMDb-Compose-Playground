@@ -14,6 +14,7 @@ interface NetworkTMDbItem {
     val backdropPath: String?
     val name: String
     val voteAverage: Double
+    val voteCount: Int
 }
 
 data class NetworkMovie(
@@ -28,7 +29,9 @@ data class NetworkMovie(
     @Json(name = "title")
     override val name: String,
     @Json(name = VOTE_AVERAGE)
-    override val voteAverage: Double
+    override val voteAverage: Double,
+    @Json(name = VOTE_COUNT)
+    override val voteCount: Int
 ) : NetworkTMDbItem
 
 data class NetworkTVShow(
@@ -42,7 +45,9 @@ data class NetworkTVShow(
     override val backdropPath: String?,
     override val name: String,
     @Json(name = VOTE_AVERAGE)
-    override val voteAverage: Double
+    override val voteAverage: Double,
+    @Json(name = VOTE_COUNT)
+    override val voteCount: Int
 ) : NetworkTMDbItem
 
 fun List<NetworkMovie>.asMovieDomainModel(): List<Movie> =
@@ -64,7 +69,8 @@ fun List<NetworkMovie>.asMovieDomainModel(): List<Movie> =
                 )
             },
             it.name,
-            it.voteAverage
+            it.voteAverage,
+            it.voteCount
         )
     }
 
@@ -87,10 +93,12 @@ fun List<NetworkTVShow>.asTVShowDomainModel(): List<TVShow> =
                 )
             },
             it.name,
-            it.voteAverage
+            it.voteAverage,
+            it.voteCount
         )
     }
 
 private const val POSTER_PATH = "poster_path"
 private const val BACKDROP_PATH = "backdrop_path"
 private const val VOTE_AVERAGE = "vote_average"
+private const val VOTE_COUNT = "vote_count"

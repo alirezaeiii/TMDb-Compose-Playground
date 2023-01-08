@@ -1,196 +1,262 @@
 package com.android.sample.tmdb.ui.paging
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.grid.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.android.sample.tmdb.domain.model.TMDbItem
 import com.android.sample.tmdb.ui.common.ErrorScreen
-import com.android.sample.tmdb.ui.common.LoadingItem
-import com.android.sample.tmdb.ui.common.LoadingView
-import com.android.sample.tmdb.ui.paging.movie.*
-import com.android.sample.tmdb.ui.paging.tvshow.*
+import com.android.sample.tmdb.ui.common.LoadingRow
+import com.android.sample.tmdb.ui.common.TMDbProgressBar
+import com.android.sample.tmdb.ui.theme.imageTint
+import com.android.sample.tmdb.ui.theme.rateColors
+import com.android.sample.tmdb.utils.toDp
 
-@Composable
-fun TrendingMovieScreen(
-    viewModel: TrendingMoviesViewModel = hiltViewModel()
-) {
-    PagingScreen(viewModel = viewModel)
-}
+private const val COLUMN_COUNT = 2
+private val GRID_SPACING = 8.dp
 
-@Composable
-fun PopularMovieScreen(
-    viewModel: PopularMoviesViewModel = hiltViewModel()
-) {
-    PagingScreen(viewModel = viewModel)
-}
-
-@Composable
-fun NowPlayingMovieScreen(
-    viewModel: NowPlayingMoviesViewModel = hiltViewModel()
-) {
-    PagingScreen(viewModel = viewModel)
-}
-
-@Composable
-fun UpcomingMovieScreen(
-    viewModel: UpcomingMoviesViewModel = hiltViewModel()
-) {
-    PagingScreen(viewModel = viewModel)
-}
-
-@Composable
-fun TopRatedMovieScreen(
-    viewModel: TopRatedMoviesViewModel = hiltViewModel()
-) {
-    PagingScreen(viewModel = viewModel)
-}
-
-@Composable
-fun TrendingTVShowScreen(
-    viewModel: TrendingTvSeriesViewModel = hiltViewModel()
-) {
-    PagingScreen(viewModel = viewModel)
-}
-
-@Composable
-fun PopularTVShowScreen(
-    viewModel: PopularTvSeriesViewModel = hiltViewModel()
-) {
-    PagingScreen(viewModel = viewModel)
-}
-
-@Composable
-fun AiringTodayTVShowScreen(
-    viewModel: AiringTodayTvSeriesViewModel = hiltViewModel()
-) {
-    PagingScreen(viewModel = viewModel)
-}
-
-@Composable
-fun OnTheAirTVShowScreen(
-    viewModel: OnTheAirTvSeriesViewModel = hiltViewModel()
-) {
-    PagingScreen(viewModel = viewModel)
-}
-
-@Composable
-fun TopRatedTVShowScreen(
-    viewModel: TopRatedTvSeriesViewModel = hiltViewModel()
-) {
-    PagingScreen(viewModel = viewModel)
-}
+private val span: (LazyGridItemSpanScope) -> GridItemSpan = { GridItemSpan(COLUMN_COUNT) }
 
 @Composable
 fun <T : TMDbItem> PagingScreen(viewModel: BasePagingViewModel<T>) {
     val lazyTMDbItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
 
-    LazyColumn {
-        items(lazyTMDbItems) {
-            it?.let { tmdbItem ->
-                TMDbItem(item = tmdbItem)
+    when (lazyTMDbItems.loadState.refresh) {
+        is LoadState.Loading -> {
+            TMDbProgressBar()
+        }
+        is LoadState.Error -> {
+            val e = lazyTMDbItems.loadState.refresh as LoadState.Error
+
+            lazyTMDbItems.apply {
+                ErrorScreen(
+                    message = e.error.message!!,
+                    modifier = Modifier.fillMaxSize(),
+                    refresh = { retry() }
+                )
             }
         }
-
-        lazyTMDbItems.apply {
-            when {
-                loadState.refresh is LoadState.Loading -> {
-                    item { LoadingView(modifier = Modifier.fillParentMaxSize()) }
-                }
-                loadState.append is LoadState.Loading -> {
-                    item { LoadingItem() }
-                }
-                loadState.refresh is LoadState.Error -> {
-                    val e = lazyTMDbItems.loadState.refresh as LoadState.Error
-                    item {
-                        ErrorScreen(
-                            message = e.error.localizedMessage!!,
-                            modifier = Modifier.fillParentMaxSize(),
-                            refresh = { retry() }
-                        )
-                    }
-                }
-                loadState.append is LoadState.Error -> {
-                    val e = lazyTMDbItems.loadState.append as LoadState.Error
-                    item {
-                        ErrorScreen(
-                            message = e.error.localizedMessage!!,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp),
-                            refresh = { retry() }
-                        )
-                    }
-                }
-            }
+        else -> {
+            LazyTMDbItemGrid(lazyTMDbItems)
         }
     }
 }
 
+
 @Composable
-fun <T : TMDbItem> TMDbItem(item: T) {
-    Row(
-        modifier = Modifier
-            .padding(start = 16.dp, top = 16.dp, end = 16.dp)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        TMDbItemTitle(
-            item.name,
-            modifier = Modifier.weight(1f)
+private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(COLUMN_COUNT),
+        contentPadding = PaddingValues(
+            start = GRID_SPACING,
+            end = GRID_SPACING,
+            bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current)
+                .toDp().dp.plus(
+                    GRID_SPACING
+                )
+        ),
+        horizontalArrangement = Arrangement.spacedBy(
+            GRID_SPACING,
+            Alignment.CenterHorizontally
+        ),
+        content = {
+
+            items(lazyTMDbItems.itemCount) { index ->
+                val tmdbItem = lazyTMDbItems[index]
+                tmdbItem?.let {
+                    TMDbItemContent(
+                        tmdbItem,
+                        Modifier
+                            .height(320.dp)
+                            .padding(vertical = GRID_SPACING)
+                    )
+                }
+            }
+
+            lazyTMDbItems.apply {
+                renderLoading(loadState)
+                renderError(loadState, ::retry)
+            }
+        })
+}
+
+private fun LazyGridScope.renderLoading(loadState: CombinedLoadStates) {
+    if (loadState.append is LoadState.Loading) {
+        item(span = span) {
+            LoadingRow(modifier = Modifier.padding(vertical = GRID_SPACING))
+        }
+    }
+}
+
+private fun LazyGridScope.renderError(loadState: CombinedLoadStates, retry: () -> Unit) {
+    if (loadState.append is LoadState.Error) {
+        val message = (loadState.append as? LoadState.Error)?.error?.message ?: return
+
+        item(span = span) {
+            ErrorScreen(
+                message = message,
+                modifier = Modifier.padding(vertical = GRID_SPACING),
+                refresh = { retry.invoke() })
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun <T : TMDbItem> TMDbItemContent(tmdbItem: T, modifier: Modifier = Modifier) {
+    Box(modifier = modifier) {
+        TMDbItemRate(
+            tmdbItem.voteAverage,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .zIndex(2f)
         )
-        item.posterUrl?.let {
-            TMDbItemImage(
-                it,
-                modifier = Modifier
-                    .padding(start = 16.dp)
-                    .size(90.dp)
-            )
+        Card(
+            modifier = Modifier
+                .fillMaxSize()
+                .offset(y = 12.dp),
+            shape = RoundedCornerShape(size = 8.dp),
+            elevation = 8.dp,
+            onClick = { }
+        ) {
+            Box {
+                TMDbItemPoster(tmdbItem.posterUrl, tmdbItem.name)
+                TMDbItemInfo(
+                    tmdbItem,
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                        .background(Color(0x97000000))
+                )
+            }
         }
     }
 }
 
 @Composable
-fun TMDbItemImage(
-    imageUrl: String,
-    modifier: Modifier = Modifier
-) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(imageUrl)
-            .crossfade(true)
-            .build(),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
+private fun TMDbItemRate(rate: Double, modifier: Modifier) {
+    val shape = RoundedCornerShape(percent = 50)
+    Surface(
+        shape = shape,
+        elevation = 12.dp,
         modifier = modifier
-    )
-
+    ) {
+        Text(
+            text = rate.toString(),
+            style = MaterialTheme.typography.body1.copy(color = Color.White),
+            modifier = Modifier
+                .background(Brush.horizontalGradient(Color.rateColors(movieRate = rate)))
+                .padding(horizontal = 10.dp)
+        )
+    }
 }
 
 @Composable
-fun TMDbItemTitle(
-    title: String,
-    modifier: Modifier = Modifier
-) {
-    Text(
-        modifier = modifier,
-        text = title,
-        maxLines = 2,
-        style = MaterialTheme.typography.h6,
-        overflow = TextOverflow.Ellipsis
+private fun BoxScope.TMDbItemPoster(posterUrl: String?, tmdbItemName: String) {
+    val painter = rememberAsyncImagePainter(
+        model = posterUrl,
+        error = rememberVectorPainter(Icons.Filled.BrokenImage),
+        placeholder = rememberVectorPainter(Icons.Default.Movie)
     )
+    val colorFilter = when (painter.state) {
+        is AsyncImagePainter.State.Loading, is AsyncImagePainter.State.Error -> ColorFilter.tint(
+            MaterialTheme.colors.imageTint
+        )
+        else -> null
+    }
+    val scale =
+        if (painter.state !is AsyncImagePainter.State.Success) ContentScale.Fit else ContentScale.FillBounds
+
+    Image(
+        painter = painter,
+        colorFilter = colorFilter,
+        contentDescription = tmdbItemName,
+        contentScale = scale,
+        modifier = Modifier
+            .fillMaxSize()
+            .align(Alignment.Center)
+    )
+}
+
+@Composable
+private fun <T : TMDbItem> TMDbItemInfo(tmdbItem: T, modifier: Modifier) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = modifier.padding(horizontal = 6.dp, vertical = 4.dp)
+    ) {
+        TMDbItemName(name = tmdbItem.name)
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            tmdbItem.releaseDate?.let { TMDbItemFeature(Icons.Default.DateRange, it) }
+            TMDbItemFeature(Icons.Default.ThumbUp, tmdbItem.voteCount.toString())
+        }
+    }
+}
+
+@Composable
+private fun TMDbItemName(name: String) = Text(
+    text = name,
+    style = MaterialTheme.typography.subtitle1.copy(
+        color = Color.White,
+        letterSpacing = 1.5.sp,
+        fontFamily = FontFamily.Serif,
+        fontWeight = FontWeight.W500
+    ),
+    maxLines = 1,
+    overflow = TextOverflow.Ellipsis
+)
+
+@Composable
+private fun TMDbItemFeature(icon: ImageVector, field: String) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = Color.White,
+            modifier = Modifier.size(13.dp)
+        )
+        Text(
+            text = field,
+            style = MaterialTheme.typography.subtitle2.copy(
+                color = Color.White,
+                letterSpacing = 1.5.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.W400
+            ),
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 1,
+            modifier = Modifier.padding(horizontal = 2.dp)
+        )
+    }
 }
