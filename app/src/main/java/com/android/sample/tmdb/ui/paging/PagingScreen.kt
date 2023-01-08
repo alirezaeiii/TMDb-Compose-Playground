@@ -47,7 +47,10 @@ private val GRID_SPACING = 8.dp
 private val span: (LazyGridItemSpanScope) -> GridItemSpan = { GridItemSpan(COLUMN_COUNT) }
 
 @Composable
-fun <T : TMDbItem> PagingScreen(viewModel: BasePagingViewModel<T>) {
+fun <T : TMDbItem> PagingScreen(
+    viewModel: BasePagingViewModel<T>,
+    onClick: (TMDbItem) -> Unit,
+) {
     val lazyTMDbItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
 
     when (lazyTMDbItems.loadState.refresh) {
@@ -66,14 +69,17 @@ fun <T : TMDbItem> PagingScreen(viewModel: BasePagingViewModel<T>) {
             }
         }
         else -> {
-            LazyTMDbItemGrid(lazyTMDbItems)
+            LazyTMDbItemGrid(lazyTMDbItems, onClick)
         }
     }
 }
 
 
 @Composable
-private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>) {
+private fun <T : TMDbItem> LazyTMDbItemGrid(
+    lazyTMDbItems: LazyPagingItems<T>,
+    onClick: (TMDbItem) -> Unit
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(COLUMN_COUNT),
         contentPadding = PaddingValues(
@@ -97,7 +103,8 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>) {
                         tmdbItem,
                         Modifier
                             .height(320.dp)
-                            .padding(vertical = GRID_SPACING)
+                            .padding(vertical = GRID_SPACING),
+                        onClick
                     )
                 }
             }
@@ -132,7 +139,11 @@ private fun LazyGridScope.renderError(loadState: CombinedLoadStates, retry: () -
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun <T : TMDbItem> TMDbItemContent(tmdbItem: T, modifier: Modifier = Modifier) {
+fun <T : TMDbItem> TMDbItemContent(
+    tmdbItem: T,
+    modifier: Modifier = Modifier,
+    onClick: (TMDbItem) -> Unit
+) {
     Box(modifier = modifier) {
         TMDbItemRate(
             tmdbItem.voteAverage,
@@ -146,7 +157,7 @@ fun <T : TMDbItem> TMDbItemContent(tmdbItem: T, modifier: Modifier = Modifier) {
                 .offset(y = 12.dp),
             shape = RoundedCornerShape(size = 8.dp),
             elevation = 8.dp,
-            onClick = { }
+            onClick = { onClick.invoke(tmdbItem) }
         ) {
             Box {
                 TMDbItemPoster(tmdbItem.posterUrl, tmdbItem.name)

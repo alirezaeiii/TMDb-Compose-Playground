@@ -110,35 +110,35 @@ private fun NavGraphBuilder.tmdbNavGraph(
     ) {
         TVShowDetailScreen(upPress)
     }
-    composable(route = MainDestinations.TMDB_TRENDING_MOVIES_ROUTE) {
-        TrendingMovieScreen()
+    composable(route = MainDestinations.TMDB_TRENDING_MOVIES_ROUTE) { from ->
+        TrendingMovieScreen(onClick = { onMovieSelected(it.id, from) })
     }
-    composable(route = MainDestinations.TMDB_POPULAR_MOVIES_ROUTE) {
-        PopularMovieScreen()
+    composable(route = MainDestinations.TMDB_POPULAR_MOVIES_ROUTE) { from ->
+        PopularMovieScreen(onClick = { onMovieSelected(it.id, from) })
     }
-    composable(route = MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE) {
-        NowPlayingMovieScreen()
+    composable(route = MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE) { from ->
+        NowPlayingMovieScreen(onClick = { onMovieSelected(it.id, from) })
     }
-    composable(route = MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE) {
-        UpcomingMovieScreen()
+    composable(route = MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE) { from ->
+        UpcomingMovieScreen(onClick = { onMovieSelected(it.id, from) })
     }
-    composable(route = MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE) {
-        TopRatedMovieScreen()
+    composable(route = MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE) { from ->
+        TopRatedMovieScreen(onClick = { onMovieSelected(it.id, from) })
     }
-    composable(route = MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE) {
-        TrendingTVShowScreen()
+    composable(route = MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE) { from ->
+        TrendingTVShowScreen(onClick = { onTVShowSelected(it.id, from) })
     }
-    composable(route = MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE) {
-        PopularTVShowScreen()
+    composable(route = MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE) { from ->
+        PopularTVShowScreen(onClick = { onTVShowSelected(it.id, from) })
     }
-    composable(route = MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE) {
-        AiringTodayTVShowScreen()
+    composable(route = MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE) { from ->
+        AiringTodayTVShowScreen(onClick = { onTVShowSelected(it.id, from) })
     }
-    composable(route = MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE) {
-        OnTheAirTVShowScreen()
+    composable(route = MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE) { from ->
+        OnTheAirTVShowScreen(onClick = { onTVShowSelected(it.id, from) })
     }
-    composable(route = MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE) {
-        TopRatedTVShowScreen()
+    composable(route = MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE) { from ->
+        TopRatedTVShowScreen(onClick = { onTVShowSelected(it.id, from) })
     }
 }
 

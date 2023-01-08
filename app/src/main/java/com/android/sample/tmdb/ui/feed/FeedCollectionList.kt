@@ -84,12 +84,6 @@ private fun <T : TMDbItem> FeedCollection(
                 color = MaterialTheme.colors.onSurface,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
-                    .padding(
-                        start = Dimens.PaddingMedium,
-                        end = Dimens.PaddingMedium,
-                        top = Dimens.PaddingMedium,
-                        bottom = Dimens.paddingBottom
-                    )
                     .clickable {
                         when (tmdbType) {
                             TMDbType.MOVIES -> {
@@ -131,7 +125,12 @@ private fun <T : TMDbItem> FeedCollection(
                                 }
                             }
                         }
-                    }
+                    }.padding(
+                        start = Dimens.PaddingMedium,
+                        end = Dimens.PaddingMedium,
+                        top = Dimens.PaddingMedium,
+                        bottom = Dimens.paddingBottom
+                    )
             )
         }
         Feeds(feedCollection.feeds, onFeedClick, itemWidth)
