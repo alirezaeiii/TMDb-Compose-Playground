@@ -3,7 +3,10 @@ package com.android.sample.tmdb.ui.paging
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -27,7 +30,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -58,11 +60,12 @@ fun <T : TMDbItem> PagingScreen(
             TMDbProgressBar()
         }
         is LoadState.Error -> {
-            val e = lazyTMDbItems.loadState.refresh as LoadState.Error
+            val message =
+                (lazyTMDbItems.loadState.refresh as? LoadState.Error)?.error?.message ?: return
 
             lazyTMDbItems.apply {
                 ErrorScreen(
-                    message = e.error.message!!,
+                    message = message,
                     modifier = Modifier.fillMaxSize(),
                     refresh = { retry() }
                 )
@@ -110,31 +113,27 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
             }
 
             lazyTMDbItems.apply {
-                renderLoading(loadState)
-                renderError(loadState, ::retry)
+                when (loadState.append) {
+                    is LoadState.Loading -> {
+                        item(span = span) {
+                            LoadingRow(modifier = Modifier.padding(vertical = GRID_SPACING))
+                        }
+                    }
+                    is LoadState.Error -> {
+                        val message =
+                            (loadState.append as? LoadState.Error)?.error?.message ?: return@apply
+
+                        item(span = span) {
+                            ErrorScreen(
+                                message = message,
+                                modifier = Modifier.padding(vertical = GRID_SPACING),
+                                refresh = { retry() })
+                        }
+                    }
+                    else -> {}
+                }
             }
         })
-}
-
-private fun LazyGridScope.renderLoading(loadState: CombinedLoadStates) {
-    if (loadState.append is LoadState.Loading) {
-        item(span = span) {
-            LoadingRow(modifier = Modifier.padding(vertical = GRID_SPACING))
-        }
-    }
-}
-
-private fun LazyGridScope.renderError(loadState: CombinedLoadStates, retry: () -> Unit) {
-    if (loadState.append is LoadState.Error) {
-        val message = (loadState.append as? LoadState.Error)?.error?.message ?: return
-
-        item(span = span) {
-            ErrorScreen(
-                message = message,
-                modifier = Modifier.padding(vertical = GRID_SPACING),
-                refresh = { retry.invoke() })
-        }
-    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
