@@ -36,6 +36,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.android.sample.tmdb.domain.model.TMDbItem
+import com.android.sample.tmdb.ui.common.Dimens
 import com.android.sample.tmdb.ui.common.ErrorScreen
 import com.android.sample.tmdb.ui.common.LoadingRow
 import com.android.sample.tmdb.ui.common.TMDbProgressBar
@@ -44,7 +45,6 @@ import com.android.sample.tmdb.ui.theme.rateColors
 import com.android.sample.tmdb.utils.toDp
 
 private const val COLUMN_COUNT = 2
-private val GRID_SPACING = 8.dp
 
 private val span: (LazyGridItemSpanScope) -> GridItemSpan = { GridItemSpan(COLUMN_COUNT) }
 
@@ -86,15 +86,15 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
     LazyVerticalGrid(
         columns = GridCells.Fixed(COLUMN_COUNT),
         contentPadding = PaddingValues(
-            start = GRID_SPACING,
-            end = GRID_SPACING,
+            start = Dimens.GridSpacing,
+            end = Dimens.GridSpacing,
             bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current)
                 .toDp().dp.plus(
-                    GRID_SPACING
+                    Dimens.GridSpacing
                 )
         ),
         horizontalArrangement = Arrangement.spacedBy(
-            GRID_SPACING,
+            Dimens.GridSpacing,
             Alignment.CenterHorizontally
         ),
         content = {
@@ -106,7 +106,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
                         it,
                         Modifier
                             .height(320.dp)
-                            .padding(vertical = GRID_SPACING),
+                            .padding(vertical = Dimens.GridSpacing),
                         onClick
                     )
                 }
@@ -116,7 +116,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
                 when (loadState.append) {
                     is LoadState.Loading -> {
                         item(span = span) {
-                            LoadingRow(modifier = Modifier.padding(vertical = GRID_SPACING))
+                            LoadingRow(modifier = Modifier.padding(vertical = Dimens.GridSpacing))
                         }
                     }
                     is LoadState.Error -> {
@@ -126,7 +126,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
                         item(span = span) {
                             ErrorScreen(
                                 message = message,
-                                modifier = Modifier.padding(vertical = GRID_SPACING),
+                                modifier = Modifier.padding(vertical = Dimens.GridSpacing),
                                 refresh = { retry() })
                         }
                     }

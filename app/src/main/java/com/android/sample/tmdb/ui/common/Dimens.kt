@@ -13,9 +13,12 @@ object Dimens {
 
     val PaddingMedium = 12.dp
 
-    val paddingBottom = 10.dp
+    val PaddingBottom = 10.dp
 
-    val paddingMicro = 2.dp
+    val PaddingMicro = 2.dp
 
-    val rowHeight = 36.dp
+    val RowHeight = 36.dp
+
+    val GridSpacing: Dp
+        @Composable get() = dimensionResource(R.dimen.padding_medium)
 }

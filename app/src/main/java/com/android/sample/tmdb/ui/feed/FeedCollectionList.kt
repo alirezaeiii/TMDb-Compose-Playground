@@ -68,7 +68,7 @@ private fun <T : TMDbItem> FeedCollection(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .heightIn(min = Dimens.rowHeight)
+                .heightIn(min = Dimens.RowHeight)
                 .padding(start = Dimens.PaddingMedium)
         ) {
             Text(
@@ -129,7 +129,7 @@ private fun <T : TMDbItem> FeedCollection(
                         start = Dimens.PaddingMedium,
                         end = Dimens.PaddingMedium,
                         top = Dimens.PaddingMedium,
-                        bottom = Dimens.paddingBottom
+                        bottom = Dimens.PaddingBottom
                     )
             )
         }
@@ -146,7 +146,7 @@ private fun <T : TMDbItem> Feeds(
 ) {
     LazyRow(
         modifier = modifier,
-        contentPadding = PaddingValues(start = Dimens.paddingMicro, end = Dimens.paddingMicro)
+        contentPadding = PaddingValues(start = Dimens.PaddingMicro, end = Dimens.PaddingMicro)
     ) {
         items(feeds) { feed ->
             TMDbItem(feed, onFeedClick, tmdbItemWidth)
