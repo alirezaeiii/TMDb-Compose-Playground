@@ -103,7 +103,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
                 val tmdbItem = lazyTMDbItems[index]
                 tmdbItem?.let {
                     TMDbItemContent(
-                        tmdbItem,
+                        it,
                         Modifier
                             .height(320.dp)
                             .padding(vertical = GRID_SPACING),
