@@ -43,6 +43,13 @@ fun <T : TMDbItem> FeedCollectionList(
     onFeedClick: (TMDbItem) -> Unit
 ) {
     LazyColumn {
+        item {
+            Spacer(
+                Modifier.windowInsetsTopHeight(
+                    WindowInsets.statusBars.add(WindowInsets(top = 56.dp))
+                )
+            )
+        }
         itemsIndexed(collection) { index, feedCollection ->
             FeedCollection(
                 tmdbType = tmdbType,
@@ -125,7 +132,8 @@ private fun <T : TMDbItem> FeedCollection(
                                 }
                             }
                         }
-                    }.padding(
+                    }
+                    .padding(
                         start = Dimens.PaddingMedium,
                         end = Dimens.PaddingMedium,
                         top = Dimens.PaddingMedium,

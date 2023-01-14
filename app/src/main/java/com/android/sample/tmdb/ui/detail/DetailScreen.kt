@@ -2,7 +2,9 @@ package com.android.sample.tmdb.ui.detail
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.Animatable
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector4D
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -321,8 +323,16 @@ private fun GenreChips(genres: List<Genre>, modifier: Modifier) {
 private fun TMDbItemFields(tmdbItemDetails: TMDbItemDetails, modifier: Modifier) {
     Row(horizontalArrangement = Arrangement.spacedBy(20.dp), modifier = modifier) {
         val context = LocalContext.current
-        tmdbItemDetails.releaseDate?.let { TMDbItemField(context.getString(R.string.release_date), it) }
-        TMDbItemField(context.getString(R.string.vote_average), tmdbItemDetails.voteAverage.toString())
+        tmdbItemDetails.releaseDate?.let {
+            TMDbItemField(
+                context.getString(R.string.release_date),
+                it
+            )
+        }
+        TMDbItemField(
+            context.getString(R.string.vote_average),
+            tmdbItemDetails.voteAverage.toString()
+        )
         TMDbItemField(context.getString(R.string.votes), tmdbItemDetails.voteCount.toString())
     }
 }
@@ -374,7 +384,7 @@ private fun <T : Credit> CreditSection(
     itemContent: @Composable (T, Int) -> Unit,
     modifier: Modifier
 ) {
-    if(items.isNotEmpty()) {
+    if (items.isNotEmpty()) {
         Column(modifier = modifier.fillMaxWidth()) {
             SectionHeader(headerResId, items.size)
             LazyRow(

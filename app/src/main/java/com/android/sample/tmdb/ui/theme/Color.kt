@@ -16,10 +16,12 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import androidx.palette.graphics.Palette
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
+val AshGray = Color(0xFFD3D3D3)
+val GRAY = Color(0xFF808080)
+val DarkGray = Color(0xFF525252)
 val Teal200 = Color(0xFF03DAC5)
+
+const val AlphaNearOpaque = 0.65f
 
 @Composable
 fun Color.Companion.rateColors(movieRate: Double): List<Color> = remember(movieRate) {

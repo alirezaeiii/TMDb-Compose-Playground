@@ -65,6 +65,7 @@ dependencies {
     implementation Deps.composeConstraintLayout
     implementation Deps.iconExtended
     implementation Deps.composePaging
+    implementation Deps.systemUiController
     debugImplementation Deps.composeUiTooling
 
     implementation Deps.hilt

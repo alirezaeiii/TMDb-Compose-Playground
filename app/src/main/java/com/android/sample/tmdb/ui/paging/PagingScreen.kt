@@ -36,10 +36,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.android.sample.tmdb.domain.model.TMDbItem
-import com.android.sample.tmdb.ui.common.Dimens
-import com.android.sample.tmdb.ui.common.ErrorScreen
-import com.android.sample.tmdb.ui.common.LoadingRow
-import com.android.sample.tmdb.ui.common.TMDbProgressBar
+import com.android.sample.tmdb.ui.common.*
 import com.android.sample.tmdb.ui.theme.imageTint
 import com.android.sample.tmdb.ui.theme.rateColors
 import com.android.sample.tmdb.utils.toDp
@@ -47,6 +44,18 @@ import com.android.sample.tmdb.utils.toDp
 private const val COLUMN_COUNT = 2
 
 private val span: (LazyGridItemSpanScope) -> GridItemSpan = { GridItemSpan(COLUMN_COUNT) }
+
+@Composable
+fun <T : TMDbItem> PagingScreen(
+    viewModel: BasePagingViewModel<T>,
+    onClick: (TMDbItem) -> Unit,
+    title: String
+) {
+    Box {
+        PagingScreen(viewModel, onClick)
+        DestinationBar(title)
+    }
+}
 
 @Composable
 fun <T : TMDbItem> PagingScreen(
@@ -98,6 +107,16 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
             Alignment.CenterHorizontally
         ),
         content = {
+
+            repeat(COLUMN_COUNT) {
+                item {
+                    Spacer(
+                        Modifier.windowInsetsTopHeight(
+                            WindowInsets.statusBars.add(WindowInsets(top = 56.dp))
+                        )
+                    )
+                }
+            }
 
             items(lazyTMDbItems.itemCount) { index ->
                 val tmdbItem = lazyTMDbItems[index]

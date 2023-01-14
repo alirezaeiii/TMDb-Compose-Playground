@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">Tmdb-Paging-Compose</string>
+    <string name="app_name">TMDb-Compose</string>
+    <string name="app_title">TMDb %s</string>
+    <string name="movies">Movies</string>
+    <string name="tv_series">TV Series</string>
     <string name="text_trending">Trending</string>
     <string name="text_popular">Popular</string>
     <string name="text_now_playing">Now Playing</string>
@@ -12,8 +15,6 @@
     <string name="failed_loading_msg">Something went wrong</string>
     <string name="retry">Retry</string>
 
-    <string name="base_poster_path">http://image.tmdb.org/t/p/w342%s</string>
-
     <string name="release_date">Release Date</string>
     <string name="vote_average">Vote Avg</string>
     <string name="votes">Votes</string>
@@ -21,5 +22,13 @@
     <string name="cast">Cast</string>
     <string name="crew">Crew</string>
     <string name="person_content_description">Photo of %1$s the %2$s</string>
+
+    <string name="trending">Trending %s</string>
+    <string name="popular">Popular %s</string>
+    <string name="now_playing">Now Playing %s</string>
+    <string name="upcoming">Upcoming %s</string>
+    <string name="airing_today">Airing today %s</string>
+    <string name="on_the_air">On the air %s</string>
+    <string name="highest_rate">Top Rated %s</string>
 
 </resources>

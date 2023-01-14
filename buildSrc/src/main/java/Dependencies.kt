@@ -4,7 +4,7 @@ object Versions {
     const val compose = "1.2.0"
     const val compose_paging = "1.0.0-alpha17"
     const val constraint_layout = "1.0.1"
-    const val accompanist = "0.25.0"
+    const val accompanist = "0.25.1"
     const val compose_activity = "1.3.1"
     const val nav_version = "2.5.2"
     const val appCompat = "1.5.1"
@@ -42,13 +42,16 @@ object Deps {
     const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
     const val composeActivity = "androidx.activity:activity-compose:${Versions.compose_activity}"
     const val  composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
-    const val  accompanist = "com.google.accompanist:accompanist-navigation-animation:${Versions.accompanist}"
     const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.nav_version}"
     const val composeConstraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraint_layout}"
     const val iconExtended = "androidx.compose.material:material-icons-extended:${Versions.icon_extended}"
 
     // Paging Compose
     const val composePaging = "androidx.paging:paging-compose:${Versions.compose_paging}"
+
+    // Accompanist
+    const val  accompanist = "com.google.accompanist:accompanist-navigation-animation:${Versions.accompanist}"
+    const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
 
     //UI
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"

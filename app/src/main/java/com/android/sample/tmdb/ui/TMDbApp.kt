@@ -1,5 +1,8 @@
 package com.android.sample.tmdb.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -25,7 +28,7 @@ fun TMDbApp() {
                 TMDbBottomBar(
                     tabs = appState.bottomBarTabs,
                     currentRoute = appState.currentRoute!!,
-                    navigateToRoute = appState::navigateToBottomBarRoute
+                    navigateToRoute = appState::navigateToBottomBarRoute,
                 )
             }
         }
@@ -53,24 +56,29 @@ private fun TMDbBottomBar(
 ) {
     val currentSection = tabs.first { it.route == currentRoute }
 
-    BottomNavigation {
-        tabs.forEach { section ->
-            val selected = section == currentSection
-
-            BottomNavigationItem(
-                label = {
-                    Text(text = section.title)
-                },
-                icon = {
-                    Icon(
-                        painterResource(id = section.icon),
-                        contentDescription = section.title
-                    )
-                },
-                selected = selected,
-                unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
-                onClick = { navigateToRoute(section.route) }
-            )
+    Box(
+        Modifier
+            .background(MaterialTheme.colors.background)
+            .navigationBarsPadding()
+    ) {
+        BottomNavigation {
+            tabs.forEach { section ->
+                val selected = section == currentSection
+                BottomNavigationItem(
+                    label = {
+                        Text(text = section.title)
+                    },
+                    icon = {
+                        Icon(
+                            painterResource(id = section.icon),
+                            contentDescription = section.title
+                        )
+                    },
+                    selected = selected,
+                    unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
+                    onClick = { navigateToRoute(section.route) }
+                )
+            }
         }
     }
 }
