@@ -19,6 +19,10 @@ Add your [TMDB](https://www.themoviedb.org/) API key in the `local.properties` f
 tmdb_api_key=YOUR_API_KEY
 ```
 
+### Inspired from
+| [JetSnack](https://github.com/android/compose-samples/tree/main/Jetsnack) | [jetflix](https://github.com/yasinkacmaz/jetflix) 
+| :-: | :-: |
+
 ## Libraries
 * [Android Jetpack](https://developer.android.com/jetpack)
    * [Compose](https://developer.android.com/jetpack/compose) Android’s modern toolkit for building native UI.
