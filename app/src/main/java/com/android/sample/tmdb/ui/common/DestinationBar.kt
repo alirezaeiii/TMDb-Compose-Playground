@@ -4,6 +4,8 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,13 +19,24 @@ import com.android.sample.tmdb.ui.theme.AlphaNearOpaque
 import com.android.sample.tmdb.ui.theme.TmdbPagingComposeTheme
 
 @Composable
-fun DestinationBar(title: String, modifier: Modifier = Modifier) {
+fun DestinationBar(title: String, modifier: Modifier = Modifier, upPress: (() -> Unit)? = null) {
     Column(modifier = modifier.statusBarsPadding()) {
         TopAppBar(
             backgroundColor = MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque),
             contentColor = MaterialTheme.colors.onSurface,
             elevation = 0.dp
         ) {
+            upPress?.let {
+                IconButton(
+                    onClick = { it.invoke() },
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
+            }
             Text(
                 text = title,
                 style = MaterialTheme.typography.subtitle1,
@@ -41,7 +54,7 @@ fun DestinationBar(title: String, modifier: Modifier = Modifier) {
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_search),
-                    contentDescription = null
+                    contentDescription = "Search"
                 )
             }
         }
@@ -54,7 +67,7 @@ fun DestinationBar(title: String, modifier: Modifier = Modifier) {
 @Preview("large font", fontScale = 2f)
 @Composable
 fun PreviewDestinationBar() {
-    TmdbPagingComposeTheme() {
+    TmdbPagingComposeTheme {
         DestinationBar("Hello")
     }
 }

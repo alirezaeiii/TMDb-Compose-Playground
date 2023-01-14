@@ -49,11 +49,12 @@ private val span: (LazyGridItemSpanScope) -> GridItemSpan = { GridItemSpan(COLUM
 fun <T : TMDbItem> PagingScreen(
     viewModel: BasePagingViewModel<T>,
     onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
     title: String
 ) {
     Box {
         PagingScreen(viewModel, onClick)
-        DestinationBar(title)
+        DestinationBar(title = title, upPress = upPress)
     }
 }
 

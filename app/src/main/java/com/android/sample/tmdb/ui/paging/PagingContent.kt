@@ -11,10 +11,11 @@ import com.android.sample.tmdb.ui.paging.tvshow.*
 @Composable
 fun TrendingMovieScreen(
     onClick: (TMDbItem) -> Unit,
-    viewModel: TrendingMoviesViewModel = hiltViewModel()
+    upPress: () -> Unit,
+    viewModel: TrendingMoviesViewModel = hiltViewModel(),
 ) {
     PagingScreen(
-        viewModel = viewModel, onClick = onClick, title = stringResource(
+        viewModel = viewModel, onClick = onClick, upPress = upPress, title = stringResource(
             R.string.trending,
             stringResource(R.string.movies)
         )
@@ -24,10 +25,11 @@ fun TrendingMovieScreen(
 @Composable
 fun PopularMovieScreen(
     onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
     viewModel: PopularMoviesViewModel = hiltViewModel()
 ) {
     PagingScreen(
-        viewModel = viewModel, onClick = onClick, title = stringResource(
+        viewModel = viewModel, onClick = onClick, upPress = upPress, title = stringResource(
             R.string.popular,
             stringResource(R.string.movies)
         )
@@ -37,10 +39,11 @@ fun PopularMovieScreen(
 @Composable
 fun NowPlayingMovieScreen(
     onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
     viewModel: NowPlayingMoviesViewModel = hiltViewModel()
 ) {
     PagingScreen(
-        viewModel = viewModel, onClick = onClick, title = stringResource(
+        viewModel = viewModel, onClick = onClick, upPress = upPress, title = stringResource(
             R.string.now_playing,
             stringResource(R.string.movies)
         )
@@ -50,10 +53,11 @@ fun NowPlayingMovieScreen(
 @Composable
 fun UpcomingMovieScreen(
     onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
     viewModel: UpcomingMoviesViewModel = hiltViewModel()
 ) {
     PagingScreen(
-        viewModel = viewModel, onClick = onClick, title = stringResource(
+        viewModel = viewModel, onClick = onClick, upPress = upPress, title = stringResource(
             R.string.upcoming,
             stringResource(R.string.movies)
         )
@@ -63,10 +67,11 @@ fun UpcomingMovieScreen(
 @Composable
 fun TopRatedMovieScreen(
     onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
     viewModel: TopRatedMoviesViewModel = hiltViewModel()
 ) {
     PagingScreen(
-        viewModel = viewModel, onClick = onClick, title = stringResource(
+        viewModel = viewModel, onClick = onClick, upPress = upPress, title = stringResource(
             R.string.highest_rate,
             stringResource(R.string.movies)
         )
@@ -76,10 +81,11 @@ fun TopRatedMovieScreen(
 @Composable
 fun TrendingTVShowScreen(
     onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
     viewModel: TrendingTvSeriesViewModel = hiltViewModel()
 ) {
     PagingScreen(
-        viewModel = viewModel, onClick = onClick, title = stringResource(
+        viewModel = viewModel, onClick = onClick, upPress = upPress, title = stringResource(
             R.string.trending,
             stringResource(R.string.tv_series)
         )
@@ -89,10 +95,11 @@ fun TrendingTVShowScreen(
 @Composable
 fun PopularTVShowScreen(
     onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
     viewModel: PopularTvSeriesViewModel = hiltViewModel()
 ) {
     PagingScreen(
-        viewModel = viewModel, onClick = onClick, title = stringResource(
+        viewModel = viewModel, onClick = onClick, upPress = upPress, title = stringResource(
             R.string.popular,
             stringResource(R.string.tv_series)
         )
@@ -102,10 +109,11 @@ fun PopularTVShowScreen(
 @Composable
 fun AiringTodayTVShowScreen(
     onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
     viewModel: AiringTodayTvSeriesViewModel = hiltViewModel()
 ) {
     PagingScreen(
-        viewModel = viewModel, onClick = onClick, title = stringResource(
+        viewModel = viewModel, onClick = onClick, upPress = upPress, title = stringResource(
             R.string.airing_today,
             stringResource(R.string.tv_series)
         )
@@ -115,10 +123,11 @@ fun AiringTodayTVShowScreen(
 @Composable
 fun OnTheAirTVShowScreen(
     onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
     viewModel: OnTheAirTvSeriesViewModel = hiltViewModel()
 ) {
     PagingScreen(
-        viewModel = viewModel, onClick = onClick, title = stringResource(
+        viewModel = viewModel, onClick = onClick, upPress = upPress, title = stringResource(
             R.string.on_the_air,
             stringResource(R.string.tv_series)
         )
@@ -128,10 +137,11 @@ fun OnTheAirTVShowScreen(
 @Composable
 fun TopRatedTVShowScreen(
     onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
     viewModel: TopRatedTvSeriesViewModel = hiltViewModel()
 ) {
     PagingScreen(
-        viewModel = viewModel, onClick = onClick, title = stringResource(
+        viewModel = viewModel, onClick = onClick, upPress = upPress, title = stringResource(
             R.string.highest_rate,
             stringResource(R.string.tv_series)
         )
