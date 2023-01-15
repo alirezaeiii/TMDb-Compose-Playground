@@ -9,7 +9,7 @@ object Versions {
     const val nav_version = "2.5.2"
     const val appCompat = "1.5.1"
     const val material  = "1.6.1"
-    const val lifecycle = "2.3.1"
+    const val lifecycle = "2.5.1"
     const val androidx_core = "1.8.0"
     const val hilt = "2.40"
     const val hiltCompose = "1.0.0"
@@ -62,6 +62,7 @@ object Deps {
     //Core
     const val androidxCore = "androidx.core:core-ktx:${Versions.androidx_core}"
     const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
+    const val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
 
     //Hilt
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"

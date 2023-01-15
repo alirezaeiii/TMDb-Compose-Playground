@@ -1,6 +1,5 @@
 package com.android.sample.tmdb.ui.common
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.*
@@ -12,14 +11,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.android.sample.tmdb.R
+import com.android.sample.tmdb.domain.model.TMDbType
+import com.android.sample.tmdb.ui.MainDestinations
 import com.android.sample.tmdb.ui.theme.AlphaNearOpaque
-import com.android.sample.tmdb.ui.theme.TmdbPagingComposeTheme
 
 @Composable
-fun DestinationBar(title: String, modifier: Modifier = Modifier, upPress: (() -> Unit)? = null) {
+fun DestinationBar(
+    title: String,
+    modifier: Modifier = Modifier,
+    upPress: (() -> Unit)? = null,
+    navController: NavController,
+    type: TMDbType
+) {
     Column(modifier = modifier.statusBarsPadding()) {
         TopAppBar(
             backgroundColor = MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque),
@@ -49,7 +55,12 @@ fun DestinationBar(title: String, modifier: Modifier = Modifier, upPress: (() ->
                     .align(Alignment.CenterVertically)
             )
             IconButton(
-                onClick = { /* todo */ },
+                onClick = {
+                    when (type) {
+                        TMDbType.MOVIES -> navController.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE)
+                        TMDbType.TV_SERIES -> navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE)
+                    }
+                },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Icon(
@@ -59,15 +70,5 @@ fun DestinationBar(title: String, modifier: Modifier = Modifier, upPress: (() ->
             }
         }
         TMDbDivider()
-    }
-}
-
-@Preview("default")
-@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview("large font", fontScale = 2f)
-@Composable
-fun PreviewDestinationBar() {
-    TmdbPagingComposeTheme {
-        DestinationBar("Hello")
     }
 }

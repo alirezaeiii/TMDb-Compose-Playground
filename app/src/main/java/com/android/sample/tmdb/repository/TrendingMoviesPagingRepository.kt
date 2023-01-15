@@ -15,6 +15,6 @@ class TrendingMoviesPagingRepository @Inject constructor(
     private val movieApi: MovieService
 ) : BasePagingRepository<Movie>() {
 
-    override val pagingSource: BasePagingSource<Movie>
-        get() = TrendingMoviesPagingSource(context, movieApi)
+    override fun pagingSource(query: String?): BasePagingSource<Movie> =
+        TrendingMoviesPagingSource(context, movieApi)
 }

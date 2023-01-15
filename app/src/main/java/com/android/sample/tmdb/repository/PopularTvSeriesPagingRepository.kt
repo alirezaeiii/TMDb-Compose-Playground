@@ -15,6 +15,6 @@ class PopularTvSeriesPagingRepository @Inject constructor(
     private val tvShowApi: TVShowService
 ) : BasePagingRepository<TVShow>() {
 
-    override val pagingSource: BasePagingSource<TVShow>
-        get() = PopularTvSeriesPagingSource(context, tvShowApi)
+    override fun pagingSource(query: String?): BasePagingSource<TVShow> =
+        PopularTvSeriesPagingSource(context, tvShowApi)
 }

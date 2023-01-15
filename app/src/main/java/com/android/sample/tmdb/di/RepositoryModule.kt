@@ -56,6 +56,10 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
+    internal abstract fun bindSearchMoviesRepository(searchMoviesPagingRepository: SearchMoviesPagingRepository): BasePagingRepository<Movie>
+
+    @Singleton
+    @Binds
     internal abstract fun bindTrendingTVShowRepository(trendingTvSeriesPagingRepository: TrendingTvSeriesPagingRepository): BasePagingRepository<TVShow>
 
     @Singleton
@@ -74,5 +78,7 @@ abstract class RepositoryModule {
     @Binds
     internal abstract fun bindTopRatedTVShowRepository(topRatedTvSeriesPagingRepository: TopRatedTvSeriesPagingRepository): BasePagingRepository<TVShow>
 
-
+    @Singleton
+    @Binds
+    internal abstract fun bindSearchTVShowRepository(searchTvSeriesPagingRepository: SearchTvSeriesPagingRepository): BasePagingRepository<TVShow>
 }

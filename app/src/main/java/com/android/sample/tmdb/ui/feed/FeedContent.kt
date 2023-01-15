@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.FeedWrapper
 import com.android.sample.tmdb.domain.model.TMDbItem
+import com.android.sample.tmdb.domain.model.TMDbType
 import com.android.sample.tmdb.ui.Content
 import com.android.sample.tmdb.ui.common.DestinationBar
 
@@ -19,15 +20,13 @@ fun MovieFeedScreen(
     viewModel: MovieFeedViewModel = hiltViewModel()
 ) {
     Content(viewModel = viewModel) {
-        Box {
-            FeedScreen(
-                type = TMDbType.MOVIES,
-                navController = navController,
-                onClick = onClick,
-                feeds = it,
-                R.string.movies
-            )
-        }
+        FeedScreen(
+            type = TMDbType.MOVIES,
+            navController = navController,
+            onClick = onClick,
+            feeds = it,
+            R.string.movies
+        )
     }
 }
 
@@ -62,7 +61,7 @@ fun <T : TMDbItem> FeedScreen(
         DestinationBar(
             title = stringResource(
                 R.string.app_title, stringResource(resourceId)
-            )
+            ), navController = navController, type = type
         )
     }
 }

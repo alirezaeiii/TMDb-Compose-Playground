@@ -24,11 +24,14 @@ object MainDestinations {
     const val TMDB_NOW_PLAYING_MOVIES_ROUTE = "now_playing_movies"
     const val TMDB_UPCOMING_MOVIES_ROUTE = "upcoming_movies"
     const val TMDB_TOP_RATED_MOVIES_ROUTE = "top_rated_movies"
+    const val TMDB_SEARCH_MOVIE_ROUTE = "search_movies"
     const val TMDB_TRENDING_TV_SHOW_ROUTE = "trending_tv_show"
     const val TMDB_POPULAR_TV_SHOW_ROUTE = "popular_tv_show"
     const val TMDB_AIRING_TODAY_TV_SHOW_ROUTE = "airing_today_tv_show"
     const val TMDB_ON_THE_AIR_TV_SHOW_ROUTE = "on_the_air_tv_show"
     const val TMDB_TOP_RATED_TV_SHOW_ROUTE = "top_rated_tv_show"
+    const val TMDB_SEARCH_TV_SHOW_ROUTE = "search_tv_show"
+    const val TMDB_QUERY_KEY = "search_query"
 }
 
 /**
@@ -96,6 +99,20 @@ class TMDbAppState(
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
             navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/$id")
+        }
+    }
+
+    fun navigateToSearchMovies(query: String, from: NavBackStackEntry) {
+        // In order to discard duplicated navigation events, we check the Lifecycle
+        if (from.lifecycleIsResumed()) {
+            navController.navigate("${MainDestinations.TMDB_SEARCH_MOVIE_ROUTE}/$query")
+        }
+    }
+
+    fun navigateToSearchTVShow(query: String, from: NavBackStackEntry) {
+        // In order to discard duplicated navigation events, we check the Lifecycle
+        if (from.lifecycleIsResumed()) {
+            navController.navigate("${MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE}/$query")
         }
     }
 }

@@ -51,6 +51,7 @@ dependencies {
 
     implementation Deps.androidxCore
     implementation Deps.lifecycle
+    implementation Deps.lifecycleLiveData
 
     implementation Deps.appCompat
     implementation Deps.material

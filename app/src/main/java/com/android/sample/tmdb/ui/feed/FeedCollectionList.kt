@@ -23,17 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.android.sample.tmdb.R
-import com.android.sample.tmdb.domain.model.FeedWrapper
-import com.android.sample.tmdb.domain.model.Movie
-import com.android.sample.tmdb.domain.model.SortType
-import com.android.sample.tmdb.domain.model.TMDbItem
+import com.android.sample.tmdb.domain.model.*
 import com.android.sample.tmdb.ui.MainDestinations
 import com.android.sample.tmdb.ui.common.Dimens
 import com.android.sample.tmdb.ui.theme.TmdbPagingComposeTheme
-
-enum class TMDbType {
-    MOVIES, TV_SERIES
-}
 
 @Composable
 fun <T : TMDbItem> FeedCollectionList(

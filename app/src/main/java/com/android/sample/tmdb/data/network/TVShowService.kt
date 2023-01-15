@@ -45,4 +45,10 @@ interface TVShowService {
 
     @GET("3/tv/{tv_id}")
     suspend fun fetchTvDetail(@Path("tv_id") tvId: Int): TvDetailResponse
+
+    @GET("3/search/tv")
+    suspend fun searchTVSeries(
+        @Query("page") page: Int,
+        @Query("query") query: String
+    ): TMDbWrapper<NetworkTVShow>
 }

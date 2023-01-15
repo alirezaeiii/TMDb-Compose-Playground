@@ -45,4 +45,10 @@ interface MovieService {
 
     @GET("3/movie/{movie_id}")
     suspend fun fetchMovieDetail(@Path("movie_id") movieId: Int): MovieDetailResponse
+
+    @GET("3/search/movie")
+    suspend fun searchMovies(
+        @Query("page") page: Int,
+        @Query("query") query: String
+    ): TMDbWrapper<NetworkMovie>
 }

@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.Flow
 
 abstract class BasePagingRepository<T : TMDbItem> {
 
-    protected abstract val pagingSource: BasePagingSource<T>
+    protected abstract fun pagingSource(query: String?): BasePagingSource<T>
 
-    val fetchResultStream: Flow<PagingData<T>> = Pager(
+    fun fetchResultStream(query: String?= null): Flow<PagingData<T>> = Pager(
         config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
-        pagingSourceFactory = { pagingSource }
+        pagingSourceFactory = { pagingSource(query) }
     ).flow
 
     companion object {
