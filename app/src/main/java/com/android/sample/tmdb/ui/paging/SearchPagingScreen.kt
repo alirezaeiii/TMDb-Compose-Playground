@@ -47,7 +47,7 @@ fun <T : TMDbItem> Search(
                         maxHeight = 32.dp
                     )
                     .background(
-                        color = Color.LightGray,
+                        color = MaterialTheme.colors.primary,
                         shape = CircleShape
                     )
 
@@ -60,7 +60,7 @@ fun <T : TMDbItem> Search(
                     Icon(
                         Icons.Filled.ArrowBack,
                         contentDescription = "Back",
-                        tint = MaterialTheme.colors.onSurface
+                        tint = MaterialTheme.colors.surface
                     )
                 }
                 SearchBar(
@@ -106,12 +106,12 @@ private fun SearchBar(
         shape = MaterialTheme.shapes.small,
         modifier = modifier
             .fillMaxWidth()
-            .height(56.dp)
-            .background(Color.LightGray, CircleShape)
+            .height(46.dp)
+            .background(MaterialTheme.colors.primary, CircleShape)
             .padding(horizontal = 24.dp, vertical = 8.dp)
     ) {
         Box(Modifier.fillMaxSize()
-            .background(Color.LightGray)) {
+            .background(MaterialTheme.colors.primary)) {
             if (query.text.isEmpty()) {
                 SearchHint(resourceId)
             }
@@ -125,7 +125,7 @@ private fun SearchBar(
                     IconButton(onClick = onClearQuery) {
                         Icon(
                             imageVector = Icons.Default.Clear,
-                            tint = Color.White,
+                            tint = MaterialTheme.colors.surface,
                             contentDescription = "Back"
                         )
                     }
