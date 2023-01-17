@@ -1,10 +1,14 @@
 package com.android.sample.tmdb.ui.paging
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.TMDbItem
 import com.android.sample.tmdb.ui.common.TMDbDivider
-import com.android.sample.tmdb.ui.common.mirroringBackIcon
 
 @Composable
 fun <T : TMDbItem> Search(
@@ -31,14 +34,44 @@ fun <T : TMDbItem> Search(
     Surface(modifier = modifier.fillMaxSize()) {
         Column {
             Spacer(modifier = Modifier.statusBarsPadding())
-            SearchBar(
-                query = state.query,
-                resourceId = resourceId,
-                onQueryChange = { state.query = it },
-                searchFocused = state.focused,
-                onSearchFocusChange = { state.focused = it },
-                onClearQuery = { state.query = TextFieldValue("") },
-            )
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                val iconModifier = Modifier
+                    .sizeIn(
+                        maxWidth = 32.dp,
+                        maxHeight = 32.dp
+                    )
+                    .background(
+                        color = Color.LightGray,
+                        shape = CircleShape
+                    )
+
+                IconButton(
+                    onClick = upPress,
+                    modifier = Modifier
+                        .padding(start = 12.dp)
+                        .then(iconModifier)
+                ) {
+                    Icon(
+                        Icons.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        tint = MaterialTheme.colors.onSurface
+                    )
+                }
+                SearchBar(
+                    query = state.query,
+                    resourceId = resourceId,
+                    onQueryChange = { state.query = it },
+                    searchFocused = state.focused,
+                    onSearchFocusChange = { state.focused = it },
+                    onClearQuery = { state.query = TextFieldValue("") },
+                )
+            }
             TMDbDivider()
 
             when (state.searchDisplay) {
@@ -46,7 +79,8 @@ fun <T : TMDbItem> Search(
                     viewModel.showResult(state.query.text)
                     PagingScreen(
                         viewModel = viewModel,
-                        onClick = onClick
+                        onClick = onClick,
+                        hasQuery = true
                     )
                 }
                 SearchDisplay.NoResults -> { /* todo */
@@ -73,9 +107,11 @@ private fun SearchBar(
         modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
+            .background(Color.LightGray, CircleShape)
             .padding(horizontal = 24.dp, vertical = 8.dp)
     ) {
-        Box(Modifier.fillMaxSize()) {
+        Box(Modifier.fillMaxSize()
+            .background(Color.LightGray)) {
             if (query.text.isEmpty()) {
                 SearchHint(resourceId)
             }
@@ -88,14 +124,15 @@ private fun SearchBar(
                 if (searchFocused) {
                     IconButton(onClick = onClearQuery) {
                         Icon(
-                            imageVector = mirroringBackIcon(),
-                            tint = Color.Gray,
+                            imageVector = Icons.Default.Clear,
+                            tint = Color.White,
                             contentDescription = "Back"
                         )
                     }
                 }
                 BasicTextField(
                     value = query,
+                    textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colors.surface),
                     onValueChange = onQueryChange,
                     modifier = Modifier
                         .weight(1f)
@@ -118,13 +155,13 @@ private fun SearchHint(@StringRes resourceId: Int) {
     ) {
         Icon(
             imageVector = Icons.Outlined.Search,
-            tint = Color.LightGray,
-            contentDescription = stringResource(R.string.Search, stringResource(resourceId))
+            tint = MaterialTheme.colors.surface,
+            contentDescription = "Search"
         )
         Spacer(Modifier.width(8.dp))
         Text(
-            text = "Search",
-            color = Color.LightGray
+            text = stringResource(R.string.Search, stringResource(resourceId)),
+            color = MaterialTheme.colors.surface
         )
     }
 }
