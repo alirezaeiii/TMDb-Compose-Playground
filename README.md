@@ -6,6 +6,7 @@
   <img src="https://github.com/alirezaeiii/TMDb-Compose/blob/main/screenshots/screenshot1.gif" width="250" />
   <img src="https://github.com/alirezaeiii/TMDb-Compose/blob/main/screenshots/screenshot2.gif" width="250" />
   <img src="https://github.com/alirezaeiii/TMDb-Compose/blob/main/screenshots/screenshot3.gif" width="250" />
+  <img src="https://github.com/alirezaeiii/TMDb-Compose/blob/main/screenshots/screenshot4.gif" width="250" />
 </p>
 
 ## Features
