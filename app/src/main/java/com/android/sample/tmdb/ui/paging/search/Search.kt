@@ -21,6 +21,7 @@ import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.TMDbItem
 import com.android.sample.tmdb.ui.common.TMDbDivider
 import com.android.sample.tmdb.ui.paging.PagingScreen
+import com.android.sample.tmdb.ui.theme.AlphaNearOpaque
 
 @Composable
 fun <T : TMDbItem> Search(
@@ -32,66 +33,64 @@ fun <T : TMDbItem> Search(
 ) {
     var query by rememberSaveable { mutableStateOf("") }
     var focused by rememberSaveable { mutableStateOf(false) }
-    Surface(modifier = modifier.fillMaxSize()) {
-        Box(modifier = Modifier.statusBarsPadding()) {
-            when {
-                query.isEmpty() -> { /*todo */
-                }
-                else -> {
-                    viewModel.showResult(query)
-                    PagingScreen(
-                        viewModel = viewModel,
-                        onClick = onClick
-                    )
-                }
+    Box(modifier = modifier.fillMaxSize()) {
+        when {
+            query.isEmpty() -> { /*todo */
             }
-            Column(
-                modifier = Modifier
-                    .background(MaterialTheme.colors.background)
+            else -> {
+                viewModel.showResult(query)
+                PagingScreen(
+                    viewModel = viewModel,
+                    onClick = onClick
+                )
+            }
+        }
+        Column(
+            modifier = Modifier
+                .statusBarsPadding()
+                .background(MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque))
+        ) {
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(
+                    16.dp,
+                    Alignment.CenterHorizontally
+                ),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(
-                        16.dp,
-                        Alignment.CenterHorizontally
-                    ),
-                    verticalAlignment = Alignment.CenterVertically
+                val iconModifier = Modifier
+                    .sizeIn(
+                        maxWidth = 32.dp,
+                        maxHeight = 32.dp
+                    )
+                    .background(
+                        color = MaterialTheme.colors.primary,
+                        shape = CircleShape
+                    )
+                IconButton(
+                    onClick = upPress,
+                    modifier = Modifier
+                        .padding(start = 12.dp)
+                        .then(iconModifier)
                 ) {
-                    val iconModifier = Modifier
-                        .sizeIn(
-                            maxWidth = 32.dp,
-                            maxHeight = 32.dp
-                        )
-                        .background(
-                            color = MaterialTheme.colors.primary,
-                            shape = CircleShape
-                        )
-
-                    IconButton(
-                        onClick = upPress,
-                        modifier = Modifier
-                            .padding(start = 12.dp)
-                            .then(iconModifier)
-                    ) {
-                        Icon(
-                            Icons.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = MaterialTheme.colors.surface
-                        )
-                    }
-                    SearchBar(
-                        query = query,
-                        resourceId = resourceId,
-                        onQueryChange = { query = it },
-                        searchFocused = focused,
-                        onSearchFocusChange = { focused = it },
-                        onClearQuery = { query = "" },
+                    Icon(
+                        Icons.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        tint = MaterialTheme.colors.surface
                     )
                 }
-                TMDbDivider()
+                SearchBar(
+                    query = query,
+                    resourceId = resourceId,
+                    onQueryChange = { query = it },
+                    searchFocused = focused,
+                    onSearchFocusChange = { focused = it },
+                    onClearQuery = { query = "" },
+                )
             }
+            TMDbDivider()
         }
     }
 }
