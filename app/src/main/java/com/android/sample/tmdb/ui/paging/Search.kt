@@ -11,12 +11,11 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.TMDbItem
@@ -28,9 +27,10 @@ fun <T : TMDbItem> Search(
     onClick: (TMDbItem) -> Unit,
     upPress: () -> Unit,
     @StringRes resourceId: Int,
-    modifier: Modifier = Modifier,
-    state: SearchState = rememberSearchState()
+    modifier: Modifier = Modifier
 ) {
+    var query by rememberSaveable { mutableStateOf("") }
+    var focused by rememberSaveable { mutableStateOf(false) }
     Surface(modifier = modifier.fillMaxSize()) {
         Column {
             Spacer(modifier = Modifier.statusBarsPadding())
@@ -64,26 +64,25 @@ fun <T : TMDbItem> Search(
                     )
                 }
                 SearchBar(
-                    query = state.query,
+                    query = query,
                     resourceId = resourceId,
-                    onQueryChange = { state.query = it },
-                    searchFocused = state.focused,
-                    onSearchFocusChange = { state.focused = it },
-                    onClearQuery = { state.query = TextFieldValue("") },
+                    onQueryChange = { query = it },
+                    searchFocused = focused,
+                    onSearchFocusChange = { focused = it },
+                    onClearQuery = { query = "" },
                 )
             }
             TMDbDivider()
 
-            when (state.searchDisplay) {
-                SearchDisplay.Results -> {
-                    viewModel.showResult(state.query.text)
+            when {
+                query.isEmpty() -> { /*todo */ }
+                else -> {
+                    viewModel.showResult(query)
                     PagingScreen(
                         viewModel = viewModel,
                         onClick = onClick,
                         hasQuery = true
                     )
-                }
-                SearchDisplay.NoResults -> { /* todo */
                 }
             }
         }
@@ -92,9 +91,9 @@ fun <T : TMDbItem> Search(
 
 @Composable
 private fun SearchBar(
-    query: TextFieldValue,
+    query: String,
     @StringRes resourceId: Int,
-    onQueryChange: (TextFieldValue) -> Unit,
+    onQueryChange: (String) -> Unit,
     searchFocused: Boolean,
     onSearchFocusChange: (Boolean) -> Unit,
     onClearQuery: () -> Unit,
@@ -110,9 +109,12 @@ private fun SearchBar(
             .background(MaterialTheme.colors.primary, CircleShape)
             .padding(horizontal = 24.dp, vertical = 8.dp)
     ) {
-        Box(Modifier.fillMaxSize()
-            .background(MaterialTheme.colors.primary)) {
-            if (query.text.isEmpty()) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.primary)
+        ) {
+            if (query.isEmpty()) {
                 SearchHint(resourceId)
             }
             Row(
@@ -164,35 +166,4 @@ private fun SearchHint(@StringRes resourceId: Int) {
             color = MaterialTheme.colors.surface
         )
     }
-}
-
-@Composable
-private fun rememberSearchState(
-    query: TextFieldValue = TextFieldValue(""),
-    focused: Boolean = false
-): SearchState {
-    return remember {
-        SearchState(
-            query = query,
-            focused = focused
-        )
-    }
-}
-
-enum class SearchDisplay {
-    Results, NoResults
-}
-
-@Stable
-class SearchState(
-    query: TextFieldValue,
-    focused: Boolean
-) {
-    var query by mutableStateOf(query)
-    var focused by mutableStateOf(focused)
-    val searchDisplay: SearchDisplay
-        get() = when {
-            query.text.isEmpty() -> SearchDisplay.NoResults
-            else -> SearchDisplay.Results
-        }
 }
