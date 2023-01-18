@@ -1,4 +1,4 @@
-package com.android.sample.tmdb.ui.paging
+package com.android.sample.tmdb.ui.paging.search
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asFlow
@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.android.sample.tmdb.domain.BasePagingRepository
 import com.android.sample.tmdb.domain.model.TMDbItem
+import com.android.sample.tmdb.ui.paging.BasePagingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest

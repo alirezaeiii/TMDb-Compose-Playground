@@ -7,8 +7,11 @@ import androidx.navigation.NavController
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.TMDbItem
 import com.android.sample.tmdb.domain.model.TMDbType
-import com.android.sample.tmdb.ui.paging.movie.*
-import com.android.sample.tmdb.ui.paging.tvshow.*
+import com.android.sample.tmdb.ui.paging.main.movie.*
+import com.android.sample.tmdb.ui.paging.search.Search
+import com.android.sample.tmdb.ui.paging.search.SearchMoviesViewModel
+import com.android.sample.tmdb.ui.paging.search.SearchTvSeriesViewModel
+import com.android.sample.tmdb.ui.paging.main.tvshow.*
 
 @Composable
 fun TrendingMovieScreen(

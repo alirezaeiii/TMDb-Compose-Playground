@@ -1,4 +1,4 @@
-package com.android.sample.tmdb.ui.paging
+package com.android.sample.tmdb.ui.paging.search
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.TMDbItem
 import com.android.sample.tmdb.ui.common.TMDbDivider
+import com.android.sample.tmdb.ui.paging.PagingScreen
 
 @Composable
 fun <T : TMDbItem> Search(
@@ -32,58 +33,64 @@ fun <T : TMDbItem> Search(
     var query by rememberSaveable { mutableStateOf("") }
     var focused by rememberSaveable { mutableStateOf(false) }
     Surface(modifier = modifier.fillMaxSize()) {
-        Column {
-            Spacer(modifier = Modifier.statusBarsPadding())
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                val iconModifier = Modifier
-                    .sizeIn(
-                        maxWidth = 32.dp,
-                        maxHeight = 32.dp
-                    )
-                    .background(
-                        color = MaterialTheme.colors.primary,
-                        shape = CircleShape
-                    )
-
-                IconButton(
-                    onClick = upPress,
-                    modifier = Modifier
-                        .padding(start = 12.dp)
-                        .then(iconModifier)
-                ) {
-                    Icon(
-                        Icons.Filled.ArrowBack,
-                        contentDescription = "Back",
-                        tint = MaterialTheme.colors.surface
-                    )
-                }
-                SearchBar(
-                    query = query,
-                    resourceId = resourceId,
-                    onQueryChange = { query = it },
-                    searchFocused = focused,
-                    onSearchFocusChange = { focused = it },
-                    onClearQuery = { query = "" },
-                )
-            }
-            TMDbDivider()
-
+        Box(modifier = Modifier.statusBarsPadding()) {
             when {
-                query.isEmpty() -> { /*todo */ }
+                query.isEmpty() -> { /*todo */
+                }
                 else -> {
                     viewModel.showResult(query)
                     PagingScreen(
                         viewModel = viewModel,
-                        onClick = onClick,
-                        hasQuery = true
+                        onClick = onClick
                     )
                 }
+            }
+            Column(
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background)
+            ) {
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        16.dp,
+                        Alignment.CenterHorizontally
+                    ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    val iconModifier = Modifier
+                        .sizeIn(
+                            maxWidth = 32.dp,
+                            maxHeight = 32.dp
+                        )
+                        .background(
+                            color = MaterialTheme.colors.primary,
+                            shape = CircleShape
+                        )
+
+                    IconButton(
+                        onClick = upPress,
+                        modifier = Modifier
+                            .padding(start = 12.dp)
+                            .then(iconModifier)
+                    ) {
+                        Icon(
+                            Icons.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = MaterialTheme.colors.surface
+                        )
+                    }
+                    SearchBar(
+                        query = query,
+                        resourceId = resourceId,
+                        onQueryChange = { query = it },
+                        searchFocused = focused,
+                        onSearchFocusChange = { focused = it },
+                        onClearQuery = { query = "" },
+                    )
+                }
+                TMDbDivider()
             }
         }
     }

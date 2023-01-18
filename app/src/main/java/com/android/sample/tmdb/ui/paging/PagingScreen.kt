@@ -57,7 +57,7 @@ fun <T : TMDbItem> PagingScreen(
     title: String,
 ) {
     Box {
-        PagingScreen(viewModel, onClick, false)
+        PagingScreen(viewModel, onClick)
         DestinationBar(title = title, upPress = upPress, navController = navController, type = type)
     }
 }
@@ -66,7 +66,6 @@ fun <T : TMDbItem> PagingScreen(
 fun <T : TMDbItem> PagingScreen(
     viewModel: BasePagingViewModel<T>,
     onClick: (TMDbItem) -> Unit,
-    hasQuery: Boolean,
 ) {
     val lazyTMDbItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
 
@@ -87,7 +86,7 @@ fun <T : TMDbItem> PagingScreen(
             }
         }
         else -> {
-            LazyTMDbItemGrid(lazyTMDbItems, onClick, hasQuery)
+            LazyTMDbItemGrid(lazyTMDbItems, onClick)
         }
     }
 }
@@ -97,7 +96,6 @@ fun <T : TMDbItem> PagingScreen(
 private fun <T : TMDbItem> LazyTMDbItemGrid(
     lazyTMDbItems: LazyPagingItems<T>,
     onClick: (TMDbItem) -> Unit,
-    hasQuery: Boolean
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(COLUMN_COUNT),
@@ -115,15 +113,13 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
         ),
         content = {
 
-            if(!hasQuery) {
-                repeat(COLUMN_COUNT) {
-                    item {
-                        Spacer(
-                            Modifier.windowInsetsTopHeight(
-                                WindowInsets.statusBars.add(WindowInsets(top = 56.dp))
-                            )
+            repeat(COLUMN_COUNT) {
+                item {
+                    Spacer(
+                        Modifier.windowInsetsTopHeight(
+                            WindowInsets.statusBars.add(WindowInsets(top = 56.dp))
                         )
-                    }
+                    )
                 }
             }
 
