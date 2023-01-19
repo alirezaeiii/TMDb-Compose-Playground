@@ -180,9 +180,10 @@ private fun <T : TMDbItem> TMDbItem(
             fontSize = TmdbPagingComposeTheme.fontSizes.sp_11,
             color = MaterialTheme.colors.onSurface,
             textAlign = TextAlign.Center,
+            maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
-                .size(width = itemWidth, height = 56.dp)
+                .size(width = itemWidth, height = 36.dp)
                 .padding(top = Dimens.PaddingSmall)
         )
     }
