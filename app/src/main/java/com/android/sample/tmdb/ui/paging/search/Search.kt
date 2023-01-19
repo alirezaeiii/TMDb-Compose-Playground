@@ -83,7 +83,7 @@ fun <T : TMDbItem> Search(
                     Icon(
                         Icons.Filled.ArrowBack,
                         contentDescription = "Back",
-                        tint = MaterialTheme.colors.onBackground
+                        tint = MaterialTheme.colors.primary
                     )
                 }
                 SearchBar(
@@ -138,7 +138,7 @@ private fun SearchBar(
                     IconButton(onClick = onClearQuery) {
                         Icon(
                             imageVector = Icons.Default.Clear,
-                            tint = MaterialTheme.colors.onBackground,
+                            tint = MaterialTheme.colors.primary,
                             contentDescription = "Back"
                         )
                     }
