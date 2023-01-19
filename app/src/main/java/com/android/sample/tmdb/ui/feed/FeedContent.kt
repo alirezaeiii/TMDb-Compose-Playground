@@ -19,15 +19,13 @@ fun MovieFeedScreen(
     navController: NavController,
     viewModel: MovieFeedViewModel = hiltViewModel()
 ) {
-    Content(viewModel = viewModel) {
-        FeedScreen(
-            type = TMDbType.MOVIES,
-            navController = navController,
-            onClick = onClick,
-            feeds = it,
-            R.string.movies
-        )
-    }
+    FeedScreen(
+        viewModel = viewModel,
+        type = TMDbType.MOVIES,
+        navController = navController,
+        onClick = onClick,
+        R.string.movies
+    )
 }
 
 @Composable
@@ -36,32 +34,32 @@ fun TVShowFeedScreen(
     navController: NavController,
     viewModel: TVShowFeedViewModel = hiltViewModel()
 ) {
-    Content(viewModel = viewModel) {
-        FeedScreen(
-            type = TMDbType.TV_SERIES,
-            navController = navController,
-            onClick = onClick,
-            feeds = it,
-            R.string.tv_series
-        )
-    }
+    FeedScreen(
+        viewModel = viewModel,
+        type = TMDbType.TV_SERIES,
+        navController = navController,
+        onClick = onClick,
+        R.string.tv_series
+    )
 }
 
 @Composable
 fun <T : TMDbItem> FeedScreen(
+    viewModel: BaseFeedViewModel<T>,
     type: TMDbType,
     navController: NavController,
     onClick: (TMDbItem) -> Unit,
-    feeds: List<FeedWrapper<T>>,
     @StringRes resourceId: Int
 
 ) {
-    Box {
-        FeedCollectionList(type, navController, feeds, onClick)
-        DestinationBar(
-            title = stringResource(
-                R.string.app_title, stringResource(resourceId)
-            ), navController = navController, type = type
-        )
+    Content(viewModel = viewModel) { feeds ->
+        Box {
+            FeedCollectionList(type, navController, feeds, onClick)
+            DestinationBar(
+                title = stringResource(
+                    R.string.app_title, stringResource(resourceId)
+                ), navController = navController, type = type
+            )
+        }
     }
 }

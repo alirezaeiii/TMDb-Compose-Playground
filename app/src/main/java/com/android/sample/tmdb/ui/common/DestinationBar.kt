@@ -20,11 +20,11 @@ import com.android.sample.tmdb.ui.theme.AlphaNearOpaque
 
 @Composable
 fun DestinationBar(
-    title: String,
     modifier: Modifier = Modifier,
-    upPress: (() -> Unit)? = null,
+    title: String,
     navController: NavController,
-    type: TMDbType
+    type: TMDbType,
+    upPress: (() -> Unit)? = null,
 ) {
     Column(modifier = modifier.statusBarsPadding()) {
         TopAppBar(

@@ -30,15 +30,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.android.sample.tmdb.domain.model.TMDbItem
-import com.android.sample.tmdb.domain.model.TMDbType
-import com.android.sample.tmdb.ui.common.*
+import com.android.sample.tmdb.ui.common.Dimens
+import com.android.sample.tmdb.ui.common.ErrorScreen
+import com.android.sample.tmdb.ui.common.LoadingRow
+import com.android.sample.tmdb.ui.common.TMDbProgressBar
 import com.android.sample.tmdb.ui.theme.imageTint
 import com.android.sample.tmdb.ui.theme.rateColors
 import com.android.sample.tmdb.utils.toDp
@@ -46,21 +47,6 @@ import com.android.sample.tmdb.utils.toDp
 private const val COLUMN_COUNT = 2
 
 private val span: (LazyGridItemSpanScope) -> GridItemSpan = { GridItemSpan(COLUMN_COUNT) }
-
-@Composable
-fun <T : TMDbItem> PagingScreen(
-    viewModel: BasePagingViewModel<T>,
-    onClick: (TMDbItem) -> Unit,
-    upPress: () -> Unit,
-    navController: NavController,
-    type: TMDbType,
-    title: String,
-) {
-    Box {
-        PagingScreen(viewModel, onClick)
-        DestinationBar(title = title, upPress = upPress, navController = navController, type = type)
-    }
-}
 
 @Composable
 fun <T : TMDbItem> PagingScreen(

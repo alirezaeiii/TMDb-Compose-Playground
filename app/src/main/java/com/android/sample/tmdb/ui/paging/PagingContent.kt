@@ -1,5 +1,6 @@
 package com.android.sample.tmdb.ui.paging
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -7,6 +8,7 @@ import androidx.navigation.NavController
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.TMDbItem
 import com.android.sample.tmdb.domain.model.TMDbType
+import com.android.sample.tmdb.ui.common.DestinationBar
 import com.android.sample.tmdb.ui.paging.main.movie.*
 import com.android.sample.tmdb.ui.paging.search.Search
 import com.android.sample.tmdb.ui.paging.search.SearchMoviesViewModel
@@ -171,6 +173,21 @@ fun TopRatedTVShowScreen(
             stringResource(R.string.tv_series)
         )
     )
+}
+
+@Composable
+fun <T : TMDbItem> PagingScreen(
+    viewModel: BasePagingViewModel<T>,
+    onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
+    navController: NavController,
+    type: TMDbType,
+    title: String,
+) {
+    Box {
+        PagingScreen(viewModel, onClick)
+        DestinationBar(title = title, upPress = upPress, navController = navController, type = type)
+    }
 }
 
 @Composable
