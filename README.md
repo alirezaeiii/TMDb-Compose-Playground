@@ -1,5 +1,5 @@
 # TMDb-Compose
-### 🚧 Construction in progress 👷‍♀️⛏👷🔧️👷🔧 🚧
+### 🚧 Work in progress 👷‍♀️⛏👷🔧️👷🔧 🚧
 
 ## Screenshots
 <p float="left">
@@ -21,7 +21,7 @@ tmdb_api_key=YOUR_API_KEY
 ```
 
 ### Inspired from
-| [JetSnack](https://github.com/android/compose-samples/tree/main/Jetsnack) | [jetflix](https://github.com/yasinkacmaz/jetflix) 
+| [JetSnack](https://github.com/android/compose-samples/tree/main/Jetsnack) | [Jetflix](https://github.com/yasinkacmaz/jetflix) 
 | :-: | :-: |
 
 ## Libraries
