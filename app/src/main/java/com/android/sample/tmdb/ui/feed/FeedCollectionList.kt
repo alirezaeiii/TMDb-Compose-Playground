@@ -183,7 +183,7 @@ private fun <T : TMDbItem> TMDbItem(
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
-                .size(width = itemWidth, height = 36.dp)
+                .size(width = itemWidth, height = Dimens.RowHeight)
                 .padding(top = Dimens.PaddingSmall)
         )
     }

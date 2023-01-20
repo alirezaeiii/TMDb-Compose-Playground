@@ -63,13 +63,11 @@ fun <T : TMDbItem> PagingScreen(
             val message =
                 (lazyTMDbItems.loadState.refresh as? LoadState.Error)?.error?.message ?: return
 
-            lazyTMDbItems.apply {
-                ErrorScreen(
-                    message = message,
-                    modifier = Modifier.fillMaxSize(),
-                    refresh = { retry() }
-                )
-            }
+            ErrorScreen(
+                message = message,
+                modifier = Modifier.fillMaxSize(),
+                refresh = { lazyTMDbItems.retry() }
+            )
         }
         else -> {
             LazyTMDbItemGrid(lazyTMDbItems, onClick)
@@ -122,26 +120,25 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
                 }
             }
 
-            lazyTMDbItems.apply {
-                when (loadState.append) {
-                    is LoadState.Loading -> {
-                        item(span = span) {
-                            LoadingRow(modifier = Modifier.padding(vertical = Dimens.GridSpacing))
-                        }
+            when (lazyTMDbItems.loadState.append) {
+                is LoadState.Loading -> {
+                    item(span = span) {
+                        LoadingRow(modifier = Modifier.padding(vertical = Dimens.GridSpacing))
                     }
-                    is LoadState.Error -> {
-                        val message =
-                            (loadState.append as? LoadState.Error)?.error?.message ?: return@apply
-
-                        item(span = span) {
-                            ErrorScreen(
-                                message = message,
-                                modifier = Modifier.padding(vertical = Dimens.GridSpacing),
-                                refresh = { retry() })
-                        }
-                    }
-                    else -> {}
                 }
+                is LoadState.Error -> {
+                    val message =
+                        (lazyTMDbItems.loadState.append as? LoadState.Error)?.error?.message
+                            ?: return@LazyVerticalGrid
+
+                    item(span = span) {
+                        ErrorScreen(
+                            message = message,
+                            modifier = Modifier.padding(vertical = Dimens.GridSpacing),
+                            refresh = { lazyTMDbItems.retry() })
+                    }
+                }
+                else -> {}
             }
         })
 }

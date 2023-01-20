@@ -17,13 +17,14 @@ abstract class BasePagingSource<T : TMDbItem>(private val context: Context) : Pa
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
         val page = params.key ?: STARTING_PAGE_INDEX
         return try {
+            val response = fetchItems(page)
             LoadResult.Page(
-                data = fetchItems(page),
+                data = response,
                 prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1,
-                nextKey = page + 1
+                nextKey = if (response.isEmpty()) null else page + 1
             )
         } catch (exception: IOException) {
-            LoadResult.Error(Exception(context.getString(R.string.failed_loading_msg)))
+            LoadResult.Error(IOException(context.getString(R.string.failed_loading_msg)))
         } catch (exception: HttpException) {
             LoadResult.Error(Exception(context.getString(R.string.failed_loading_msg)))
         }
