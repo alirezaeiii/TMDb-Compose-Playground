@@ -176,21 +176,6 @@ fun TopRatedTVShowScreen(
 }
 
 @Composable
-fun <T : TMDbItem> PagingScreen(
-    viewModel: BasePagingViewModel<T>,
-    onClick: (TMDbItem) -> Unit,
-    upPress: () -> Unit,
-    navController: NavController,
-    type: TMDbType,
-    title: String,
-) {
-    Box {
-        PagingScreen(viewModel, onClick)
-        DestinationBar(title = title, upPress = upPress, navController = navController, type = type)
-    }
-}
-
-@Composable
 fun SearchMoviesScreen(
     onClick: (TMDbItem) -> Unit,
     upPress: () -> Unit,
@@ -216,4 +201,19 @@ fun SearchTVSeriesScreen(
         upPress = upPress,
         resourceId = R.string.tv_series
     )
+}
+
+@Composable
+private fun <T : TMDbItem> PagingScreen(
+    viewModel: BasePagingViewModel<T>,
+    onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
+    navController: NavController,
+    type: TMDbType,
+    title: String,
+) {
+    Box {
+        PagingScreen(viewModel, onClick)
+        DestinationBar(title = title, upPress = upPress, navController = navController, type = type)
+    }
 }

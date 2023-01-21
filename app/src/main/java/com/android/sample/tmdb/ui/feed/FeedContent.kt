@@ -7,7 +7,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.android.sample.tmdb.R
-import com.android.sample.tmdb.domain.model.FeedWrapper
 import com.android.sample.tmdb.domain.model.TMDbItem
 import com.android.sample.tmdb.domain.model.TMDbType
 import com.android.sample.tmdb.ui.Content
@@ -44,7 +43,7 @@ fun TVShowFeedScreen(
 }
 
 @Composable
-fun <T : TMDbItem> FeedScreen(
+private fun <T : TMDbItem> FeedScreen(
     viewModel: BaseFeedViewModel<T>,
     type: TMDbType,
     navController: NavController,

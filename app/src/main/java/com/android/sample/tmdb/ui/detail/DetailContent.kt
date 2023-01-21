@@ -22,7 +22,7 @@ fun TVShowDetailScreen(
 }
 
 @Composable
-fun <T : TMDbItemDetails> DetailScreen(
+private fun <T : TMDbItemDetails> DetailScreen(
     viewModel: BaseDetailViewModel<T>,
     upPress: () -> Unit
 ) {
