@@ -8,16 +8,12 @@ import com.android.sample.tmdb.R
 
 object Dimens {
 
+    val PaddingMicro = 2.dp
+
     val PaddingSmall: Dp
         @Composable get() = dimensionResource(R.dimen.padding_small)
 
     val PaddingMedium = 12.dp
-
-    val PaddingBottom = 10.dp
-
-    val PaddingMicro = 2.dp
-
-    val RowHeight = 36.dp
 
     val GridSpacing: Dp
         @Composable get() = dimensionResource(R.dimen.padding_medium)

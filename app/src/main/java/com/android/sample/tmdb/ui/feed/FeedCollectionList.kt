@@ -68,7 +68,7 @@ private fun <T : TMDbItem> FeedCollection(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .heightIn(min = Dimens.RowHeight)
+                .heightIn(min = 36.dp)
                 .padding(start = Dimens.PaddingMedium)
         ) {
             Text(
@@ -130,7 +130,7 @@ private fun <T : TMDbItem> FeedCollection(
                         start = Dimens.PaddingMedium,
                         end = Dimens.PaddingMedium,
                         top = Dimens.PaddingMedium,
-                        bottom = Dimens.PaddingBottom
+                        bottom = 10.dp
                     )
             )
         }
@@ -192,7 +192,7 @@ private fun <T : TMDbItem> TMDbItem(
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
-                .size(width = itemWidth, height = Dimens.RowHeight)
+                .size(width = itemWidth, height = 36.dp)
                 .padding(top = Dimens.PaddingSmall)
         )
     }
