@@ -126,12 +126,7 @@ private fun <T : TMDbItem> FeedCollection(
                             }
                         }
                     }
-                    .padding(
-                        start = Dimens.PaddingMedium,
-                        end = Dimens.PaddingMedium,
-                        top = Dimens.PaddingMedium,
-                        bottom = 10.dp
-                    )
+                    .padding(Dimens.PaddingMedium)
             )
         }
         Feeds(feedCollection.feeds, onFeedClick, index)

@@ -21,7 +21,7 @@ abstract class BaseDetailRepository<T : TMDbItemDetails>(
 
     protected abstract suspend fun getCredit(id: Int): NetworkCreditWrapper
 
-    override suspend fun successResult(id: Any?): Resource<DetailWrapper<T>> {
+    override suspend fun getSuccessResult(id: Any?): Resource<DetailWrapper<T>> {
         val detailsDeferred: Deferred<T>
         val creditDeferred: Deferred<NetworkCreditWrapper>
         coroutineScope {
