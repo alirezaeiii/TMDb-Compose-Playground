@@ -5,6 +5,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.TMDbItem
+import com.android.sample.tmdb.utils.TMDbException
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -24,9 +25,9 @@ abstract class BasePagingSource<T : TMDbItem>(private val context: Context) : Pa
                 nextKey = if (response.isEmpty()) null else page + 1
             )
         } catch (exception: IOException) {
-            LoadResult.Error(IOException(context.getString(R.string.failed_loading_msg)))
+            LoadResult.Error(TMDbException(context.getString(R.string.failed_loading_msg)))
         } catch (exception: HttpException) {
-            LoadResult.Error(Exception(context.getString(R.string.failed_loading_msg)))
+            LoadResult.Error(TMDbException(context.getString(R.string.failed_loading_msg)))
         }
     }
 
