@@ -40,7 +40,17 @@ fun <T : TMDbItem> Search(
     var focused by rememberSaveable { mutableStateOf(false) }
     Box(modifier = modifier.fillMaxSize()) {
         when {
-            query.isEmpty() -> { /*todo */ }
+            query.isEmpty() -> {
+                InfinitelyFlowingCircles()
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 28.dp, end = 28.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    AnimatedSearch()
+                }
+            }
             else -> {
                 viewModel.showResult(query)
                 PagingScreen(
@@ -134,15 +144,6 @@ private fun SearchBar(
                     .fillMaxSize()
                     .wrapContentHeight()
             ) {
-                if (searchFocused) {
-                    IconButton(onClick = onClearQuery) {
-                        Icon(
-                            imageVector = Icons.Default.Clear,
-                            tint = MaterialTheme.colors.primary,
-                            contentDescription = "Back"
-                        )
-                    }
-                }
                 BasicTextField(
                     value = query,
                     textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colors.onBackground),
@@ -154,6 +155,15 @@ private fun SearchBar(
                             onSearchFocusChange(it.isFocused)
                         }
                 )
+                if (searchFocused && query.isNotEmpty()) {
+                    IconButton(onClick = onClearQuery) {
+                        Icon(
+                            imageVector = Icons.Default.Clear,
+                            tint = MaterialTheme.colors.primary,
+                            contentDescription = "Clear"
+                        )
+                    }
+                }
             }
         }
     }
