@@ -18,6 +18,8 @@ import com.android.sample.tmdb.ui.detail.TVShowDetailScreen
 import com.android.sample.tmdb.ui.feed.MovieFeedScreen
 import com.android.sample.tmdb.ui.feed.TVShowFeedScreen
 import com.android.sample.tmdb.ui.paging.*
+import com.android.sample.tmdb.ui.paging.search.SearchMoviesScreen
+import com.android.sample.tmdb.ui.paging.search.SearchTVSeriesScreen
 
 @Composable
 fun TMDbApp() {

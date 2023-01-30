@@ -22,11 +22,40 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.sample.tmdb.R
 import com.android.sample.tmdb.domain.model.TMDbItem
 import com.android.sample.tmdb.ui.common.TMDbDivider
 import com.android.sample.tmdb.ui.paging.PagingScreen
 import com.android.sample.tmdb.ui.theme.AlphaNearOpaque
+
+@Composable
+fun SearchMoviesScreen(
+    onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
+    viewModel: SearchMoviesViewModel = hiltViewModel()
+) {
+    Search(
+        viewModel = viewModel,
+        onClick = onClick,
+        upPress = upPress,
+        resourceId = R.string.movies
+    )
+}
+
+@Composable
+fun SearchTVSeriesScreen(
+    onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
+    viewModel: SearchTvSeriesViewModel = hiltViewModel()
+) {
+    Search(
+        viewModel = viewModel,
+        onClick = onClick,
+        upPress = upPress,
+        resourceId = R.string.tv_series
+    )
+}
 
 @Composable
 fun <T : TMDbItem> Search(
