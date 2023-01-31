@@ -1,10 +1,6 @@
 package com.android.sample.tmdb.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
-enum class SortType : Parcelable {
+enum class SortType {
     TRENDING,
     MOST_POPULAR,
     NOW_PLAYING,
