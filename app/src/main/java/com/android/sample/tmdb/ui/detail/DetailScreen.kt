@@ -79,7 +79,7 @@ private fun <T : TMDbItemDetails> DetailScreen(
     }
 }
 
-val LocalVibrantColor =
+private val LocalVibrantColor =
     compositionLocalOf<Animatable<Color, AnimationVector4D>> { error("No vibrant color defined") }
 
 @Composable
