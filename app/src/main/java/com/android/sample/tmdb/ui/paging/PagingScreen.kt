@@ -256,7 +256,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
     onClick: (TMDbItem) -> Unit,
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 125.dp),
+        columns = GridCells.Adaptive(minSize = 180.dp),
         contentPadding = PaddingValues(
             start = Dimens.GridSpacing,
             end = Dimens.GridSpacing,
