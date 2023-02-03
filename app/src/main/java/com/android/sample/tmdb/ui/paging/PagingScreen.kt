@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -223,10 +222,6 @@ private fun <T : TMDbItem> PagingScreen(
     }
 }
 
-private const val COLUMN_COUNT = 2
-
-private val span: (LazyGridItemSpanScope) -> GridItemSpan = { GridItemSpan(COLUMN_COUNT) }
-
 @Composable
 fun <T : TMDbItem> PagingScreen(
     viewModel: BasePagingViewModel<T>,
@@ -261,7 +256,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
     onClick: (TMDbItem) -> Unit,
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(COLUMN_COUNT),
+        columns = GridCells.Adaptive(minSize = 125.dp),
         contentPadding = PaddingValues(
             start = Dimens.GridSpacing,
             end = Dimens.GridSpacing,
@@ -276,14 +271,14 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
         ),
         content = {
 
-            repeat(COLUMN_COUNT) {
-                item {
-                    Spacer(
-                        Modifier.windowInsetsTopHeight(
-                            WindowInsets.statusBars.add(WindowInsets(top = 56.dp))
-                        )
+            item(span = {
+                GridItemSpan(maxLineSpan)
+            }) {
+                Spacer(
+                    Modifier.windowInsetsTopHeight(
+                        WindowInsets.statusBars.add(WindowInsets(top = 56.dp))
                     )
-                }
+                )
             }
 
             items(lazyTMDbItems.itemCount) { index ->
@@ -301,7 +296,9 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
 
             when (lazyTMDbItems.loadState.append) {
                 is LoadState.Loading -> {
-                    item(span = span) {
+                    item(span = {
+                        GridItemSpan(maxLineSpan)
+                    }) {
                         LoadingRow(modifier = Modifier.padding(vertical = Dimens.GridSpacing))
                     }
                 }
@@ -310,7 +307,9 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
                         (lazyTMDbItems.loadState.append as? LoadState.Error)?.error?.message
                             ?: return@LazyVerticalGrid
 
-                    item(span = span) {
+                    item(span = {
+                        GridItemSpan(maxLineSpan)
+                    }) {
                         ErrorScreen(
                             message = message,
                             modifier = Modifier.padding(vertical = Dimens.GridSpacing),
