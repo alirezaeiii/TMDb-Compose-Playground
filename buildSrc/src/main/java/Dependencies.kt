@@ -27,7 +27,7 @@ object Versions {
 }
 
 object AppMetaData {
-    const val id = "com.android.sample.tmdb"
+    const val id = "com.sample.tmdb"
     const val targetSdkVersion = 33
     const val compileSdkVersion = 33
     const val minSdkVersion = 21
