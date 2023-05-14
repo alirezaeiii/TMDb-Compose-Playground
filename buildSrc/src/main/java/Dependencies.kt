@@ -19,7 +19,6 @@ object Versions {
     const val converterMoshi = "2.9.0"
     const val coroutines = "1.5.2"
     const val coil = "2.2.2"
-    const val lottie = "5.0.3"
     const val gson = "2.9.1"
     const val palette = "1.0.0"
     const val icon_extended = "1.4.0-alpha02"
@@ -31,8 +30,8 @@ object AppMetaData {
     const val targetSdkVersion = 33
     const val compileSdkVersion = 33
     const val minSdkVersion = 21
-    const val versionCode = 1
-    const val versionName = "1.0.0"
+    const val versionCode = 2
+    const val versionName = "1.0.1"
 }
 
 object Deps {
@@ -86,9 +85,6 @@ object Deps {
 
     //Coil
     const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
-
-    //Lottie
-    const val lottie = "com.airbnb.android:lottie-compose:${Versions.lottie}"
 
     //Gson
     const val gson =  "com.google.code.gson:gson:${Versions.gson}"
