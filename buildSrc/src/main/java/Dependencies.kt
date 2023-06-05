@@ -30,8 +30,8 @@ object AppMetaData {
     const val targetSdkVersion = 33
     const val compileSdkVersion = 33
     const val minSdkVersion = 21
-    const val versionCode = 2
-    const val versionName = "1.0.1"
+    const val versionCode = 3
+    const val versionName = "1.0.2"
 }
 
 object Deps {
