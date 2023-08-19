@@ -1,5 +1,6 @@
 package com.sample.tmdb.ui
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -12,7 +13,12 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.R
+import com.sample.tmdb.domain.model.Cast
+import com.sample.tmdb.domain.model.Crew
+import com.sample.tmdb.ui.credit.CreditScreen
 import com.sample.tmdb.ui.detail.MovieDetailScreen
 import com.sample.tmdb.ui.detail.TVShowDetailScreen
 import com.sample.tmdb.ui.feed.MovieFeedScreen
@@ -44,6 +50,8 @@ fun TMDbApp() {
                 navController = appState.navController,
                 onMovieSelected = appState::navigateToMovieDetail,
                 onTVShowSelected = appState::navigateToTVShowDetail,
+                onAllCastSelected = appState::navigateToCastList,
+                onAllCrewSelected = appState::navigateToCrewList,
                 upPress = appState::upPress
             )
         }
@@ -89,6 +97,8 @@ private fun NavGraphBuilder.tmdbNavGraph(
     navController: NavController,
     onMovieSelected: (Int, NavBackStackEntry) -> Unit,
     onTVShowSelected: (Int, NavBackStackEntry) -> Unit,
+    onAllCastSelected: (String, NavBackStackEntry) -> Unit,
+    onAllCrewSelected: (String, NavBackStackEntry) -> Unit,
     upPress: () -> Unit
 ) {
     navigation(
@@ -110,15 +120,35 @@ private fun NavGraphBuilder.tmdbNavGraph(
         route = "${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments = listOf(
             navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType })
-    ) {
-        MovieDetailScreen(upPress)
+    ) { from ->
+        MovieDetailScreen(upPress, onAllCastSelected = {
+            onAllCastSelected(
+                Uri.encode(gson.toJson(it, object : TypeToken<List<Cast>>() {}.type)),
+                from
+            )
+        }, onAllCrewSelected = {
+            onAllCrewSelected(
+                Uri.encode(gson.toJson(it, object : TypeToken<List<Crew>>() {}.type)),
+                from
+            )
+        })
     }
     composable(
         route = "${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments = listOf(
             navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType })
-    ) {
-        TVShowDetailScreen(upPress)
+    ) { from ->
+        TVShowDetailScreen(upPress, onAllCastSelected = {
+            onAllCastSelected(
+                Uri.encode(gson.toJson(it, object : TypeToken<List<Cast>>() {}.type)),
+                from
+            )
+        }, onAllCrewSelected = {
+            onAllCrewSelected(
+                Uri.encode(gson.toJson(it, object : TypeToken<List<Crew>>() {}.type)),
+                from
+            )
+        })
     }
     composable(route = MainDestinations.TMDB_TRENDING_MOVIES_ROUTE) { from ->
         TrendingMovieScreen(
@@ -196,9 +226,42 @@ private fun NavGraphBuilder.tmdbNavGraph(
     composable(route = MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) { from ->
         SearchTVSeriesScreen(onClick = { onTVShowSelected(it.id, from) }, upPress = upPress)
     }
+    composable(route = MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) { from ->
+        SearchTVSeriesScreen(onClick = { onTVShowSelected(it.id, from) }, upPress = upPress)
+    }
+    composable(
+        route = "${MainDestinations.TMDB_CAST_ROUTE}/{${MainDestinations.TMDB_CREDIT_KEY}}",
+        arguments = listOf(
+            navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType })
+    ) { from ->
+        CreditScreen(
+            R.string.cast,
+            upPress,
+            gson.fromJson<List<Cast>>(
+                from.arguments?.getString(MainDestinations.TMDB_CREDIT_KEY),
+                object : TypeToken<List<Cast>>() {}.type
+            )
+        )
+    }
+    composable(
+        route = "${MainDestinations.TMDB_CREW_ROUTE}/{${MainDestinations.TMDB_CREDIT_KEY}}",
+        arguments = listOf(
+            navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType })
+    ) { from ->
+        CreditScreen(
+            R.string.crew,
+            upPress,
+            gson.fromJson<List<Crew>>(
+                from.arguments?.getString(MainDestinations.TMDB_CREDIT_KEY),
+                object : TypeToken<List<Crew>>() {}.type
+            )
+        )
+    }
 }
 
 enum class HomeSections(val route: String, val title: String, val icon: Int) {
     MOVIE_SECTION("Movie", "Movie", R.drawable.ic_movie),
     TV_SHOW_SECTION("TVShow", "TVShow", R.drawable.ic_tv_series)
 }
+
+private val gson = Gson()

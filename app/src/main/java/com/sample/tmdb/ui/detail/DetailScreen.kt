@@ -8,7 +8,6 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -19,8 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -29,51 +26,67 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sample.tmdb.R
 import com.sample.tmdb.domain.model.*
-import com.sample.tmdb.ui.theme.imageTint
-import com.sample.tmdb.utils.CircleTopCropTransformation
+import com.sample.tmdb.ui.Content
+import com.sample.tmdb.ui.common.BottomArcShape
+import com.sample.tmdb.ui.common.Person
+import com.sample.tmdb.ui.theme.GetVibrantColorFromPoster
 import com.sample.tmdb.utils.dpToPx
 import com.sample.tmdb.utils.openInChromeCustomTab
 import com.sample.tmdb.utils.springAnimation
-import com.sample.tmdb.domain.model.TMDbItemDetails
-import com.sample.tmdb.ui.Content
-import com.sample.tmdb.ui.common.BottomArcShape
-import com.sample.tmdb.ui.theme.GetVibrantColorFromPoster
 
 @Composable
 fun MovieDetailScreen(
     upPress: () -> Unit,
+    onAllCastSelected: (List<Cast>) -> Unit,
+    onAllCrewSelected: (List<Crew>) -> Unit,
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
-    DetailScreen(viewModel = viewModel, upPress = upPress)
+    DetailScreen(
+        viewModel = viewModel,
+        upPress = upPress,
+        onAllCastSelected = onAllCastSelected,
+        onAllCrewSelected = onAllCrewSelected
+    )
 }
 
 @Composable
 fun TVShowDetailScreen(
     upPress: () -> Unit,
+    onAllCastSelected: (List<Cast>) -> Unit,
+    onAllCrewSelected: (List<Crew>) -> Unit,
     viewModel: TVShowDetailViewModel = hiltViewModel()
 ) {
-    DetailScreen(viewModel = viewModel, upPress = upPress)
+    DetailScreen(
+        viewModel = viewModel,
+        upPress = upPress,
+        onAllCastSelected = onAllCastSelected,
+        onAllCrewSelected = onAllCrewSelected
+    )
 }
 
 @Composable
 private fun <T : TMDbItemDetails> DetailScreen(
     viewModel: BaseDetailViewModel<T>,
-    upPress: () -> Unit
+    upPress: () -> Unit,
+    onAllCastSelected: (List<Cast>) -> Unit,
+    onAllCrewSelected: (List<Crew>) -> Unit,
 ) {
     Content(viewModel = viewModel) {
-        DetailScreen(detailWrapper = it, upPress = upPress)
+        DetailScreen(
+            detailWrapper = it,
+            upPress = upPress,
+            onAllCastSelected = onAllCastSelected,
+            onAllCrewSelected = onAllCrewSelected
+        )
     }
 }
 
@@ -81,7 +94,12 @@ private val LocalVibrantColor =
     compositionLocalOf<Animatable<Color, AnimationVector4D>> { error("No vibrant color defined") }
 
 @Composable
-fun <T : TMDbItemDetails> DetailScreen(detailWrapper: DetailWrapper<T>, upPress: () -> Unit) {
+fun <T : TMDbItemDetails> DetailScreen(
+    detailWrapper: DetailWrapper<T>,
+    upPress: () -> Unit,
+    onAllCastSelected: (List<Cast>) -> Unit,
+    onAllCrewSelected: (List<Crew>) -> Unit
+) {
     val defaultTextColor = MaterialTheme.colors.onBackground
     val vibrantColor = remember { Animatable(defaultTextColor) }
     CompositionLocalProvider(
@@ -227,6 +245,7 @@ fun <T : TMDbItemDetails> DetailScreen(detailWrapper: DetailWrapper<T>, upPress:
                 items = detailWrapper.cast,
                 headerResId = R.string.cast,
                 itemContent = { item, _ -> Person(item, Modifier.width(140.dp)) },
+                onAllCreditSelected = onAllCastSelected,
                 modifier = Modifier.constrainAs(castSection) {
                     top.linkTo(overview.bottom, 16.dp)
                     linkTo(startGuideline, endGuideline)
@@ -236,6 +255,7 @@ fun <T : TMDbItemDetails> DetailScreen(detailWrapper: DetailWrapper<T>, upPress:
                 items = detailWrapper.crew,
                 headerResId = R.string.crew,
                 itemContent = { item, _ -> Person(item, Modifier.width(140.dp)) },
+                onAllCreditSelected = onAllCrewSelected,
                 modifier = Modifier.constrainAs(crewSection) {
                     top.linkTo(castSection.bottom, 16.dp)
                     linkTo(startGuideline, endGuideline)
@@ -411,11 +431,12 @@ private fun <T : Credit> CreditSection(
     items: List<T>,
     @StringRes headerResId: Int,
     itemContent: @Composable (T, Int) -> Unit,
+    onAllCreditSelected: (List<T>) -> Unit,
     modifier: Modifier
 ) {
     if (items.isNotEmpty()) {
         Column(modifier = modifier.fillMaxWidth()) {
-            SectionHeader(headerResId, items.size)
+            SectionHeader(headerResId, items, onAllCreditSelected)
             LazyRow(
                 modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
                 contentPadding = PaddingValues(16.dp)
@@ -433,9 +454,10 @@ private fun <T : Credit> CreditSection(
 }
 
 @Composable
-private fun SectionHeader(
+private fun <T : Credit> SectionHeader(
     @StringRes headerResId: Int,
-    count: Int,
+    items: List<T>,
+    onAllCreditSelected: (List<T>) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -454,72 +476,23 @@ private fun SectionHeader(
             modifier = Modifier.padding(4.dp)
         ) {
             Text(
-                text = stringResource(R.string.see_all, count),
+                text = stringResource(R.string.see_all, items.size),
                 color = LocalVibrantColor.current.value,
                 style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Bold),
-                modifier = Modifier.padding(end = 4.dp)
+                modifier = Modifier
+                    .padding(end = 4.dp)
+                    .clickable {
+                        onAllCreditSelected.invoke(items)
+                    }
             )
             Icon(
                 Icons.Filled.ArrowForward,
                 contentDescription = stringResource(R.string.see_all),
-                tint = LocalVibrantColor.current.value
+                tint = LocalVibrantColor.current.value,
+                modifier = Modifier.clickable {
+                    onAllCreditSelected.invoke(items)
+                }
             )
         }
-    }
-}
-
-@Composable
-fun Person(person: Credit, modifier: Modifier = Modifier) {
-    Column(
-        modifier.padding(4.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Card(shape = CircleShape, elevation = 8.dp, modifier = Modifier.size(120.dp)) {
-            val request = ImageRequest.Builder(LocalContext.current)
-                .data(person.profileUrl)
-                .crossfade(true)
-                .transformations(CircleTopCropTransformation())
-                .build()
-            val placeholderPainter = rememberVectorPainter(person.gender.placeholderIcon)
-            val painter =
-                rememberAsyncImagePainter(
-                    model = request,
-                    error = placeholderPainter,
-                    placeholder = placeholderPainter
-                )
-            val colorFilter = when (painter.state) {
-                is AsyncImagePainter.State.Error, is AsyncImagePainter.State.Loading -> ColorFilter.tint(
-                    MaterialTheme.colors.imageTint
-                )
-                else -> null
-            }
-            Image(
-                painter = painter,
-                colorFilter = colorFilter,
-                contentDescription = stringResource(
-                    id = R.string.person_content_description,
-                    person.name,
-                    person.role
-                ),
-                contentScale = ContentScale.FillHeight
-            )
-        }
-        Text(
-            text = person.name,
-            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(top = 4.dp)
-        )
-        Text(
-            text = person.role,
-            style = MaterialTheme.typography.subtitle2.copy(
-                fontWeight = FontWeight.Normal,
-                fontStyle = FontStyle.Italic
-            ),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(top = 2.dp)
-        )
     }
 }

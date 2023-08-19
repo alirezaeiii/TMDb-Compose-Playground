@@ -22,8 +22,8 @@ import com.sample.tmdb.ui.theme.AlphaNearOpaque
 fun DestinationBar(
     modifier: Modifier = Modifier,
     title: String,
-    navController: NavController,
-    type: TMDbType,
+    navController: NavController? = null,
+    type: TMDbType? = null,
     upPress: (() -> Unit)? = null,
 ) {
     Column(modifier = modifier.statusBarsPadding()) {
@@ -54,19 +54,21 @@ fun DestinationBar(
                     .weight(1f)
                     .align(Alignment.CenterVertically)
             )
-            IconButton(
-                onClick = {
-                    when (type) {
-                        TMDbType.MOVIES -> navController.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE)
-                        TMDbType.TV_SERIES -> navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE)
-                    }
-                },
-                modifier = Modifier.align(Alignment.CenterVertically)
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_search),
-                    contentDescription = "Search"
-                )
+            type?.let {
+                IconButton(
+                    onClick = {
+                        when (it) {
+                            TMDbType.MOVIES -> navController?.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE)
+                            TMDbType.TV_SERIES -> navController?.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE)
+                        }
+                    },
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_search),
+                        contentDescription = "Search"
+                    )
+                }
             }
         }
         TMDbDivider()

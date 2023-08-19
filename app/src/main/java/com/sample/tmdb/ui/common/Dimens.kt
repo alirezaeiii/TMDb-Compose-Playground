@@ -17,4 +17,6 @@ object Dimens {
 
     val GridSpacing: Dp
         @Composable get() = dimensionResource(R.dimen.padding_medium)
+
+    val CreditCardSize = 120.dp
 }

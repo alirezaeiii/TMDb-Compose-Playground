@@ -15,7 +15,7 @@ object Versions {
     const val hiltCompose = "1.0.0"
     const val retrofit = "2.9.0"
     const val okhttp = "4.9.0"
-    const val moshi = "1.11.0"
+    const val moshi = "1.14.0"
     const val converterMoshi = "2.9.0"
     const val coroutines = "1.5.2"
     const val coil = "2.2.2"

@@ -31,6 +31,9 @@ object MainDestinations {
     const val TMDB_ON_THE_AIR_TV_SHOW_ROUTE = "on_the_air_tv_show"
     const val TMDB_TOP_RATED_TV_SHOW_ROUTE = "top_rated_tv_show"
     const val TMDB_SEARCH_TV_SHOW_ROUTE = "search_tv_show"
+    const val TMDB_CAST_ROUTE = "cast_list"
+    const val TMDB_CREW_ROUTE = "crew_list"
+    const val TMDB_CREDIT_KEY =  "credit_list"
 }
 
 /**
@@ -98,6 +101,20 @@ class TMDbAppState(
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
             navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/$id")
+        }
+    }
+
+    fun navigateToCastList(cast: String, from: NavBackStackEntry) {
+        // In order to discard duplicated navigation events, we check the Lifecycle
+        if (from.lifecycleIsResumed()) {
+            navController.navigate("${MainDestinations.TMDB_CAST_ROUTE}/$cast")
+        }
+    }
+
+    fun navigateToCrewList(crew: String, from: NavBackStackEntry) {
+        // In order to discard duplicated navigation events, we check the Lifecycle
+        if (from.lifecycleIsResumed()) {
+            navController.navigate("${MainDestinations.TMDB_CREW_ROUTE}/$crew")
         }
     }
 }
