@@ -8,7 +8,9 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -32,16 +34,16 @@ fun DestinationBar(
             contentColor = MaterialTheme.colors.onSurface,
             elevation = 0.dp
         ) {
-            upPress?.let {
-                IconButton(
-                    onClick = { it.invoke() },
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }
+            IconButton(
+                onClick = { upPress?.invoke() },
+                modifier = Modifier
+                    .alpha(if (upPress == null) 0f else 1f)
+                    .align(Alignment.CenterVertically)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = stringResource(R.string.back)
+                )
             }
             Text(
                 text = title,
@@ -54,21 +56,27 @@ fun DestinationBar(
                     .weight(1f)
                     .align(Alignment.CenterVertically)
             )
-            type?.let {
-                IconButton(
-                    onClick = {
-                        when (it) {
-                            TMDbType.MOVIES -> navController?.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE)
-                            TMDbType.TV_SERIES -> navController?.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE)
-                        }
-                    },
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_search),
-                        contentDescription = "Search"
-                    )
-                }
+            IconButton(
+                onClick = {
+                    when (type) {
+                        TMDbType.MOVIES -> navController?.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE)
+                        TMDbType.TV_SERIES -> navController?.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE)
+                        else -> {}
+                    }
+                },
+                modifier = Modifier
+                    .alpha(if (type == null) 0f else 1f)
+                    .align(Alignment.CenterVertically)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_search),
+                    contentDescription = type?.let {
+                        stringResource(
+                            id = R.string.search,
+                            it.name
+                        )
+                    }
+                )
             }
         }
         TMDbDivider()

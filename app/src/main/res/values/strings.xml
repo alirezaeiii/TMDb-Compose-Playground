@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TMDb-Compose</string>
+    <string name="app_name">TMDb</string>
     <string name="app_title">TMDb %s</string>
     <string name="movies">Movies</string>
     <string name="tv_series">TV Series</string>
@@ -31,5 +31,6 @@
     <string name="on_the_air">On the air %s</string>
     <string name="highest_rate">Top Rated %s</string>
 
-    <string name="Search">Search %s</string>
+    <string name="search">Search %s</string>
+    <string name="back">Back</string>
 </resources>
