@@ -7,8 +7,6 @@ plugins {
 }
 
 android {
-    compileSdk 32
-
     defaultConfig {
         applicationId AppMetaData.id
         minSdk AppMetaData.minSdkVersion

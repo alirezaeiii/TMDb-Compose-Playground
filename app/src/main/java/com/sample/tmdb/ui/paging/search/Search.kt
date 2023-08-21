@@ -97,7 +97,7 @@ fun <T : TMDbItem> Search(
             Row(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(Dimens.PaddingMedium),
                 horizontalArrangement = Arrangement.spacedBy(
                     Dimens.PaddingLarge,
                     Alignment.CenterHorizontally
@@ -117,7 +117,7 @@ fun <T : TMDbItem> Search(
                 IconButton(
                     onClick = upPress,
                     modifier = Modifier
-                        .padding(start = 12.dp)
+                        .padding(start = Dimens.PaddingNormal)
                         .then(iconModifier)
                 ) {
                     Icon(
@@ -158,7 +158,7 @@ private fun SearchBar(
             .height(46.dp)
             .border(1.dp, MaterialTheme.colors.primary, CircleShape)
             .background(MaterialTheme.colors.background, CircleShape)
-            .padding(horizontal = 24.dp, vertical = 8.dp)
+            .padding(horizontal = 24.dp, vertical = Dimens.PaddingMedium)
     ) {
         Box(
             Modifier

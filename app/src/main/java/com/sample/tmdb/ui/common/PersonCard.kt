@@ -38,7 +38,7 @@ fun Person(
 ) {
     Column(
         modifier
-            .padding(4.dp)
+            .padding(Dimens.PaddingExtraSmall)
             .clickable {
                 onCreditSelected.invoke(person.id.toString())
             },

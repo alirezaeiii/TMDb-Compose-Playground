@@ -406,7 +406,10 @@ private fun BoxScope.TMDbItemPoster(posterUrl: String?, tmdbItemName: String) {
 private fun <T : TMDbItem> TMDbItemInfo(tmdbItem: T, modifier: Modifier) {
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier.padding(horizontal = 6.dp, vertical = 4.dp)
+        modifier = modifier.padding(
+            horizontal = Dimens.PaddingSmall,
+            vertical = Dimens.PaddingExtraSmall
+        )
     ) {
         TMDbItemName(name = tmdbItem.name)
         Row(
@@ -451,7 +454,7 @@ private fun TMDbItemFeature(icon: ImageVector, field: String) {
             ),
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,
-            modifier = Modifier.padding(horizontal = 2.dp)
+            modifier = Modifier.padding(horizontal = Dimens.PaddingMicro)
         )
     }
 }

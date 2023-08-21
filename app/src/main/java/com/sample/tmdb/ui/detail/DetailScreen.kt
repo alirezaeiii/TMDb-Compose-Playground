@@ -166,7 +166,7 @@ fun <T : TMDbItemDetails> DetailScreen(
                     textAlign = TextAlign.Center
                 ),
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = Dimens.PaddingLarge)
                     .constrainAs(title) {
                         top.linkTo(poster.bottom, 8.dp)
                         linkTo(startGuideline, endGuideline)
@@ -180,7 +180,7 @@ fun <T : TMDbItemDetails> DetailScreen(
                         letterSpacing = 2.sp
                     ),
                     modifier = Modifier
-                        .padding(horizontal = 16.dp)
+                        .padding(horizontal = Dimens.PaddingLarge)
                         .constrainAs(originalTitle) {
                             top.linkTo(title.bottom)
                             linkTo(startGuideline, endGuideline)
@@ -229,7 +229,7 @@ fun <T : TMDbItemDetails> DetailScreen(
                     fontWeight = FontWeight.Bold
                 ),
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = Dimens.PaddingLarge)
                     .constrainAs(tagline) {
                         top.linkTo(rateStars.bottom, 32.dp)
                     }
@@ -243,7 +243,7 @@ fun <T : TMDbItemDetails> DetailScreen(
                     fontFamily = FontFamily.SansSerif
                 ),
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = Dimens.PaddingLarge)
                     .constrainAs(overview) {
                         top.linkTo(tagline.bottom, 8.dp)
                         linkTo(startGuideline, endGuideline)
@@ -358,7 +358,7 @@ private fun GenreChips(genres: List<Genre>, modifier: Modifier) {
     Row(
         modifier
             .horizontalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = Dimens.PaddingLarge)
     ) {
         genres.map(Genre::name).forEachIndexed { index, name ->
             Text(
@@ -366,7 +366,7 @@ private fun GenreChips(genres: List<Genre>, modifier: Modifier) {
                 style = MaterialTheme.typography.subtitle1.copy(letterSpacing = 2.sp),
                 modifier = Modifier
                     .border(1.25.dp, LocalVibrantColor.current.value, RoundedCornerShape(50))
-                    .padding(horizontal = 6.dp, vertical = 3.dp)
+                    .padding(horizontal = Dimens.PaddingSmall, vertical = 3.dp)
             )
 
             if (index != genres.lastIndex) {
@@ -407,14 +407,14 @@ private fun TMDbItemField(name: String, value: String) {
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 4.dp)
+                .padding(top = Dimens.PaddingExtraSmall)
         )
     }
 }
 
 @Composable
 private fun RateStars(voteAverage: Double, modifier: Modifier) {
-    Row(modifier.padding(start = 4.dp)) {
+    Row(modifier.padding(start = Dimens.PaddingExtraSmall)) {
         val maxVote = 10
         val starCount = 5
         repeat(starCount) { starIndex ->
@@ -447,7 +447,7 @@ private fun <T : Credit> CreditSection(
             SectionHeader(headerResId, items, onAllCreditSelected)
             LazyRow(
                 modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
-                contentPadding = PaddingValues(16.dp)
+                contentPadding = PaddingValues(Dimens.PaddingLarge)
             ) {
                 items(
                     count = items.size,
@@ -471,7 +471,7 @@ private fun <T : Credit> SectionHeader(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = Dimens.PaddingLarge)
     ) {
         Text(
             text = stringResource(headerResId),
@@ -482,7 +482,7 @@ private fun <T : Credit> SectionHeader(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(4.dp)
+                .padding(Dimens.PaddingExtraSmall)
                 .clickable {
                     onAllCreditSelected.invoke(items)
                 }
@@ -491,7 +491,7 @@ private fun <T : Credit> SectionHeader(
                 text = stringResource(R.string.see_all, items.size),
                 color = LocalVibrantColor.current.value,
                 style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Bold),
-                modifier = Modifier.padding(end = 4.dp)
+                modifier = Modifier.padding(end = Dimens.PaddingExtraSmall)
             )
             Icon(
                 Icons.Filled.ArrowForward,
