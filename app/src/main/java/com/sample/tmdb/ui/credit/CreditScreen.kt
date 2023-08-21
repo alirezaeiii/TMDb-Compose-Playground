@@ -19,6 +19,7 @@ import com.sample.tmdb.utils.toDp
 @Composable
 fun <T : Credit> CreditScreen(
     @StringRes resourceId: Int,
+    onCreditSelected: (String) -> Unit,
     upPress: () -> Unit,
     items: List<T>
 ) {
@@ -30,7 +31,7 @@ fun <T : Credit> CreditScreen(
             top = Dimens.PaddingSmall,
             bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current)
                 .toDp().dp.plus(
-                    Dimens.GridSpacing
+                    Dimens.PaddingMedium
                 )
         ),
         content = {
@@ -46,7 +47,7 @@ fun <T : Credit> CreditScreen(
             }
 
             items(items.size) { index ->
-                Person(person = items[index])
+                Person(person = items[index], onCreditSelected = onCreditSelected)
             }
         }
     )

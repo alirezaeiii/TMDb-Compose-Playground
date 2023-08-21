@@ -20,6 +20,8 @@ val AshGray = Color(0xFFD3D3D3)
 val GRAY = Color(0xFF808080)
 val DarkGray = Color(0xFF525252)
 val Teal200 = Color(0xFF03DAC5)
+val Tornado = listOf(Color(0xff7057f5), Color(0xff86f7fa))
+val Neutral8 = Color(0xff121212)
 
 const val AlphaNearOpaque = 0.65f
 

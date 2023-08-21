@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sample.tmdb.R
 import com.sample.tmdb.domain.model.TMDbItem
+import com.sample.tmdb.ui.common.Dimens
 import com.sample.tmdb.ui.common.TMDbDivider
 import com.sample.tmdb.ui.paging.PagingScreen
 import com.sample.tmdb.ui.theme.AlphaNearOpaque
@@ -98,7 +99,7 @@ fun <T : TMDbItem> Search(
                     .fillMaxWidth()
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(
-                    16.dp,
+                    Dimens.PaddingLarge,
                     Alignment.CenterHorizontally
                 ),
                 verticalAlignment = Alignment.CenterVertically

@@ -37,6 +37,7 @@ import com.sample.tmdb.R
 import com.sample.tmdb.domain.model.*
 import com.sample.tmdb.ui.Content
 import com.sample.tmdb.ui.common.BottomArcShape
+import com.sample.tmdb.ui.common.Dimens
 import com.sample.tmdb.ui.common.Person
 import com.sample.tmdb.ui.theme.GetVibrantColorFromPoster
 import com.sample.tmdb.utils.dpToPx
@@ -48,13 +49,15 @@ fun MovieDetailScreen(
     upPress: () -> Unit,
     onAllCastSelected: (List<Cast>) -> Unit,
     onAllCrewSelected: (List<Crew>) -> Unit,
+    onCreditSelected: (String) -> Unit,
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     DetailScreen(
         viewModel = viewModel,
         upPress = upPress,
         onAllCastSelected = onAllCastSelected,
-        onAllCrewSelected = onAllCrewSelected
+        onAllCrewSelected = onAllCrewSelected,
+        onCreditSelected = onCreditSelected
     )
 }
 
@@ -63,13 +66,15 @@ fun TVShowDetailScreen(
     upPress: () -> Unit,
     onAllCastSelected: (List<Cast>) -> Unit,
     onAllCrewSelected: (List<Crew>) -> Unit,
+    onCreditSelected: (String) -> Unit,
     viewModel: TVShowDetailViewModel = hiltViewModel()
 ) {
     DetailScreen(
         viewModel = viewModel,
         upPress = upPress,
         onAllCastSelected = onAllCastSelected,
-        onAllCrewSelected = onAllCrewSelected
+        onAllCrewSelected = onAllCrewSelected,
+        onCreditSelected = onCreditSelected
     )
 }
 
@@ -79,13 +84,15 @@ private fun <T : TMDbItemDetails> DetailScreen(
     upPress: () -> Unit,
     onAllCastSelected: (List<Cast>) -> Unit,
     onAllCrewSelected: (List<Crew>) -> Unit,
+    onCreditSelected: (String) -> Unit
 ) {
     Content(viewModel = viewModel) {
         DetailScreen(
             detailWrapper = it,
             upPress = upPress,
             onAllCastSelected = onAllCastSelected,
-            onAllCrewSelected = onAllCrewSelected
+            onAllCrewSelected = onAllCrewSelected,
+            onCreditSelected = onCreditSelected
         )
     }
 }
@@ -98,7 +105,8 @@ fun <T : TMDbItemDetails> DetailScreen(
     detailWrapper: DetailWrapper<T>,
     upPress: () -> Unit,
     onAllCastSelected: (List<Cast>) -> Unit,
-    onAllCrewSelected: (List<Crew>) -> Unit
+    onAllCrewSelected: (List<Crew>) -> Unit,
+    onCreditSelected: (String) -> Unit
 ) {
     val defaultTextColor = MaterialTheme.colors.onBackground
     val vibrantColor = remember { Animatable(defaultTextColor) }
@@ -244,7 +252,7 @@ fun <T : TMDbItemDetails> DetailScreen(
             CreditSection(
                 items = detailWrapper.cast,
                 headerResId = R.string.cast,
-                itemContent = { item, _ -> Person(item, Modifier.width(140.dp)) },
+                itemContent = { item, _ -> Person(item, onCreditSelected, Modifier.width(140.dp)) },
                 onAllCreditSelected = onAllCastSelected,
                 modifier = Modifier.constrainAs(castSection) {
                     top.linkTo(overview.bottom, 16.dp)
@@ -254,7 +262,7 @@ fun <T : TMDbItemDetails> DetailScreen(
             CreditSection(
                 items = detailWrapper.crew,
                 headerResId = R.string.crew,
-                itemContent = { item, _ -> Person(item, Modifier.width(140.dp)) },
+                itemContent = { item, _ -> Person(item, onCreditSelected, Modifier.width(140.dp)) },
                 onAllCreditSelected = onAllCrewSelected,
                 modifier = Modifier.constrainAs(crewSection) {
                     top.linkTo(castSection.bottom, 16.dp)
@@ -445,7 +453,7 @@ private fun <T : Credit> CreditSection(
                     count = items.size,
                     itemContent = { index ->
                         itemContent(items[index], index)
-                        Spacer(modifier = Modifier.width(16.dp))
+                        Spacer(modifier = Modifier.width(Dimens.PaddingLarge))
                     }
                 )
             }
@@ -473,25 +481,22 @@ private fun <T : Credit> SectionHeader(
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier
+                .padding(4.dp)
+                .clickable {
+                    onAllCreditSelected.invoke(items)
+                }
         ) {
             Text(
                 text = stringResource(R.string.see_all, items.size),
                 color = LocalVibrantColor.current.value,
                 style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Bold),
-                modifier = Modifier
-                    .padding(end = 4.dp)
-                    .clickable {
-                        onAllCreditSelected.invoke(items)
-                    }
+                modifier = Modifier.padding(end = 4.dp)
             )
             Icon(
                 Icons.Filled.ArrowForward,
                 contentDescription = stringResource(R.string.see_all),
                 tint = LocalVibrantColor.current.value,
-                modifier = Modifier.clickable {
-                    onAllCreditSelected.invoke(items)
-                }
             )
         }
     }

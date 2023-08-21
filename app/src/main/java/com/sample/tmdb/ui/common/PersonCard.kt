@@ -1,6 +1,7 @@
 package com.sample.tmdb.ui.common
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,9 +31,17 @@ import com.sample.tmdb.ui.theme.imageTint
 import com.sample.tmdb.utils.CircleTopCropTransformation
 
 @Composable
-fun Person(person: Credit, modifier: Modifier = Modifier) {
+fun Person(
+    person: Credit,
+    onCreditSelected: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier.padding(4.dp),
+        modifier
+            .padding(4.dp)
+            .clickable {
+                onCreditSelected.invoke(person.id.toString())
+            },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card(
@@ -74,7 +83,7 @@ fun Person(person: Credit, modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = Dimens.PaddingExtraSmall)
         )
         Text(
             text = person.role,
@@ -84,7 +93,7 @@ fun Person(person: Credit, modifier: Modifier = Modifier) {
             ),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(top = 2.dp)
+            modifier = Modifier.padding(top = Dimens.PaddingMicro)
         )
     }
 }

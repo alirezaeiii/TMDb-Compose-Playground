@@ -8,15 +8,23 @@ import com.sample.tmdb.R
 
 object Dimens {
 
-    val PaddingMicro = 2.dp
+    val PaddingMicro: Dp
+        @Composable get() = dimensionResource(R.dimen.padding_micro)
+
+    val PaddingExtraSmall: Dp
+        @Composable get() = dimensionResource(R.dimen.padding_extra_small)
 
     val PaddingSmall: Dp
         @Composable get() = dimensionResource(R.dimen.padding_small)
 
-    val PaddingMedium = 12.dp
-
-    val GridSpacing: Dp
+    val PaddingMedium: Dp
         @Composable get() = dimensionResource(R.dimen.padding_medium)
+
+    val PaddingNormal: Dp
+        @Composable get() = dimensionResource(R.dimen.padding_normal)
+
+    val PaddingLarge: Dp
+        @Composable get() = dimensionResource(R.dimen.padding_large)
 
     val CreditCardSize = 120.dp
 }

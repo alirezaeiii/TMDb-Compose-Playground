@@ -34,6 +34,8 @@ object MainDestinations {
     const val TMDB_CAST_ROUTE = "cast_list"
     const val TMDB_CREW_ROUTE = "crew_list"
     const val TMDB_CREDIT_KEY =  "credit_list"
+    const val TMDB_PERSON_ROUTE = "person"
+    const val TMDB_PERSON_KEY = "personId"
 }
 
 /**
@@ -115,6 +117,13 @@ class TMDbAppState(
         // In order to discard duplicated navigation events, we check the Lifecycle
         if (from.lifecycleIsResumed()) {
             navController.navigate("${MainDestinations.TMDB_CREW_ROUTE}/$crew")
+        }
+    }
+
+    fun navigateToPerson(id: String, from: NavBackStackEntry) {
+        // In order to discard duplicated navigation events, we check the Lifecycle
+        if (from.lifecycleIsResumed()) {
+            navController.navigate("${MainDestinations.TMDB_PERSON_ROUTE}/$id")
         }
     }
 }

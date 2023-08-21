@@ -19,6 +19,7 @@ import com.sample.tmdb.R
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.ui.credit.CreditScreen
+import com.sample.tmdb.ui.credit.PersonScreen
 import com.sample.tmdb.ui.detail.MovieDetailScreen
 import com.sample.tmdb.ui.detail.TVShowDetailScreen
 import com.sample.tmdb.ui.feed.MovieFeedScreen
@@ -52,6 +53,7 @@ fun TMDbApp() {
                 onTVShowSelected = appState::navigateToTVShowDetail,
                 onAllCastSelected = appState::navigateToCastList,
                 onAllCrewSelected = appState::navigateToCrewList,
+                onCreditSelected = appState::navigateToPerson,
                 upPress = appState::upPress
             )
         }
@@ -99,6 +101,7 @@ private fun NavGraphBuilder.tmdbNavGraph(
     onTVShowSelected: (Int, NavBackStackEntry) -> Unit,
     onAllCastSelected: (String, NavBackStackEntry) -> Unit,
     onAllCrewSelected: (String, NavBackStackEntry) -> Unit,
+    onCreditSelected: (String, NavBackStackEntry) -> Unit,
     upPress: () -> Unit
 ) {
     navigation(
@@ -131,6 +134,8 @@ private fun NavGraphBuilder.tmdbNavGraph(
                 Uri.encode(gson.toJson(it, object : TypeToken<List<Crew>>() {}.type)),
                 from
             )
+        }, onCreditSelected = {
+            onCreditSelected(it, from)
         })
     }
     composable(
@@ -148,6 +153,8 @@ private fun NavGraphBuilder.tmdbNavGraph(
                 Uri.encode(gson.toJson(it, object : TypeToken<List<Crew>>() {}.type)),
                 from
             )
+        }, onCreditSelected = {
+            onCreditSelected(it, from)
         })
     }
     composable(route = MainDestinations.TMDB_TRENDING_MOVIES_ROUTE) { from ->
@@ -226,9 +233,6 @@ private fun NavGraphBuilder.tmdbNavGraph(
     composable(route = MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) { from ->
         SearchTVSeriesScreen(onClick = { onTVShowSelected(it.id, from) }, upPress = upPress)
     }
-    composable(route = MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) { from ->
-        SearchTVSeriesScreen(onClick = { onTVShowSelected(it.id, from) }, upPress = upPress)
-    }
     composable(
         route = "${MainDestinations.TMDB_CAST_ROUTE}/{${MainDestinations.TMDB_CREDIT_KEY}}",
         arguments = listOf(
@@ -236,6 +240,9 @@ private fun NavGraphBuilder.tmdbNavGraph(
     ) { from ->
         CreditScreen(
             R.string.cast,
+            onCreditSelected = {
+                onCreditSelected(it, from)
+            },
             upPress,
             gson.fromJson<List<Cast>>(
                 from.arguments?.getString(MainDestinations.TMDB_CREDIT_KEY),
@@ -250,12 +257,22 @@ private fun NavGraphBuilder.tmdbNavGraph(
     ) { from ->
         CreditScreen(
             R.string.crew,
+            onCreditSelected = {
+                onCreditSelected(it, from)
+            },
             upPress,
             gson.fromJson<List<Crew>>(
                 from.arguments?.getString(MainDestinations.TMDB_CREDIT_KEY),
                 object : TypeToken<List<Crew>>() {}.type
             )
         )
+    }
+    composable(
+        route = "${MainDestinations.TMDB_PERSON_ROUTE}/{${MainDestinations.TMDB_PERSON_KEY}}",
+        arguments = listOf(
+            navArgument(MainDestinations.TMDB_PERSON_KEY) { type = NavType.StringType })
+    ) {
+        PersonScreen(upPress)
     }
 }
 

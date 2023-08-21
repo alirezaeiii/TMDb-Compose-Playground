@@ -2,6 +2,7 @@ package com.sample.tmdb.di
 
 import com.sample.tmdb.BuildConfig
 import com.sample.tmdb.data.network.MovieService
+import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.network.TVShowService
 import dagger.Module
 import dagger.Provides
@@ -20,9 +21,16 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideMovieService(retrofit: Retrofit): MovieService = retrofit.create(MovieService::class.java)
+    fun provideMovieService(retrofit: Retrofit): MovieService =
+        retrofit.create(MovieService::class.java)
 
     @Singleton
     @Provides
-    fun provideTVShowService(retrofit: Retrofit): TVShowService = retrofit.create(TVShowService::class.java)
+    fun provideTVShowService(retrofit: Retrofit): TVShowService =
+        retrofit.create(TVShowService::class.java)
+
+    @Singleton
+    @Provides
+    fun providePersonService(retrofit: Retrofit): PersonService =
+        retrofit.create(PersonService::class.java)
 }

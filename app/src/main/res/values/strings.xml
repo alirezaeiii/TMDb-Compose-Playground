@@ -33,4 +33,9 @@
 
     <string name="search">Search %s</string>
     <string name="back">Back</string>
+
+    <string name="from">From %s</string>
+    <string name="born">Born on %s</string>
+    <string name="death">Death in %s</string>
+    <string name="biography">Biography</string>
 </resources>

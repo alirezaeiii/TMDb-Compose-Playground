@@ -4,10 +4,8 @@ import com.sample.tmdb.repository.*
 import com.sample.tmdb.domain.BaseDetailRepository
 import com.sample.tmdb.domain.BaseFeedRepository
 import com.sample.tmdb.domain.BasePagingRepository
-import com.sample.tmdb.domain.model.Movie
-import com.sample.tmdb.domain.model.MovieDetails
-import com.sample.tmdb.domain.model.TVShow
-import com.sample.tmdb.domain.model.TvDetails
+import com.sample.tmdb.domain.BaseRepository
+import com.sample.tmdb.domain.model.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -81,4 +79,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     internal abstract fun bindSearchTVShowRepository(searchTvSeriesPagingRepository: SearchTvSeriesPagingRepository): BasePagingRepository<TVShow>
+
+    @Singleton
+    @Binds
+    internal abstract fun bindPersonRepository(personRepository: PersonRepository): BaseRepository<Person>
 }

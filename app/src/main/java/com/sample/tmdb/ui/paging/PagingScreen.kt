@@ -258,15 +258,15 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 140.dp),
         contentPadding = PaddingValues(
-            start = Dimens.GridSpacing,
-            end = Dimens.GridSpacing,
+            start = Dimens.PaddingMedium,
+            end = Dimens.PaddingMedium,
             bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current)
                 .toDp().dp.plus(
-                    Dimens.GridSpacing
+                    Dimens.PaddingMedium
                 )
         ),
         horizontalArrangement = Arrangement.spacedBy(
-            Dimens.GridSpacing,
+            Dimens.PaddingMedium,
             Alignment.CenterHorizontally
         ),
         content = {
@@ -288,7 +288,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
                         it,
                         Modifier
                             .height(320.dp)
-                            .padding(vertical = Dimens.GridSpacing),
+                            .padding(vertical = Dimens.PaddingMedium),
                         onClick
                     )
                 }
@@ -299,7 +299,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
                     item(span = {
                         GridItemSpan(maxLineSpan)
                     }) {
-                        LoadingRow(modifier = Modifier.padding(vertical = Dimens.GridSpacing))
+                        LoadingRow(modifier = Modifier.padding(vertical = Dimens.PaddingMedium))
                     }
                 }
                 is LoadState.Error -> {
@@ -312,7 +312,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
                     }) {
                         ErrorScreen(
                             message = message,
-                            modifier = Modifier.padding(vertical = Dimens.GridSpacing),
+                            modifier = Modifier.padding(vertical = Dimens.PaddingMedium),
                             refresh = { lazyTMDbItems.retry() })
                     }
                 }
