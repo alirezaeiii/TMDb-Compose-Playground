@@ -6,11 +6,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -33,7 +34,6 @@ import kotlin.math.max
 import kotlin.math.min
 
 private val BottomBarHeight = 36.dp
-private val TitleHeight = 136.dp
 private val GradientScroll = 180.dp
 private val ImageOverlap = 115.dp
 private val MinTitleOffset = 56.dp
@@ -56,13 +56,14 @@ fun PersonScreen(
 
 @Composable
 private fun PersonScreen(person: Person, upPress: () -> Unit) {
+    val titleHeight = remember { mutableStateOf(0.dp) }
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         val scroll = rememberScrollState(0)
         Header()
-        Body(person.biography, scroll)
-        Title(person) { scroll.value }
+        Body(person.biography, titleHeight, scroll)
+        Title(person, titleHeight) { scroll.value }
         person.profilePath?.let {
             Image(it) { scroll.value }
         }
@@ -104,6 +105,7 @@ private fun Up(upPress: () -> Unit) {
 @Composable
 private fun Body(
     biography: String,
+    titleHeight: MutableState<Dp>,
     scroll: ScrollState
 ) {
     Column {
@@ -119,10 +121,9 @@ private fun Body(
             Spacer(Modifier.height(GradientScroll))
             Surface(Modifier.fillMaxWidth()) {
                 Column {
-                    Spacer(Modifier.height(ImageOverlap))
-                    Spacer(Modifier.height(TitleHeight))
+                    Spacer(Modifier.height(82.dp))
+                    Spacer(Modifier.height(titleHeight.value))
 
-                    Spacer(Modifier.height(16.dp))
                     if (biography.isNotEmpty()) {
                         Text(
                             text = stringResource(R.string.biography),
@@ -156,23 +157,31 @@ private fun Body(
 }
 
 @Composable
-private fun Title(person: Person, scrollProvider: () -> Int) {
-    val maxOffset = with(LocalDensity.current) {
+private fun Title(
+    person: Person,
+    titleHeight: MutableState<Dp>,
+    scrollProvider: () -> Int
+) {
+    val localDestiny = LocalDensity.current
+    val maxOffset = with(localDestiny) {
         (if (person.profilePath == null) MediumTitleOffset else MaxTitleOffset).toPx()
     }
-    val minOffset = with(LocalDensity.current) { MinTitleOffset.toPx() }
-
+    val minOffset = with(localDestiny) { MinTitleOffset.toPx() }
     Column(
         verticalArrangement = Arrangement.Bottom,
-        modifier = Modifier
-            .heightIn(min = TitleHeight)
-            .statusBarsPadding()
-            .offset {
-                val scroll = scrollProvider()
-                val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
-                IntOffset(x = 0, y = offset.toInt())
+        modifier = with(Modifier) {
+            onGloballyPositioned { coordinates ->
+                with(localDestiny) { titleHeight.value = coordinates.size.height.toDp() }
             }
-            .background(color = MaterialTheme.colors.surface)
+                .heightIn(min = titleHeight.value)
+                .statusBarsPadding()
+                .offset {
+                    val scroll = scrollProvider()
+                    val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
+                    IntOffset(x = 0, y = offset.toInt())
+                }
+                .background(color = MaterialTheme.colors.surface)
+        }
     ) {
         Spacer(Modifier.height(16.dp))
         Text(
@@ -207,8 +216,9 @@ private fun Title(person: Person, scrollProvider: () -> Int) {
                 color = MaterialTheme.colors.onSurface,
                 modifier = HzPadding
             )
+            Spacer(Modifier.height(4.dp))
         }
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(12.dp))
         TMDbDivider()
     }
 }
