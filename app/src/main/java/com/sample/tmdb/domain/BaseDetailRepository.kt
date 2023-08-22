@@ -6,7 +6,6 @@ import com.sample.tmdb.data.response.asCastDomainModel
 import com.sample.tmdb.data.response.asCrewDomainModel
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbItemDetails
-import com.sample.tmdb.utils.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -21,7 +20,7 @@ abstract class BaseDetailRepository<T : TMDbItemDetails>(
 
     protected abstract suspend fun getCredit(id: Int): NetworkCreditWrapper
 
-    override suspend fun getSuccessResult(id: Any?): Resource<DetailWrapper<T>> {
+    override suspend fun getSuccessResult(id: Any?): DetailWrapper<T> {
         val detailsDeferred: Deferred<T>
         val creditDeferred: Deferred<NetworkCreditWrapper>
         coroutineScope {
@@ -34,6 +33,6 @@ abstract class BaseDetailRepository<T : TMDbItemDetails>(
         val cast = networkCreditWrapper.cast.asCastDomainModel()
         val crew = networkCreditWrapper.crew.asCrewDomainModel()
 
-        return Resource.Success(DetailWrapper(cast, crew, details))
+        return DetailWrapper(cast, crew, details)
     }
 }

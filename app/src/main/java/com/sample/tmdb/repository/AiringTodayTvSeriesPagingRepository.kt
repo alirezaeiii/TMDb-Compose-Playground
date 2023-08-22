@@ -6,12 +6,13 @@ import com.sample.tmdb.data.paged.BasePagingSource
 import com.sample.tmdb.data.paged.tvshow.AiringTodayTvSeriesPagingSource
 import com.sample.tmdb.domain.BasePagingRepository
 import com.sample.tmdb.domain.model.TVShow
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AiringTodayTvSeriesPagingRepository @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val tvShowApi: TVShowService
 ) : BasePagingRepository<TVShow>() {
 

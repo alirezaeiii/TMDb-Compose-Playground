@@ -6,6 +6,7 @@ import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.di.IoDispatcher
 import com.sample.tmdb.domain.BaseDetailRepository
 import com.sample.tmdb.domain.model.MovieDetails
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -13,7 +14,7 @@ import javax.inject.Singleton
 @Singleton
 class MovieDetailRepository @Inject constructor(
     private val movieApi: MovieService,
-    context: Context,
+    @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
 ) : BaseDetailRepository<MovieDetails>(context, ioDispatcher) {
 

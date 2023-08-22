@@ -7,13 +7,14 @@ import com.sample.tmdb.data.response.asMovieDomainModel
 import com.sample.tmdb.di.IoDispatcher
 import com.sample.tmdb.domain.BaseFeedRepository
 import com.sample.tmdb.domain.model.Movie
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class MovieFeedRepository @Inject constructor(
-    context: Context,
+    @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
     private val movieApi: MovieService,
 ) : BaseFeedRepository<Movie>(context, ioDispatcher) {

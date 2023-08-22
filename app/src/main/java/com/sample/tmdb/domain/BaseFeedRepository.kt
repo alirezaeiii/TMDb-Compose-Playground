@@ -5,7 +5,6 @@ import com.sample.tmdb.R
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TMDbItem
-import com.sample.tmdb.utils.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -30,7 +29,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(
 
     protected abstract fun getLatestResId(): Int
 
-    override suspend fun getSuccessResult(id: Any?): Resource<List<FeedWrapper<T>>> {
+    override suspend fun getSuccessResult(id: Any?): List<FeedWrapper<T>> {
         val trendingDeferred: Deferred<List<T>>
         val nowPlayingDeferred: Deferred<List<T>>
         val popularDeferred: Deferred<List<T>>
@@ -43,33 +42,31 @@ abstract class BaseFeedRepository<T : TMDbItem>(
             latestDeferred = async { latestItems() }
             topRatedDeferred = async { topRatedItems() }
         }
-        return Resource.Success(
-            listOf(
-                FeedWrapper(
-                    trendingDeferred.await(),
-                    R.string.text_trending,
-                    SortType.TRENDING
-                ),
-                FeedWrapper(
-                    popularDeferred.await(),
-                    R.string.text_popular,
-                    SortType.MOST_POPULAR
-                ),
-                FeedWrapper(
-                    nowPlayingDeferred.await(),
-                    getNowPlayingResId(),
-                    SortType.NOW_PLAYING
-                ),
-                FeedWrapper(
-                    latestDeferred.await(),
-                    getLatestResId(),
-                    SortType.UPCOMING
-                ),
-                FeedWrapper(
-                    topRatedDeferred.await(),
-                    R.string.text_highest_rate,
-                    SortType.HIGHEST_RATED
-                )
+        return listOf(
+            FeedWrapper(
+                trendingDeferred.await(),
+                R.string.text_trending,
+                SortType.TRENDING
+            ),
+            FeedWrapper(
+                popularDeferred.await(),
+                R.string.text_popular,
+                SortType.MOST_POPULAR
+            ),
+            FeedWrapper(
+                nowPlayingDeferred.await(),
+                getNowPlayingResId(),
+                SortType.NOW_PLAYING
+            ),
+            FeedWrapper(
+                latestDeferred.await(),
+                getLatestResId(),
+                SortType.UPCOMING
+            ),
+            FeedWrapper(
+                topRatedDeferred.await(),
+                R.string.text_highest_rate,
+                SortType.HIGHEST_RATED
             )
         )
     }

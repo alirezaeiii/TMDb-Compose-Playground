@@ -7,6 +7,7 @@ import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.di.IoDispatcher
 import com.sample.tmdb.domain.BaseDetailRepository
 import com.sample.tmdb.domain.model.TvDetails
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 class TVShowDetailRepository @Inject constructor(
     private val tvShowApi: TVShowService,
-    context: Context,
+    @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
 ) : BaseDetailRepository<TvDetails>(context, ioDispatcher) {
 

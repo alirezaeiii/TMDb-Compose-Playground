@@ -6,12 +6,13 @@ import com.sample.tmdb.data.paged.BasePagingSource
 import com.sample.tmdb.data.paged.movie.TopRatedMoviesPagingSource
 import com.sample.tmdb.domain.BasePagingRepository
 import com.sample.tmdb.domain.model.Movie
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class TopRatedMoviesPagingRepository @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val movieApi: MovieService
 ) : BasePagingRepository<Movie>() {
 

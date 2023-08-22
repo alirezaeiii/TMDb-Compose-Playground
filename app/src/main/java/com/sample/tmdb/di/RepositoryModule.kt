@@ -1,19 +1,19 @@
 package com.sample.tmdb.di
 
-import com.sample.tmdb.repository.*
 import com.sample.tmdb.domain.BaseDetailRepository
 import com.sample.tmdb.domain.BaseFeedRepository
 import com.sample.tmdb.domain.BasePagingRepository
 import com.sample.tmdb.domain.BaseRepository
 import com.sample.tmdb.domain.model.*
+import com.sample.tmdb.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
     @Singleton
