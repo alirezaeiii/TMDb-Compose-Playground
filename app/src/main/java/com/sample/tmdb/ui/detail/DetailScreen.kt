@@ -2,9 +2,12 @@ package com.sample.tmdb.ui.detail
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.Animatable
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector4D
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -15,10 +18,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -55,6 +63,8 @@ fun MovieDetailScreen(
     onCreditSelected: (String) -> Unit,
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
+    // Visibility for FAB
+    val isFabVisible = rememberSaveable { mutableStateOf(true) }
     Content(viewModel = viewModel) {
         DetailScreen(
             detailWrapper = it,
@@ -62,7 +72,28 @@ fun MovieDetailScreen(
             onAllCastSelected = onAllCastSelected,
             onAllCrewSelected = onAllCrewSelected,
             onCreditSelected = onCreditSelected,
-            fab = { ToggleBookmarkMovieFab(viewModel, it.details) }
+            fab = {
+                val isBookmark = viewModel.isBookmarked.collectAsState().value
+                ToggleBookmarkFab(isBookmark = isBookmark, isVisible = isFabVisible) {
+                    if (isBookmark) {
+                        viewModel.removeBookmark(it.details.id)
+                    } else {
+                        viewModel.addBookmark(
+                            Movie(
+                                id = it.details.id,
+                                overview = it.details.overview,
+                                releaseDate = it.details.releaseDate,
+                                backdropUrl = it.details.backdropPath,
+                                posterUrl = it.details.posterPath,
+                                name = it.details.title,
+                                voteAverage = it.details.voteAverage,
+                                voteCount = it.details.voteCount
+                            )
+                        )
+                    }
+                }
+            },
+            isFabVisible = isFabVisible
         )
         viewModel.isBookmarked(it.details.id)
     }
@@ -76,6 +107,8 @@ fun TVShowDetailScreen(
     onCreditSelected: (String) -> Unit,
     viewModel: TVShowDetailViewModel = hiltViewModel()
 ) {
+    // Visibility for FAB
+    val isFabVisible = rememberSaveable { mutableStateOf(true) }
     Content(viewModel = viewModel) {
         DetailScreen(
             detailWrapper = it,
@@ -83,7 +116,28 @@ fun TVShowDetailScreen(
             onAllCastSelected = onAllCastSelected,
             onAllCrewSelected = onAllCrewSelected,
             onCreditSelected = onCreditSelected,
-            fab = { ToggleBookmarkTVShowFab(viewModel, it.details) }
+            fab = {
+                val isBookmark = viewModel.isBookmarked.collectAsState().value
+                ToggleBookmarkFab(isBookmark = isBookmark, isVisible = isFabVisible) {
+                    if (isBookmark) {
+                        viewModel.removeBookmark(it.details.id)
+                    } else {
+                        viewModel.addBookmark(
+                            TVShow(
+                                id = it.details.id,
+                                overview = it.details.overview,
+                                releaseDate = it.details.releaseDate,
+                                backdropUrl = it.details.backdropPath,
+                                posterUrl = it.details.posterPath,
+                                name = it.details.title,
+                                voteAverage = it.details.voteAverage,
+                                voteCount = it.details.voteCount
+                            )
+                        )
+                    }
+                }
+            },
+            isFabVisible = isFabVisible
         )
         viewModel.isBookmarked(it.details.id)
     }
@@ -100,13 +154,31 @@ fun <T : TMDbItemDetails> DetailScreen(
     onAllCrewSelected: (List<Crew>) -> Unit,
     onCreditSelected: (String) -> Unit,
     fab: @Composable() () -> Unit,
+    isFabVisible: MutableState<Boolean>
 ) {
     val defaultTextColor = MaterialTheme.colors.onBackground
     val vibrantColor = remember { Animatable(defaultTextColor) }
+    // Nested scroll for control FAB
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                // Hide FAB
+                if (available.y < -1) {
+                    isFabVisible.value = false
+                }
+                // Show FAB
+                if (available.y > 1) {
+                    isFabVisible.value = true
+                }
+                return Offset.Zero
+            }
+        }
+    }
     CompositionLocalProvider(
         LocalVibrantColor provides vibrantColor,
     ) {
         Scaffold(
+            Modifier.nestedScroll(nestedScrollConnection),
             floatingActionButton = { fab.invoke() },
             floatingActionButtonPosition = FabPosition.End
         ) { contentPadding ->
@@ -115,7 +187,7 @@ fun <T : TMDbItemDetails> DetailScreen(
                     .fillMaxSize()
                     .background(MaterialTheme.colors.surface)
                     .verticalScroll(rememberScrollState())
-                    .padding(bottom = contentPadding.calculateBottomPadding())
+                    .padding(contentPadding)
             ) {
                 val (appbar, backdrop, poster, title, originalTitle, genres, specs, rateStars, tagline, overview) = createRefs()
                 val (castSection, crewSection, space) = createRefs()
@@ -517,84 +589,31 @@ private fun <T : Credit> SectionHeader(
 }
 
 @Composable
-private fun ToggleBookmarkMovieFab(
-    viewModel: MovieDetailViewModel,
-    movieDetails: TMDbItemDetails
+private fun ToggleBookmarkFab(
+    isBookmark: Boolean,
+    isVisible: MutableState<Boolean>,
+    onClick: () -> Unit
 ) {
-    val isBookmark = viewModel.isBookmarked.collectAsState().value
-    FloatingActionButton(
-        modifier = Modifier.padding(
-            bottom = WindowInsets.navigationBars
-                .getBottom(LocalDensity.current).toDp().dp
-        ),
-        shape = CircleShape,
-        onClick = {
-            if (isBookmark) {
-                viewModel.removeBookmark(movieDetails.id)
-            } else {
-                viewModel.addBookmark(
-                    Movie(
-                        id = movieDetails.id,
-                        overview = movieDetails.overview,
-                        releaseDate = movieDetails.releaseDate,
-                        backdropUrl = movieDetails.backdropPath,
-                        posterUrl = movieDetails.posterPath,
-                        name = movieDetails.title,
-                        voteAverage = movieDetails.voteAverage,
-                        voteCount = movieDetails.voteCount
-                    )
-                )
-            }
-        },
+    AnimatedVisibility(
+        visible = isVisible.value,
+        enter = slideInVertically(initialOffsetY = { it * 2 }),
+        exit = slideOutVertically(targetOffsetY = { it * 2 }),
     ) {
-        Icon(
-            imageVector = Icons.Filled.Favorite,
-            tint = if (isBookmark) Color.Red else Color.Black,
-            contentDescription = if (isBookmark) stringResource(R.string.favorite) else stringResource(
-                R.string.un_favorite
-            )
-        )
-    }
-}
-
-@Composable
-private fun ToggleBookmarkTVShowFab(
-    viewModel: TVShowDetailViewModel,
-    tvShowDetails: TMDbItemDetails
-) {
-    viewModel.isBookmarked(tvShowDetails.id)
-    val isBookmark = viewModel.isBookmarked.collectAsState().value
-    FloatingActionButton(
-        modifier = Modifier.padding(
-            bottom = WindowInsets.navigationBars
-                .getBottom(LocalDensity.current).toDp().dp
-        ),
-        shape = CircleShape,
-        onClick = {
-            if (isBookmark) {
-                viewModel.removeBookmark(tvShowDetails.id)
-            } else {
-                viewModel.addBookmark(
-                    TVShow(
-                        id = tvShowDetails.id,
-                        overview = tvShowDetails.overview,
-                        releaseDate = tvShowDetails.releaseDate,
-                        backdropUrl = tvShowDetails.backdropPath,
-                        posterUrl = tvShowDetails.posterPath,
-                        name = tvShowDetails.title,
-                        voteAverage = tvShowDetails.voteAverage,
-                        voteCount = tvShowDetails.voteCount
-                    )
+        FloatingActionButton(
+            modifier = Modifier.padding(
+                bottom = WindowInsets.navigationBars
+                    .getBottom(LocalDensity.current).toDp().dp
+            ),
+            shape = CircleShape,
+            onClick = onClick
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Favorite,
+                tint = if (isBookmark) Color.Red else MaterialTheme.colors.surface,
+                contentDescription = if (isBookmark) stringResource(R.string.favorite) else stringResource(
+                    R.string.un_favorite
                 )
-            }
-        },
-    ) {
-        Icon(
-            imageVector = Icons.Filled.Favorite,
-            tint = if (isBookmark) Color.Red else Color.Black,
-            contentDescription = if (isBookmark) stringResource(R.string.favorite) else stringResource(
-                R.string.un_favorite
             )
-        )
+        }
     }
 }
