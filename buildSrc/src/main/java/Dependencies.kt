@@ -23,6 +23,7 @@ object Versions {
     const val palette = "1.0.0"
     const val icon_extended = "1.4.0-alpha02"
     const val browser = "1.5.0-alpha01"
+    const val room_version = "2.5.2"
 }
 
 object AppMetaData {
@@ -88,4 +89,9 @@ object Deps {
 
     //Gson
     const val gson =  "com.google.code.gson:gson:${Versions.gson}"
+
+    // Room
+    const val room = "androidx.room:room-runtime:${Versions.room_version}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.room_version}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.room_version}"
 }

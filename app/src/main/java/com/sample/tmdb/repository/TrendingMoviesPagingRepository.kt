@@ -4,7 +4,7 @@ import android.content.Context
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.paged.BasePagingSource
 import com.sample.tmdb.data.paged.movie.TrendingMoviesPagingSource
-import com.sample.tmdb.domain.BasePagingRepository
+import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.domain.model.Movie
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

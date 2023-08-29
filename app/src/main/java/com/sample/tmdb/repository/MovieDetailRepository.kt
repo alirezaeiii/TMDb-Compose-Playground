@@ -4,7 +4,7 @@ import android.content.Context
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.di.IoDispatcher
-import com.sample.tmdb.domain.BaseDetailRepository
+import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.model.MovieDetails
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher

@@ -1,4 +1,4 @@
-package com.sample.tmdb.domain
+package com.sample.tmdb.domain.repository
 
 import android.content.Context
 import com.sample.tmdb.data.response.NetworkCreditWrapper

@@ -1,7 +1,7 @@
 package com.sample.tmdb.ui.detail
 
 import androidx.lifecycle.SavedStateHandle
-import com.sample.tmdb.domain.BaseDetailRepository
+import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.ui.BaseViewModel

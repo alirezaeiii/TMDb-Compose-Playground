@@ -8,6 +8,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -20,6 +21,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -43,6 +45,7 @@ import com.sample.tmdb.ui.theme.GetVibrantColorFromPoster
 import com.sample.tmdb.utils.dpToPx
 import com.sample.tmdb.utils.openInChromeCustomTab
 import com.sample.tmdb.utils.springAnimation
+import com.sample.tmdb.utils.toDp
 
 @Composable
 fun MovieDetailScreen(
@@ -52,13 +55,17 @@ fun MovieDetailScreen(
     onCreditSelected: (String) -> Unit,
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
-    DetailScreen(
-        viewModel = viewModel,
-        upPress = upPress,
-        onAllCastSelected = onAllCastSelected,
-        onAllCrewSelected = onAllCrewSelected,
-        onCreditSelected = onCreditSelected
-    )
+    Content(viewModel = viewModel) {
+        DetailScreen(
+            detailWrapper = it,
+            upPress = upPress,
+            onAllCastSelected = onAllCastSelected,
+            onAllCrewSelected = onAllCrewSelected,
+            onCreditSelected = onCreditSelected,
+            fab = { ToggleBookmarkMovieFab(viewModel, it.details) }
+        )
+        viewModel.isBookmarked(it.details.id)
+    }
 }
 
 @Composable
@@ -69,31 +76,16 @@ fun TVShowDetailScreen(
     onCreditSelected: (String) -> Unit,
     viewModel: TVShowDetailViewModel = hiltViewModel()
 ) {
-    DetailScreen(
-        viewModel = viewModel,
-        upPress = upPress,
-        onAllCastSelected = onAllCastSelected,
-        onAllCrewSelected = onAllCrewSelected,
-        onCreditSelected = onCreditSelected
-    )
-}
-
-@Composable
-private fun <T : TMDbItemDetails> DetailScreen(
-    viewModel: BaseDetailViewModel<T>,
-    upPress: () -> Unit,
-    onAllCastSelected: (List<Cast>) -> Unit,
-    onAllCrewSelected: (List<Crew>) -> Unit,
-    onCreditSelected: (String) -> Unit
-) {
     Content(viewModel = viewModel) {
         DetailScreen(
             detailWrapper = it,
             upPress = upPress,
             onAllCastSelected = onAllCastSelected,
             onAllCrewSelected = onAllCrewSelected,
-            onCreditSelected = onCreditSelected
+            onCreditSelected = onCreditSelected,
+            fab = { ToggleBookmarkTVShowFab(viewModel, it.details) }
         )
+        viewModel.isBookmarked(it.details.id)
     }
 }
 
@@ -106,177 +98,196 @@ fun <T : TMDbItemDetails> DetailScreen(
     upPress: () -> Unit,
     onAllCastSelected: (List<Cast>) -> Unit,
     onAllCrewSelected: (List<Crew>) -> Unit,
-    onCreditSelected: (String) -> Unit
+    onCreditSelected: (String) -> Unit,
+    fab: @Composable() () -> Unit,
 ) {
     val defaultTextColor = MaterialTheme.colors.onBackground
     val vibrantColor = remember { Animatable(defaultTextColor) }
     CompositionLocalProvider(
         LocalVibrantColor provides vibrantColor,
     ) {
-        ConstraintLayout(
-            Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.surface)
-                .verticalScroll(rememberScrollState())
-        ) {
-            val (appbar, backdrop, poster, title, originalTitle, genres, specs, rateStars, tagline, overview) = createRefs()
-            val (castSection, crewSection, space) = createRefs()
-            val startGuideline = createGuidelineFromStart(16.dp)
-            val endGuideline = createGuidelineFromEnd(16.dp)
-
-            detailWrapper.details.posterPath?.let {
-                GetVibrantColorFromPoster(
-                    it,
-                    LocalVibrantColor.current
-                )
-            }
-            detailWrapper.details.backdropPath?.let {
-                Backdrop(
-                    backdropUrl = it,
-                    detailWrapper.details.title,
-                    Modifier.constrainAs(backdrop) {})
-            }
-            val posterWidth = 160.dp
-            AppBar(
-                homepage = detailWrapper.details.homepage,
-                upPress = upPress,
-                modifier = Modifier
-                    .requiredWidth(posterWidth * 2.2f)
-                    .constrainAs(appbar) { centerTo(poster) }
-                    .offset(y = 24.dp)
-            )
-            Poster(
-                detailWrapper.details.posterPath,
-                detailWrapper.details.title,
+        Scaffold(
+            floatingActionButton = { fab.invoke() },
+            floatingActionButtonPosition = FabPosition.End
+        ) { contentPadding ->
+            ConstraintLayout(
                 Modifier
-                    .zIndex(17f)
-                    .width(posterWidth)
-                    .height(240.dp)
-                    .constrainAs(poster) {
-                        centerAround(backdrop.bottom)
-                        linkTo(startGuideline, endGuideline)
-                    }
-            )
-            Text(
-                text = detailWrapper.details.title,
-                style = MaterialTheme.typography.h1.copy(
-                    fontSize = 26.sp,
-                    letterSpacing = 3.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center
-                ),
-                modifier = Modifier
-                    .padding(horizontal = Dimens.PaddingLarge)
-                    .constrainAs(title) {
-                        top.linkTo(poster.bottom, 8.dp)
-                        linkTo(startGuideline, endGuideline)
-                    }
-            )
-            if (detailWrapper.details.title != detailWrapper.details.originalTitle) {
-                Text(
-                    text = "(${detailWrapper.details.originalTitle})",
-                    style = MaterialTheme.typography.subtitle2.copy(
-                        fontStyle = FontStyle.Italic,
-                        letterSpacing = 2.sp
-                    ),
+                    .fillMaxSize()
+                    .background(MaterialTheme.colors.surface)
+                    .verticalScroll(rememberScrollState())
+                    .padding(bottom = contentPadding.calculateBottomPadding())
+            ) {
+                val (appbar, backdrop, poster, title, originalTitle, genres, specs, rateStars, tagline, overview) = createRefs()
+                val (castSection, crewSection, space) = createRefs()
+                val startGuideline = createGuidelineFromStart(16.dp)
+                val endGuideline = createGuidelineFromEnd(16.dp)
+
+                detailWrapper.details.posterPath?.let {
+                    GetVibrantColorFromPoster(
+                        it,
+                        LocalVibrantColor.current
+                    )
+                }
+                detailWrapper.details.backdropPath?.let {
+                    Backdrop(
+                        backdropUrl = it,
+                        detailWrapper.details.title,
+                        Modifier.constrainAs(backdrop) {})
+                }
+                val posterWidth = 160.dp
+                AppBar(
+                    homepage = detailWrapper.details.homepage,
+                    upPress = upPress,
                     modifier = Modifier
-                        .padding(horizontal = Dimens.PaddingLarge)
-                        .constrainAs(originalTitle) {
-                            top.linkTo(title.bottom)
+                        .requiredWidth(posterWidth * 2.2f)
+                        .constrainAs(appbar) { centerTo(poster) }
+                        .offset(y = 24.dp)
+                )
+                Poster(
+                    detailWrapper.details.posterPath,
+                    detailWrapper.details.title,
+                    Modifier
+                        .zIndex(17f)
+                        .width(posterWidth)
+                        .height(240.dp)
+                        .constrainAs(poster) {
+                            centerAround(backdrop.bottom)
                             linkTo(startGuideline, endGuideline)
                         }
                 )
-            } else {
-                Spacer(
-                    modifier = Modifier.constrainAs(originalTitle) {
-                        top.linkTo(title.bottom)
+                Text(
+                    text = detailWrapper.details.title,
+                    style = MaterialTheme.typography.h1.copy(
+                        fontSize = 26.sp,
+                        letterSpacing = 3.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Center
+                    ),
+                    modifier = Modifier
+                        .padding(horizontal = Dimens.PaddingLarge)
+                        .constrainAs(title) {
+                            top.linkTo(poster.bottom, 8.dp)
+                            linkTo(startGuideline, endGuideline)
+                        }
+                )
+                if (detailWrapper.details.title != detailWrapper.details.originalTitle) {
+                    Text(
+                        text = "(${detailWrapper.details.originalTitle})",
+                        style = MaterialTheme.typography.subtitle2.copy(
+                            fontStyle = FontStyle.Italic,
+                            letterSpacing = 2.sp
+                        ),
+                        modifier = Modifier
+                            .padding(horizontal = Dimens.PaddingLarge)
+                            .constrainAs(originalTitle) {
+                                top.linkTo(title.bottom)
+                                linkTo(startGuideline, endGuideline)
+                            }
+                    )
+                } else {
+                    Spacer(
+                        modifier = Modifier.constrainAs(originalTitle) {
+                            top.linkTo(title.bottom)
+                            linkTo(startGuideline, endGuideline)
+                        }
+                    )
+                }
+
+                GenreChips(
+                    detailWrapper.details.genres.take(4),
+                    modifier = Modifier.constrainAs(genres) {
+                        top.linkTo(originalTitle.bottom, 16.dp)
                         linkTo(startGuideline, endGuideline)
                     }
                 )
-            }
 
-            GenreChips(
-                detailWrapper.details.genres.take(4),
-                modifier = Modifier.constrainAs(genres) {
-                    top.linkTo(originalTitle.bottom, 16.dp)
-                    linkTo(startGuideline, endGuideline)
-                }
-            )
-
-            TMDbItemFields(
-                detailWrapper.details,
-                modifier = Modifier.constrainAs(specs) {
-                    top.linkTo(genres.bottom, 12.dp)
-                    linkTo(startGuideline, endGuideline)
-                }
-            )
-
-            RateStars(
-                detailWrapper.details.voteAverage,
-                modifier = Modifier.constrainAs(rateStars) {
-                    top.linkTo(specs.bottom, 12.dp)
-                    linkTo(startGuideline, endGuideline)
-                }
-            )
-
-            Text(
-                text = detailWrapper.details.tagline,
-                color = LocalVibrantColor.current.value,
-                style = MaterialTheme.typography.body1.copy(
-                    letterSpacing = 2.sp,
-                    lineHeight = 24.sp,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold
-                ),
-                modifier = Modifier
-                    .padding(horizontal = Dimens.PaddingLarge)
-                    .constrainAs(tagline) {
-                        top.linkTo(rateStars.bottom, 32.dp)
-                    }
-            )
-
-            Text(
-                text = detailWrapper.details.overview,
-                style = MaterialTheme.typography.body2.copy(
-                    letterSpacing = 2.sp,
-                    lineHeight = 30.sp,
-                    fontFamily = FontFamily.SansSerif
-                ),
-                modifier = Modifier
-                    .padding(horizontal = Dimens.PaddingLarge)
-                    .constrainAs(overview) {
-                        top.linkTo(tagline.bottom, 8.dp)
+                TMDbItemFields(
+                    detailWrapper.details,
+                    modifier = Modifier.constrainAs(specs) {
+                        top.linkTo(genres.bottom, 12.dp)
                         linkTo(startGuideline, endGuideline)
                     }
-            )
-            CreditSection(
-                items = detailWrapper.cast,
-                headerResId = R.string.cast,
-                itemContent = { item, _ -> Person(item, onCreditSelected, Modifier.width(140.dp)) },
-                onAllCreditSelected = onAllCastSelected,
-                modifier = Modifier.constrainAs(castSection) {
-                    top.linkTo(overview.bottom, 16.dp)
-                    linkTo(startGuideline, endGuideline)
-                }
-            )
-            CreditSection(
-                items = detailWrapper.crew,
-                headerResId = R.string.crew,
-                itemContent = { item, _ -> Person(item, onCreditSelected, Modifier.width(140.dp)) },
-                onAllCreditSelected = onAllCrewSelected,
-                modifier = Modifier.constrainAs(crewSection) {
-                    top.linkTo(castSection.bottom, 16.dp)
-                    linkTo(startGuideline, endGuideline)
-                }
-            )
+                )
 
-            Spacer(
-                modifier = Modifier
-                    .windowInsetsBottomHeight(WindowInsets.navigationBars)
-                    .constrainAs(space) {
-                        top.linkTo(crewSection.bottom)
+                RateStars(
+                    detailWrapper.details.voteAverage,
+                    modifier = Modifier.constrainAs(rateStars) {
+                        top.linkTo(specs.bottom, 12.dp)
+                        linkTo(startGuideline, endGuideline)
                     }
-            )
+                )
+
+                Text(
+                    text = detailWrapper.details.tagline,
+                    color = LocalVibrantColor.current.value,
+                    style = MaterialTheme.typography.body1.copy(
+                        letterSpacing = 2.sp,
+                        lineHeight = 24.sp,
+                        fontFamily = FontFamily.Serif,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    modifier = Modifier
+                        .padding(horizontal = Dimens.PaddingLarge)
+                        .constrainAs(tagline) {
+                            top.linkTo(rateStars.bottom, 32.dp)
+                        }
+                )
+
+                Text(
+                    text = detailWrapper.details.overview,
+                    style = MaterialTheme.typography.body2.copy(
+                        letterSpacing = 2.sp,
+                        lineHeight = 30.sp,
+                        fontFamily = FontFamily.SansSerif
+                    ),
+                    modifier = Modifier
+                        .padding(horizontal = Dimens.PaddingLarge)
+                        .constrainAs(overview) {
+                            top.linkTo(tagline.bottom, 8.dp)
+                            linkTo(startGuideline, endGuideline)
+                        }
+                )
+                CreditSection(
+                    items = detailWrapper.cast,
+                    headerResId = R.string.cast,
+                    itemContent = { item, _ ->
+                        Person(
+                            item,
+                            onCreditSelected,
+                            Modifier.width(140.dp)
+                        )
+                    },
+                    onAllCreditSelected = onAllCastSelected,
+                    modifier = Modifier.constrainAs(castSection) {
+                        top.linkTo(overview.bottom, 16.dp)
+                        linkTo(startGuideline, endGuideline)
+                    }
+                )
+                CreditSection(
+                    items = detailWrapper.crew,
+                    headerResId = R.string.crew,
+                    itemContent = { item, _ ->
+                        Person(
+                            item,
+                            onCreditSelected,
+                            Modifier.width(140.dp)
+                        )
+                    },
+                    onAllCreditSelected = onAllCrewSelected,
+                    modifier = Modifier.constrainAs(crewSection) {
+                        top.linkTo(castSection.bottom, 16.dp)
+                        linkTo(startGuideline, endGuideline)
+                    }
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .windowInsetsBottomHeight(WindowInsets.navigationBars)
+                        .constrainAs(space) {
+                            top.linkTo(crewSection.bottom)
+                        }
+                )
+            }
         }
     }
 }
@@ -399,7 +410,10 @@ private fun TMDbItemField(name: String, value: String) {
     Column {
         Text(
             text = name,
-            style = MaterialTheme.typography.subtitle2.copy(fontSize = 13.sp, letterSpacing = 1.sp),
+            style = MaterialTheme.typography.subtitle2.copy(
+                fontSize = 13.sp,
+                letterSpacing = 1.sp
+            ),
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Text(
@@ -499,5 +513,88 @@ private fun <T : Credit> SectionHeader(
                 tint = LocalVibrantColor.current.value,
             )
         }
+    }
+}
+
+@Composable
+private fun ToggleBookmarkMovieFab(
+    viewModel: MovieDetailViewModel,
+    movieDetails: TMDbItemDetails
+) {
+    val isBookmark = viewModel.isBookmarked.collectAsState().value
+    FloatingActionButton(
+        modifier = Modifier.padding(
+            bottom = WindowInsets.navigationBars
+                .getBottom(LocalDensity.current).toDp().dp
+        ),
+        shape = CircleShape,
+        onClick = {
+            if (isBookmark) {
+                viewModel.removeBookmark(movieDetails.id)
+            } else {
+                viewModel.addBookmark(
+                    Movie(
+                        id = movieDetails.id,
+                        overview = movieDetails.overview,
+                        releaseDate = movieDetails.releaseDate,
+                        backdropUrl = movieDetails.backdropPath,
+                        posterUrl = movieDetails.posterPath,
+                        name = movieDetails.title,
+                        voteAverage = movieDetails.voteAverage,
+                        voteCount = movieDetails.voteCount
+                    )
+                )
+            }
+        },
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Favorite,
+            tint = if (isBookmark) Color.Red else Color.Black,
+            contentDescription = if (isBookmark) stringResource(R.string.favorite) else stringResource(
+                R.string.un_favorite
+            )
+        )
+    }
+}
+
+@Composable
+private fun ToggleBookmarkTVShowFab(
+    viewModel: TVShowDetailViewModel,
+    tvShowDetails: TMDbItemDetails
+) {
+    viewModel.isBookmarked(tvShowDetails.id)
+    val isBookmark = viewModel.isBookmarked.collectAsState().value
+    FloatingActionButton(
+        modifier = Modifier.padding(
+            bottom = WindowInsets.navigationBars
+                .getBottom(LocalDensity.current).toDp().dp
+        ),
+        shape = CircleShape,
+        onClick = {
+            if (isBookmark) {
+                viewModel.removeBookmark(tvShowDetails.id)
+            } else {
+                viewModel.addBookmark(
+                    TVShow(
+                        id = tvShowDetails.id,
+                        overview = tvShowDetails.overview,
+                        releaseDate = tvShowDetails.releaseDate,
+                        backdropUrl = tvShowDetails.backdropPath,
+                        posterUrl = tvShowDetails.posterPath,
+                        name = tvShowDetails.title,
+                        voteAverage = tvShowDetails.voteAverage,
+                        voteCount = tvShowDetails.voteCount
+                    )
+                )
+            }
+        },
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Favorite,
+            tint = if (isBookmark) Color.Red else Color.Black,
+            contentDescription = if (isBookmark) stringResource(R.string.favorite) else stringResource(
+                R.string.un_favorite
+            )
+        )
     }
 }

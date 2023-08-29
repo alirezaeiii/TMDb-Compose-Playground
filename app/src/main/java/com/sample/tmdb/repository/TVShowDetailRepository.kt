@@ -5,7 +5,7 @@ import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.response.NetworkCreditWrapper
 import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.di.IoDispatcher
-import com.sample.tmdb.domain.BaseDetailRepository
+import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.model.TvDetails
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher

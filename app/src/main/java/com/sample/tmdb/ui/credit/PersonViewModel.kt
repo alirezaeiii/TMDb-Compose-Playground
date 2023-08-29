@@ -1,7 +1,7 @@
 package com.sample.tmdb.ui.credit
 
 import androidx.lifecycle.SavedStateHandle
-import com.sample.tmdb.domain.BaseRepository
+import com.sample.tmdb.domain.repository.BaseRepository
 import com.sample.tmdb.domain.model.Person
 import com.sample.tmdb.ui.BaseViewModel
 import com.sample.tmdb.ui.MainDestinations

@@ -38,4 +38,6 @@
     <string name="born">Born on %s</string>
     <string name="death">Death in %s</string>
     <string name="biography">Biography</string>
+    <string name="favorite">Favorite</string>
+    <string name="un_favorite">Un-favorite</string>
 </resources>

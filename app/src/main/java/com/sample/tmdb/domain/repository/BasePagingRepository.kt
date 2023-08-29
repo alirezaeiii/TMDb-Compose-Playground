@@ -1,4 +1,4 @@
-package com.sample.tmdb.domain
+package com.sample.tmdb.domain.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig

@@ -11,7 +11,7 @@ import com.sample.tmdb.utils.Resource
 @Composable
 fun <T> Content(
     viewModel: BaseViewModel<T>,
-    SuccessScreen: @Composable (t: T) -> Unit
+    SuccessScreen: @Composable (T) -> Unit
 ) {
     when (val resource = viewModel.stateFlow.collectAsState().value) {
         is Resource.Loading -> TMDbProgressBar()

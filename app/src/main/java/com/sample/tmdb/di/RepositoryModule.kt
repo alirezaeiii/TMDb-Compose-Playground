@@ -1,10 +1,7 @@
 package com.sample.tmdb.di
 
-import com.sample.tmdb.domain.BaseDetailRepository
-import com.sample.tmdb.domain.BaseFeedRepository
-import com.sample.tmdb.domain.BasePagingRepository
-import com.sample.tmdb.domain.BaseRepository
 import com.sample.tmdb.domain.model.*
+import com.sample.tmdb.domain.repository.*
 import com.sample.tmdb.repository.*
 import dagger.Binds
 import dagger.Module
@@ -83,4 +80,23 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     internal abstract fun bindPersonRepository(personRepository: PersonRepository): BaseRepository<Person>
+
+    @Singleton
+    @Binds
+    internal abstract fun bindBookmarkMovieDetailsRepository(bookmarkMovieDetailsRepository: BookmarkMovieDetailsRepositoryImpl): BookmarkMovieDetailsRepository
+
+    @Singleton
+    @Binds
+    internal abstract fun bindBookmarkTVShowDetailsRepository(bookmarkTVShowDetailsRepository: BookmarkTVShowDetailsRepositoryImpl): BookmarkTVShowDetailsRepository
+
+    @Singleton
+    @Binds
+    @JvmSuppressWildcards
+    internal abstract fun bindBookmarkMovieRepository(bookmarkMovieRepository: BookmarkMovieRepository): BaseRepository<List<Movie>>
+
+    @Singleton
+    @Binds
+    @JvmSuppressWildcards
+    internal abstract fun bindBookmarkTVShowRepository(bookmarkTVShowRepository: BookmarkTVShowRepository): BaseRepository<List<TVShow>>
+
 }

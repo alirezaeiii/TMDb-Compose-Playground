@@ -2,7 +2,7 @@ package com.sample.tmdb.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sample.tmdb.domain.BaseRepository
+import com.sample.tmdb.domain.repository.BaseRepository
 import com.sample.tmdb.utils.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

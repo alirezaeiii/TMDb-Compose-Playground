@@ -81,6 +81,10 @@ dependencies {
 
     implementation Deps.coil
     implementation Deps.gson
+
+    implementation Deps.room
+    implementation Deps.roomKtx
+    kapt Deps.roomCompiler
 }
 
 def getProperty(String filename, String propName) {

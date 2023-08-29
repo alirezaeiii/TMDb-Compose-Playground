@@ -1,6 +1,8 @@
 package com.sample.tmdb.domain.model
 
 import android.os.Parcelable
+import com.sample.tmdb.data.source.entity.MovieEntity
+import com.sample.tmdb.data.source.entity.TVShowEntity
 import kotlinx.parcelize.Parcelize
 
 interface TMDbItem : Parcelable {
@@ -37,3 +39,25 @@ data class TVShow(
     override val voteAverage: Double,
     override val voteCount: Int
 ) : TMDbItem
+
+fun Movie.asDatabaseModel(): MovieEntity = MovieEntity(
+    id = id,
+    overview = overview,
+    releaseDate = releaseDate,
+    posterUrl = posterUrl,
+    backdropUrl = backdropUrl,
+    name = name,
+    voteAverage = voteAverage,
+    voteCount = voteCount
+)
+
+fun TVShow.asDatabaseModel(): TVShowEntity = TVShowEntity(
+    id = id,
+    overview = overview,
+    releaseDate = releaseDate,
+    posterUrl = posterUrl,
+    backdropUrl = backdropUrl,
+    name = name,
+    voteAverage = voteAverage,
+    voteCount = voteCount
+)
