@@ -15,7 +15,7 @@ interface MovieDao {
     @Query("DELETE FROM movies WHERE id = :id")
     suspend fun deleteBookmark(id: Int)
 
-    @Query("SELECT EXISTS(SELECT * FROM movies WHERE id = :id)")
+    @Query("SELECT EXISTS(SELECT * FROM Movies WHERE id = :id)")
     suspend fun isBookmarked(id: Int): Boolean
 
     @Query("SELECT * FROM movies ORDER BY releaseDate DESC")

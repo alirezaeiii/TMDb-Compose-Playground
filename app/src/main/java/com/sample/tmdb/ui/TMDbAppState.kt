@@ -3,8 +3,6 @@ package com.sample.tmdb.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
-import androidx.lifecycle.Lifecycle
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
@@ -92,49 +90,26 @@ class TMDbAppState(
         }
     }
 
-    fun navigateToMovieDetail(id: Int, from: NavBackStackEntry) {
-        // In order to discard duplicated navigation events, we check the Lifecycle
-        if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/$id")
-        }
+    fun navigateToMovieDetail(id: Int) {
+        navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/$id")
     }
 
-    fun navigateToTVShowDetail(id: Int, from: NavBackStackEntry) {
-        // In order to discard duplicated navigation events, we check the Lifecycle
-        if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/$id")
-        }
+    fun navigateToTVShowDetail(id: Int) {
+        navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/$id")
     }
 
-    fun navigateToCastList(cast: String, from: NavBackStackEntry) {
-        // In order to discard duplicated navigation events, we check the Lifecycle
-        if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.TMDB_CAST_ROUTE}/$cast")
-        }
+    fun navigateToCastList(cast: String) {
+        navController.navigate("${MainDestinations.TMDB_CAST_ROUTE}/$cast")
     }
 
-    fun navigateToCrewList(crew: String, from: NavBackStackEntry) {
-        // In order to discard duplicated navigation events, we check the Lifecycle
-        if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.TMDB_CREW_ROUTE}/$crew")
-        }
+    fun navigateToCrewList(crew: String) {
+        navController.navigate("${MainDestinations.TMDB_CREW_ROUTE}/$crew")
     }
 
-    fun navigateToPerson(id: String, from: NavBackStackEntry) {
-        // In order to discard duplicated navigation events, we check the Lifecycle
-        if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.TMDB_PERSON_ROUTE}/$id")
-        }
+    fun navigateToPerson(id: String) {
+        navController.navigate("${MainDestinations.TMDB_PERSON_ROUTE}/$id")
     }
 }
-
-/**
- * If the lifecycle is not resumed it means this NavBackStackEntry already processed a nav event.
- *
- * This is used to de-duplicate navigation events.
- */
-private fun NavBackStackEntry.lifecycleIsResumed() =
-    this.lifecycle.currentState == Lifecycle.State.RESUMED
 
 private val NavGraph.startDestination: NavDestination?
     get() = findNode(startDestinationId)
