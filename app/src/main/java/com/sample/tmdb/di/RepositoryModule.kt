@@ -83,11 +83,11 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    internal abstract fun bindBookmarkMovieDetailsRepository(bookmarkMovieDetailsRepository: BookmarkMovieDetailsRepositoryImpl): BookmarkMovieDetailsRepository
+    internal abstract fun bindBookmarkMovieDetailsRepository(bookmarkMovieDetailsRepository: BookmarkMovieDetailsRepositoryImpl): BookmarkItemDetailsRepository<Movie>
 
     @Singleton
     @Binds
-    internal abstract fun bindBookmarkTVShowDetailsRepository(bookmarkTVShowDetailsRepository: BookmarkTVShowDetailsRepositoryImpl): BookmarkTVShowDetailsRepository
+    internal abstract fun bindBookmarkTVShowDetailsRepository(bookmarkTVShowDetailsRepository: BookmarkTVShowDetailsRepositoryImpl): BookmarkItemDetailsRepository<TVShow>
 
     @Singleton
     @Binds

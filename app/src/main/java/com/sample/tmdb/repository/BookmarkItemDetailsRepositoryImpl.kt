@@ -3,17 +3,17 @@ package com.sample.tmdb.repository
 import com.sample.tmdb.data.source.local.TVShowDao
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.asDatabaseModel
-import com.sample.tmdb.domain.repository.BookmarkTVShowDetailsRepository
+import com.sample.tmdb.domain.repository.BookmarkItemDetailsRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class BookmarkTVShowDetailsRepositoryImpl @Inject constructor(
     private val tvShowDao: TVShowDao
-) : BookmarkTVShowDetailsRepository {
+) : BookmarkItemDetailsRepository<TVShow> {
 
-    override suspend fun addBookmark(tvShow: TVShow) {
-        tvShowDao.addBookmark(tvShow.asDatabaseModel())
+    override suspend fun addBookmark(item: TVShow) {
+        tvShowDao.addBookmark(item.asDatabaseModel())
     }
 
     override suspend fun deleteBookmark(id: Int) {
