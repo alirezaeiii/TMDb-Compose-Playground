@@ -40,4 +40,6 @@
     <string name="biography">Biography</string>
     <string name="favorite">Favorite</string>
     <string name="un_favorite">Un-favorite</string>
+    <string name="movie">Movie</string>
+    <string name="tv_show">TVShow</string>
 </resources>

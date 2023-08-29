@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.Tv
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -78,12 +82,12 @@ private fun TMDbBottomBar(
                 val selected = section == currentSection
                 BottomNavigationItem(
                     label = {
-                        Text(text = section.title)
+                        Text(text = stringResource(id = section.title))
                     },
                     icon = {
                         Icon(
-                            painterResource(id = section.icon),
-                            contentDescription = section.title
+                            imageVector = section.icon,
+                            contentDescription = stringResource(id = section.title)
                         )
                     },
                     selected = selected,
@@ -276,9 +280,9 @@ private fun NavGraphBuilder.tmdbNavGraph(
     }
 }
 
-enum class HomeSections(val route: String, val title: String, val icon: Int) {
-    MOVIE_SECTION("Movie", "Movie", R.drawable.ic_movie),
-    TV_SHOW_SECTION("TVShow", "TVShow", R.drawable.ic_tv_series)
+enum class HomeSections(val route: String, val title: Int, val icon: ImageVector) {
+    MOVIE_SECTION("Movie", R.string.movie, Icons.Filled.Movie),
+    TV_SHOW_SECTION("TVShow", R.string.tv_show, Icons.Filled.Tv)
 }
 
 private val gson = Gson()
