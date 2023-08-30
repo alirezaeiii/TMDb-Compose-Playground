@@ -2,6 +2,7 @@ package com.sample.tmdb.ui.bookmark
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -12,13 +13,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sample.tmdb.R
 import com.sample.tmdb.domain.model.TMDbItem
+import com.sample.tmdb.ui.BaseViewModel
 import com.sample.tmdb.ui.Content
 import com.sample.tmdb.ui.common.*
+import com.sample.tmdb.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.utils.toDp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -43,6 +49,7 @@ fun BookmarkScreen(
     ) {
         TabRow(
             selectedTabIndex = selectedTabIndex,
+            backgroundColor = MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque),
             divider = { TMDbDivider() }
         ) {
             tabs.forEach { tab ->
@@ -79,11 +86,7 @@ private fun MoviesTabContent(
     onClickMovie: (TMDbItem) -> Unit,
     viewModel: BookmarkMovieViewModel = hiltViewModel()
 ) {
-    viewModel.refresh()
-    Content(viewModel = viewModel) {
-        TabContent(items = it, onClick = onClickMovie)
-    }
-
+    TabContent(viewModel = viewModel, onClick = onClickMovie, textResourceId = R.string.movies)
 }
 
 @Composable
@@ -91,9 +94,22 @@ private fun TVShowsTabContent(
     onClickTVShow: (TMDbItem) -> Unit,
     viewModel: BookmarkTVShowViewModel = hiltViewModel()
 ) {
+    TabContent(viewModel = viewModel, onClick = onClickTVShow, textResourceId = R.string.tv_series)
+}
+
+@Composable
+private fun <T : TMDbItem> TabContent(
+    viewModel: BaseViewModel<List<T>>,
+    onClick: (TMDbItem) -> Unit,
+    @StringRes textResourceId: Int
+) {
     viewModel.refresh()
     Content(viewModel = viewModel) {
-        TabContent(items = it, onClick = onClickTVShow)
+        if (it.isEmpty()) {
+            EmptyView(textResourceId = textResourceId)
+        } else {
+            TabContent(items = it, onClick = onClick)
+        }
     }
 }
 
@@ -114,7 +130,6 @@ private fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Uni
             Alignment.CenterHorizontally
         ),
         content = {
-
             items(items.size) { index ->
                 TMDbItemContent(
                     items[index],
@@ -126,6 +141,31 @@ private fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Uni
             }
         }
     )
+}
+
+@Composable
+private fun EmptyView(@StringRes textResourceId: Int) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 64.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            modifier = Modifier.padding(bottom = Dimens.PaddingLarge),
+            painter = painterResource(id = R.drawable.ic_empty),
+            contentDescription = stringResource(id = R.string.empty_list)
+        )
+        Text(
+            text = stringResource(
+                id = R.string.empty_list,
+                stringResource(id = textResourceId)
+            ),
+            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
+            textAlign = TextAlign.Center
+        )
+    }
 }
 
 enum class MediaTab(@StringRes val titleResourceId: Int) {
