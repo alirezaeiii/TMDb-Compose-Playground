@@ -4,9 +4,20 @@ import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.MovieDetails
 import com.sample.tmdb.domain.model.SpokenLanguage
 import com.sample.tmdb.domain.model.TvDetails
+import com.sample.tmdb.utils.Constants.BACKDROP_PATH
 import com.sample.tmdb.utils.Constants.BASE_WIDTH_342_PATH
 import com.sample.tmdb.utils.Constants.BASE_WIDTH_780_PATH
+import com.sample.tmdb.utils.Constants.FIRST_AIR_DATE
+import com.sample.tmdb.utils.Constants.ID
+import com.sample.tmdb.utils.Constants.NAME
+import com.sample.tmdb.utils.Constants.OVERVIEW
+import com.sample.tmdb.utils.Constants.POSTER_PATH
+import com.sample.tmdb.utils.Constants.RELEASE_DATE
+import com.sample.tmdb.utils.Constants.TITLE
+import com.sample.tmdb.utils.Constants.VOTE_AVERAGE
+import com.sample.tmdb.utils.Constants.VOTE_COUNT
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 interface TMDbItemDetailsResponse {
     val backdropPath: String?
@@ -27,53 +38,56 @@ interface TMDbItemDetailsResponse {
     val voteCount: Int
 }
 
+@JsonClass(generateAdapter = true)
 data class MovieDetailResponse(
-    @Json(name = "backdrop_path") override val backdropPath: String?,
-    @Json(name = "genres") override val genres: List<GenreResponse>,
-    @Json(name = "homepage") override val homepage: String?,
-    @Json(name = "id") override val id: Int,
-    @Json(name = "original_language") override val originalLanguage: String,
-    @Json(name = "original_title") override val originalTitle: String,
-    @Json(name = "overview") override val overview: String,
-    @Json(name = "popularity") override val popularity: Double,
-    @Json(name = "poster_path") override val posterPath: String?,
-    @Json(name = "release_date") override val releaseDate: String?,
-    @Json(name = "spoken_languages") override val spokenLanguages: List<SpokenLanguageResponse>,
-    @Json(name = "status") override val status: String,
-    @Json(name = "tagline") override val tagline: String,
-    @Json(name = "title") override val title: String,
-    @Json(name = "vote_average") override val voteAverage: Double,
-    @Json(name = "vote_count") override val voteCount: Int
+    @Json(name = BACKDROP_PATH) override val backdropPath: String?,
+    @Json(name = GENRES) override val genres: List<GenreResponse>,
+    @Json(name = HOMEPAGE) override val homepage: String?,
+    @Json(name = ID) override val id: Int,
+    @Json(name = ORIGINAL_LANGUAGE) override val originalLanguage: String,
+    @Json(name = ORIGINAL_TITLE) override val originalTitle: String,
+    @Json(name = OVERVIEW) override val overview: String,
+    @Json(name = POPULARITY) override val popularity: Double,
+    @Json(name = POSTER_PATH) override val posterPath: String?,
+    @Json(name = RELEASE_DATE) override val releaseDate: String?,
+    @Json(name = SPOKEN_LANGUAGE) override val spokenLanguages: List<SpokenLanguageResponse>,
+    @Json(name = STATUS) override val status: String,
+    @Json(name = TAGLINE) override val tagline: String,
+    @Json(name = TITLE) override val title: String,
+    @Json(name = VOTE_AVERAGE) override val voteAverage: Double,
+    @Json(name = VOTE_COUNT) override val voteCount: Int
 ) : TMDbItemDetailsResponse
 
+@JsonClass(generateAdapter = true)
 data class TvDetailResponse(
-    @Json(name = "backdrop_path") override val backdropPath: String?,
-    @Json(name = "genres") override val genres: List<GenreResponse>,
-    @Json(name = "homepage") override val homepage: String?,
-    @Json(name = "id") override val id: Int,
-    @Json(name = "original_language") override val originalLanguage: String,
-    @Json(name = "original_name") override val originalTitle: String,
-    @Json(name = "overview") override val overview: String,
-    @Json(name = "popularity") override val popularity: Double,
-    @Json(name = "poster_path") override val posterPath: String?,
-    @Json(name = "first_air_date") override val releaseDate: String?,
-    @Json(name = "spoken_languages") override val spokenLanguages: List<SpokenLanguageResponse>,
-    @Json(name = "status") override val status: String,
-    @Json(name = "tagline") override val tagline: String,
-    @Json(name = "name") override val title: String,
-    @Json(name = "vote_average") override val voteAverage: Double,
-    @Json(name = "vote_count") override val voteCount: Int,
-
+    @Json(name = BACKDROP_PATH) override val backdropPath: String?,
+    @Json(name = GENRES) override val genres: List<GenreResponse>,
+    @Json(name = HOMEPAGE) override val homepage: String?,
+    @Json(name = ID) override val id: Int,
+    @Json(name = ORIGINAL_LANGUAGE) override val originalLanguage: String,
+    @Json(name = ORIGINAL_TITLE) override val originalTitle: String,
+    @Json(name = OVERVIEW) override val overview: String,
+    @Json(name = POPULARITY) override val popularity: Double,
+    @Json(name = POSTER_PATH) override val posterPath: String?,
+    @Json(name = FIRST_AIR_DATE) override val releaseDate: String?,
+    @Json(name = SPOKEN_LANGUAGE) override val spokenLanguages: List<SpokenLanguageResponse>,
+    @Json(name = STATUS) override val status: String,
+    @Json(name = TAGLINE) override val tagline: String,
+    @Json(name = NAME) override val title: String,
+    @Json(name = VOTE_AVERAGE) override val voteAverage: Double,
+    @Json(name = VOTE_COUNT) override val voteCount: Int,
     ) : TMDbItemDetailsResponse
 
+@JsonClass(generateAdapter = false)
 data class GenreResponse(
-    @Json(name = "id") val id: Int,
-    @Json(name = "name") val name: String?
+    @Json(name = ID) val id: Int,
+    @Json(name = NAME) val name: String?
 )
 
+@JsonClass(generateAdapter = false)
 data class SpokenLanguageResponse(
     @Json(name = "iso_639_1") val iso6391: String,
-    @Json(name = "name") val name: String
+    @Json(name = NAME) val name: String
 )
 
 fun MovieDetailResponse.asDomainModel(): MovieDetails = MovieDetails(
@@ -128,3 +142,12 @@ private fun List<GenreResponse>.asGenreDomainModel(): List<Genre> = map {
 private fun List<SpokenLanguageResponse>.asLanguageDomainModel(): List<SpokenLanguage> = map {
     SpokenLanguage(it.iso6391, it.name)
 }
+
+private const val GENRES = "genres"
+private const val HOMEPAGE = "homepage"
+private const val ORIGINAL_LANGUAGE = "original_language"
+private const val ORIGINAL_TITLE = "original_title"
+private const val POPULARITY = "popularity"
+private const val SPOKEN_LANGUAGE = "spoken_languages"
+private const val STATUS = "status"
+private const val TAGLINE = "tagline"

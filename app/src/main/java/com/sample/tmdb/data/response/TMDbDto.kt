@@ -2,9 +2,20 @@ package com.sample.tmdb.data.response
 
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TVShow
+import com.sample.tmdb.utils.Constants.BACKDROP_PATH
 import com.sample.tmdb.utils.Constants.BASE_WIDTH_342_PATH
 import com.sample.tmdb.utils.Constants.BASE_WIDTH_780_PATH
+import com.sample.tmdb.utils.Constants.FIRST_AIR_DATE
+import com.sample.tmdb.utils.Constants.ID
+import com.sample.tmdb.utils.Constants.NAME
+import com.sample.tmdb.utils.Constants.OVERVIEW
+import com.sample.tmdb.utils.Constants.POSTER_PATH
+import com.sample.tmdb.utils.Constants.RELEASE_DATE
+import com.sample.tmdb.utils.Constants.TITLE
+import com.sample.tmdb.utils.Constants.VOTE_AVERAGE
+import com.sample.tmdb.utils.Constants.VOTE_COUNT
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 interface NetworkTMDbItem {
     val id: Int
@@ -17,16 +28,19 @@ interface NetworkTMDbItem {
     val voteCount: Int
 }
 
+@JsonClass(generateAdapter = true)
 data class NetworkMovie(
+    @Json(name = ID)
     override val id: Int,
+    @Json(name = OVERVIEW)
     override val overview: String,
-    @Json(name = "release_date")
+    @Json(name = RELEASE_DATE)
     override val releaseDate: String?,
     @Json(name = POSTER_PATH)
     override val posterPath: String?,
     @Json(name = BACKDROP_PATH)
     override val backdropPath: String?,
-    @Json(name = "title")
+    @Json(name = TITLE)
     override val name: String,
     @Json(name = VOTE_AVERAGE)
     override val voteAverage: Double,
@@ -34,15 +48,19 @@ data class NetworkMovie(
     override val voteCount: Int
 ) : NetworkTMDbItem
 
+@JsonClass(generateAdapter = true)
 data class NetworkTVShow(
+    @Json(name = ID)
     override val id: Int,
+    @Json(name = OVERVIEW)
     override val overview: String,
-    @Json(name = "first_air_date")
+    @Json(name = FIRST_AIR_DATE)
     override val releaseDate: String?,
     @Json(name = POSTER_PATH)
     override val posterPath: String?,
     @Json(name = BACKDROP_PATH)
     override val backdropPath: String?,
+    @Json(name = NAME)
     override val name: String,
     @Json(name = VOTE_AVERAGE)
     override val voteAverage: Double,
@@ -97,8 +115,3 @@ fun List<NetworkTVShow>.asTVShowDomainModel(): List<TVShow> =
             it.voteCount
         )
     }
-
-private const val POSTER_PATH = "poster_path"
-private const val BACKDROP_PATH = "backdrop_path"
-private const val VOTE_AVERAGE = "vote_average"
-private const val VOTE_COUNT = "vote_count"

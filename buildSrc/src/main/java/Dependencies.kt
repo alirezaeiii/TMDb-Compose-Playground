@@ -12,8 +12,8 @@ object Versions {
     const val hilt = "2.47"
     const val hiltCompose = "1.0.0"
     const val retrofit = "2.9.0"
-    const val okhttp = "4.9.0"
-    const val moshi = "1.14.0"
+    const val okhttp = "4.11.0"
+    const val moshi = "1.15.0"
     const val converterMoshi = "2.9.0"
     const val coroutines = "1.5.2"
     const val coil = "2.2.2"
@@ -75,6 +75,7 @@ object Deps {
     // Moshi
     const val moshi = "com.squareup.moshi:moshi:${Versions.moshi}"
     const val moshiKotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
+    const val moshiCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}"
 
     // Coroutines
     const val coroutinesCore =

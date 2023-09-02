@@ -4,25 +4,36 @@ import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.Gender
 import com.sample.tmdb.utils.Constants.BASE_WIDTH_342_PATH
+import com.sample.tmdb.utils.Constants.ID
+import com.sample.tmdb.utils.Constants.NAME
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-class NetworkCast(
+@JsonClass(generateAdapter = true)
+data class NetworkCast(
     @Json(name = "character")
     val role: String,
+    @Json(name = NAME)
     val name: String,
     @Json(name = PROFILE_PATH)
     val profilePath: String?,
+    @Json(name = GENDER)
     val gender: Int,
+    @Json(name = ID)
     val id: Int
 )
 
-class NetworkCrew(
+@JsonClass(generateAdapter = true)
+data class NetworkCrew(
     @Json(name = "job")
     val role: String,
+    @Json(name = NAME)
     val name: String,
     @Json(name = PROFILE_PATH)
     val profilePath: String?,
+    @Json(name = GENDER)
     val gender: Int,
+    @Json(name = ID)
     val id: String
 )
 
@@ -59,3 +70,4 @@ fun List<NetworkCrew>.asCrewDomainModel(): List<Crew> = map {
 private fun Int.toGender() = if (this == 1) Gender.FEMALE else Gender.MALE
 
 private const val PROFILE_PATH = "profile_path"
+private const val GENDER = "gender"
