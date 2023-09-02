@@ -121,7 +121,7 @@ private fun Body(
             Spacer(Modifier.height(GradientScroll))
             Surface(Modifier.fillMaxWidth()) {
                 Column {
-                    Spacer(Modifier.height(82.dp))
+                    Spacer(Modifier.height(96.dp))
                     Spacer(Modifier.height(titleHeight.value))
 
                     if (biography.isNotEmpty()) {

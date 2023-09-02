@@ -65,7 +65,7 @@ data class TvDetailResponse(
     @Json(name = HOMEPAGE) override val homepage: String?,
     @Json(name = ID) override val id: Int,
     @Json(name = ORIGINAL_LANGUAGE) override val originalLanguage: String,
-    @Json(name = ORIGINAL_TITLE) override val originalTitle: String,
+    @Json(name = ORIGINAL_NAME) override val originalTitle: String,
     @Json(name = OVERVIEW) override val overview: String,
     @Json(name = POPULARITY) override val popularity: Double,
     @Json(name = POSTER_PATH) override val posterPath: String?,
@@ -78,13 +78,13 @@ data class TvDetailResponse(
     @Json(name = VOTE_COUNT) override val voteCount: Int,
     ) : TMDbItemDetailsResponse
 
-@JsonClass(generateAdapter = false)
+@JsonClass(generateAdapter = true)
 data class GenreResponse(
     @Json(name = ID) val id: Int,
     @Json(name = NAME) val name: String?
 )
 
-@JsonClass(generateAdapter = false)
+@JsonClass(generateAdapter = true)
 data class SpokenLanguageResponse(
     @Json(name = "iso_639_1") val iso6391: String,
     @Json(name = NAME) val name: String
@@ -147,6 +147,7 @@ private const val GENRES = "genres"
 private const val HOMEPAGE = "homepage"
 private const val ORIGINAL_LANGUAGE = "original_language"
 private const val ORIGINAL_TITLE = "original_title"
+private const val ORIGINAL_NAME = "original_name"
 private const val POPULARITY = "popularity"
 private const val SPOKEN_LANGUAGE = "spoken_languages"
 private const val STATUS = "status"
