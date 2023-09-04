@@ -148,7 +148,7 @@ private fun EmptyView(@StringRes textResourceId: Int) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 64.dp),
+            .padding(top = Dimens.PaddingLarge, bottom = Dimens.PaddingExtraLarge),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

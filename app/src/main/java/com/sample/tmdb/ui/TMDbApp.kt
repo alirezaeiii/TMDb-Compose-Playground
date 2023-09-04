@@ -6,10 +6,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Tv
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -34,9 +42,19 @@ import com.sample.tmdb.ui.detail.MovieDetailScreen
 import com.sample.tmdb.ui.detail.TVShowDetailScreen
 import com.sample.tmdb.ui.feed.MovieFeedScreen
 import com.sample.tmdb.ui.feed.TVShowFeedScreen
-import com.sample.tmdb.ui.paging.*
+import com.sample.tmdb.ui.paging.AiringTodayTVShowScreen
+import com.sample.tmdb.ui.paging.NowPlayingMovieScreen
+import com.sample.tmdb.ui.paging.OnTheAirTVShowScreen
+import com.sample.tmdb.ui.paging.PopularMovieScreen
+import com.sample.tmdb.ui.paging.PopularTVShowScreen
+import com.sample.tmdb.ui.paging.TopRatedMovieScreen
+import com.sample.tmdb.ui.paging.TopRatedTVShowScreen
+import com.sample.tmdb.ui.paging.TrendingMovieScreen
+import com.sample.tmdb.ui.paging.TrendingTVShowScreen
+import com.sample.tmdb.ui.paging.UpcomingMovieScreen
 import com.sample.tmdb.ui.paging.search.SearchMoviesScreen
 import com.sample.tmdb.ui.paging.search.SearchTVSeriesScreen
+import com.sample.tmdb.ui.setting.SettingsScreen
 
 @Composable
 fun TMDbApp() {
@@ -132,6 +150,9 @@ private fun NavGraphBuilder.tmdbNavGraph(
             BookmarkScreen(
                 onClickMovie = { onMovieSelected(it.id) },
                 onClickTVShow = { onTVShowSelected(it.id) })
+        }
+        composable(route = HomeSections.SETTING_SECTION.route) {
+            SettingsScreen()
         }
     }
     composable(
@@ -290,7 +311,8 @@ private fun NavGraphBuilder.tmdbNavGraph(
 enum class HomeSections(val route: String, @StringRes val title: Int, val icon: ImageVector) {
     MOVIE_SECTION("Movie", R.string.movie, Icons.Filled.Movie),
     TV_SHOW_SECTION("TVShow", R.string.tv_show, Icons.Filled.Tv),
-    BOOKMARK_SECTION("Bookmark", R.string.favorite, Icons.Filled.Favorite)
+    BOOKMARK_SECTION("Bookmark", R.string.favorite, Icons.Filled.Favorite),
+    SETTING_SECTION("Setting", R.string.setting, Icons.Filled.Settings)
 }
 
 private val gson = Gson()

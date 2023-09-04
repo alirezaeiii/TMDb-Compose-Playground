@@ -26,5 +26,8 @@ object Dimens {
     val PaddingLarge: Dp
         @Composable get() = dimensionResource(R.dimen.padding_large)
 
+    val PaddingExtraLarge: Dp
+        @Composable get() = dimensionResource(R.dimen.padding_extra_large)
+
     val CreditCardSize = 120.dp
 }

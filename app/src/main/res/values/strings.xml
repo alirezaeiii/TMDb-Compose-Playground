@@ -43,4 +43,10 @@
     <string name="movie">Movie</string>
     <string name="tv_show">TVShow</string>
     <string name="empty_list">No %s to show</string>
+
+    <string name="source_code_github">Source code on Github</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="version">Version</string>
+    <string name="forward">Forward</string>
+    <string name="setting">Setting</string>
 </resources>
