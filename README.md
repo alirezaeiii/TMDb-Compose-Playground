@@ -24,8 +24,8 @@ tmdb_api_key=YOUR_API_KEY
 ```
 
 ### Inspired from
-| [Jetsnack](https://github.com/android/compose-samples/tree/main/Jetsnack) | [Jetflix](https://github.com/yasinkacmaz/jetflix) 
-| :-: | :-: |
+| [Jetsnack](https://github.com/android/compose-samples/tree/main/Jetsnack) | [Jetflix](https://github.com/yasinkacmaz/jetflix) | [Cinemax](https://github.com/AfigAliyev/Cinemax)
+| :-: | :-: | :-: |
 
 ## Libraries
 * [Android Jetpack](https://developer.android.com/jetpack)
