@@ -49,4 +49,5 @@
     <string name="version">Version</string>
     <string name="forward">Forward</string>
     <string name="setting">Setting</string>
+    <string name="about">About</string>
 </resources>

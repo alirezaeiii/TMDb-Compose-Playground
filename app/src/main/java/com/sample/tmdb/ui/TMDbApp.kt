@@ -19,6 +19,10 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Tv
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.Movie
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -110,7 +114,7 @@ private fun TMDbBottomBar(
                     },
                     icon = {
                         Icon(
-                            imageVector = section.icon,
+                            imageVector = if (selected) section.selectedIcon else section.unselectedIcon,
                             contentDescription = stringResource(id = section.title)
                         )
                     },
@@ -308,11 +312,16 @@ private fun NavGraphBuilder.tmdbNavGraph(
     }
 }
 
-enum class HomeSections(val route: String, @StringRes val title: Int, val icon: ImageVector) {
-    MOVIE_SECTION("Movie", R.string.movie, Icons.Filled.Movie),
-    TV_SHOW_SECTION("TVShow", R.string.tv_show, Icons.Filled.Tv),
-    BOOKMARK_SECTION("Bookmark", R.string.favorite, Icons.Filled.Favorite),
-    SETTING_SECTION("Setting", R.string.setting, Icons.Filled.Settings)
+enum class HomeSections(
+    val route: String,
+    @StringRes val title: Int,
+    val unselectedIcon: ImageVector,
+    val selectedIcon: ImageVector
+) {
+    MOVIE_SECTION("Movie", R.string.movie, Icons.Outlined.Movie, Icons.Filled.Movie),
+    TV_SHOW_SECTION("TVShow", R.string.tv_show, Icons.Outlined.Tv, Icons.Filled.Tv),
+    BOOKMARK_SECTION("Bookmark", R.string.favorite, Icons.Outlined.Favorite, Icons.Filled.Favorite),
+    SETTING_SECTION("Setting", R.string.setting, Icons.Outlined.Settings, Icons.Filled.Settings)
 }
 
 private val gson = Gson()

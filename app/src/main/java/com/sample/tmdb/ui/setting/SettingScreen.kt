@@ -37,6 +37,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.sample.tmdb.BuildConfig
 import com.sample.tmdb.R
+import com.sample.tmdb.ui.common.DestinationBar
 import com.sample.tmdb.ui.common.Dimens
 import com.sample.tmdb.ui.theme.Teal200
 
@@ -66,8 +67,13 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
     ) {
         SettingsGroupItem(
             settings = aboutSettings, modifier = modifier
-                .padding(Dimens.PaddingNormal)
+                .padding(
+                    top = 56.dp + Dimens.PaddingLarge,
+                    start = Dimens.PaddingNormal,
+                    end = Dimens.PaddingNormal
+                )
         )
+        DestinationBar(title = stringResource(R.string.about))
     }
 }
 
