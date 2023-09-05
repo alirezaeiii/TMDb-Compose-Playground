@@ -25,9 +25,9 @@ open class BaseDetailViewModel<T : TMDbItemDetails, R: TMDbItem>(
     val isBookmarked: StateFlow<Boolean>
         get() = _isBookmarked
 
-    fun addBookmark(movie: R) = viewModelScope.launch {
-        bookmarkRepository.addBookmark(movie)
-        isBookmarked(movie.id)
+    fun addBookmark(item: R) = viewModelScope.launch {
+        bookmarkRepository.addBookmark(item)
+        isBookmarked(item.id)
     }
 
     fun removeBookmark(id: Int) = viewModelScope.launch {
