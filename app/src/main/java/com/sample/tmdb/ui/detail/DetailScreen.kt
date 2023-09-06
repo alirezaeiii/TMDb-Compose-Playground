@@ -389,7 +389,7 @@ private fun AppBar(modifier: Modifier, homepage: String?, upPress: () -> Unit) {
         IconButton(onClick = { upPress.invoke() }) {
             Icon(
                 Icons.Filled.ArrowBack,
-                contentDescription = "back",
+                contentDescription = stringResource(id = R.string.back),
                 tint = vibrantColor,
                 modifier = scaleModifier
             )
@@ -399,7 +399,7 @@ private fun AppBar(modifier: Modifier, homepage: String?, upPress: () -> Unit) {
             IconButton(onClick = { homepage.openInChromeCustomTab(context, vibrantColor) }) {
                 Icon(
                     Icons.Rounded.OpenInNew,
-                    contentDescription = "open",
+                    contentDescription = stringResource(id = R.string.open),
                     tint = vibrantColor,
                     modifier = scaleModifier
                 )
