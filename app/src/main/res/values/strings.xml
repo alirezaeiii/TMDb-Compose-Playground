@@ -32,8 +32,10 @@
     <string name="highest_rate">Top Rated %s</string>
 
     <string name="search">Search %s</string>
+    <string name="search_desc">Search</string>
     <string name="back">Back</string>
     <string name="open">Open</string>
+    <string name="clear">Clear</string>
 
     <string name="from">From %s</string>
     <string name="born">Born on %s</string>

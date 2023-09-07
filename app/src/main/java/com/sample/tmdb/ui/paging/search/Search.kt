@@ -3,10 +3,28 @@ package com.sample.tmdb.ui.paging.search
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
@@ -122,7 +140,7 @@ fun <T : TMDbItem> Search(
                 ) {
                     Icon(
                         Icons.Filled.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = stringResource(id = R.string.back),
                         tint = MaterialTheme.colors.primary
                     )
                 }
@@ -190,7 +208,7 @@ private fun SearchBar(
                         Icon(
                             imageVector = Icons.Default.Clear,
                             tint = MaterialTheme.colors.primary,
-                            contentDescription = "Clear"
+                            contentDescription = stringResource(id = R.string.clear)
                         )
                     }
                 }
@@ -210,7 +228,7 @@ private fun SearchHint(@StringRes resourceId: Int) {
         Icon(
             imageVector = Icons.Outlined.Search,
             tint = MaterialTheme.colors.primary,
-            contentDescription = "Search"
+            contentDescription = stringResource(id = R.string.search_desc)
         )
         Spacer(Modifier.width(8.dp))
         Text(
