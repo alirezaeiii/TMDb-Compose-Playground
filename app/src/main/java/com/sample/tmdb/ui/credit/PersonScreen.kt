@@ -169,19 +169,18 @@ private fun Title(
     val minOffset = with(localDestiny) { MinTitleOffset.toPx() }
     Column(
         verticalArrangement = Arrangement.Bottom,
-        modifier = with(Modifier) {
-            onGloballyPositioned { coordinates ->
+        modifier = Modifier
+            .onGloballyPositioned { coordinates ->
                 with(localDestiny) { titleHeight.value = coordinates.size.height.toDp() }
             }
-                .heightIn(min = titleHeight.value)
-                .statusBarsPadding()
-                .offset {
-                    val scroll = scrollProvider()
-                    val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
-                    IntOffset(x = 0, y = offset.toInt())
-                }
-                .background(color = MaterialTheme.colors.surface)
-        }
+            .heightIn(min = titleHeight.value)
+            .statusBarsPadding()
+            .offset {
+                val scroll = scrollProvider()
+                val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
+                IntOffset(x = 0, y = offset.toInt())
+            }
+            .background(color = MaterialTheme.colors.surface)
     ) {
         Spacer(Modifier.height(16.dp))
         Text(
