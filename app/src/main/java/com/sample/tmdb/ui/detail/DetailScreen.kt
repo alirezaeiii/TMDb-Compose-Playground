@@ -69,27 +69,18 @@ fun MovieDetailScreen(
         onAllCastSelected = onAllCastSelected,
         onAllCrewSelected = onAllCrewSelected,
         onCreditSelected = onCreditSelected,
-        fab = { isFabVisible, isBookmark, details ->
-            ToggleBookmarkFab(isBookmark = isBookmark, isVisible = isFabVisible) {
-                if (isBookmark) {
-                    viewModel.removeBookmark(details.id)
-                } else {
-                    viewModel.addBookmark(
-                        Movie(
-                            id = details.id,
-                            overview = details.overview,
-                            releaseDate = details.releaseDate,
-                            backdropUrl = details.backdropPath,
-                            posterUrl = details.posterPath,
-                            name = details.title,
-                            voteAverage = details.voteAverage,
-                            voteCount = details.voteCount
-                        )
-                    )
-                }
-            }
-        }
-    )
+    ) { details ->
+        Movie(
+            id = details.id,
+            overview = details.overview,
+            releaseDate = details.releaseDate,
+            backdropUrl = details.backdropPath,
+            posterUrl = details.posterPath,
+            name = details.title,
+            voteAverage = details.voteAverage,
+            voteCount = details.voteCount
+        )
+    }
 }
 
 @Composable
@@ -106,30 +97,48 @@ fun TVShowDetailScreen(
         onAllCastSelected = onAllCastSelected,
         onAllCrewSelected = onAllCrewSelected,
         onCreditSelected = onCreditSelected,
+    ) { details ->
+        TVShow(
+            id = details.id,
+            overview = details.overview,
+            releaseDate = details.releaseDate,
+            backdropUrl = details.backdropPath,
+            posterUrl = details.posterPath,
+            name = details.title,
+            voteAverage = details.voteAverage,
+            voteCount = details.voteCount
+        )
+    }
+}
+
+@Composable
+fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
+    viewModel: BaseDetailViewModel<T, E>,
+    upPress: () -> Unit,
+    onAllCastSelected: (List<Cast>) -> Unit,
+    onAllCrewSelected: (List<Crew>) -> Unit,
+    onCreditSelected: (String) -> Unit,
+    getBookmarkedItem: (T) -> E
+) {
+    DetailScreen(
+        viewModel = viewModel,
+        upPress = upPress,
+        onAllCastSelected = onAllCastSelected,
+        onAllCrewSelected = onAllCrewSelected,
+        onCreditSelected = onCreditSelected,
         fab = { isFabVisible, isBookmark, details ->
             ToggleBookmarkFab(isBookmark = isBookmark, isVisible = isFabVisible) {
                 if (isBookmark) {
                     viewModel.removeBookmark(details.id)
                 } else {
-                    viewModel.addBookmark(
-                        TVShow(
-                            id = details.id,
-                            overview = details.overview,
-                            releaseDate = details.releaseDate,
-                            backdropUrl = details.backdropPath,
-                            posterUrl = details.posterPath,
-                            name = details.title,
-                            voteAverage = details.voteAverage,
-                            voteCount = details.voteCount
-                        )
-                    )
+                    viewModel.addBookmark(getBookmarkedItem.invoke(details))
                 }
             }
         }
     )
 }
 
-private val LocalVibrantColor =
+private val localVibrantColor =
     compositionLocalOf<Animatable<Color, AnimationVector4D>> { error("No vibrant color defined") }
 
 @Composable
@@ -164,7 +173,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
             }
         }
         CompositionLocalProvider(
-            LocalVibrantColor provides vibrantColor,
+            localVibrantColor provides vibrantColor,
         ) {
             Scaffold(
                 Modifier.nestedScroll(nestedScrollConnection),
@@ -192,7 +201,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                     it.details.posterPath?.let { posterPath ->
                         GetVibrantColorFromPoster(
                             posterPath,
-                            LocalVibrantColor.current
+                            localVibrantColor.current
                         )
                     }
                     it.details.backdropPath?.let { backdropPath ->
@@ -286,7 +295,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
 
                     Text(
                         text = it.details.tagline,
-                        color = LocalVibrantColor.current.value,
+                        color = localVibrantColor.current.value,
                         style = MaterialTheme.typography.body1.copy(
                             letterSpacing = 2.sp,
                             lineHeight = 24.sp,
@@ -365,7 +374,7 @@ private fun Backdrop(backdropUrl: String, tmdbItemName: String, modifier: Modifi
     Card(
         elevation = 16.dp,
         shape = BottomArcShape(arcHeight = 120.dpToPx()),
-        backgroundColor = LocalVibrantColor.current.value.copy(alpha = 0.1f),
+        backgroundColor = localVibrantColor.current.value.copy(alpha = 0.1f),
         modifier = modifier.height(360.dp)
     ) {
         AsyncImage(
@@ -384,7 +393,7 @@ private fun AppBar(modifier: Modifier, homepage: String?, upPress: () -> Unit) {
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
     ) {
-        val vibrantColor = LocalVibrantColor.current.value
+        val vibrantColor = localVibrantColor.current.value
         val scaleModifier = Modifier.scale(1.1f)
         IconButton(onClick = { upPress.invoke() }) {
             Icon(
@@ -444,7 +453,7 @@ private fun GenreChips(genres: List<Genre>, modifier: Modifier) {
                 text = name.orEmpty(),
                 style = MaterialTheme.typography.subtitle1.copy(letterSpacing = 2.sp),
                 modifier = Modifier
-                    .border(1.25.dp, LocalVibrantColor.current.value, RoundedCornerShape(50))
+                    .border(1.25.dp, localVibrantColor.current.value, RoundedCornerShape(50))
                     .padding(horizontal = Dimens.PaddingSmall, vertical = 3.dp)
             )
 
@@ -509,7 +518,7 @@ private fun RateStars(voteAverage: Double, modifier: Modifier) {
             Icon(
                 imageVector = asset,
                 contentDescription = null,
-                tint = LocalVibrantColor.current.value
+                tint = localVibrantColor.current.value
             )
             Spacer(modifier = Modifier.width(4.dp))
         }
@@ -557,7 +566,7 @@ private fun <T : Credit> SectionHeader(
     ) {
         Text(
             text = stringResource(headerResId),
-            color = LocalVibrantColor.current.value,
+            color = localVibrantColor.current.value,
             style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold)
         )
 
@@ -571,14 +580,14 @@ private fun <T : Credit> SectionHeader(
         ) {
             Text(
                 text = stringResource(R.string.see_all, items.size),
-                color = LocalVibrantColor.current.value,
+                color = localVibrantColor.current.value,
                 style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(end = Dimens.PaddingExtraSmall)
             )
             Icon(
                 Icons.Filled.ArrowForward,
                 contentDescription = stringResource(R.string.see_all),
-                tint = LocalVibrantColor.current.value,
+                tint = localVibrantColor.current.value,
             )
         }
     }
