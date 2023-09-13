@@ -1,5 +1,6 @@
 package com.sample.tmdb.ui.bookmark
 
+import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -12,6 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -145,18 +147,25 @@ private fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Uni
 
 @Composable
 private fun EmptyView(@StringRes textResourceId: Int) {
+    val configuration = LocalConfiguration.current
+    val isPortrait = when (configuration.orientation) {
+        Configuration.ORIENTATION_PORTRAIT -> { true }
+        else -> { false }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = Dimens.PaddingLarge, bottom = Dimens.PaddingExtraLarge),
+            .padding(bottom = Dimens.PaddingExtraLarge),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            modifier = Modifier.padding(bottom = Dimens.PaddingLarge),
-            painter = painterResource(id = R.drawable.ic_empty),
-            contentDescription = stringResource(id = R.string.empty_list)
-        )
+        if(isPortrait) {
+            Image(
+                modifier = Modifier.padding(bottom = Dimens.PaddingLarge),
+                painter = painterResource(id = R.drawable.ic_empty),
+                contentDescription = stringResource(id = R.string.empty_list)
+            )
+        }
         Text(
             text = stringResource(
                 id = R.string.empty_list,
