@@ -34,6 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.sample.tmdb.BuildConfig
 import com.sample.tmdb.R
@@ -122,18 +123,17 @@ private fun SettingsItem(
             .padding(Dimens.PaddingNormal)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Dimens.PaddingMedium)
-        ) {
-            IconBox(
-                iconResourceId = settings.iconResourceId,
-                contentDescription = stringResource(id = settings.titleResourceId)
-            )
-            TitleText(titleResourceId = settings.titleResourceId)
-        }
+        IconBox(
+            iconResourceId = settings.iconResourceId,
+            contentDescription = stringResource(id = settings.titleResourceId)
+        )
+        TitleText(
+            modifier = Modifier
+                .padding(Dimens.PaddingMedium)
+                .weight(1f),
+            titleResourceId = settings.titleResourceId
+        )
         when (settings) {
             is Settings.Info -> TitleText(title = settings.value)
             is Settings.Action, is Settings.IntentAction -> ForwardButton()
@@ -174,7 +174,9 @@ private fun TitleText(
         modifier = modifier,
         text = stringResource(id = titleResourceId),
         style = style,
-        color = color
+        color = color,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
     )
 }
 
@@ -189,7 +191,9 @@ private fun TitleText(
         modifier = modifier,
         text = title,
         style = style,
-        color = color
+        color = color,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
     )
 }
 
