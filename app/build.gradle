@@ -6,16 +6,24 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+def appVersion = (new File(project.rootDir, 'version.txt')).text.trim()
+
+ext.generateVersionCode = { versionName ->
+    def (versionMajor, versionMinor, versionPatch) = versionName.tokenize(".")
+    Integer versionCode = versionMajor.toInteger() * 100000000 + versionMinor.toInteger() * 10000 + versionPatch.toInteger()
+    logger.info('Version code based on version {}: {}', versionName, versionCode)
+    return versionCode
+}
+
 android {
     defaultConfig {
         applicationId AppMetaData.id
         minSdk AppMetaData.minSdkVersion
         targetSdk AppMetaData.targetSdkVersion
         compileSdk AppMetaData.compileSdkVersion
-        versionCode AppMetaData.versionCode
-        versionName AppMetaData.versionName
-
-        buildConfigField "String", "TMDB_API_KEY", "\"${getProperty("local.properties", "tmdb_api_key")}\""
+        versionCode generateVersionCode(appVersion)
+        versionName appVersion
+        buildConfigField "String", "TMDB_API_KEY", "\"${getProperty("local.properties", "tmdb_api_key") ?: System.getenv("TMDB_API_KEY")}\""
         buildConfigField "String", "TMDB_BASE_URL", "\"http://api.themoviedb.org/\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

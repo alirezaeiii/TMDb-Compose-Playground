@@ -1,3 +1,6 @@
+import org.gradle.internal.impldep.com.esotericsoftware.minlog.Log
+import java.io.File
+
 object Versions {
     const val compose = "1.5.0"
     const val compose_paging = "1.0.0-alpha17"
@@ -29,8 +32,6 @@ object AppMetaData {
     const val targetSdkVersion = 34
     const val compileSdkVersion = 34
     const val minSdkVersion = 21
-    const val versionCode = 10
-    const val versionName = "1.2.3"
 }
 
 object Deps {
