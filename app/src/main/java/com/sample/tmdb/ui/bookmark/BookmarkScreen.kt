@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -147,19 +148,14 @@ private fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Uni
 
 @Composable
 private fun EmptyView(@StringRes textResourceId: Int) {
-    val configuration = LocalConfiguration.current
-    val isPortrait = when (configuration.orientation) {
-        Configuration.ORIENTATION_PORTRAIT -> { true }
-        else -> { false }
-    }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = Dimens.PaddingExtraLarge),
+            .padding(bottom = 64.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if(isPortrait) {
+        if (isEmptyImageVisible()) {
             Image(
                 modifier = Modifier.padding(bottom = Dimens.PaddingLarge),
                 painter = painterResource(id = R.drawable.ic_empty),
@@ -175,6 +171,29 @@ private fun EmptyView(@StringRes textResourceId: Int) {
             textAlign = TextAlign.Center
         )
     }
+}
+
+@Composable
+private fun isEmptyImageVisible(): Boolean {
+    val configuration = LocalConfiguration.current
+    val isPortrait = when (configuration.orientation) {
+        Configuration.ORIENTATION_PORTRAIT -> {
+            true
+        }
+
+        else -> {
+            false
+        }
+    }
+    if (isPortrait) {
+        return true
+    } else {
+        val isTablet = booleanResource(id = R.bool.is_tablet)
+        if (isTablet) {
+            return true
+        }
+    }
+    return false
 }
 
 enum class MediaTab(@StringRes val titleResourceId: Int) {
