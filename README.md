@@ -1,4 +1,4 @@
-# TMDb-Compose
+# TMDb-Compose-Playground
 ### 🚧 Work in progress 👷‍♀️⛏👷🔧️👷🔧 🚧
 
 <a href="https://play.google.com/store/apps/details?id=com.sample.tmdb"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height=70px /></a>
@@ -25,8 +25,8 @@ tmdb_api_key=YOUR_API_KEY
 ```
 
 ### Inspired from
-| [Jetsnack](https://github.com/android/compose-samples/tree/main/Jetsnack) | [Jetflix](https://github.com/yasinkacmaz/jetflix) | [Cinemax](https://github.com/AfigAliyev/Cinemax) | [Mova](https://github.com/muratozturk5/Mova)
-| :-: | :-: | :-: | :-: |
+| [Jetsnack](https://github.com/android/compose-samples/tree/main/Jetsnack) | [Jetflix](https://github.com/yasinkacmaz/jetflix) | [Cinemax](https://github.com/AfigAliyev/Cinemax)
+| :-: | :-: | :-: |
 
 ## Libraries
 * [Android Jetpack](https://developer.android.com/jetpack)
