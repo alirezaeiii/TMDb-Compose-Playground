@@ -1,18 +1,18 @@
 package com.sample.tmdb.ui.feed
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -165,32 +165,32 @@ private fun <T : TMDbItem> TMDbItem(
         itemWidth = 120.dp
         imageUrl = tmdbItem.posterUrl
     }
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Card(
         modifier = Modifier
-            .clickable(onClick = { onFeedClick(tmdbItem) })
             .padding(Dimens.PaddingSmall)
+            .clickable(onClick = { onFeedClick(tmdbItem) }),
+        shape = RoundedCornerShape(10.dp)
     ) {
-        AsyncImage(
-            model = imageUrl,
-            contentDescription = null,
-            modifier = Modifier
-                .size(width = itemWidth, height = 180.dp)
-                .border(.3.dp, MaterialTheme.colors.onSurface, RectangleShape),
-            contentScale = ContentScale.Crop
-        )
-        Text(
-            text = tmdbItem.name,
-            fontSize = TmdbPagingComposeTheme.fontSizes.sp_11,
-            color = MaterialTheme.colors.onSurface,
-            textAlign = TextAlign.Center,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier
-                .size(width = itemWidth, height = 36.dp)
-                .padding(top = Dimens.PaddingSmall)
-                .wrapContentHeight()
-        )
+        Column {
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(width = itemWidth, height = 180.dp),
+                contentScale = ContentScale.Crop
+            )
+            Text(
+                text = tmdbItem.name,
+                fontSize = TmdbPagingComposeTheme.fontSizes.sp_11,
+                color = MaterialTheme.colors.onSurface,
+                textAlign = TextAlign.Center,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .size(width = itemWidth, height = 36.dp)
+                    .wrapContentHeight()
+            )
+        }
     }
 }
 
