@@ -47,6 +47,8 @@ import com.sample.tmdb.ui.detail.TVShowDetailScreen
 import com.sample.tmdb.ui.feed.MovieFeedScreen
 import com.sample.tmdb.ui.feed.TVShowFeedScreen
 import com.sample.tmdb.ui.paging.AiringTodayTVShowScreen
+import com.sample.tmdb.ui.paging.DiscoverMovieScreen
+import com.sample.tmdb.ui.paging.DiscoverTVShowScreen
 import com.sample.tmdb.ui.paging.NowPlayingMovieScreen
 import com.sample.tmdb.ui.paging.OnTheAirTVShowScreen
 import com.sample.tmdb.ui.paging.PopularMovieScreen
@@ -261,6 +263,13 @@ private fun NavGraphBuilder.moviePagingScreens(
             navController = navController
         )
     }
+    composable(route = MainDestinations.TMDB_DISCOVER_MOVIES_ROUTE) {
+        DiscoverMovieScreen(
+            onClick = { onMovieSelected(it.id) },
+            upPress = upPress,
+            navController = navController
+        )
+    }
 }
 
 private fun NavGraphBuilder.tvShowPagingScreens(
@@ -298,6 +307,13 @@ private fun NavGraphBuilder.tvShowPagingScreens(
     }
     composable(route = MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE) {
         TopRatedTVShowScreen(
+            onClick = { onTVShowSelected(it.id) },
+            upPress = upPress,
+            navController = navController
+        )
+    }
+    composable(route = MainDestinations.TMDB_DISCOVER_TV_SHOW_ROUTE) {
+        DiscoverTVShowScreen(
             onClick = { onTVShowSelected(it.id) },
             upPress = upPress,
             navController = navController

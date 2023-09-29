@@ -91,36 +91,53 @@ private fun <T : TMDbItem> FeedCollection(
                                     SortType.TRENDING -> {
                                         navController.navigate(MainDestinations.TMDB_TRENDING_MOVIES_ROUTE)
                                     }
+
                                     SortType.MOST_POPULAR -> {
                                         navController.navigate(MainDestinations.TMDB_POPULAR_MOVIES_ROUTE)
                                     }
+
                                     SortType.NOW_PLAYING -> {
                                         navController.navigate(MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE)
                                     }
+
                                     SortType.UPCOMING -> {
                                         navController.navigate(MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE)
                                     }
+
                                     SortType.HIGHEST_RATED -> {
                                         navController.navigate(MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE)
                                     }
+
+                                    SortType.DISCOVER -> {
+                                        navController.navigate(MainDestinations.TMDB_DISCOVER_MOVIES_ROUTE)
+                                    }
                                 }
                             }
+
                             TMDbType.TV_SERIES -> {
                                 when (feedCollection.sortType) {
                                     SortType.TRENDING -> {
                                         navController.navigate(MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE)
                                     }
+
                                     SortType.MOST_POPULAR -> {
                                         navController.navigate(MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE)
                                     }
+
                                     SortType.NOW_PLAYING -> {
                                         navController.navigate(MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE)
                                     }
+
                                     SortType.UPCOMING -> {
                                         navController.navigate(MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE)
                                     }
+
                                     SortType.HIGHEST_RATED -> {
                                         navController.navigate(MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE)
+                                    }
+
+                                    SortType.DISCOVER -> {
+                                        navController.navigate(MainDestinations.TMDB_DISCOVER_TV_SHOW_ROUTE)
                                     }
                                 }
                             }
@@ -158,7 +175,7 @@ private fun <T : TMDbItem> TMDbItem(
 ) {
     val itemWidth: Dp
     val imageUrl: String?
-    if (index == 0) {
+    if (index % 3 == 0) {
         itemWidth = 220.dp
         imageUrl = tmdbItem.backdropUrl
     } else {

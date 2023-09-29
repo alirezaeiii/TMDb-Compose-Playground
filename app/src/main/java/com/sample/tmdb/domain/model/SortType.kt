@@ -5,5 +5,6 @@ enum class SortType {
     MOST_POPULAR,
     NOW_PLAYING,
     UPCOMING,
-    HIGHEST_RATED
+    HIGHEST_RATED,
+    DISCOVER
 }

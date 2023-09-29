@@ -5,8 +5,8 @@ import com.sample.tmdb.R
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.response.asMovieDomainModel
 import com.sample.tmdb.di.IoDispatcher
-import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.model.Movie
+import com.sample.tmdb.domain.repository.BaseFeedRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
@@ -33,6 +33,9 @@ class MovieFeedRepository @Inject constructor(
 
     override suspend fun nowPlayingItems(): List<Movie> =
         movieApi.nowPlayingMovies().items.asMovieDomainModel()
+
+    override suspend fun discoverItems(): List<Movie> =
+        movieApi.discoverMovies().items.asMovieDomainModel()
 
     override fun getNowPlayingResId(): Int = R.string.text_now_playing
 

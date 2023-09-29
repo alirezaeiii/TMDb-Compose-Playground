@@ -25,6 +25,9 @@ interface TVShowService {
     @GET("3/tv/top_rated")
     suspend fun topRatedTVSeries(): TMDbWrapper<NetworkTVShow>
 
+    @GET("3/discover/tv")
+    suspend fun discoverTVSeries(): TMDbWrapper<NetworkTVShow>
+
     @GET("3/trending/tv/day")
     suspend fun trendingTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
 
@@ -39,6 +42,9 @@ interface TVShowService {
 
     @GET("3/tv/top_rated")
     suspend fun topRatedTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
+
+    @GET("3/discover/tv")
+    suspend fun discoverTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/{tvId}/credits")
     suspend fun tvCredit(@Path("tvId") tvId: Int): NetworkCreditWrapper

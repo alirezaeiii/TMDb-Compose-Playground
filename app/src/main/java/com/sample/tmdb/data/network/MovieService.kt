@@ -25,6 +25,9 @@ interface MovieService {
     @GET("3/movie/top_rated")
     suspend fun topRatedMovies(): TMDbWrapper<NetworkMovie>
 
+    @GET("3/discover/movie")
+    suspend fun discoverMovies(): TMDbWrapper<NetworkMovie>
+
     @GET("3/trending/movie/day")
     suspend fun trendingMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
 
@@ -39,6 +42,9 @@ interface MovieService {
 
     @GET("3/movie/top_rated")
     suspend fun topRatedMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
+
+    @GET("3/discover/movie")
+    suspend fun discoverMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
 
     @GET("3/movie/{movieId}/credits")
     suspend fun movieCredit(@Path("movieId") movieId: Int): NetworkCreditWrapper

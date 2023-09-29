@@ -1,6 +1,17 @@
 package com.sample.tmdb.ui.paging
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.add
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -18,9 +29,24 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.sample.tmdb.R
 import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.model.TMDbType
-import com.sample.tmdb.ui.common.*
-import com.sample.tmdb.ui.paging.main.movie.*
-import com.sample.tmdb.ui.paging.main.tvshow.*
+import com.sample.tmdb.ui.common.DestinationBar
+import com.sample.tmdb.ui.common.Dimens
+import com.sample.tmdb.ui.common.ErrorScreen
+import com.sample.tmdb.ui.common.LoadingRow
+import com.sample.tmdb.ui.common.TMDbItemContent
+import com.sample.tmdb.ui.common.TMDbProgressBar
+import com.sample.tmdb.ui.paging.main.movie.DiscoverMoviesViewModel
+import com.sample.tmdb.ui.paging.main.movie.NowPlayingMoviesViewModel
+import com.sample.tmdb.ui.paging.main.movie.PopularMoviesViewModel
+import com.sample.tmdb.ui.paging.main.movie.TopRatedMoviesViewModel
+import com.sample.tmdb.ui.paging.main.movie.TrendingMoviesViewModel
+import com.sample.tmdb.ui.paging.main.movie.UpcomingMoviesViewModel
+import com.sample.tmdb.ui.paging.main.tvshow.AiringTodayTvSeriesViewModel
+import com.sample.tmdb.ui.paging.main.tvshow.DiscoverTvSeriesViewModel
+import com.sample.tmdb.ui.paging.main.tvshow.OnTheAirTvSeriesViewModel
+import com.sample.tmdb.ui.paging.main.tvshow.PopularTvSeriesViewModel
+import com.sample.tmdb.ui.paging.main.tvshow.TopRatedTvSeriesViewModel
+import com.sample.tmdb.ui.paging.main.tvshow.TrendingTvSeriesViewModel
 import com.sample.tmdb.utils.toDp
 
 @Composable
@@ -104,6 +130,22 @@ fun TopRatedMovieScreen(
 }
 
 @Composable
+fun DiscoverMovieScreen(
+    onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
+    navController: NavController,
+    viewModel: DiscoverMoviesViewModel = hiltViewModel()
+) {
+    PagingScreen(
+        viewModel = viewModel, onClick = onClick, upPress = upPress, navController = navController,
+        type = TMDbType.MOVIES, title = stringResource(
+            R.string.discover,
+            stringResource(R.string.movies)
+        )
+    )
+}
+
+@Composable
 fun TrendingTVShowScreen(
     onClick: (TMDbItem) -> Unit,
     upPress: () -> Unit,
@@ -178,6 +220,22 @@ fun TopRatedTVShowScreen(
         viewModel = viewModel, onClick = onClick, upPress = upPress, navController = navController,
         type = TMDbType.TV_SERIES, title = stringResource(
             R.string.highest_rate,
+            stringResource(R.string.tv_series)
+        )
+    )
+}
+
+@Composable
+fun DiscoverTVShowScreen(
+    onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
+    navController: NavController,
+    viewModel: DiscoverTvSeriesViewModel = hiltViewModel()
+) {
+    PagingScreen(
+        viewModel = viewModel, onClick = onClick, upPress = upPress, navController = navController,
+        type = TMDbType.TV_SERIES, title = stringResource(
+            R.string.discover,
             stringResource(R.string.tv_series)
         )
     )
