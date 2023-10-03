@@ -1,4 +1,4 @@
-package com.sample.tmdb.di
+package com.sample.tmdb.utils
 
 import com.sample.tmdb.BuildConfig
 import com.squareup.moshi.Moshi
