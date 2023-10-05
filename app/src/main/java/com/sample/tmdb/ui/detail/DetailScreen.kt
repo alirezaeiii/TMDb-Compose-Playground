@@ -112,7 +112,7 @@ fun TVShowDetailScreen(
 }
 
 @Composable
-fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
+private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     viewModel: BaseDetailViewModel<T, E>,
     upPress: () -> Unit,
     onAllCastSelected: (List<Cast>) -> Unit,

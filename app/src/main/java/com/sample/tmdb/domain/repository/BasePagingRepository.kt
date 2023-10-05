@@ -3,7 +3,7 @@ package com.sample.tmdb.domain.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.sample.tmdb.data.paged.BasePagingSource
+import com.sample.tmdb.data.paging.BasePagingSource
 import com.sample.tmdb.domain.model.TMDbItem
 import kotlinx.coroutines.flow.Flow
 

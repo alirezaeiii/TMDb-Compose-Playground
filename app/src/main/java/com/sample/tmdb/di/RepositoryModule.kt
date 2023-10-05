@@ -2,7 +2,7 @@ package com.sample.tmdb.di
 
 import com.sample.tmdb.domain.model.*
 import com.sample.tmdb.domain.repository.*
-import com.sample.tmdb.repository.*
+import com.sample.tmdb.data.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
