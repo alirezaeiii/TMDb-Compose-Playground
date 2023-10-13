@@ -4,7 +4,7 @@ import com.sample.tmdb.core.BuildConfig
 import com.sample.tmdb.core.data.network.MovieService
 import com.sample.tmdb.core.data.network.PersonService
 import com.sample.tmdb.core.data.network.TVShowService
-import com.sample.tmdb.utils.createNetworkClient
+import com.sample.tmdb.core.utils.createNetworkClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -23,8 +23,6 @@ android {
         compileSdk AppMetaData.compileSdkVersion
         versionCode generateVersionCode(appVersion)
         versionName appVersion
-        buildConfigField "String", "TMDB_API_KEY", "\"${getProperty("local.properties", "tmdb_api_key") ?: System.getenv("TMDB_API_KEY")}\""
-        buildConfigField "String", "TMDB_BASE_URL", "\"http://api.themoviedb.org/\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -84,43 +82,15 @@ dependencies {
     implementation Deps.composeActivity
     implementation Deps.navigationCompose
     implementation Deps.composeConstraintLayout
-    implementation Deps.iconExtended
-    implementation Deps.composePaging
     implementation Deps.systemUiController
+    implementation Deps.iconExtended
     debugImplementation Deps.composeUiTooling
-
+    implementation Deps.composePaging
     implementation Deps.hilt
     kapt Deps.hilt_compiler
     implementation Deps.hilt_compose
-
-    implementation Deps.retrofit
-    implementation Deps.retrofitMoshi
-    implementation Deps.okhttpInterceptor
-    implementation Deps.moshi
-    implementation Deps.moshiKotlin
-    kapt Deps.moshiCodegen
     implementation Deps.coroutinesCore
     implementation Deps.coroutinesAndroid
-
     implementation Deps.coil
     implementation Deps.gson
-
-    implementation Deps.room
-    implementation Deps.roomKtx
-    kapt Deps.roomCompiler
-}
-
-def getProperty(String filename, String propName) {
-    def propsFile = rootProject.file(filename)
-    if (propsFile.exists()) {
-        def props = new Properties()
-        props.load(new FileInputStream(propsFile))
-        if (props[propName] != null) {
-            return props[propName]
-        } else {
-            print("No such property " + propName + " in file " + filename)
-        }
-    } else {
-        print(filename + " does not exist!")
-    }
 }

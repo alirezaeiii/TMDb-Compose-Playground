@@ -45,6 +45,7 @@ dependencies {
     implementation(Deps.okhttpInterceptor)
     implementation(Deps.moshi)
     implementation(Deps.moshiKotlin)
+    kapt(Deps.moshiCodegen)
     implementation(Deps.composePaging)
     implementation(Deps.room)
     implementation(Deps.roomKtx)
