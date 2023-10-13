@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="release_date">Release Date</string>
+    <string name="vote_average">Vote Avg</string>
+    <string name="votes">Votes</string>
+    <string name="see_all">See All(%1$d)</string>
+    <string name="cast">Cast</string>
+    <string name="crew">Crew</string>
+    <string name="open">Open</string>
+    <string name="favorite">Favorite</string>
+    <string name="un_favorite">Un-favorite</string>
+</resources>

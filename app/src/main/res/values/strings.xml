@@ -3,14 +3,6 @@
     <string name="app_title">TMDb %s</string>
     <string name="movies">Movies</string>
     <string name="tv_series">TV Series</string>
-    <string name="text_trending">Trending</string>
-    <string name="text_popular">Popular</string>
-    <string name="text_now_playing">Now Playing</string>
-    <string name="text_upcoming">Upcoming</string>
-    <string name="text_airing_today">Airing today</string>
-    <string name="text_on_the_air">On the air</string>
-    <string name="text_highest_rate">Top Rated</string>
-    <string name="text_discover">Discover</string>
     <string name="more_item">More</string>
 
     <string name="failed_loading_msg">Something went wrong</string>
