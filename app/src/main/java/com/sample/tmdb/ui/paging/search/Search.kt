@@ -42,11 +42,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sample.tmdb.R
-import com.sample.tmdb.domain.model.TMDbItem
-import com.sample.tmdb.ui.common.Dimens
-import com.sample.tmdb.ui.common.TMDbDivider
+import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.TMDbDivider
+import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.ui.paging.PagingScreen
-import com.sample.tmdb.ui.theme.AlphaNearOpaque
 
 @Composable
 fun SearchMoviesScreen(

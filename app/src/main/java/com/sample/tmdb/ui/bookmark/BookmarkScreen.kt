@@ -23,12 +23,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sample.tmdb.R
-import com.sample.tmdb.domain.model.TMDbItem
-import com.sample.tmdb.ui.BaseViewModel
+import com.sample.tmdb.common.base.BaseViewModel
+import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.TMDbDivider
+import com.sample.tmdb.common.ui.TMDbItemContent
+import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
+import com.sample.tmdb.common.utils.toDp
 import com.sample.tmdb.ui.Content
-import com.sample.tmdb.ui.common.*
-import com.sample.tmdb.ui.theme.AlphaNearOpaque
-import com.sample.tmdb.utils.toDp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

@@ -7,10 +7,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sample.tmdb.R
-import com.sample.tmdb.domain.model.TMDbItem
-import com.sample.tmdb.domain.model.TMDbType
+import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.common.model.TMDbType
+import com.sample.tmdb.common.ui.DestinationBar
 import com.sample.tmdb.ui.Content
-import com.sample.tmdb.ui.common.DestinationBar
 
 @Composable
 fun MovieFeedScreen(

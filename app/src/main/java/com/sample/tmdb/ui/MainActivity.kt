@@ -7,8 +7,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.core.view.WindowCompat
 
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.sample.tmdb.ui.theme.AlphaNearOpaque
-import com.sample.tmdb.ui.theme.TmdbPagingComposeTheme
+import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
+import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

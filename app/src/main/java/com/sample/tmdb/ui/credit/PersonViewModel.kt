@@ -1,10 +1,10 @@
 package com.sample.tmdb.ui.credit
 
 import androidx.lifecycle.SavedStateHandle
-import com.sample.tmdb.domain.model.Person
-import com.sample.tmdb.domain.repository.BaseRepository
-import com.sample.tmdb.ui.BaseRefreshViewModel
-import com.sample.tmdb.ui.MainDestinations
+import com.sample.tmdb.common.base.BaseRefreshViewModel
+import com.sample.tmdb.common.base.BaseRepository
+import com.sample.tmdb.common.model.MainDestinations
+import com.sample.tmdb.core.domain.model.Person
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

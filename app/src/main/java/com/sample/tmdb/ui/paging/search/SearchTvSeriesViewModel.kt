@@ -1,8 +1,8 @@
 package com.sample.tmdb.ui.paging.search
 
 import androidx.lifecycle.SavedStateHandle
-import com.sample.tmdb.domain.model.TVShow
-import com.sample.tmdb.data.repository.SearchTvSeriesPagingRepository
+import com.sample.tmdb.core.data.repository.SearchTvSeriesPagingRepository
+import com.sample.tmdb.core.domain.model.TVShow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

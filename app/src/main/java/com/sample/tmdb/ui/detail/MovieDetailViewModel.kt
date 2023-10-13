@@ -1,10 +1,10 @@
 package com.sample.tmdb.ui.detail
 
 import androidx.lifecycle.SavedStateHandle
-import com.sample.tmdb.domain.model.Movie
-import com.sample.tmdb.domain.model.MovieDetails
-import com.sample.tmdb.domain.repository.BaseDetailRepository
-import com.sample.tmdb.domain.repository.BookmarkItemDetailsRepository
+import com.sample.tmdb.core.domain.model.Movie
+import com.sample.tmdb.core.domain.model.MovieDetails
+import com.sample.tmdb.core.domain.repository.BaseDetailRepository
+import com.sample.tmdb.core.domain.repository.BookmarkItemDetailsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

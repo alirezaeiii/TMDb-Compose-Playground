@@ -27,14 +27,15 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.sample.tmdb.R
-import com.sample.tmdb.domain.model.TMDbItem
-import com.sample.tmdb.domain.model.TMDbType
-import com.sample.tmdb.ui.common.DestinationBar
-import com.sample.tmdb.ui.common.Dimens
-import com.sample.tmdb.ui.common.ErrorScreen
-import com.sample.tmdb.ui.common.LoadingRow
-import com.sample.tmdb.ui.common.TMDbItemContent
-import com.sample.tmdb.ui.common.TMDbProgressBar
+import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.common.model.TMDbType
+import com.sample.tmdb.common.ui.DestinationBar
+import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.ErrorScreen
+import com.sample.tmdb.common.ui.LoadingRow
+import com.sample.tmdb.common.ui.TMDbItemContent
+import com.sample.tmdb.common.ui.TMDbProgressBar
+import com.sample.tmdb.common.utils.toDp
 import com.sample.tmdb.ui.paging.main.movie.DiscoverMoviesViewModel
 import com.sample.tmdb.ui.paging.main.movie.NowPlayingMoviesViewModel
 import com.sample.tmdb.ui.paging.main.movie.PopularMoviesViewModel
@@ -47,7 +48,6 @@ import com.sample.tmdb.ui.paging.main.tvshow.OnTheAirTvSeriesViewModel
 import com.sample.tmdb.ui.paging.main.tvshow.PopularTvSeriesViewModel
 import com.sample.tmdb.ui.paging.main.tvshow.TopRatedTvSeriesViewModel
 import com.sample.tmdb.ui.paging.main.tvshow.TrendingTvSeriesViewModel
-import com.sample.tmdb.utils.toDp
 
 @Composable
 fun TrendingMovieScreen(

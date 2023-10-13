@@ -37,8 +37,9 @@ import androidx.navigation.navArgument
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.R
-import com.sample.tmdb.domain.model.Cast
-import com.sample.tmdb.domain.model.Crew
+import com.sample.tmdb.common.model.MainDestinations
+import com.sample.tmdb.core.domain.model.Cast
+import com.sample.tmdb.core.domain.model.Crew
 import com.sample.tmdb.ui.bookmark.BookmarkScreen
 import com.sample.tmdb.ui.credit.CreditScreen
 import com.sample.tmdb.ui.credit.PersonScreen

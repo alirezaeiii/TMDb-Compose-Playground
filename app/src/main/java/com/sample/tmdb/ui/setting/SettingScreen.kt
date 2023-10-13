@@ -8,7 +8,6 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,9 +37,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.sample.tmdb.BuildConfig
 import com.sample.tmdb.R
-import com.sample.tmdb.ui.common.DestinationBar
-import com.sample.tmdb.ui.common.Dimens
-import com.sample.tmdb.ui.theme.Teal200
+import com.sample.tmdb.common.ui.DestinationBar
+import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.theme.Teal200
 
 @Composable
 fun SettingsScreen(modifier: Modifier = Modifier) {

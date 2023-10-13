@@ -2,13 +2,13 @@ package com.sample.tmdb.ui.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.sample.tmdb.domain.model.DetailWrapper
-import com.sample.tmdb.domain.model.TMDbItem
-import com.sample.tmdb.domain.model.TMDbItemDetails
-import com.sample.tmdb.domain.repository.BaseDetailRepository
-import com.sample.tmdb.domain.repository.BookmarkItemDetailsRepository
-import com.sample.tmdb.ui.BaseRefreshViewModel
-import com.sample.tmdb.ui.MainDestinations
+import com.sample.tmdb.common.base.BaseRefreshViewModel
+import com.sample.tmdb.common.model.MainDestinations
+import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.core.domain.model.DetailWrapper
+import com.sample.tmdb.core.domain.model.TMDbItemDetails
+import com.sample.tmdb.core.domain.repository.BaseDetailRepository
+import com.sample.tmdb.core.domain.repository.BookmarkItemDetailsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

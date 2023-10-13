@@ -1,8 +1,8 @@
 package com.sample.tmdb.ui.bookmark
 
-import com.sample.tmdb.domain.model.TVShow
-import com.sample.tmdb.domain.repository.BaseRepository
-import com.sample.tmdb.ui.BaseViewModel
+import com.sample.tmdb.common.base.BaseRepository
+import com.sample.tmdb.common.base.BaseViewModel
+import com.sample.tmdb.core.domain.model.TVShow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

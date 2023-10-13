@@ -6,6 +6,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector4D
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.*
@@ -23,7 +24,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -36,24 +43,35 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.palette.graphics.Palette
+import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import coil.request.SuccessResult
 import com.sample.tmdb.R
-import com.sample.tmdb.domain.model.*
+import com.sample.tmdb.common.model.Credit
+import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.PersonCard
+import com.sample.tmdb.common.utils.dpToPx
+import com.sample.tmdb.common.utils.toDp
+import com.sample.tmdb.core.domain.model.Cast
+import com.sample.tmdb.core.domain.model.Crew
+import com.sample.tmdb.core.domain.model.Genre
+import com.sample.tmdb.core.domain.model.Movie
+import com.sample.tmdb.core.domain.model.TMDbItemDetails
+import com.sample.tmdb.core.domain.model.TVShow
 import com.sample.tmdb.ui.Content
-import com.sample.tmdb.ui.common.BottomArcShape
-import com.sample.tmdb.ui.common.Dimens
-import com.sample.tmdb.ui.common.Person
-import com.sample.tmdb.ui.theme.GetVibrantColorFromPoster
-import com.sample.tmdb.utils.dpToPx
 import com.sample.tmdb.utils.openInChromeCustomTab
 import com.sample.tmdb.utils.springAnimation
-import com.sample.tmdb.utils.toDp
 
 @Composable
 fun MovieDetailScreen(
@@ -327,7 +345,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         items = it.cast,
                         headerResId = R.string.cast,
                         itemContent = { item, _ ->
-                            Person(
+                            PersonCard(
                                 item,
                                 onCreditSelected,
                                 Modifier.width(140.dp)
@@ -343,7 +361,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         items = it.crew,
                         headerResId = R.string.crew,
                         itemContent = { item, _ ->
-                            Person(
+                            PersonCard(
                                 item,
                                 onCreditSelected,
                                 Modifier.width(140.dp)
@@ -366,6 +384,26 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun GetVibrantColorFromPoster(
+    posterUrl: String,
+    color: Animatable<Color, AnimationVector4D>
+) {
+    val context = LocalContext.current
+    LaunchedEffect(posterUrl) {
+        val loader = ImageLoader(context)
+        val request = ImageRequest.Builder(context)
+            .data(posterUrl)
+            .size(128, 128)
+            .allowHardware(false)
+            .build()
+
+        val bitmap = (loader.execute(request) as? SuccessResult)?.drawable?.toBitmap() ?: return@LaunchedEffect
+        val vibrantColor = Palette.from(bitmap).generate().getVibrantColor(color.value.toArgb())
+        color.animateTo(Color(vibrantColor), tween(400))
     }
 }
 
@@ -620,5 +658,29 @@ private fun ToggleBookmarkFab(
                 )
             )
         }
+    }
+}
+
+class BottomArcShape(private val arcHeight: Float) : Shape {
+    override fun createOutline(
+        size: Size,
+        layoutDirection: LayoutDirection,
+        density: Density
+    ): Outline {
+        val path = Path().apply {
+            moveTo(size.width, 0f)
+            lineTo(size.width, size.height)
+            val arcOffset = arcHeight / 10
+            val rect = Rect(
+                left = 0f - arcOffset,
+                top = size.height - arcHeight,
+                right = size.width + arcOffset,
+                bottom = size.height
+            )
+            arcTo(rect, 0f, 180f, false)
+            lineTo(0f, 0f)
+            close()
+        }
+        return Outline.Generic(path)
     }
 }

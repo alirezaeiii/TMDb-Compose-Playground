@@ -5,8 +5,8 @@ import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.sample.tmdb.domain.repository.BasePagingRepository
-import com.sample.tmdb.domain.model.TMDbItem
+import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.core.domain.repository.BasePagingRepository
 import com.sample.tmdb.ui.paging.BasePagingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

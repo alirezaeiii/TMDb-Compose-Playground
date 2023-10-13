@@ -1,7 +1,13 @@
 package com.sample.tmdb.ui.credit
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.add
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -10,11 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.sample.tmdb.domain.model.Credit
-import com.sample.tmdb.ui.common.DestinationBar
-import com.sample.tmdb.ui.common.Dimens
-import com.sample.tmdb.ui.common.Person
-import com.sample.tmdb.utils.toDp
+import com.sample.tmdb.common.model.Credit
+import com.sample.tmdb.common.ui.DestinationBar
+import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.PersonCard
+import com.sample.tmdb.common.utils.toDp
 
 @Composable
 fun <T : Credit> CreditScreen(
@@ -47,7 +53,7 @@ fun <T : Credit> CreditScreen(
             }
 
             items(items.size) { index ->
-                Person(person = items[index], onCreditSelected = onCreditSelected)
+                PersonCard(person = items[index], onCreditSelected = onCreditSelected)
             }
         }
     )

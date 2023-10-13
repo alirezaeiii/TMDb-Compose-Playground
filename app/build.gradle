@@ -66,6 +66,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: BuildModules.CORE)
 
     implementation Deps.androidxCore
     implementation Deps.lifecycle

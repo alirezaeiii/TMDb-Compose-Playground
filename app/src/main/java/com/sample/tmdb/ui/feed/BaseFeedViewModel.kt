@@ -1,9 +1,9 @@
 package com.sample.tmdb.ui.feed
 
-import com.sample.tmdb.domain.model.FeedWrapper
-import com.sample.tmdb.domain.model.TMDbItem
-import com.sample.tmdb.domain.repository.BaseFeedRepository
-import com.sample.tmdb.ui.BaseRefreshViewModel
+import com.sample.tmdb.common.base.BaseRefreshViewModel
+import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.core.domain.model.FeedWrapper
+import com.sample.tmdb.core.domain.repository.BaseFeedRepository
 
 open class BaseFeedViewModel<T : TMDbItem>(
     repository: BaseFeedRepository<T>,
