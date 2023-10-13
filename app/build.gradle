@@ -65,15 +65,17 @@ android {
 
 dependencies {
     implementation project(path: BuildModules.CORE)
+    implementation project(path: BuildModules.FEATURE_FEED)
+    implementation project(path: BuildModules.FEATURE_BOOKMARK)
+    implementation project(path: BuildModules.FEATURE_SETTING)
+    implementation project(path: BuildModules.FEATURE_PAGING)
+    implementation project(path: BuildModules.FEATURE_DETAIL)
+    implementation project(path: BuildModules.FEATURE_CREDIT)
 
     implementation Deps.androidxCore
-    implementation Deps.lifecycle
-    implementation Deps.lifecycleLiveData
 
     implementation Deps.appCompat
     implementation Deps.material
-    implementation Deps.palette
-    implementation Deps.browser
 
     implementation Deps.composeUi
     implementation Deps.composeMaterial

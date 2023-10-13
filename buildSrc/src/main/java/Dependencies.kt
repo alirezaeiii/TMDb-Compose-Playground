@@ -41,7 +41,12 @@ object BuildModules {
     const val APP = ":app"
     const val CORE = ":core"
     const val COMMON = ":common"
-    const val FEATURE_LIST = ":feature_list"
+    const val FEATURE_FEED = ":features:feature-feed"
+    const val FEATURE_BOOKMARK = ":features:feature-bookmark"
+    const val FEATURE_SETTING = ":features:feature-setting"
+    const val FEATURE_PAGING = ":features:feature-paging"
+    const val FEATURE_DETAIL = ":features:feature-detail"
+    const val FEATURE_CREDIT = ":features:feature-credit"
 }
 
 object Deps {
@@ -73,6 +78,7 @@ object Deps {
     const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+    const val lifecycleSavedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
 
     // Hilt
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
