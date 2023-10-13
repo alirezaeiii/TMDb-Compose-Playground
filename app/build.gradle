@@ -72,27 +72,14 @@ dependencies {
     implementation project(path: BuildModules.FEATURE_DETAIL)
     implementation project(path: BuildModules.FEATURE_CREDIT)
 
-    implementation Deps.androidxCore
-
-    implementation Deps.appCompat
     implementation Deps.material
-
-    implementation Deps.composeUi
     implementation Deps.composeMaterial
     implementation Deps.composeFoundation
-    implementation Deps.composeUiToolingPreview
-    implementation Deps.composeActivity
-    implementation Deps.navigationCompose
-    implementation Deps.composeConstraintLayout
-    implementation Deps.systemUiController
     implementation Deps.iconExtended
-    debugImplementation Deps.composeUiTooling
+    implementation Deps.navigationCompose
+    implementation Deps.systemUiController
     implementation Deps.composePaging
     implementation Deps.hilt
     kapt Deps.hilt_compiler
-    implementation Deps.hilt_compose
-    implementation Deps.coroutinesCore
-    implementation Deps.coroutinesAndroid
-    implementation Deps.coil
     implementation Deps.gson
 }
