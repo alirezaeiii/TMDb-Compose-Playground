@@ -1,8 +1,5 @@
-package com.sample.tmdb.common.model
+package com.sample.tmdb.common
 
-/**
- * Destinations used in the [TMDbApp].
- */
 object MainDestinations {
     const val HOME_ROUTE = "home"
     const val TMDB_MOVIE_DETAIL_ROUTE = "movie"

@@ -42,7 +42,6 @@ android {
 }
 
 dependencies {
-
     implementation(project(mapOf("path" to BuildModules.COMMON)))
 
     implementation(Deps.composeUi)

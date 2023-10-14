@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sample.tmdb.common.R
-import com.sample.tmdb.common.model.MainDestinations
+import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.model.TMDbType
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 

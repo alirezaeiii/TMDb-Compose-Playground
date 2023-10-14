@@ -40,7 +40,6 @@ android {
 }
 
 dependencies {
-
     implementation(project(mapOf("path" to BuildModules.CORE)))
 
     implementation(Deps.hilt)

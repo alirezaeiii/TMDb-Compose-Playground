@@ -40,8 +40,8 @@ android {
 }
 
 dependencies {
-
     implementation(project(mapOf("path" to BuildModules.CORE)))
+
     implementation(Deps.lifecycleLiveData)
     implementation(Deps.composeUi)
     implementation(Deps.composeFoundation)

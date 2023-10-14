@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.sample.tmdb.common.model.MainDestinations
+import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.model.TMDbType
 import com.sample.tmdb.common.ui.Dimens

@@ -8,7 +8,7 @@ import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sample.tmdb.common.model.MainDestinations
+import com.sample.tmdb.common.MainDestinations
 
 
 /**

@@ -38,7 +38,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.R
 import com.sample.tmdb.bookmark.BookmarkScreen
-import com.sample.tmdb.common.model.MainDestinations
+import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.core.domain.model.Cast
 import com.sample.tmdb.core.domain.model.Crew
 import com.sample.tmdb.credit.CreditScreen

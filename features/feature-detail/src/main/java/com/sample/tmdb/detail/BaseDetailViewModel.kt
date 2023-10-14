@@ -3,7 +3,7 @@ package com.sample.tmdb.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.sample.tmdb.common.base.BaseRefreshViewModel
-import com.sample.tmdb.common.model.MainDestinations
+import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.core.domain.model.DetailWrapper
 import com.sample.tmdb.core.domain.model.TMDbItemDetails
