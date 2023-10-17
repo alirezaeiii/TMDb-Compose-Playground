@@ -88,25 +88,22 @@ fun <T : TMDbItem> Search(
     var query by rememberSaveable { mutableStateOf("") }
     var focused by rememberSaveable { mutableStateOf(false) }
     Box(modifier = modifier.fillMaxSize()) {
-        when {
-            query.isEmpty() -> {
-                InfinitelyFlowingCircles()
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 28.dp, end = 28.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    AnimatedSearch()
-                }
+        if (query.isEmpty()) {
+            InfinitelyFlowingCircles()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 28.dp, end = 28.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                AnimatedSearch()
             }
-            else -> {
-                viewModel.showResult(query)
-                PagingScreen(
-                    viewModel = viewModel,
-                    onClick = onClick
-                )
-            }
+        } else {
+            viewModel.showResult(query)
+            PagingScreen(
+                viewModel = viewModel,
+                onClick = onClick
+            )
         }
         Column(
             modifier = Modifier
