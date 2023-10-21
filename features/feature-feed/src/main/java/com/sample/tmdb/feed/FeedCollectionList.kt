@@ -27,9 +27,9 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.model.TMDbType
 import com.sample.tmdb.common.ui.Dimens
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
-import com.sample.tmdb.core.domain.model.FeedWrapper
-import com.sample.tmdb.core.domain.model.Movie
-import com.sample.tmdb.core.domain.model.SortType
+import com.sample.tmdb.domain.model.FeedWrapper
+import com.sample.tmdb.domain.model.Movie
+import com.sample.tmdb.domain.model.SortType
 
 @Composable
 fun <T : TMDbItem> FeedCollectionList(

@@ -64,7 +64,8 @@ android {
 }
 
 dependencies {
-    implementation project(path: BuildModules.CORE)
+    implementation project(path: BuildModules.DATA)
+    implementation project(path: BuildModules.DOMAIN)
     implementation project(path: BuildModules.FEATURE_FEED)
     implementation project(path: BuildModules.FEATURE_BOOKMARK)
     implementation project(path: BuildModules.FEATURE_SETTING)

@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    implementation(project(mapOf("path" to BuildModules.CORE)))
+    implementation(project(mapOf("path" to BuildModules.DOMAIN)))
 
     implementation(Deps.lifecycleViewModel)
     implementation(Deps.lifecycleSavedstate)

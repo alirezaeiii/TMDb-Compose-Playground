@@ -23,6 +23,7 @@ object Versions {
     const val icon_extended = "1.4.0-alpha02"
     const val browser = "1.5.0-alpha01"
     const val room_version = "2.6.0-alpha01"
+    const val annotation = "1.7.0"
 }
 
 object AppMetaData {
@@ -37,8 +38,9 @@ object AppMetaData {
  */
 object BuildModules {
     const val APP = ":app"
-    const val CORE = ":core"
     const val COMMON = ":common"
+    const val DATA = ":data"
+    const val DOMAIN = ":domain"
     const val FEATURE_FEED = ":features:feature-feed"
     const val FEATURE_BOOKMARK = ":features:feature-bookmark"
     const val FEATURE_SETTING = ":features:feature-setting"
@@ -67,6 +69,7 @@ object Deps {
     const val material = "com.google.android.material:material:${Versions.material}"
     const val palette = "androidx.palette:palette-ktx:${Versions.palette}"
     const val browser = "androidx.browser:browser:${Versions.browser}"
+    const val annotation = "androidx.annotation:annotation:${Versions.annotation}"
 
     // Core
     const val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"

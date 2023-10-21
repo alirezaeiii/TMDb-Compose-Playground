@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_now_playing">Now Playing</string>
+    <string name="text_upcoming">Upcoming</string>
+    <string name="text_airing_today">Airing today</string>
+    <string name="text_on_the_air">On the air</string>
+</resources>

@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.sample.tmdb.common.base.BaseRefreshViewModel
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.core.domain.model.Person
+import com.sample.tmdb.domain.model.Person
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

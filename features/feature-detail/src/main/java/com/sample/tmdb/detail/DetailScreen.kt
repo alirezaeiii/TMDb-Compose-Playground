@@ -65,12 +65,12 @@ import com.sample.tmdb.common.ui.Dimens
 import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.utils.dpToPx
 import com.sample.tmdb.common.utils.toDp
-import com.sample.tmdb.core.domain.model.Cast
-import com.sample.tmdb.core.domain.model.Crew
-import com.sample.tmdb.core.domain.model.Genre
-import com.sample.tmdb.core.domain.model.Movie
-import com.sample.tmdb.core.domain.model.TMDbItemDetails
-import com.sample.tmdb.core.domain.model.TVShow
+import com.sample.tmdb.domain.model.Cast
+import com.sample.tmdb.domain.model.Crew
+import com.sample.tmdb.domain.model.Genre
+import com.sample.tmdb.domain.model.Movie
+import com.sample.tmdb.domain.model.TMDbItemDetails
+import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.detail.utils.openInChromeCustomTab
 import com.sample.tmdb.common.R as R1
 
