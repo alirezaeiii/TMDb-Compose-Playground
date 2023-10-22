@@ -1,6 +1,6 @@
 package com.sample.tmdb.paging.main.tvshow
 
-import com.sample.tmdb.domain.annotations.TopRated
+import com.sample.tmdb.domain.utils.TopRated
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.paging.main.BaseMainPagingViewModel

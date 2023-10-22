@@ -1,6 +1,5 @@
 package com.sample.tmdb.data.di
 
-import com.sample.tmdb.domain.annotations.IoDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,3 +16,7 @@ object DispatcherModule {
     @Provides
     fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 }
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class IoDispatcher

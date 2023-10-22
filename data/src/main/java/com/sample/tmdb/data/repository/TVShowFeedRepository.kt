@@ -4,7 +4,7 @@ import android.content.Context
 import com.sample.tmdb.data.R
 import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.response.asTVShowDomainModel
-import com.sample.tmdb.domain.annotations.IoDispatcher
+import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import dagger.hilt.android.qualifiers.ApplicationContext

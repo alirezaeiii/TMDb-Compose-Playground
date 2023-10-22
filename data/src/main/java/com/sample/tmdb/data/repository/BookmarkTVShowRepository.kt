@@ -4,7 +4,7 @@ import android.content.Context
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.local.TVShowDao
-import com.sample.tmdb.domain.annotations.IoDispatcher
+import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.domain.model.TVShow
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher

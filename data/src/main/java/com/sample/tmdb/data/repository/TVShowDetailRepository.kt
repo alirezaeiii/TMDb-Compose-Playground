@@ -2,11 +2,10 @@ package com.sample.tmdb.data.repository
 
 import android.content.Context
 import com.sample.tmdb.data.network.TVShowService
-import com.sample.tmdb.data.response.NetworkCreditWrapper
 import com.sample.tmdb.data.response.asCastDomainModel
 import com.sample.tmdb.data.response.asCrewDomainModel
 import com.sample.tmdb.data.response.asDomainModel
-import com.sample.tmdb.domain.annotations.IoDispatcher
+import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.repository.BaseDetailRepository

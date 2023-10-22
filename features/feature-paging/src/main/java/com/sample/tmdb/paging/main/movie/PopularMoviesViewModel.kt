@@ -1,6 +1,6 @@
 package com.sample.tmdb.paging.main.movie
 
-import com.sample.tmdb.domain.annotations.Popular
+import com.sample.tmdb.domain.utils.Popular
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.paging.main.BaseMainPagingViewModel

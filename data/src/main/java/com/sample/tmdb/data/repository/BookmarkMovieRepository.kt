@@ -2,9 +2,9 @@ package com.sample.tmdb.data.repository
 
 import android.content.Context
 import com.sample.tmdb.common.base.BaseRepository
+import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.local.MovieDao
-import com.sample.tmdb.domain.annotations.IoDispatcher
 import com.sample.tmdb.domain.model.Movie
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
