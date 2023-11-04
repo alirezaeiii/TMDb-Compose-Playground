@@ -15,11 +15,11 @@ dependencyResolutionManagement {
 rootProject.name = "Tmdb-Compose"
 include ':app'
 include ':common'
+include ':core:data'
+include ':core:domain'
 include ':features:feature-feed'
 include ':features:feature-bookmark'
 include ':features:feature-credit'
 include ':features:feature-setting'
 include ':features:feature-detail'
 include ':features:feature-paging'
-include ':data'
-include ':domain'

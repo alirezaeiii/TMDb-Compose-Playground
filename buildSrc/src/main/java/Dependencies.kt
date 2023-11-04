@@ -39,8 +39,8 @@ object AppMetaData {
 object BuildModules {
     const val APP = ":app"
     const val COMMON = ":common"
-    const val DATA = ":data"
-    const val DOMAIN = ":domain"
+    const val DATA = ":core:data"
+    const val DOMAIN = ":core:domain"
     const val FEATURE_FEED = ":features:feature-feed"
     const val FEATURE_BOOKMARK = ":features:feature-bookmark"
     const val FEATURE_SETTING = ":features:feature-setting"
