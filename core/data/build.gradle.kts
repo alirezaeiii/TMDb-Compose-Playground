@@ -37,7 +37,6 @@ android {
 }
 
 dependencies {
-    implementation(project(BuildModules.COMMON))
     implementation(project(BuildModules.DOMAIN))
     implementation(Deps.retrofit)
     implementation(Deps.retrofitMoshi)
