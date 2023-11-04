@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation(project(BuildModules.DOMAIN))
+    api(project(BuildModules.DOMAIN))
     implementation(Deps.retrofit)
     implementation(Deps.retrofitMoshi)
     implementation(Deps.okhttpInterceptor)
