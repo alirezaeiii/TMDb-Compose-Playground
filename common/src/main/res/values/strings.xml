@@ -5,7 +5,7 @@
     <string name="failed_loading_msg">Something went wrong</string>
     <string name="retry">Retry</string>
 
-    <string name="search">Search %s</string>
+    <string name="search">Search</string>
     <string name="back">Back</string>
 
     <string name="person_content_description">Photo of %1$s the %2$s</string>

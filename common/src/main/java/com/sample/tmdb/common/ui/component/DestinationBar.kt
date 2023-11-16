@@ -18,18 +18,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.sample.tmdb.common.R
-import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.model.TMDbType
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 
 @Composable
 fun DestinationBar(
     modifier: Modifier = Modifier,
     title: String,
-    navController: NavController? = null,
-    type: TMDbType? = null,
+    onSearchClicked: (() -> Unit)? = null,
     upPress: (() -> Unit)? = null,
 ) {
     Column(modifier = modifier.statusBarsPadding()) {
@@ -61,25 +57,14 @@ fun DestinationBar(
                     .align(Alignment.CenterVertically)
             )
             IconButton(
-                onClick = {
-                    when (type) {
-                        TMDbType.MOVIES -> navController?.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE)
-                        TMDbType.TV_SERIES -> navController?.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE)
-                        else -> {}
-                    }
-                },
+                onClick = { onSearchClicked?.invoke() },
                 modifier = Modifier
-                    .alpha(if (type == null) 0f else 1f)
+                    .alpha(if (onSearchClicked == null) 0f else 1f)
                     .align(Alignment.CenterVertically)
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_search),
-                    contentDescription = type?.let {
-                        stringResource(
-                            id = R.string.search,
-                            it.name
-                        )
-                    }
+                    contentDescription = stringResource(id = R.string.search)
                 )
             }
         }

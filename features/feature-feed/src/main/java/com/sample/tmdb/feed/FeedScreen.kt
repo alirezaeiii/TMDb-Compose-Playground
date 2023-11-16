@@ -15,6 +15,7 @@ import com.sample.tmdb.common.R as R1
 @Composable
 fun MovieFeedScreen(
     onClick: (TMDbItem) -> Unit,
+    onSearchMovie: () -> Unit,
     navController: NavController,
     viewModel: MovieFeedViewModel = hiltViewModel()
 ) {
@@ -22,6 +23,7 @@ fun MovieFeedScreen(
         viewModel = viewModel,
         type = TMDbType.MOVIES,
         navController = navController,
+        onSearchClicked = onSearchMovie,
         onClick = onClick,
         R1.string.movies
     )
@@ -30,6 +32,7 @@ fun MovieFeedScreen(
 @Composable
 fun TVShowFeedScreen(
     onClick: (TMDbItem) -> Unit,
+    onSearchTVShow:()->Unit,
     navController: NavController,
     viewModel: TVShowFeedViewModel = hiltViewModel()
 ) {
@@ -37,6 +40,7 @@ fun TVShowFeedScreen(
         viewModel = viewModel,
         type = TMDbType.TV_SERIES,
         navController = navController,
+        onSearchClicked = onSearchTVShow,
         onClick = onClick,
         R1.string.tv_series
     )
@@ -47,6 +51,7 @@ private fun <T : TMDbItem> FeedScreen(
     viewModel: BaseFeedViewModel<T>,
     type: TMDbType,
     navController: NavController,
+    onSearchClicked: () -> Unit,
     onClick: (TMDbItem) -> Unit,
     @StringRes resourceId: Int
 
@@ -57,7 +62,7 @@ private fun <T : TMDbItem> FeedScreen(
             DestinationBar(
                 title = stringResource(
                     R.string.app_title, stringResource(resourceId)
-                ), navController = navController, type = type
+                ), onSearchClicked = onSearchClicked
             )
         }
     }

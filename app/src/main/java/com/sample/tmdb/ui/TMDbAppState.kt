@@ -84,6 +84,14 @@ class TMDbAppState(
     fun navigateToPerson(id: String) {
         navController.navigate("${MainDestinations.TMDB_PERSON_ROUTE}/$id")
     }
+
+    fun navigateToSearchMovie() {
+        navController.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE)
+    }
+
+    fun navigateToSearchTVShow() {
+        navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE)
+    }
 }
 
 private val NavGraph.startDestination: NavDestination?
