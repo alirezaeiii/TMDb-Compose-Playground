@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.sample.tmdb.domain"
-    compileSdk = 33
+    compileSdk = AppMetaData.compileSdkVersion
 
     defaultConfig {
         minSdk = 21

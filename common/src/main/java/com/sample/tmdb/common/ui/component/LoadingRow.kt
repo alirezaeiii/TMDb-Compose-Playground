@@ -24,6 +24,6 @@ fun LoadingRow(modifier: Modifier = Modifier) {
 
 @Preview(showSystemUi = true)
 @Composable
-private fun LoadingRowPreview() {
+fun LoadingRowPreview() {
     LoadingRow()
 }
