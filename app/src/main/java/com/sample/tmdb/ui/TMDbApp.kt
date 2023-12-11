@@ -10,7 +10,6 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -136,6 +135,7 @@ private fun TMDbBottomBar(
             tabs.forEach { section ->
                 val selected = section == currentSection
                 BottomNavigationItem(
+                    modifier = Modifier.background(MaterialTheme.colors.background),
                     label = {
                         Text(text = stringResource(id = section.title))
                     },
@@ -146,7 +146,8 @@ private fun TMDbBottomBar(
                         )
                     },
                     selected = selected,
-                    unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
+                    unselectedContentColor = MaterialTheme.colors.onBackground.copy(alpha = ContentAlpha.disabled),
+                    selectedContentColor = MaterialTheme.colors.onBackground,
                     onClick = { navigateToRoute(section.route) }
                 )
             }
