@@ -127,15 +127,12 @@ private fun TMDbBottomBar(
     val currentSection = tabs.first { it.route == currentRoute }
 
     Box(
-        Modifier
-            .background(MaterialTheme.colors.background)
-            .navigationBarsPadding()
+        Modifier.navigationBarsPadding()
     ) {
-        BottomNavigation {
+        BottomNavigation(backgroundColor = MaterialTheme.colors.background) {
             tabs.forEach { section ->
                 val selected = section == currentSection
                 BottomNavigationItem(
-                    modifier = Modifier.background(MaterialTheme.colors.background),
                     label = {
                         Text(text = stringResource(id = section.title))
                     },
