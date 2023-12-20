@@ -2,7 +2,6 @@ package com.sample.tmdb.ui
 
 import android.net.Uri
 import androidx.annotation.StringRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
