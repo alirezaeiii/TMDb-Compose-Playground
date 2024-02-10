@@ -9,4 +9,5 @@
     <string name="back">Back</string>
 
     <string name="person_content_description">Photo of %1$s the %2$s</string>
+    <string name="poster_content_description">Poster</string>
 </resources>

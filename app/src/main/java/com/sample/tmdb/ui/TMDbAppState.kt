@@ -92,6 +92,11 @@ class TMDbAppState(
     fun navigateToSearchTVShow() {
         navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE)
     }
+
+    fun navigateToImages(images: String, id: Int) {
+        navController.navigate("${MainDestinations.TMDB_IMAGES_ROUTE}/$images/$id")
+    }
+
 }
 
 private val NavGraph.startDestination: NavDestination?
