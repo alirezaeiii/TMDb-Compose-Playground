@@ -11,16 +11,58 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FabPosition
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarHalf
+import androidx.compose.material.icons.filled.StarOutline
 import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,10 +71,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -56,22 +100,25 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.palette.graphics.Palette
 import coil.ImageLoader
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
 import com.sample.tmdb.common.ui.component.PersonCard
+import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.utils.dpToPx
 import com.sample.tmdb.common.utils.toDp
+import com.sample.tmdb.detail.utils.openInChromeCustomTab
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.Movie
+import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TVShow
-import com.sample.tmdb.detail.utils.openInChromeCustomTab
 import com.sample.tmdb.common.R as R1
 
 @Composable
@@ -80,6 +127,7 @@ fun MovieDetailScreen(
     onAllCastSelected: (List<Cast>) -> Unit,
     onAllCrewSelected: (List<Crew>) -> Unit,
     onCreditSelected: (String) -> Unit,
+    onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     DetailScreen(
@@ -88,6 +136,7 @@ fun MovieDetailScreen(
         onAllCastSelected = onAllCastSelected,
         onAllCrewSelected = onAllCrewSelected,
         onCreditSelected = onCreditSelected,
+        onImagesSelected = onImagesSelected
     ) { details ->
         Movie(
             id = details.id,
@@ -108,6 +157,7 @@ fun TVShowDetailScreen(
     onAllCastSelected: (List<Cast>) -> Unit,
     onAllCrewSelected: (List<Crew>) -> Unit,
     onCreditSelected: (String) -> Unit,
+    onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     viewModel: TVShowDetailViewModel = hiltViewModel()
 ) {
     DetailScreen(
@@ -116,6 +166,7 @@ fun TVShowDetailScreen(
         onAllCastSelected = onAllCastSelected,
         onAllCrewSelected = onAllCrewSelected,
         onCreditSelected = onCreditSelected,
+        onImagesSelected = onImagesSelected
     ) { details ->
         TVShow(
             id = details.id,
@@ -137,6 +188,7 @@ private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     onAllCastSelected: (List<Cast>) -> Unit,
     onAllCrewSelected: (List<Crew>) -> Unit,
     onCreditSelected: (String) -> Unit,
+    onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     getBookmarkedItem: (T) -> E
 ) {
     DetailScreen(
@@ -145,6 +197,7 @@ private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
         onAllCastSelected = onAllCastSelected,
         onAllCrewSelected = onAllCrewSelected,
         onCreditSelected = onCreditSelected,
+        onImagesSelected = onImagesSelected,
         fab = { isFabVisible, isBookmark, details ->
             ToggleBookmarkFab(isBookmark = isBookmark, isVisible = isFabVisible) {
                 if (isBookmark) {
@@ -167,6 +220,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     onAllCastSelected: (List<Cast>) -> Unit,
     onAllCrewSelected: (List<Crew>) -> Unit,
     onCreditSelected: (String) -> Unit,
+    onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     fab: @Composable (MutableState<Boolean>, Boolean, T) -> Unit
 ) {
     // Visibility for FAB
@@ -213,7 +267,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         .padding(contentPadding)
                 ) {
                     val (appbar, backdrop, poster, title, originalTitle, genres, specs, rateStars, tagline, overview) = createRefs()
-                    val (castSection, crewSection, space) = createRefs()
+                    val (castSection, crewSection, imagesSection, space) = createRefs()
                     val startGuideline = createGuidelineFromStart(16.dp)
                     val endGuideline = createGuidelineFromEnd(16.dp)
 
@@ -227,7 +281,9 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         Backdrop(
                             backdropUrl = backdropPath,
                             it.details.title,
-                            Modifier.constrainAs(backdrop) {})
+                            Modifier.constrainAs(backdrop) {
+                                top.linkTo(parent.top)
+                            })
                     }
                     val posterWidth = 160.dp
                     AppBar(
@@ -342,7 +398,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                                 linkTo(startGuideline, endGuideline)
                             }
                     )
-                    CreditSection(
+                    TMDbDetailItemSection(
                         items = it.cast,
                         headerResId = R.string.cast,
                         itemContent = { item, _ ->
@@ -352,13 +408,14 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                                 Modifier.width(140.dp)
                             )
                         },
-                        onAllCreditSelected = onAllCastSelected,
+                        onSeeAllClicked = { cast -> onAllCastSelected.invoke(cast) },
                         modifier = Modifier.constrainAs(castSection) {
                             top.linkTo(overview.bottom, 16.dp)
                             linkTo(startGuideline, endGuideline)
                         }
                     )
-                    CreditSection(
+
+                    TMDbDetailItemSection(
                         items = it.crew,
                         headerResId = R.string.crew,
                         itemContent = { item, _ ->
@@ -368,18 +425,33 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                                 Modifier.width(140.dp)
                             )
                         },
-                        onAllCreditSelected = onAllCrewSelected,
+                        onSeeAllClicked = { crew -> onAllCrewSelected.invoke(crew) },
                         modifier = Modifier.constrainAs(crewSection) {
                             top.linkTo(castSection.bottom, 16.dp)
                             linkTo(startGuideline, endGuideline)
                         }
                     )
 
+                    TMDbDetailItemSection(
+                        items = it.images,
+                        headerResId = R.string.images,
+                        onSeeAllClicked = { images -> onImagesSelected.invoke(images, 0) },
+                        itemContent = { item, index ->
+                            ImageSection(
+                                item,
+                            ) { onImagesSelected.invoke(it.images, index) }
+                        },
+                        modifier = Modifier.constrainAs(imagesSection) {
+                            top.linkTo(crewSection.bottom, 16.dp)
+                            linkTo(startGuideline, endGuideline)
+                        },
+                    )
+
                     Spacer(
                         modifier = Modifier
                             .windowInsetsBottomHeight(WindowInsets.navigationBars)
                             .constrainAs(space) {
-                                top.linkTo(crewSection.bottom)
+                                top.linkTo(imagesSection.bottom)
                             }
                     )
                 }
@@ -470,7 +542,7 @@ private fun Poster(posterUrl: String?, tmdbItemName: String, modifier: Modifier)
     val scale =
         animateFloatAsState(
             targetValue = if (isScaled.value) 2.2f else 1f,
-            animationSpec = springAnimation
+            animationSpec = springAnimation, label = ""
         ).value
 
     Card(
@@ -572,37 +644,35 @@ private fun RateStars(voteAverage: Double, modifier: Modifier) {
 }
 
 @Composable
-private fun <T : Credit> CreditSection(
+private fun <T : Any> TMDbDetailItemSection(
     items: List<T>,
     @StringRes headerResId: Int,
+    onSeeAllClicked: (List<T>) -> Unit,
     itemContent: @Composable (T, Int) -> Unit,
-    onAllCreditSelected: (List<T>) -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
-    if (items.isNotEmpty()) {
-        Column(modifier = modifier.fillMaxWidth()) {
-            SectionHeader(headerResId, items, onAllCreditSelected)
-            LazyRow(
-                modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
-                contentPadding = PaddingValues(Dimens.PaddingLarge)
-            ) {
-                items(
-                    count = items.size,
-                    itemContent = { index ->
-                        itemContent(items[index], index)
-                        Spacer(modifier = Modifier.width(Dimens.PaddingLarge))
-                    }
-                )
-            }
+    Column(modifier = modifier.fillMaxWidth()) {
+        SectionHeader(headerResId, items, onSeeAllClicked)
+        LazyRow(
+            modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
+            contentPadding = PaddingValues(Dimens.PaddingLarge),
+        ) {
+            items(
+                count = items.size,
+                itemContent = { index ->
+                    itemContent(items[index], index)
+                    Spacer(modifier = Modifier.width(16.dp))
+                },
+            )
         }
     }
 }
 
 @Composable
-private fun <T : Credit> SectionHeader(
+private fun <T : Any> SectionHeader(
     @StringRes headerResId: Int,
     items: List<T>,
-    onAllCreditSelected: (List<T>) -> Unit
+    onAllSelected: (List<T>) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -621,7 +691,7 @@ private fun <T : Credit> SectionHeader(
             modifier = Modifier
                 .padding(Dimens.PaddingExtraSmall)
                 .clickable {
-                    onAllCreditSelected.invoke(items)
+                    onAllSelected.invoke(items)
                 }
         ) {
             Text(
@@ -636,6 +706,43 @@ private fun <T : Credit> SectionHeader(
                 tint = localVibrantColor.current.value,
             )
         }
+    }
+}
+
+@Composable
+private fun ImageSection(
+    image: TMDbImage,
+    onImageSelected: () -> Unit,
+) {
+    Card(
+        Modifier
+            .width(240.dp)
+            .height(160.dp)
+            .clickable { onImageSelected.invoke() },
+        shape = RoundedCornerShape(12.dp),
+        elevation = 8.dp,
+    ) {
+        val request = ImageRequest.Builder(LocalContext.current)
+            .data(image.url)
+            .crossfade(true)
+            .build()
+        val painter = rememberAsyncImagePainter(
+            model = request,
+            placeholder = rememberVectorPainter(Icons.Default.Image),
+            error = rememberVectorPainter(Icons.Default.BrokenImage),
+        )
+        val (colorFilter, contentScale) = when (painter.state) {
+            is AsyncImagePainter.State.Error, is AsyncImagePainter.State.Loading ->
+                ColorFilter.tint(MaterialTheme.colors.imageTint) to ContentScale.Fit
+
+            else -> null to ContentScale.Crop
+        }
+        Image(
+            painter = painter,
+            colorFilter = colorFilter,
+            contentDescription = stringResource(id = R1.string.poster_content_description),
+            contentScale = contentScale,
+        )
     }
 }
 

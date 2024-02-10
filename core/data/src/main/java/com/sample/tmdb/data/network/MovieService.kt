@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.network
 
+import com.sample.tmdb.data.response.ImagesResponse
 import com.sample.tmdb.data.response.MovieDetailResponse
 import com.sample.tmdb.data.response.NetworkCreditWrapper
 import com.sample.tmdb.data.response.NetworkMovie
@@ -57,4 +58,7 @@ interface MovieService {
         @Query("page") page: Int,
         @Query("query") query: String
     ): TMDbWrapper<NetworkMovie>
+
+    @GET("3/movie/{movie_id}/images")
+    suspend fun fetchImages(@Path("movie_id") movieId: Int): ImagesResponse
 }

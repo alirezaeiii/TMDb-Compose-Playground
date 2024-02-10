@@ -44,8 +44,10 @@ import com.sample.tmdb.detail.MovieDetailScreen
 import com.sample.tmdb.detail.TVShowDetailScreen
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
+import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.feed.MovieFeedScreen
 import com.sample.tmdb.feed.TVShowFeedScreen
+import com.sample.tmdb.image.ImagesScreen
 import com.sample.tmdb.paging.AiringTodayTVShowScreen
 import com.sample.tmdb.paging.DiscoverMovieScreen
 import com.sample.tmdb.paging.DiscoverTVShowScreen
@@ -92,6 +94,7 @@ fun TMDbApp() {
                 onAllCastSelected = appState::navigateToCastList,
                 onAllCrewSelected = appState::navigateToCrewList,
                 onCreditSelected = appState::navigateToPerson,
+                onImagesSelected = appState::navigateToImages,
                 upPress = appState::upPress
             )
             moviePagingScreens(
@@ -114,6 +117,7 @@ fun TMDbApp() {
                 upPress = appState::upPress
             )
             personScreen(upPress = appState::upPress)
+            imagesScreen()
         }
     }
 }
@@ -192,6 +196,7 @@ private fun NavGraphBuilder.detailScreens(
     onAllCastSelected: (String) -> Unit,
     onAllCrewSelected: (String) -> Unit,
     onCreditSelected: (String) -> Unit,
+    onImagesSelected: (String, Int) -> Unit,
     upPress: () -> Unit
 ) {
     composable(
@@ -209,6 +214,11 @@ private fun NavGraphBuilder.detailScreens(
             )
         }, onCreditSelected = {
             onCreditSelected(it)
+        }, onImagesSelected = { images, index ->
+            onImagesSelected(
+                Uri.encode(gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type)),
+                index
+            )
         })
     }
     composable(
@@ -226,6 +236,11 @@ private fun NavGraphBuilder.detailScreens(
             )
         }, onCreditSelected = {
             onCreditSelected(it)
+        }, onImagesSelected = { images, index ->
+            onImagesSelected(
+                Uri.encode(gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type)),
+                index
+            )
         })
     }
 }
@@ -390,6 +405,24 @@ private fun NavGraphBuilder.personScreen(
             navArgument(MainDestinations.TMDB_PERSON_KEY) { type = NavType.StringType })
     ) {
         PersonScreen(upPress)
+    }
+}
+
+private fun NavGraphBuilder.imagesScreen() {
+    composable(
+        route = "${MainDestinations.TMDB_IMAGES_ROUTE}/{${MainDestinations.TMDB_IMAGES_KEY}}/{${MainDestinations.TMDB_IMAGE_ID}}",
+        arguments = listOf(
+            navArgument(MainDestinations.TMDB_IMAGES_KEY) { type = NavType.StringType },
+            navArgument(MainDestinations.TMDB_IMAGE_ID) { type = NavType.IntType }
+        )
+    ) { from ->
+        ImagesScreen(
+            images = gson.fromJson(
+                from.arguments?.getString(MainDestinations.TMDB_IMAGES_KEY),
+                object : TypeToken<List<TMDbImage>>() {}.type
+            ),
+            initialPage = from.arguments?.getInt(MainDestinations.TMDB_IMAGE_ID)!!
+        )
     }
 }
 

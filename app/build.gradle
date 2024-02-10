@@ -71,6 +71,7 @@ dependencies {
     implementation project(path: BuildModules.FEATURE_PAGING)
     implementation project(path: BuildModules.FEATURE_DETAIL)
     implementation project(path: BuildModules.FEATURE_CREDIT)
+    implementation project(path: BuildModules.FEATURE_IMAGE)
 
     implementation Deps.material
     implementation Deps.composeMaterial

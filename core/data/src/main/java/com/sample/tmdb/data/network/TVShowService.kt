@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.network
 
+import com.sample.tmdb.data.response.ImagesResponse
 import com.sample.tmdb.data.response.NetworkCreditWrapper
 import com.sample.tmdb.data.response.NetworkTVShow
 import com.sample.tmdb.data.response.TMDbWrapper
@@ -49,12 +50,15 @@ interface TVShowService {
     @GET("3/tv/{tvId}/credits")
     suspend fun tvCredit(@Path("tvId") tvId: Int): NetworkCreditWrapper
 
-    @GET("3/tv/{tv_id}")
-    suspend fun fetchTvDetail(@Path("tv_id") tvId: Int): TvDetailResponse
+    @GET("3/tv/{tvId}")
+    suspend fun fetchTvDetail(@Path("tvId") tvId: Int): TvDetailResponse
 
     @GET("3/search/tv")
     suspend fun searchTVSeries(
         @Query("page") page: Int,
         @Query("query") query: String
     ): TMDbWrapper<NetworkTVShow>
+
+    @GET("3/tv/{tvId}/images")
+    suspend fun fetchImages(@Path("tvId") tvId: Int): ImagesResponse
 }

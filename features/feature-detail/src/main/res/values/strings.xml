@@ -9,4 +9,5 @@
     <string name="open">Open</string>
     <string name="favorite">Favorite</string>
     <string name="un_favorite">Un-favorite</string>
+    <string name="images">Images</string>
 </resources>
