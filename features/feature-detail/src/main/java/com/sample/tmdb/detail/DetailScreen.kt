@@ -108,6 +108,7 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
 import com.sample.tmdb.common.ui.component.PersonCard
+import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.utils.dpToPx
 import com.sample.tmdb.common.utils.toDp
@@ -128,6 +129,7 @@ fun MovieDetailScreen(
     onAllCrewSelected: (List<Crew>) -> Unit,
     onCreditSelected: (String) -> Unit,
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
+    onTMDbItemSelected: (TMDbItem) -> Unit,
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     DetailScreen(
@@ -136,7 +138,8 @@ fun MovieDetailScreen(
         onAllCastSelected = onAllCastSelected,
         onAllCrewSelected = onAllCrewSelected,
         onCreditSelected = onCreditSelected,
-        onImagesSelected = onImagesSelected
+        onImagesSelected = onImagesSelected,
+        onTMDbItemSelected = onTMDbItemSelected
     ) { details ->
         Movie(
             id = details.id,
@@ -158,6 +161,7 @@ fun TVShowDetailScreen(
     onAllCrewSelected: (List<Crew>) -> Unit,
     onCreditSelected: (String) -> Unit,
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
+    onTMDbItemSelected: (TMDbItem) -> Unit,
     viewModel: TVShowDetailViewModel = hiltViewModel()
 ) {
     DetailScreen(
@@ -166,7 +170,8 @@ fun TVShowDetailScreen(
         onAllCastSelected = onAllCastSelected,
         onAllCrewSelected = onAllCrewSelected,
         onCreditSelected = onCreditSelected,
-        onImagesSelected = onImagesSelected
+        onImagesSelected = onImagesSelected,
+        onTMDbItemSelected = onTMDbItemSelected
     ) { details ->
         TVShow(
             id = details.id,
@@ -189,6 +194,7 @@ private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     onAllCrewSelected: (List<Crew>) -> Unit,
     onCreditSelected: (String) -> Unit,
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
+    onTMDbItemSelected: (TMDbItem) -> Unit,
     getBookmarkedItem: (T) -> E
 ) {
     DetailScreen(
@@ -198,6 +204,7 @@ private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
         onAllCrewSelected = onAllCrewSelected,
         onCreditSelected = onCreditSelected,
         onImagesSelected = onImagesSelected,
+        onTMDbItemSelected = onTMDbItemSelected,
         fab = { isFabVisible, isBookmark, details ->
             ToggleBookmarkFab(isBookmark = isBookmark, isVisible = isFabVisible) {
                 if (isBookmark) {
@@ -221,6 +228,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     onAllCrewSelected: (List<Crew>) -> Unit,
     onCreditSelected: (String) -> Unit,
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
+    onTMDbItemSelected: (TMDbItem) -> Unit,
     fab: @Composable (MutableState<Boolean>, Boolean, T) -> Unit
 ) {
     // Visibility for FAB
@@ -267,7 +275,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         .padding(contentPadding)
                 ) {
                     val (appbar, backdrop, poster, title, originalTitle, genres, specs, rateStars, tagline, overview) = createRefs()
-                    val (castSection, crewSection, imagesSection, space) = createRefs()
+                    val (castSection, crewSection, imagesSection, similarSection, space) = createRefs()
                     val startGuideline = createGuidelineFromStart(16.dp)
                     val endGuideline = createGuidelineFromEnd(16.dp)
 
@@ -447,11 +455,25 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         },
                     )
 
+                    TMDbDetailItemSection(
+                        items = it.similarItems,
+                        headerResId = R.string.similar,
+                        onSeeAllClicked = {},
+                        itemContent = { item, _ ->
+                            TMDbCard(item, onTMDbItemSelected)
+                        },
+                        showSize = false,
+                        modifier = Modifier.constrainAs(similarSection) {
+                            top.linkTo(imagesSection.bottom, 16.dp)
+                            linkTo(startGuideline, endGuideline)
+                        },
+                    )
+
                     Spacer(
                         modifier = Modifier
                             .windowInsetsBottomHeight(WindowInsets.navigationBars)
                             .constrainAs(space) {
-                                top.linkTo(imagesSection.bottom)
+                                top.linkTo(similarSection.bottom)
                             }
                     )
                 }
@@ -649,10 +671,11 @@ private fun <T : Any> TMDbDetailItemSection(
     @StringRes headerResId: Int,
     onSeeAllClicked: (List<T>) -> Unit,
     itemContent: @Composable (T, Int) -> Unit,
+    showSize: Boolean = true,
     modifier: Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        SectionHeader(headerResId, items, onSeeAllClicked)
+        SectionHeader(headerResId, items, onSeeAllClicked, showSize)
         LazyRow(
             modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
             contentPadding = PaddingValues(Dimens.PaddingLarge),
@@ -672,7 +695,8 @@ private fun <T : Any> TMDbDetailItemSection(
 private fun <T : Any> SectionHeader(
     @StringRes headerResId: Int,
     items: List<T>,
-    onAllSelected: (List<T>) -> Unit
+    onAllSelected: (List<T>) -> Unit,
+    showSize: Boolean
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -695,14 +719,14 @@ private fun <T : Any> SectionHeader(
                 }
         ) {
             Text(
-                text = stringResource(R.string.see_all, items.size),
+                text = getHeaderText(showSize, items),
                 color = localVibrantColor.current.value,
                 style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(end = Dimens.PaddingExtraSmall)
             )
             Icon(
                 Icons.Filled.ArrowForward,
-                contentDescription = stringResource(R.string.see_all),
+                contentDescription = getHeaderText(showSize, items),
                 tint = localVibrantColor.current.value,
             )
         }
@@ -799,3 +823,10 @@ class BottomArcShape(private val arcHeight: Float) : Shape {
         return Outline.Generic(path)
     }
 }
+
+@Composable
+private fun <T : Any> getHeaderText(showSize: Boolean, items: List<T>) =
+    if (showSize) stringResource(
+        R.string.see_all,
+        items.size
+    ) else stringResource(R.string.see_all_items)

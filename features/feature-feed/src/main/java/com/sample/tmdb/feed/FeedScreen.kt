@@ -11,37 +11,30 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsTopHeight
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
 import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
 import com.sample.tmdb.common.ui.component.DestinationBar
+import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
@@ -86,7 +79,7 @@ private inline fun <reified T : TMDbItem> FeedScreen(
     viewModel: BaseFeedViewModel<T>,
     navController: NavController,
     noinline onSearchClicked: () -> Unit,
-    crossinline onClick: (TMDbItem) -> Unit,
+    noinline onClick: (TMDbItem) -> Unit,
     @StringRes resourceId: Int
 
 ) {
@@ -106,7 +99,7 @@ private inline fun <reified T : TMDbItem> FeedScreen(
 private inline fun <reified T : TMDbItem> FeedCollectionList(
     navController: NavController,
     collection: List<FeedWrapper<T>>,
-    crossinline onFeedClick: (TMDbItem) -> Unit
+    noinline onFeedClick: (TMDbItem) -> Unit
 ) {
     LazyColumn {
         item {
@@ -131,7 +124,7 @@ private inline fun <reified T : TMDbItem> FeedCollectionList(
 private inline fun <reified T : TMDbItem> FeedCollection(
     navController: NavController,
     feedCollection: FeedWrapper<T>,
-    crossinline onFeedClick: (TMDbItem) -> Unit,
+    noinline onFeedClick: (TMDbItem) -> Unit,
     index: Int,
     modifier: Modifier = Modifier,
 ) {
@@ -222,9 +215,9 @@ private inline fun <reified T : TMDbItem> FeedCollection(
 }
 
 @Composable
-private inline fun <T : TMDbItem> Feeds(
+private fun <T : TMDbItem> Feeds(
     feeds: List<T>,
-    crossinline onFeedClick: (TMDbItem) -> Unit,
+    onFeedClick: (TMDbItem) -> Unit,
     index: Int,
     modifier: Modifier = Modifier
 ) {
@@ -239,9 +232,9 @@ private inline fun <T : TMDbItem> Feeds(
 }
 
 @Composable
-private inline fun <T : TMDbItem> TMDbItem(
+private fun <T : TMDbItem> TMDbItem(
     tmdbItem: T,
-    crossinline onFeedClick: (TMDbItem) -> Unit,
+    onFeedClick: (TMDbItem) -> Unit,
     index: Int
 ) {
     val itemWidth: Dp
@@ -253,33 +246,7 @@ private inline fun <T : TMDbItem> TMDbItem(
         itemWidth = 120.dp
         imageUrl = tmdbItem.posterUrl
     }
-    Card(
-        modifier = Modifier
-            .padding(Dimens.PaddingSmall)
-            .clickable(onClick = { onFeedClick(tmdbItem) }),
-        shape = RoundedCornerShape(10.dp)
-    ) {
-        Column {
-            AsyncImage(
-                model = imageUrl,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(width = itemWidth, height = 180.dp),
-                contentScale = ContentScale.Crop
-            )
-            Text(
-                text = tmdbItem.name,
-                fontSize = TmdbPagingComposeTheme.fontSizes.sp_11,
-                color = MaterialTheme.colors.onSurface,
-                textAlign = TextAlign.Center,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier
-                    .size(width = itemWidth, height = 36.dp)
-                    .wrapContentHeight()
-            )
-        }
-    }
+    TMDbCard(tmdbItem, onFeedClick, imageUrl, itemWidth)
 }
 
 @Preview("default")

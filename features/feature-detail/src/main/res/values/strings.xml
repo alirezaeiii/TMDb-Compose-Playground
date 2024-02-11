@@ -3,6 +3,7 @@
     <string name="release_date">Release Date</string>
     <string name="vote_average">Vote Avg</string>
     <string name="votes">Votes</string>
+    <string name="see_all_items">See All</string>
     <string name="see_all">See All(%1$d)</string>
     <string name="cast">Cast</string>
     <string name="crew">Crew</string>
@@ -10,4 +11,5 @@
     <string name="favorite">Favorite</string>
     <string name="un_favorite">Un-favorite</string>
     <string name="images">Images</string>
+    <string name="similar">Similar</string>
 </resources>

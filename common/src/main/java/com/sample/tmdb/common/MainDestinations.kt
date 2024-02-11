@@ -24,7 +24,7 @@ object MainDestinations {
     const val TMDB_CREDIT_KEY =  "credit_list"
     const val TMDB_PERSON_ROUTE = "person"
     const val TMDB_PERSON_KEY = "personId"
-    const val TMDB_IMAGES_ROUTE = "image"
+    const val TMDB_IMAGES_ROUTE = "images"
     const val TMDB_IMAGES_KEY = "imagesKey"
-    const val TMDB_IMAGE_ID = "imageId"
+    const val TMDB_IMAGE_PAGE = "imagePage"
 }
