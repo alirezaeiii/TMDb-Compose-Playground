@@ -1,11 +1,13 @@
 package com.sample.tmdb.data.repository
 
 import android.content.Context
+import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.response.asCastDomainModel
 import com.sample.tmdb.data.response.asCrewDomainModel
 import com.sample.tmdb.data.response.asDomainModel
+import com.sample.tmdb.data.response.asMovieDomainModel
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.MovieDetails
@@ -36,4 +38,7 @@ class MovieDetailRepository @Inject constructor(
 
     override suspend fun getImages(id: Int): List<TMDbImage> =
         movieApi.fetchImages(id).asDomainModel()
+
+    override suspend fun getSimilarItems(id: Int): List<TMDbItem> =
+        movieApi.fetchSimilarMovies(id).items.asMovieDomainModel()
 }

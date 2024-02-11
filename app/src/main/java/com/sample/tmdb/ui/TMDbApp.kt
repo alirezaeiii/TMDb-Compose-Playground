@@ -90,11 +90,20 @@ fun TMDbApp() {
                 onSearchTVShow = appState::navigateToSearchTVShow,
                 navController = appState.navController
             )
-            detailScreens(
+            movieDetailScreens(
                 onAllCastSelected = appState::navigateToCastList,
                 onAllCrewSelected = appState::navigateToCrewList,
                 onCreditSelected = appState::navigateToPerson,
                 onImagesSelected = appState::navigateToImages,
+                onTMDbItemSelected = appState::navigateToMovieDetail,
+                upPress = appState::upPress
+            )
+            tvShowDetailScreens(
+                onAllCastSelected = appState::navigateToCastList,
+                onAllCrewSelected = appState::navigateToCrewList,
+                onCreditSelected = appState::navigateToPerson,
+                onImagesSelected = appState::navigateToImages,
+                onTMDbItemSelected = appState::navigateToTVShowDetail,
                 upPress = appState::upPress
             )
             moviePagingScreens(
@@ -192,11 +201,12 @@ private fun NavGraphBuilder.navigationScreens(
     }
 }
 
-private fun NavGraphBuilder.detailScreens(
+private fun NavGraphBuilder.movieDetailScreens(
     onAllCastSelected: (String) -> Unit,
     onAllCrewSelected: (String) -> Unit,
     onCreditSelected: (String) -> Unit,
     onImagesSelected: (String, Int) -> Unit,
+    onTMDbItemSelected: (Int) -> Unit,
     upPress: () -> Unit
 ) {
     composable(
@@ -219,8 +229,20 @@ private fun NavGraphBuilder.detailScreens(
                 Uri.encode(gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type)),
                 index
             )
+        }, onTMDbItemSelected = {
+            onTMDbItemSelected(it.id)
         })
     }
+}
+
+private fun NavGraphBuilder.tvShowDetailScreens(
+    onAllCastSelected: (String) -> Unit,
+    onAllCrewSelected: (String) -> Unit,
+    onCreditSelected: (String) -> Unit,
+    onImagesSelected: (String, Int) -> Unit,
+    onTMDbItemSelected: (Int) -> Unit,
+    upPress: () -> Unit
+) {
     composable(
         route = "${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments = listOf(
@@ -241,6 +263,8 @@ private fun NavGraphBuilder.detailScreens(
                 Uri.encode(gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type)),
                 index
             )
+        }, onTMDbItemSelected = {
+            onTMDbItemSelected(it.id)
         })
     }
 }
@@ -410,10 +434,10 @@ private fun NavGraphBuilder.personScreen(
 
 private fun NavGraphBuilder.imagesScreen() {
     composable(
-        route = "${MainDestinations.TMDB_IMAGES_ROUTE}/{${MainDestinations.TMDB_IMAGES_KEY}}/{${MainDestinations.TMDB_IMAGE_ID}}",
+        route = "${MainDestinations.TMDB_IMAGES_ROUTE}/{${MainDestinations.TMDB_IMAGES_KEY}}/{${MainDestinations.TMDB_IMAGE_PAGE}}",
         arguments = listOf(
             navArgument(MainDestinations.TMDB_IMAGES_KEY) { type = NavType.StringType },
-            navArgument(MainDestinations.TMDB_IMAGE_ID) { type = NavType.IntType }
+            navArgument(MainDestinations.TMDB_IMAGE_PAGE) { type = NavType.IntType }
         )
     ) { from ->
         ImagesScreen(
@@ -421,7 +445,7 @@ private fun NavGraphBuilder.imagesScreen() {
                 from.arguments?.getString(MainDestinations.TMDB_IMAGES_KEY),
                 object : TypeToken<List<TMDbImage>>() {}.type
             ),
-            initialPage = from.arguments?.getInt(MainDestinations.TMDB_IMAGE_ID)!!
+            initialPage = from.arguments?.getInt(MainDestinations.TMDB_IMAGE_PAGE)!!
         )
     }
 }

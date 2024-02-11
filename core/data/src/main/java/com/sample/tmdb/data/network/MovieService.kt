@@ -61,4 +61,13 @@ interface MovieService {
 
     @GET("3/movie/{movie_id}/images")
     suspend fun fetchImages(@Path("movie_id") movieId: Int): ImagesResponse
+
+    @GET("3/movie/{movie_id}/similar")
+    suspend fun fetchSimilarMovies(@Path("movie_id") movieId: Int): TMDbWrapper<NetworkMovie>
+
+    @GET("3/movie/{movie_id}/similar")
+    suspend fun fetchSimilarMovies(
+        @Path("movie_id") movieId: Int,
+        @Query("page") page: Int
+    ): TMDbWrapper<NetworkMovie>
 }

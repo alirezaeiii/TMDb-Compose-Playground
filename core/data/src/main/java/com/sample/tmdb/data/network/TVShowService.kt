@@ -61,4 +61,13 @@ interface TVShowService {
 
     @GET("3/tv/{tvId}/images")
     suspend fun fetchImages(@Path("tvId") tvId: Int): ImagesResponse
+
+    @GET("3/tv/{tvId}/similar")
+    suspend fun fetchSimilarMovies(@Path("tvId") tvId: Int): TMDbWrapper<NetworkTVShow>
+
+    @GET("3/tv/{TvId}/similar")
+    suspend fun fetchSimilarMovies(
+        @Path("TvId") tvId: Int,
+        @Query("page") page: Int
+    ): TMDbWrapper<NetworkTVShow>
 }
