@@ -97,6 +97,13 @@ class TMDbAppState(
         navController.navigate("${MainDestinations.TMDB_IMAGES_ROUTE}/$images/$id")
     }
 
+    fun navigateToSimilarMovies(id: Int) {
+        navController.navigate("${MainDestinations.TMDB_SIMILAR_MOVIES_ROUTE}/$id")
+    }
+
+    fun navigateToSimilarTVShow(id: Int) {
+        navController.navigate("${MainDestinations.TMDB_SIMILAR_TV_SHOW_ROUTE}/$id")
+    }
 }
 
 private val NavGraph.startDestination: NavDestination?

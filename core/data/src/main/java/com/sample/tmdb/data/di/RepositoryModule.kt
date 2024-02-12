@@ -14,6 +14,7 @@ import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.domain.repository.BookmarkItemDetailsRepository
+import com.sample.tmdb.domain.utils.Similar
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -71,6 +72,12 @@ abstract class RepositoryModule {
     internal abstract fun bindDiscoverMoviesRepository(discoverMoviesPagingRepository: DiscoverMoviesPagingRepository): BasePagingRepository<Movie>
 
     @Singleton
+    @Similar
+    @Binds
+    internal abstract fun bindSimilarMoviesRepository(similarMoviesPagingRepository: SimilarMoviesPagingRepository): BasePagingRepository<Movie>
+
+
+    @Singleton
     @Search
     @Binds
     internal abstract fun bindSearchMoviesRepository(searchMoviesPagingRepository: SearchMoviesPagingRepository): BasePagingRepository<Movie>
@@ -104,6 +111,12 @@ abstract class RepositoryModule {
     @Discover
     @Binds
     internal abstract fun bindDiscoverTVShowRepository(discoverTvSeriesPagingRepository: DiscoverTvSeriesPagingRepository): BasePagingRepository<TVShow>
+
+    @Singleton
+    @Similar
+    @Binds
+    internal abstract fun bindSimilarTVShowRepository(similarTvSeriesPagingRepository: SimilarTvSeriesPagingRepository): BasePagingRepository<TVShow>
+
 
     @Singleton
     @Search

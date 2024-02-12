@@ -27,4 +27,7 @@ object MainDestinations {
     const val TMDB_IMAGES_ROUTE = "images"
     const val TMDB_IMAGES_KEY = "imagesKey"
     const val TMDB_IMAGE_PAGE = "imagePage"
+    const val TMDB_SIMILAR_MOVIES_ROUTE = "similar_movies"
+    const val TMDB_SIMILAR_TV_SHOW_ROUTE = "similar_tv_show"
+    const val TMDB_SIMILAR_ID = "similarId"
 }

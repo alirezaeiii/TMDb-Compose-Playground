@@ -55,6 +55,8 @@ import com.sample.tmdb.paging.NowPlayingMovieScreen
 import com.sample.tmdb.paging.OnTheAirTVShowScreen
 import com.sample.tmdb.paging.PopularMovieScreen
 import com.sample.tmdb.paging.PopularTVShowScreen
+import com.sample.tmdb.paging.SimilarMovieScreen
+import com.sample.tmdb.paging.SimilarTVShowScreen
 import com.sample.tmdb.paging.TopRatedMovieScreen
 import com.sample.tmdb.paging.TopRatedTVShowScreen
 import com.sample.tmdb.paging.TrendingMovieScreen
@@ -96,6 +98,7 @@ fun TMDbApp() {
                 onCreditSelected = appState::navigateToPerson,
                 onImagesSelected = appState::navigateToImages,
                 onTMDbItemSelected = appState::navigateToMovieDetail,
+                onAllSimilarSelected = appState::navigateToSimilarMovies,
                 upPress = appState::upPress
             )
             tvShowDetailScreens(
@@ -104,6 +107,7 @@ fun TMDbApp() {
                 onCreditSelected = appState::navigateToPerson,
                 onImagesSelected = appState::navigateToImages,
                 onTMDbItemSelected = appState::navigateToTVShowDetail,
+                onAllSimilarSelected = appState::navigateToSimilarTVShow,
                 upPress = appState::upPress
             )
             moviePagingScreens(
@@ -207,6 +211,7 @@ private fun NavGraphBuilder.movieDetailScreens(
     onCreditSelected: (String) -> Unit,
     onImagesSelected: (String, Int) -> Unit,
     onTMDbItemSelected: (Int) -> Unit,
+    onAllSimilarSelected: (Int) -> Unit,
     upPress: () -> Unit
 ) {
     composable(
@@ -231,6 +236,8 @@ private fun NavGraphBuilder.movieDetailScreens(
             )
         }, onTMDbItemSelected = {
             onTMDbItemSelected(it.id)
+        }, onAllSimilarSelected = {
+            onAllSimilarSelected(it)
         })
     }
 }
@@ -241,6 +248,7 @@ private fun NavGraphBuilder.tvShowDetailScreens(
     onCreditSelected: (String) -> Unit,
     onImagesSelected: (String, Int) -> Unit,
     onTMDbItemSelected: (Int) -> Unit,
+    onAllSimilarSelected: (Int) -> Unit,
     upPress: () -> Unit
 ) {
     composable(
@@ -265,6 +273,8 @@ private fun NavGraphBuilder.tvShowDetailScreens(
             )
         }, onTMDbItemSelected = {
             onTMDbItemSelected(it.id)
+        }, onAllSimilarSelected = {
+            onAllSimilarSelected(it)
         })
     }
 }
@@ -311,6 +321,17 @@ private fun NavGraphBuilder.moviePagingScreens(
     }
     composable(route = MainDestinations.TMDB_DISCOVER_MOVIES_ROUTE) {
         DiscoverMovieScreen(
+            onClick = { onMovieSelected(it.id) },
+            upPress = upPress,
+            onSearchMovie = onSearchMovie
+        )
+    }
+    composable(
+        route = "${MainDestinations.TMDB_SIMILAR_MOVIES_ROUTE}/{${MainDestinations.TMDB_SIMILAR_ID}}",
+        arguments = listOf(
+            navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType })
+    ) {
+        SimilarMovieScreen(
             onClick = { onMovieSelected(it.id) },
             upPress = upPress,
             onSearchMovie = onSearchMovie
@@ -363,6 +384,17 @@ private fun NavGraphBuilder.tvShowPagingScreens(
             onClick = { onTVShowSelected(it.id) },
             upPress = upPress,
             onSearchTVShow = onSearchTVShow
+        )
+    }
+    composable(
+        route = "${MainDestinations.TMDB_SIMILAR_TV_SHOW_ROUTE}/{${MainDestinations.TMDB_SIMILAR_ID}}",
+        arguments = listOf(
+            navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType })
+    ) {
+        SimilarTVShowScreen(
+            onClick = { onTVShowSelected(it.id) },
+            upPress = upPress,
+            onSearchMovie = onSearchTVShow
         )
     }
 }

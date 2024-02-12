@@ -36,6 +36,7 @@ import com.sample.tmdb.common.utils.toDp
 import com.sample.tmdb.paging.main.movie.DiscoverMoviesViewModel
 import com.sample.tmdb.paging.main.movie.NowPlayingMoviesViewModel
 import com.sample.tmdb.paging.main.movie.PopularMoviesViewModel
+import com.sample.tmdb.paging.main.movie.SimilarMoviesViewModel
 import com.sample.tmdb.paging.main.movie.TopRatedMoviesViewModel
 import com.sample.tmdb.paging.main.movie.TrendingMoviesViewModel
 import com.sample.tmdb.paging.main.movie.UpcomingMoviesViewModel
@@ -43,6 +44,7 @@ import com.sample.tmdb.paging.main.tvshow.AiringTodayTvSeriesViewModel
 import com.sample.tmdb.paging.main.tvshow.DiscoverTvSeriesViewModel
 import com.sample.tmdb.paging.main.tvshow.OnTheAirTvSeriesViewModel
 import com.sample.tmdb.paging.main.tvshow.PopularTvSeriesViewModel
+import com.sample.tmdb.paging.main.tvshow.SimilarTvSeriesViewModel
 import com.sample.tmdb.paging.main.tvshow.TopRatedTvSeriesViewModel
 import com.sample.tmdb.paging.main.tvshow.TrendingTvSeriesViewModel
 import com.sample.tmdb.common.R as R1
@@ -162,6 +164,25 @@ fun DiscoverMovieScreen(
 }
 
 @Composable
+fun SimilarMovieScreen(
+    onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
+    onSearchMovie: () -> Unit,
+    viewModel: SimilarMoviesViewModel = hiltViewModel()
+) {
+    PagingScreen(
+        viewModel = viewModel,
+        onClick = onClick,
+        upPress = upPress,
+        onSearchClicked = onSearchMovie,
+        title = stringResource(
+            R.string.similar_items,
+            stringResource(R1.string.movies)
+        )
+    )
+}
+
+@Composable
 fun TrendingTVShowScreen(
     onClick: (TMDbItem) -> Unit,
     upPress: () -> Unit,
@@ -270,6 +291,25 @@ fun DiscoverTVShowScreen(
         onSearchClicked = onSearchTVShow,
         title = stringResource(
             R.string.discover,
+            stringResource(R1.string.tv_series)
+        )
+    )
+}
+
+@Composable
+fun SimilarTVShowScreen(
+    onClick: (TMDbItem) -> Unit,
+    upPress: () -> Unit,
+    onSearchMovie: () -> Unit,
+    viewModel: SimilarTvSeriesViewModel = hiltViewModel()
+) {
+    PagingScreen(
+        viewModel = viewModel,
+        onClick = onClick,
+        upPress = upPress,
+        onSearchClicked = onSearchMovie,
+        title = stringResource(
+            R.string.similar_items,
             stringResource(R1.string.tv_series)
         )
     )

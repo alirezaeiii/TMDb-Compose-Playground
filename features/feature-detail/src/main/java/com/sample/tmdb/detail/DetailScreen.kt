@@ -130,6 +130,7 @@ fun MovieDetailScreen(
     onCreditSelected: (String) -> Unit,
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     onTMDbItemSelected: (TMDbItem) -> Unit,
+    onAllSimilarSelected: (Int) -> Unit,
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     DetailScreen(
@@ -139,7 +140,8 @@ fun MovieDetailScreen(
         onAllCrewSelected = onAllCrewSelected,
         onCreditSelected = onCreditSelected,
         onImagesSelected = onImagesSelected,
-        onTMDbItemSelected = onTMDbItemSelected
+        onTMDbItemSelected = onTMDbItemSelected,
+        onAllSimilarSelected = onAllSimilarSelected
     ) { details ->
         Movie(
             id = details.id,
@@ -162,6 +164,7 @@ fun TVShowDetailScreen(
     onCreditSelected: (String) -> Unit,
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     onTMDbItemSelected: (TMDbItem) -> Unit,
+    onAllSimilarSelected: (Int) -> Unit,
     viewModel: TVShowDetailViewModel = hiltViewModel()
 ) {
     DetailScreen(
@@ -171,7 +174,8 @@ fun TVShowDetailScreen(
         onAllCrewSelected = onAllCrewSelected,
         onCreditSelected = onCreditSelected,
         onImagesSelected = onImagesSelected,
-        onTMDbItemSelected = onTMDbItemSelected
+        onTMDbItemSelected = onTMDbItemSelected,
+        onAllSimilarSelected = onAllSimilarSelected
     ) { details ->
         TVShow(
             id = details.id,
@@ -195,6 +199,7 @@ private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     onCreditSelected: (String) -> Unit,
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     onTMDbItemSelected: (TMDbItem) -> Unit,
+    onAllSimilarSelected: (Int) -> Unit,
     getBookmarkedItem: (T) -> E
 ) {
     DetailScreen(
@@ -205,6 +210,7 @@ private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
         onCreditSelected = onCreditSelected,
         onImagesSelected = onImagesSelected,
         onTMDbItemSelected = onTMDbItemSelected,
+        onAllSimilarSelected = onAllSimilarSelected,
         fab = { isFabVisible, isBookmark, details ->
             ToggleBookmarkFab(isBookmark = isBookmark, isVisible = isFabVisible) {
                 if (isBookmark) {
@@ -229,6 +235,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     onCreditSelected: (String) -> Unit,
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     onTMDbItemSelected: (TMDbItem) -> Unit,
+    onAllSimilarSelected: (Int) -> Unit,
     fab: @Composable (MutableState<Boolean>, Boolean, T) -> Unit
 ) {
     // Visibility for FAB
@@ -458,7 +465,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                     TMDbDetailItemSection(
                         items = it.similarItems,
                         headerResId = R.string.similar,
-                        onSeeAllClicked = {},
+                        onSeeAllClicked = { _ -> onAllSimilarSelected.invoke(it.details.id) },
                         itemContent = { item, _ ->
                             TMDbCard(item, onTMDbItemSelected)
                         },

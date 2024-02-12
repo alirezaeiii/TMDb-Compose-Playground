@@ -29,3 +29,7 @@ annotation class Discover
 @Retention(AnnotationRetention.BINARY)
 @Qualifier
 annotation class Search
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class Similar
