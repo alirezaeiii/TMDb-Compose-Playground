@@ -8,7 +8,6 @@ import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sample.tmdb.common.MainDestinations
 
 
 /**
@@ -47,10 +46,6 @@ class TMDbAppState(
     val currentRoute: String?
         get() = navController.currentDestination?.route
 
-    fun upPress() {
-        navController.navigateUp()
-    }
-
     fun navigateToBottomBarRoute(route: String) {
         if (route != currentRoute) {
             navController.navigate(route) {
@@ -63,46 +58,6 @@ class TMDbAppState(
                 }
             }
         }
-    }
-
-    fun navigateToMovieDetail(id: Int) {
-        navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/$id")
-    }
-
-    fun navigateToTVShowDetail(id: Int) {
-        navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/$id")
-    }
-
-    fun navigateToCastList(cast: String) {
-        navController.navigate("${MainDestinations.TMDB_CAST_ROUTE}/$cast")
-    }
-
-    fun navigateToCrewList(crew: String) {
-        navController.navigate("${MainDestinations.TMDB_CREW_ROUTE}/$crew")
-    }
-
-    fun navigateToPerson(id: String) {
-        navController.navigate("${MainDestinations.TMDB_PERSON_ROUTE}/$id")
-    }
-
-    fun navigateToSearchMovie() {
-        navController.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE)
-    }
-
-    fun navigateToSearchTVShow() {
-        navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE)
-    }
-
-    fun navigateToImages(images: String, id: Int) {
-        navController.navigate("${MainDestinations.TMDB_IMAGES_ROUTE}/$images/$id")
-    }
-
-    fun navigateToSimilarMovies(id: Int) {
-        navController.navigate("${MainDestinations.TMDB_SIMILAR_MOVIES_ROUTE}/$id")
-    }
-
-    fun navigateToSimilarTVShow(id: Int) {
-        navController.navigate("${MainDestinations.TMDB_SIMILAR_TV_SHOW_ROUTE}/$id")
     }
 }
 

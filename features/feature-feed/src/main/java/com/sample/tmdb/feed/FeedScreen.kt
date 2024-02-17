@@ -44,32 +44,28 @@ import com.sample.tmdb.common.R as R1
 
 @Composable
 fun MovieFeedScreen(
-    onClick: (TMDbItem) -> Unit,
-    onSearchMovie: () -> Unit,
     navController: NavController,
     viewModel: MovieFeedViewModel = hiltViewModel()
 ) {
     FeedScreen(
         viewModel = viewModel,
         navController = navController,
-        onSearchClicked = onSearchMovie,
-        onClick = onClick,
+        onSearchClicked = { navController.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE) },
+        onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
         R1.string.movies
     )
 }
 
 @Composable
 fun TVShowFeedScreen(
-    onClick: (TMDbItem) -> Unit,
-    onSearchTVShow:()->Unit,
     navController: NavController,
     viewModel: TVShowFeedViewModel = hiltViewModel()
 ) {
     FeedScreen(
         viewModel = viewModel,
         navController = navController,
-        onSearchClicked = onSearchTVShow,
-        onClick = onClick,
+        onSearchClicked = { navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) },
+        onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
         R1.string.tv_series
     )
 }

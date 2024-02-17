@@ -21,9 +21,11 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R
 import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.placeholderIcon
@@ -34,14 +36,14 @@ import com.sample.tmdb.common.utils.CircleTopCropTransformation
 @Composable
 fun PersonCard(
     person: Credit,
-    onCreditSelected: (String) -> Unit,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier
             .padding(Dimens.PaddingExtraSmall)
             .clickable {
-                onCreditSelected.invoke(person.id.toString())
+                navController.navigate("${MainDestinations.TMDB_PERSON_ROUTE}/${person.id}")
             },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -66,6 +68,7 @@ fun PersonCard(
                 is AsyncImagePainter.State.Error, is AsyncImagePainter.State.Loading -> ColorFilter.tint(
                     MaterialTheme.colors.imageTint
                 )
+
                 else -> null
             }
             Image(

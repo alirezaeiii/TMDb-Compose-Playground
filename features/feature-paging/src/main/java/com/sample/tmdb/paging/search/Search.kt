@@ -41,6 +41,8 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R as R1
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens
@@ -51,28 +53,26 @@ import com.sample.tmdb.paging.R
 
 @Composable
 fun SearchMoviesScreen(
-    onClick: (TMDbItem) -> Unit,
-    upPress: () -> Unit,
+    navController: NavController,
     viewModel: SearchMoviesViewModel = hiltViewModel()
 ) {
     Search(
         viewModel = viewModel,
-        onClick = onClick,
-        upPress = upPress,
+        onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
+        upPress = { navController.navigateUp() },
         resourceId = R1.string.movies
     )
 }
 
 @Composable
 fun SearchTVSeriesScreen(
-    onClick: (TMDbItem) -> Unit,
-    upPress: () -> Unit,
+    navController: NavController,
     viewModel: SearchTvSeriesViewModel = hiltViewModel()
 ) {
     Search(
         viewModel = viewModel,
-        onClick = onClick,
-        upPress = upPress,
+        onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
+        upPress = { navController.navigateUp() },
         resourceId = R1.string.tv_series
     )
 }

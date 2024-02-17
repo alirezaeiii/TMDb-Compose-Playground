@@ -4,13 +4,26 @@ import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -22,6 +35,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
@@ -37,8 +52,7 @@ import com.sample.tmdb.common.R as R1
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BookmarkScreen(
-    onClickMovie: (TMDbItem) -> Unit,
-    onClickTVShow: (TMDbItem) -> Unit,
+    navController: NavController,
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
     val tabs = remember { MediaTab.values() }
@@ -79,8 +93,8 @@ fun BookmarkScreen(
             verticalAlignment = Alignment.Top
         ) { page ->
             when (page) {
-                MediaTab.Movies.ordinal -> MoviesTabContent(onClickMovie)
-                MediaTab.TvShows.ordinal -> TVShowsTabContent(onClickTVShow)
+                MediaTab.Movies.ordinal -> MoviesTabContent(navController)
+                MediaTab.TvShows.ordinal -> TVShowsTabContent(navController)
             }
         }
     }
@@ -88,18 +102,24 @@ fun BookmarkScreen(
 
 @Composable
 private fun MoviesTabContent(
-    onClickMovie: (TMDbItem) -> Unit,
+    navController: NavController,
     viewModel: BookmarkMovieViewModel = hiltViewModel()
 ) {
-    TabContent(viewModel = viewModel, onClick = onClickMovie, textResourceId = R1.string.movies)
+    TabContent(
+        viewModel = viewModel,
+        onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
+        textResourceId = R1.string.movies
+    )
 }
 
 @Composable
 private fun TVShowsTabContent(
-    onClickTVShow: (TMDbItem) -> Unit,
+    navController: NavController,
     viewModel: BookmarkTVShowViewModel = hiltViewModel()
 ) {
-    TabContent(viewModel = viewModel, onClick = onClickTVShow, textResourceId = R1.string.tv_series)
+    TabContent(viewModel = viewModel,
+        onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
+        textResourceId = R1.string.tv_series)
 }
 
 @Composable

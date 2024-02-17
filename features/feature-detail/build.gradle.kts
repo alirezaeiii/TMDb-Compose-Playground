@@ -57,4 +57,5 @@ dependencies {
     implementation(Deps.palette)
     implementation(Deps.composeConstraintLayout)
     implementation(Deps.browser)
+    implementation(Deps.gson)
 }

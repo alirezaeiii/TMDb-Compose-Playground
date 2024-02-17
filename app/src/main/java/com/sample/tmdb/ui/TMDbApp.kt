@@ -1,6 +1,5 @@
 package com.sample.tmdb.ui
 
-import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -85,51 +84,14 @@ fun TMDbApp() {
             startDestination = MainDestinations.HOME_ROUTE,
             modifier = Modifier.padding(innerPaddingModifier)
         ) {
-            navigationScreens(
-                onMovieSelected = appState::navigateToMovieDetail,
-                onTVShowSelected = appState::navigateToTVShowDetail,
-                onSearchMovie = appState::navigateToSearchMovie,
-                onSearchTVShow = appState::navigateToSearchTVShow,
-                navController = appState.navController
-            )
-            movieDetailScreens(
-                onAllCastSelected = appState::navigateToCastList,
-                onAllCrewSelected = appState::navigateToCrewList,
-                onCreditSelected = appState::navigateToPerson,
-                onImagesSelected = appState::navigateToImages,
-                onTMDbItemSelected = appState::navigateToMovieDetail,
-                onAllSimilarSelected = appState::navigateToSimilarMovies,
-                upPress = appState::upPress
-            )
-            tvShowDetailScreens(
-                onAllCastSelected = appState::navigateToCastList,
-                onAllCrewSelected = appState::navigateToCrewList,
-                onCreditSelected = appState::navigateToPerson,
-                onImagesSelected = appState::navigateToImages,
-                onTMDbItemSelected = appState::navigateToTVShowDetail,
-                onAllSimilarSelected = appState::navigateToSimilarTVShow,
-                upPress = appState::upPress
-            )
-            moviePagingScreens(
-                onMovieSelected = appState::navigateToMovieDetail,
-                onSearchMovie = appState::navigateToSearchMovie,
-                upPress = appState::upPress
-            )
-            tvShowPagingScreens(
-                onTVShowSelected = appState::navigateToTVShowDetail,
-                onSearchTVShow = appState::navigateToSearchTVShow,
-                upPress = appState::upPress
-            )
-            searchScreens(
-                onMovieSelected = appState::navigateToMovieDetail,
-                onTVShowSelected = appState::navigateToTVShowDetail,
-                upPress = appState::upPress
-            )
-            creditScreens(
-                onCreditSelected = appState::navigateToPerson,
-                upPress = appState::upPress
-            )
-            personScreen(upPress = appState::upPress)
+            navigationScreens(appState.navController)
+            movieDetailScreens(appState.navController)
+            tvShowDetailScreens(appState.navController)
+            moviePagingScreens(appState.navController)
+            tvShowPagingScreens(appState.navController)
+            searchScreens(appState.navController)
+            creditScreens(appState.navController)
+            personScreen(appState.navController)
             imagesScreen()
         }
     }
@@ -169,35 +131,19 @@ private fun TMDbBottomBar(
     }
 }
 
-private fun NavGraphBuilder.navigationScreens(
-    onMovieSelected: (Int) -> Unit,
-    onTVShowSelected: (Int) -> Unit,
-    onSearchMovie: () -> Unit,
-    onSearchTVShow: () -> Unit,
-    navController: NavController
-) {
+private fun NavGraphBuilder.navigationScreens(navController: NavController) {
     navigation(
         route = MainDestinations.HOME_ROUTE,
         startDestination = HomeSections.MOVIE_SECTION.route
     ) {
         composable(route = HomeSections.MOVIE_SECTION.route) {
-            MovieFeedScreen(
-                onClick = { onMovieSelected(it.id) },
-                onSearchMovie = onSearchMovie,
-                navController = navController
-            )
+            MovieFeedScreen(navController = navController)
         }
         composable(route = HomeSections.TV_SHOW_SECTION.route) {
-            TVShowFeedScreen(
-                onClick = { onTVShowSelected(it.id) },
-                onSearchTVShow = onSearchTVShow,
-                navController = navController,
-            )
+            TVShowFeedScreen(navController = navController)
         }
         composable(route = HomeSections.BOOKMARK_SECTION.route) {
-            BookmarkScreen(
-                onClickMovie = { onMovieSelected(it.id) },
-                onClickTVShow = { onTVShowSelected(it.id) })
+            BookmarkScreen(navController)
         }
         composable(route = HomeSections.SETTING_SECTION.route) {
             SettingsScreen()
@@ -205,217 +151,92 @@ private fun NavGraphBuilder.navigationScreens(
     }
 }
 
-private fun NavGraphBuilder.movieDetailScreens(
-    onAllCastSelected: (String) -> Unit,
-    onAllCrewSelected: (String) -> Unit,
-    onCreditSelected: (String) -> Unit,
-    onImagesSelected: (String, Int) -> Unit,
-    onTMDbItemSelected: (Int) -> Unit,
-    onAllSimilarSelected: (Int) -> Unit,
-    upPress: () -> Unit
-) {
+private fun NavGraphBuilder.movieDetailScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments = listOf(
             navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType })
     ) {
-        MovieDetailScreen(upPress, onAllCastSelected = {
-            onAllCastSelected(
-                Uri.encode(gson.toJson(it, object : TypeToken<List<Cast>>() {}.type))
-            )
-        }, onAllCrewSelected = {
-            onAllCrewSelected(
-                Uri.encode(gson.toJson(it, object : TypeToken<List<Crew>>() {}.type))
-            )
-        }, onCreditSelected = {
-            onCreditSelected(it)
-        }, onImagesSelected = { images, index ->
-            onImagesSelected(
-                Uri.encode(gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type)),
-                index
-            )
-        }, onTMDbItemSelected = {
-            onTMDbItemSelected(it.id)
-        }, onAllSimilarSelected = {
-            onAllSimilarSelected(it)
-        })
+        MovieDetailScreen(navController)
     }
 }
 
-private fun NavGraphBuilder.tvShowDetailScreens(
-    onAllCastSelected: (String) -> Unit,
-    onAllCrewSelected: (String) -> Unit,
-    onCreditSelected: (String) -> Unit,
-    onImagesSelected: (String, Int) -> Unit,
-    onTMDbItemSelected: (Int) -> Unit,
-    onAllSimilarSelected: (Int) -> Unit,
-    upPress: () -> Unit
-) {
+private fun NavGraphBuilder.tvShowDetailScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments = listOf(
             navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType })
     ) {
-        TVShowDetailScreen(upPress, onAllCastSelected = {
-            onAllCastSelected(
-                Uri.encode(gson.toJson(it, object : TypeToken<List<Cast>>() {}.type))
-            )
-        }, onAllCrewSelected = {
-            onAllCrewSelected(
-                Uri.encode(gson.toJson(it, object : TypeToken<List<Crew>>() {}.type))
-            )
-        }, onCreditSelected = {
-            onCreditSelected(it)
-        }, onImagesSelected = { images, index ->
-            onImagesSelected(
-                Uri.encode(gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type)),
-                index
-            )
-        }, onTMDbItemSelected = {
-            onTMDbItemSelected(it.id)
-        }, onAllSimilarSelected = {
-            onAllSimilarSelected(it)
-        })
+        TVShowDetailScreen(navController)
     }
 }
 
-private fun NavGraphBuilder.moviePagingScreens(
-    onMovieSelected: (Int) -> Unit,
-    onSearchMovie: () -> Unit,
-    upPress: () -> Unit
-) {
+private fun NavGraphBuilder.moviePagingScreens(navController: NavController) {
     composable(route = MainDestinations.TMDB_TRENDING_MOVIES_ROUTE) {
-        TrendingMovieScreen(
-            onClick = { onMovieSelected(it.id) },
-            upPress = upPress,
-            onSearchMovie = onSearchMovie
-        )
+        TrendingMovieScreen(navController = navController)
     }
     composable(route = MainDestinations.TMDB_POPULAR_MOVIES_ROUTE) {
-        PopularMovieScreen(
-            onClick = { onMovieSelected(it.id) },
-            upPress = upPress,
-            onSearchMovie = onSearchMovie
-        )
+        PopularMovieScreen(navController = navController)
     }
     composable(route = MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE) {
-        NowPlayingMovieScreen(
-            onClick = { onMovieSelected(it.id) },
-            upPress = upPress,
-            onSearchMovie = onSearchMovie
-        )
+        NowPlayingMovieScreen(navController = navController)
     }
     composable(route = MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE) {
-        UpcomingMovieScreen(
-            onClick = { onMovieSelected(it.id) },
-            upPress = upPress,
-            onSearchMovie = onSearchMovie
-        )
+        UpcomingMovieScreen(navController = navController)
     }
     composable(route = MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE) {
-        TopRatedMovieScreen(
-            onClick = { onMovieSelected(it.id) },
-            upPress = upPress,
-            onSearchMovie = onSearchMovie
-        )
+        TopRatedMovieScreen(navController = navController)
     }
     composable(route = MainDestinations.TMDB_DISCOVER_MOVIES_ROUTE) {
-        DiscoverMovieScreen(
-            onClick = { onMovieSelected(it.id) },
-            upPress = upPress,
-            onSearchMovie = onSearchMovie
-        )
+        DiscoverMovieScreen(navController = navController)
     }
     composable(
         route = "${MainDestinations.TMDB_SIMILAR_MOVIES_ROUTE}/{${MainDestinations.TMDB_SIMILAR_ID}}",
         arguments = listOf(
             navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType })
     ) {
-        SimilarMovieScreen(
-            onClick = { onMovieSelected(it.id) },
-            upPress = upPress,
-            onSearchMovie = onSearchMovie
-        )
+        SimilarMovieScreen(navController = navController)
     }
 }
 
-private fun NavGraphBuilder.tvShowPagingScreens(
-    onTVShowSelected: (Int) -> Unit,
-    onSearchTVShow: () -> Unit,
-    upPress: () -> Unit
-) {
+private fun NavGraphBuilder.tvShowPagingScreens(navController: NavController) {
     composable(route = MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE) {
-        TrendingTVShowScreen(
-            onClick = { onTVShowSelected(it.id) },
-            upPress = upPress,
-            onSearchTVShow = onSearchTVShow
-        )
+        TrendingTVShowScreen(navController = navController)
     }
     composable(route = MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE) {
-        PopularTVShowScreen(
-            onClick = { onTVShowSelected(it.id) },
-            upPress = upPress,
-            onSearchTVShow = onSearchTVShow
-        )
+        PopularTVShowScreen(navController = navController)
     }
     composable(route = MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE) {
-        AiringTodayTVShowScreen(
-            onClick = { onTVShowSelected(it.id) },
-            upPress = upPress,
-            onSearchTVShow = onSearchTVShow
-        )
+        AiringTodayTVShowScreen(navController = navController)
     }
     composable(route = MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE) {
-        OnTheAirTVShowScreen(
-            onClick = { onTVShowSelected(it.id) },
-            upPress = upPress,
-            onSearchTVShow = onSearchTVShow
-        )
+        OnTheAirTVShowScreen(navController = navController)
     }
     composable(route = MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE) {
-        TopRatedTVShowScreen(
-            onClick = { onTVShowSelected(it.id) },
-            upPress = upPress,
-            onSearchTVShow = onSearchTVShow
-        )
+        TopRatedTVShowScreen(navController = navController)
     }
     composable(route = MainDestinations.TMDB_DISCOVER_TV_SHOW_ROUTE) {
-        DiscoverTVShowScreen(
-            onClick = { onTVShowSelected(it.id) },
-            upPress = upPress,
-            onSearchTVShow = onSearchTVShow
-        )
+        DiscoverTVShowScreen(navController = navController)
     }
     composable(
         route = "${MainDestinations.TMDB_SIMILAR_TV_SHOW_ROUTE}/{${MainDestinations.TMDB_SIMILAR_ID}}",
         arguments = listOf(
             navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType })
     ) {
-        SimilarTVShowScreen(
-            onClick = { onTVShowSelected(it.id) },
-            upPress = upPress,
-            onSearchMovie = onSearchTVShow
-        )
+        SimilarTVShowScreen(navController = navController)
     }
 }
 
-private fun NavGraphBuilder.searchScreens(
-    onMovieSelected: (Int) -> Unit,
-    onTVShowSelected: (Int) -> Unit,
-    upPress: () -> Unit
-) {
+private fun NavGraphBuilder.searchScreens(navController: NavController) {
     composable(route = MainDestinations.TMDB_SEARCH_MOVIE_ROUTE) {
-        SearchMoviesScreen(onClick = { onMovieSelected(it.id) }, upPress = upPress)
+        SearchMoviesScreen(navController = navController)
     }
     composable(route = MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) {
-        SearchTVSeriesScreen(onClick = { onTVShowSelected(it.id) }, upPress = upPress)
+        SearchTVSeriesScreen(navController = navController)
     }
 }
 
-private fun NavGraphBuilder.creditScreens(
-    onCreditSelected: (String) -> Unit,
-    upPress: () -> Unit
-) {
+private fun NavGraphBuilder.creditScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_CAST_ROUTE}/{${MainDestinations.TMDB_CREDIT_KEY}}",
         arguments = listOf(
@@ -423,10 +244,8 @@ private fun NavGraphBuilder.creditScreens(
     ) { from ->
         CreditScreen(
             R.string.cast,
-            onCreditSelected = {
-                onCreditSelected(it)
-            },
-            upPress,
+            navController,
+            { navController.navigateUp() },
             gson.fromJson<List<Cast>>(
                 from.arguments?.getString(MainDestinations.TMDB_CREDIT_KEY),
                 object : TypeToken<List<Cast>>() {}.type
@@ -440,10 +259,8 @@ private fun NavGraphBuilder.creditScreens(
     ) { from ->
         CreditScreen(
             R.string.crew,
-            onCreditSelected = {
-                onCreditSelected(it)
-            },
-            upPress,
+            navController,
+            { navController.navigateUp() },
             gson.fromJson<List<Crew>>(
                 from.arguments?.getString(MainDestinations.TMDB_CREDIT_KEY),
                 object : TypeToken<List<Crew>>() {}.type
@@ -452,15 +269,13 @@ private fun NavGraphBuilder.creditScreens(
     }
 }
 
-private fun NavGraphBuilder.personScreen(
-    upPress: () -> Unit
-) {
+private fun NavGraphBuilder.personScreen(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_PERSON_ROUTE}/{${MainDestinations.TMDB_PERSON_KEY}}",
         arguments = listOf(
             navArgument(MainDestinations.TMDB_PERSON_KEY) { type = NavType.StringType })
     ) {
-        PersonScreen(upPress)
+        PersonScreen({ navController.navigateUp() })
     }
 }
 
