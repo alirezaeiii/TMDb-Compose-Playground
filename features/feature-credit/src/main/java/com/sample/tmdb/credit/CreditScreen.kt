@@ -27,7 +27,6 @@ import com.sample.tmdb.common.utils.toDp
 fun <T : Credit> CreditScreen(
     @StringRes resourceId: Int,
     navController: NavController,
-    upPress: () -> Unit,
     items: List<T>
 ) {
     LazyVerticalGrid(
@@ -58,5 +57,5 @@ fun <T : Credit> CreditScreen(
             }
         }
     )
-    DestinationBar(title = stringResource(resourceId), upPress = upPress)
+    DestinationBar(title = stringResource(resourceId), upPress = { navController.navigateUp() })
 }

@@ -245,7 +245,6 @@ private fun NavGraphBuilder.creditScreens(navController: NavController) {
         CreditScreen(
             R.string.cast,
             navController,
-            { navController.navigateUp() },
             gson.fromJson<List<Cast>>(
                 from.arguments?.getString(MainDestinations.TMDB_CREDIT_KEY),
                 object : TypeToken<List<Cast>>() {}.type
@@ -260,7 +259,6 @@ private fun NavGraphBuilder.creditScreens(navController: NavController) {
         CreditScreen(
             R.string.crew,
             navController,
-            { navController.navigateUp() },
             gson.fromJson<List<Crew>>(
                 from.arguments?.getString(MainDestinations.TMDB_CREDIT_KEY),
                 object : TypeToken<List<Crew>>() {}.type
