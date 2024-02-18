@@ -85,8 +85,7 @@ fun TMDbApp() {
             modifier = Modifier.padding(innerPaddingModifier)
         ) {
             navigationScreens(appState.navController)
-            movieDetailScreens(appState.navController)
-            tvShowDetailScreens(appState.navController)
+            detailScreens(appState.navController)
             moviePagingScreens(appState.navController)
             tvShowPagingScreens(appState.navController)
             searchScreens(appState.navController)
@@ -151,7 +150,7 @@ private fun NavGraphBuilder.navigationScreens(navController: NavController) {
     }
 }
 
-private fun NavGraphBuilder.movieDetailScreens(navController: NavController) {
+private fun NavGraphBuilder.detailScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments = listOf(
@@ -159,9 +158,6 @@ private fun NavGraphBuilder.movieDetailScreens(navController: NavController) {
     ) {
         MovieDetailScreen(navController)
     }
-}
-
-private fun NavGraphBuilder.tvShowDetailScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments = listOf(
