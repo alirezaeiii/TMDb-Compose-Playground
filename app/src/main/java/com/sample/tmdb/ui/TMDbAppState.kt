@@ -14,7 +14,7 @@ import androidx.navigation.compose.rememberNavController
  * Remembers and creates an instance of [TMDbAppState]
  */
 @Composable
-fun rememberTMDbkAppState(
+fun rememberTMDbAppState(
     navController: NavHostController = rememberNavController(),
 ) =
     remember(navController) {

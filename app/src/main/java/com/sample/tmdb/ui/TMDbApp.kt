@@ -67,7 +67,7 @@ import com.sample.tmdb.setting.SettingsScreen
 
 @Composable
 fun TMDbApp() {
-    val appState = rememberTMDbkAppState()
+    val appState = rememberTMDbAppState()
     Scaffold(
         bottomBar = {
             if (appState.shouldShowBottomBar) {
