@@ -1,7 +1,7 @@
 package com.sample.tmdb.credit
 
 import androidx.lifecycle.SavedStateHandle
-import com.sample.tmdb.common.base.BaseRefreshViewModel
+import com.sample.tmdb.common.base.TMDbViewModel
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.domain.model.Person
@@ -12,7 +12,7 @@ import javax.inject.Inject
 class PersonViewModel @Inject constructor(
     repository: BaseRepository<Person>,
     savedStateHandle: SavedStateHandle
-) : BaseRefreshViewModel<Person>(
+) : TMDbViewModel<Person>(
     repository,
     savedStateHandle[MainDestinations.TMDB_PERSON_KEY]
 )

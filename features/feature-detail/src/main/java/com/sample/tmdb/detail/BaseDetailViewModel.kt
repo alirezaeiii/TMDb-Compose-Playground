@@ -2,7 +2,7 @@ package com.sample.tmdb.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.sample.tmdb.common.base.BaseRefreshViewModel
+import com.sample.tmdb.common.base.TMDbViewModel
 import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.DetailWrapper
@@ -17,7 +17,7 @@ open class BaseDetailViewModel<T : TMDbItemDetails, R : TMDbItem>(
     private val bookmarkRepository: BookmarkItemDetailsRepository<R>,
     repository: BaseDetailRepository<T>,
     savedStateHandle: SavedStateHandle
-) : BaseRefreshViewModel<DetailWrapper<T>>(
+) : TMDbViewModel<DetailWrapper<T>>(
     repository,
     savedStateHandle[MainDestinations.TMDB_ID_KEY]
 ) {
