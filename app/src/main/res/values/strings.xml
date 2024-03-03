@@ -1,50 +1,9 @@
 <resources>
     <string name="app_name">TMDb</string>
-    <string name="app_title">TMDb %s</string>
-    <string name="movies">Movies</string>
-    <string name="tv_series">TV Series</string>
-    <string name="more_item">More</string>
-
-    <string name="failed_loading_msg">Something went wrong</string>
-    <string name="retry">Retry</string>
-
-    <string name="release_date">Release Date</string>
-    <string name="vote_average">Vote Avg</string>
-    <string name="votes">Votes</string>
-    <string name="see_all">See All(%1$d)</string>
     <string name="cast">Cast</string>
     <string name="crew">Crew</string>
-    <string name="person_content_description">Photo of %1$s the %2$s</string>
-
-    <string name="trending">Trending %s</string>
-    <string name="popular">Popular %s</string>
-    <string name="now_playing">Now Playing %s</string>
-    <string name="upcoming">Upcoming %s</string>
-    <string name="airing_today">Airing today %s</string>
-    <string name="on_the_air">On the air %s</string>
-    <string name="highest_rate">Top Rated %s</string>
-    <string name="discover">Discover %s</string>
-
-    <string name="search">Search %s</string>
-    <string name="search_desc">Search</string>
-    <string name="back">Back</string>
-    <string name="open">Open</string>
-    <string name="clear">Clear</string>
-
-    <string name="from">From %s</string>
-    <string name="born">Born on %s</string>
-    <string name="death">Death in %s</string>
-    <string name="biography">Biography</string>
     <string name="favorite">Favorite</string>
-    <string name="un_favorite">Un-favorite</string>
     <string name="movie">Movie</string>
     <string name="tv_show">TVShow</string>
-    <string name="empty_list">No %s to show</string>
-
-    <string name="source_code_github">Source code on Github</string>
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="version">Version</string>
-    <string name="forward">Forward</string>
     <string name="setting">Setting</string>
-    <string name="about">About</string>
 </resources>
