@@ -40,6 +40,7 @@ import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
+import com.sample.tmdb.feed.utils.conditional
 import com.sample.tmdb.common.R as R1
 
 @Composable
@@ -124,7 +125,9 @@ private inline fun <reified T : TMDbItem> FeedCollection(
     index: Int,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.conditional(index != SortType.entries.lastIndex) {
+        padding(bottom = 32.dp)
+    }) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
