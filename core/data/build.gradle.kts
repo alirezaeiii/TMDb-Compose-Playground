@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -34,6 +34,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -43,19 +46,19 @@ dependencies {
     implementation(Deps.okhttpInterceptor)
     implementation(Deps.moshi)
     implementation(Deps.moshiKotlin)
-    kapt(Deps.moshiCodegen)
+    ksp(Deps.moshiCodegen)
     implementation(Deps.composePaging)
     implementation(Deps.room)
     implementation(Deps.roomKtx)
-    kapt(Deps.roomCompiler)
+    ksp(Deps.roomCompiler)
     implementation(Deps.hilt)
-    kapt(Deps.hilt_compiler)
+    ksp(Deps.hilt_compiler)
 }
 
 fun getProperty(filename: String, propName: String): String? {
     val propsFile = rootProject.file(filename)
     if (propsFile.exists()) {
-        return com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir).getProperty(propName)
+        return com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir, providers).getProperty(propName)
     } else {
         print("$filename does not exist!")
     }

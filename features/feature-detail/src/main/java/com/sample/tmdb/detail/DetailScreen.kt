@@ -47,15 +47,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.StarHalf
+import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.StarHalf
 import androidx.compose.material.icons.filled.StarOutline
-import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -537,7 +537,7 @@ private fun AppBar(modifier: Modifier, homepage: String?, upPress: () -> Unit) {
         val scaleModifier = Modifier.scale(1.1f)
         IconButton(onClick = { upPress.invoke() }) {
             Icon(
-                Icons.Filled.ArrowBack,
+                Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = stringResource(id = R1.string.back),
                 tint = vibrantColor,
                 modifier = scaleModifier
@@ -547,7 +547,7 @@ private fun AppBar(modifier: Modifier, homepage: String?, upPress: () -> Unit) {
             val context = LocalContext.current
             IconButton(onClick = { homepage.openInChromeCustomTab(context, vibrantColor) }) {
                 Icon(
-                    Icons.Rounded.OpenInNew,
+                    Icons.AutoMirrored.Rounded.OpenInNew,
                     contentDescription = stringResource(id = R.string.open),
                     tint = vibrantColor,
                     modifier = scaleModifier
@@ -658,7 +658,7 @@ private fun RateStars(voteAverage: Double, modifier: Modifier) {
             val voteStarCount = voteAverage / (maxVote / starCount)
             val asset = when {
                 voteStarCount >= starIndex + 1 -> Icons.Filled.Star
-                voteStarCount in starIndex.toDouble()..(starIndex + 1).toDouble() -> Icons.Filled.StarHalf
+                voteStarCount in starIndex.toDouble()..(starIndex + 1).toDouble() -> Icons.AutoMirrored.Filled.StarHalf
                 else -> Icons.Filled.StarOutline
             }
             Icon(
@@ -731,7 +731,7 @@ private fun <T : Any> SectionHeader(
                 modifier = Modifier.padding(end = Dimens.PaddingExtraSmall)
             )
             Icon(
-                Icons.Filled.ArrowForward,
+                Icons.AutoMirrored.Filled.ArrowForward,
                 contentDescription = getHeaderText(showSize, items),
                 tint = localVibrantColor.current.value,
             )

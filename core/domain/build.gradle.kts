@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
     id ("kotlin-parcelize")
 }
 
@@ -42,5 +42,5 @@ dependencies {
     implementation(Deps.composePaging)
     implementation(Deps.retrofit)
     implementation(Deps.hilt)
-    kapt(Deps.hilt_compiler)
+    ksp(Deps.hilt_compiler)
 }
