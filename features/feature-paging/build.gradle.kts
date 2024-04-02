@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -35,7 +35,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.0"
+        kotlinCompilerExtensionVersion = "1.5.11"
     }
 }
 
@@ -48,6 +48,6 @@ dependencies {
     implementation(Deps.composeMaterial)
     implementation(Deps.composePaging)
     implementation(Deps.hilt)
-    kapt(Deps.hilt_compiler)
+    ksp(Deps.hilt_compiler)
     implementation(Deps.hilt_compose)
 }

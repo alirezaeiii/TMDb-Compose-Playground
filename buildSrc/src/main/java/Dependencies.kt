@@ -2,28 +2,28 @@ import org.gradle.internal.impldep.com.esotericsoftware.minlog.Log
 import java.io.File
 
 object Versions {
-    const val compose = "1.5.0"
-    const val compose_paging = "1.0.0-alpha17"
+    const val compose = "1.6.4"
+    const val compose_paging = "3.2.1"
     const val constraint_layout = "1.0.1"
-    const val accompanist = "0.25.1"
-    const val nav_version = "2.5.2"
-    const val appCompat = "1.5.1"
-    const val material  = "1.6.1"
-    const val lifecycle = "2.6.2"
-    const val hilt = "2.47"
-    const val hiltCompose = "1.0.0"
-    const val retrofit = "2.9.0"
-    const val okhttp = "4.11.0"
-    const val moshi = "1.15.0"
-    const val converterMoshi = "2.9.0"
-    const val coroutines = "1.5.2"
-    const val coil = "2.2.2"
-    const val gson = "2.9.1"
+    const val compose_activity = "1.8.2"
+    const val nav_version = "2.7.7"
+    const val appCompat = "1.6.1"
+    const val material  = "1.11.0"
+    const val lifecycle = "2.7.0"
+    const val hilt = "2.51.1"
+    const val hiltCompose = "1.2.0"
+    const val retrofit = "2.11.0"
+    const val okhttp = "4.12.0"
+    const val moshi = "1.15.1"
+    const val converterMoshi = "2.11.0"
+    const val coroutines = "1.8.0"
+    const val coil = "2.6.0"
+    const val gson = "2.10.1"
     const val palette = "1.0.0"
-    const val icon_extended = "1.4.0-alpha02"
-    const val browser = "1.5.0-alpha01"
-    const val room_version = "2.6.0-alpha01"
-    const val annotation = "1.7.0"
+    const val icon_extended = "1.6.4"
+    const val browser = "1.8.0"
+    const val room_version = "2.6.1"
+    const val annotation = "1.7.1"
 }
 
 object AppMetaData {
@@ -64,8 +64,8 @@ object Deps {
     // Paging Compose
     const val composePaging = "androidx.paging:paging-compose:${Versions.compose_paging}"
 
-    // Accompanist
-    const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
+    // Activity Compose
+    const val composeActivity = "androidx.activity:activity-compose:${Versions.compose_activity}"
 
     // UI
     const val material = "com.google.android.material:material:${Versions.material}"

@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
 }
@@ -54,11 +54,11 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.5.0'
+        kotlinCompilerExtensionVersion '1.5.11'
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
+        freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn"]
     }
     namespace 'com.sample.tmdb'
 }
@@ -78,9 +78,9 @@ dependencies {
     implementation Deps.composeFoundation
     implementation Deps.iconExtended
     implementation Deps.navigationCompose
-    implementation Deps.systemUiController
+    implementation Deps.composeActivity
     implementation Deps.composePaging
     implementation Deps.hilt
-    kapt Deps.hilt_compiler
+    ksp Deps.hilt_compiler
     implementation Deps.gson
 }
