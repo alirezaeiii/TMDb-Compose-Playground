@@ -64,7 +64,7 @@ fun DestinationBar(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_search),
-                    contentDescription = stringResource(id = R.string.search)
+                    contentDescription = stringResource(id = R.string.search_desc)
                 )
             }
         }

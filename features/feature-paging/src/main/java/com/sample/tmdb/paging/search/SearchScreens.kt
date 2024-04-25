@@ -230,7 +230,7 @@ private fun SearchHint(@StringRes resourceId: Int) {
         )
         Spacer(Modifier.width(8.dp))
         Text(
-            text = stringResource(R1.string.search, stringResource(resourceId)),
+            text = stringResource(R.string.search, stringResource(resourceId)),
             color = MaterialTheme.colors.primary
         )
     }

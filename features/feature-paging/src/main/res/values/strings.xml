@@ -9,6 +9,7 @@
     <string name="highest_rate">Top Rated %s</string>
     <string name="discover">Discover %s</string>
     <string name="similar_items">Similar %s</string>
+    <string name="search">Search %s</string>
     <string name="search_desc">Search</string>
     <string name="clear">Clear</string>
 </resources>

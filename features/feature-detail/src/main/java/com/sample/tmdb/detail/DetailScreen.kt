@@ -306,7 +306,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                     )
                     Text(
                         text = it.details.title,
-                        style = MaterialTheme.typography.h1.copy(
+                        style = MaterialTheme.typography.subtitle1.copy(
                             fontSize = 26.sp,
                             letterSpacing = 3.sp,
                             fontWeight = FontWeight.SemiBold,
