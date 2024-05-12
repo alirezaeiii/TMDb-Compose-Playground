@@ -2,10 +2,10 @@ package com.sample.tmdb.domain.model
 
 import com.sample.tmdb.common.model.TMDbItem
 
-class DetailWrapper<T : TMDbItemDetails>(
+class DetailWrapper(
     val cast: List<Cast>,
     val crew: List<Crew>,
-    val details: T,
+    val details: TMDbItemDetails,
     val images: List<TMDbImage>,
     val similarItems: List<TMDbItem>
 )

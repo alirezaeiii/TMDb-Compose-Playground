@@ -72,11 +72,11 @@ fun TVShowFeedScreen(
 }
 
 @Composable
-private inline fun <reified T : TMDbItem> FeedScreen(
+private fun <T: TMDbItem> FeedScreen(
     viewModel: BaseFeedViewModel<T>,
     navController: NavController,
-    noinline onSearchClicked: () -> Unit,
-    noinline onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    onClick: (TMDbItem) -> Unit,
     @StringRes resourceId: Int
 
 ) {
@@ -93,10 +93,10 @@ private inline fun <reified T : TMDbItem> FeedScreen(
 }
 
 @Composable
-private inline fun <reified T : TMDbItem> FeedCollectionList(
+private fun FeedCollectionList(
     navController: NavController,
-    collection: List<FeedWrapper<T>>,
-    noinline onFeedClick: (TMDbItem) -> Unit
+    collection: List<FeedWrapper>,
+    onFeedClick: (TMDbItem) -> Unit
 ) {
     LazyColumn {
         item {
@@ -118,10 +118,10 @@ private inline fun <reified T : TMDbItem> FeedCollectionList(
 }
 
 @Composable
-private inline fun <reified T : TMDbItem> FeedCollection(
+private fun FeedCollection(
     navController: NavController,
-    feedCollection: FeedWrapper<T>,
-    noinline onFeedClick: (TMDbItem) -> Unit,
+    feedCollection: FeedWrapper,
+    onFeedClick: (TMDbItem) -> Unit,
     index: Int,
     modifier: Modifier = Modifier,
 ) {
@@ -148,8 +148,8 @@ private inline fun <reified T : TMDbItem> FeedCollection(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .clickable {
-                        when (T::class) {
-                            Movie::class -> {
+                        when (feedCollection.feeds.first()) {
+                            is Movie -> {
                                 when (feedCollection.sortType) {
                                     SortType.TRENDING -> {
                                         navController.navigate(MainDestinations.TMDB_TRENDING_MOVIES_ROUTE)
@@ -177,7 +177,7 @@ private inline fun <reified T : TMDbItem> FeedCollection(
                                 }
                             }
 
-                            TVShow::class -> {
+                            is TVShow -> {
                                 when (feedCollection.sortType) {
                                     SortType.TRENDING -> {
                                         navController.navigate(MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE)
@@ -214,8 +214,8 @@ private inline fun <reified T : TMDbItem> FeedCollection(
 }
 
 @Composable
-private fun <T : TMDbItem> Feeds(
-    feeds: List<T>,
+private fun Feeds(
+    feeds: List<TMDbItem>,
     onFeedClick: (TMDbItem) -> Unit,
     index: Int,
     modifier: Modifier = Modifier
@@ -231,8 +231,8 @@ private fun <T : TMDbItem> Feeds(
 }
 
 @Composable
-private fun <T : TMDbItem> TMDbItem(
-    tmdbItem: T,
+private fun TMDbItem(
+    tmdbItem: TMDbItem,
     onFeedClick: (TMDbItem) -> Unit,
     index: Int
 ) {

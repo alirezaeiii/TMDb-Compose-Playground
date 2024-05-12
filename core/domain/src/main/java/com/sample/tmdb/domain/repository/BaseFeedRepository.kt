@@ -14,7 +14,7 @@ import kotlinx.coroutines.coroutineScope
 abstract class BaseFeedRepository<T : TMDbItem>(
     context: Context,
     ioDispatcher: CoroutineDispatcher
-) : BaseRepository<List<FeedWrapper<T>>>(context, ioDispatcher) {
+) : BaseRepository<List<FeedWrapper>>(context, ioDispatcher) {
 
     protected abstract suspend fun popularItems(): List<T>
 
@@ -32,7 +32,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(
 
     protected abstract fun getLatestResId(): Int
 
-    override suspend fun getSuccessResult(id: Any?): List<FeedWrapper<T>> {
+    override suspend fun getSuccessResult(id: Any?): List<FeedWrapper> {
         val trendingDeferred: Deferred<List<T>>
         val nowPlayingDeferred: Deferred<List<T>>
         val popularDeferred: Deferred<List<T>>

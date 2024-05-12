@@ -16,7 +16,7 @@ import kotlinx.coroutines.coroutineScope
 abstract class BaseDetailRepository<T : TMDbItemDetails>(
     context: Context,
     ioDispatcher: CoroutineDispatcher
-) : BaseRepository<DetailWrapper<T>>(context, ioDispatcher) {
+) : BaseRepository<DetailWrapper>(context, ioDispatcher) {
 
     protected abstract suspend fun getDetails(id: Int): T
 
@@ -26,7 +26,7 @@ abstract class BaseDetailRepository<T : TMDbItemDetails>(
 
     protected abstract suspend fun getSimilarItems(id: Int): List<TMDbItem>
 
-    override suspend fun getSuccessResult(id: Any?): DetailWrapper<T> {
+    override suspend fun getSuccessResult(id: Any?): DetailWrapper {
         val detailsDeferred: Deferred<T>
         val creditDeferred: Deferred<Pair<List<Cast>, List<Crew>>>
         val imageDeferred: Deferred<List<TMDbImage>>

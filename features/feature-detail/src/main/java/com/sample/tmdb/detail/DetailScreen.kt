@@ -181,7 +181,7 @@ private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     navController: NavController,
     onTMDbItemSelected: (TMDbItem) -> Unit,
     onAllSimilarSelected: (Int) -> Unit,
-    getBookmarkedItem: (T) -> E
+    getBookmarkedItem: (TMDbItemDetails) -> E
 ) {
     DetailScreen(
         viewModel = viewModel,
@@ -219,7 +219,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     onTMDbItemSelected: (TMDbItem) -> Unit,
     onAllSimilarSelected: (Int) -> Unit,
-    fab: @Composable (MutableState<Boolean>, Boolean, T) -> Unit
+    fab: @Composable (MutableState<Boolean>, Boolean, TMDbItemDetails) -> Unit
 ) {
     // Visibility for FAB
     val isFabVisible = rememberSaveable { mutableStateOf(true) }
