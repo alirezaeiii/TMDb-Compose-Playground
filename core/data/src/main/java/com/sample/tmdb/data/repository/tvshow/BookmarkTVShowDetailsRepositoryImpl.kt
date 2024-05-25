@@ -1,4 +1,4 @@
-package com.sample.tmdb.data.repository
+package com.sample.tmdb.data.repository.tvshow
 
 import com.sample.tmdb.data.source.entity.asDatabaseModel
 import com.sample.tmdb.data.source.local.TVShowDao

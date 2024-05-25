@@ -1,4 +1,4 @@
-package com.sample.tmdb.data.repository
+package com.sample.tmdb.data.repository.tvshow
 
 import android.content.Context
 import com.sample.tmdb.data.R
