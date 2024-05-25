@@ -1,4 +1,4 @@
-package com.sample.tmdb.data.repository.movie
+package com.sample.tmdb.data.repository.movie.detail
 
 import com.sample.tmdb.data.source.entity.asDatabaseModel
 import com.sample.tmdb.data.source.local.MovieDao
