@@ -28,7 +28,7 @@ fun TMDbProgressBar() {
 fun HorizontalDottedProgressBar() {
     val color = MaterialTheme.colors.primary
 
-    val infiniteTransition = rememberInfiniteTransition()
+    val infiniteTransition = rememberInfiniteTransition(label = "")
     val state = infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = 6f,
@@ -37,7 +37,7 @@ fun HorizontalDottedProgressBar() {
                 durationMillis = 700,
                 easing = LinearEasing
             )
-        )
+        ), label = ""
     )
 
     DrawCanvas(state = state.value, radius = 15.dp, color = color)
