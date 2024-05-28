@@ -139,12 +139,12 @@ private fun FeedCollectionList(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PagerTMDbItemContainer(
+private fun PagerTMDbItemContainer(
     item: FeedWrapper, navController: NavController, onFeedClick: (TMDbItem) -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = { item.feeds.size })
 
-    Banner(titleId = item.sortTypeResourceId) {
+    Header(titleId = item.sortTypeResourceId) {
         when (item.feeds.first()) {
             is Movie -> {
                 when (item.sortType) {
@@ -251,7 +251,7 @@ private fun FeedCollection(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.padding(top = 32.dp)) {
-        Banner(titleId = feedCollection.sortTypeResourceId) {
+        Header(titleId = feedCollection.sortTypeResourceId) {
             when (feedCollection.feeds.first()) {
                 is Movie -> {
                     when (feedCollection.sortType) {
@@ -287,7 +287,7 @@ private fun FeedCollection(
 }
 
 @Composable
-private fun Banner(
+private fun Header(
     @StringRes titleId: Int, onMoreClick: () -> Unit
 ) {
     Row(
