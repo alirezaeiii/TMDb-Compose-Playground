@@ -50,4 +50,5 @@ dependencies {
     implementation(Deps.hilt)
     ksp(Deps.hilt_compiler)
     implementation(Deps.hilt_compose)
+    implementation(Deps.lottieCompose)
 }

@@ -8,7 +8,7 @@ object Versions {
     const val compose_activity = "1.8.2"
     const val nav_version = "2.7.7"
     const val appCompat = "1.6.1"
-    const val material  = "1.11.0"
+    const val material = "1.11.0"
     const val lifecycle = "2.7.0"
     const val hilt = "2.51.1"
     const val hiltCompose = "1.2.0"
@@ -24,6 +24,7 @@ object Versions {
     const val browser = "1.8.0"
     const val room_version = "2.6.1"
     const val annotation = "1.7.1"
+    const val lottie_compose = "4.0.0"
 }
 
 object AppMetaData {
@@ -58,8 +59,10 @@ object Deps {
     const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
     const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.nav_version}"
-    const val composeConstraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraint_layout}"
-    const val iconExtended = "androidx.compose.material:material-icons-extended:${Versions.icon_extended}"
+    const val composeConstraintLayout =
+        "androidx.constraintlayout:constraintlayout-compose:${Versions.constraint_layout}"
+    const val iconExtended =
+        "androidx.compose.material:material-icons-extended:${Versions.icon_extended}"
 
     // Paging Compose
     const val composePaging = "androidx.paging:paging-compose:${Versions.compose_paging}"
@@ -75,8 +78,10 @@ object Deps {
 
     // Core
     const val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
-    const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
-    const val lifecycleSavedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
+    const val lifecycleViewModel =
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+    const val lifecycleSavedstate =
+        "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
 
     // Hilt
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
@@ -103,10 +108,14 @@ object Deps {
     const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
 
     // Gson
-    const val gson =  "com.google.code.gson:gson:${Versions.gson}"
+    const val gson = "com.google.code.gson:gson:${Versions.gson}"
 
     // Room
     const val room = "androidx.room:room-runtime:${Versions.room_version}"
     const val roomKtx = "androidx.room:room-ktx:${Versions.room_version}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room_version}"
+
+
+    const val lottieCompose = "com.airbnb.android:lottie-compose:${Versions.lottie_compose}"
+
 }
