@@ -8,7 +8,7 @@ object Versions {
     const val compose_activity = "1.8.2"
     const val nav_version = "2.7.7"
     const val appCompat = "1.6.1"
-    const val material  = "1.11.0"
+    const val material = "1.11.0"
     const val lifecycle = "2.7.0"
     const val hilt = "2.51.1"
     const val hiltCompose = "1.2.0"
@@ -24,6 +24,7 @@ object Versions {
     const val browser = "1.8.0"
     const val room_version = "2.6.1"
     const val annotation = "1.7.1"
+    const val lottie_compose = "4.0.0"
 }
 
 object AppMetaData {
@@ -94,19 +95,21 @@ object Deps {
     const val moshiCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}"
 
     // Coroutines
-    const val coroutinesCore =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
-    const val coroutinesAndroid =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
     // Coil
     const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
 
     // Gson
-    const val gson =  "com.google.code.gson:gson:${Versions.gson}"
+    const val gson = "com.google.code.gson:gson:${Versions.gson}"
 
     // Room
     const val room = "androidx.room:room-runtime:${Versions.room_version}"
     const val roomKtx = "androidx.room:room-ktx:${Versions.room_version}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room_version}"
+
+
+    const val lottieCompose = "com.airbnb.android:lottie-compose:${Versions.lottie_compose}"
+
 }
