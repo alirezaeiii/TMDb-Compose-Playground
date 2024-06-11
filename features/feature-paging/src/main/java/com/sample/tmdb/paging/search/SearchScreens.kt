@@ -86,9 +86,6 @@ fun <T : TMDbItem> Search(
     @StringRes resourceId: Int,
     modifier: Modifier = Modifier
 ) {
-
-
-
     var query by rememberSaveable { mutableStateOf("") }
     var focused by rememberSaveable { mutableStateOf(false) }
     Box(modifier = modifier.fillMaxSize()) {
@@ -102,7 +99,6 @@ fun <T : TMDbItem> Search(
             ) {
                 AnimatedSearch()
             }
-
         } else {
             viewModel.showResult(query)
             PagingScreen(

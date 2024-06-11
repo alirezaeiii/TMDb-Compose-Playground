@@ -59,10 +59,8 @@ object Deps {
     const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
     const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.nav_version}"
-    const val composeConstraintLayout =
-        "androidx.constraintlayout:constraintlayout-compose:${Versions.constraint_layout}"
-    const val iconExtended =
-        "androidx.compose.material:material-icons-extended:${Versions.icon_extended}"
+    const val composeConstraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraint_layout}"
+    const val iconExtended = "androidx.compose.material:material-icons-extended:${Versions.icon_extended}"
 
     // Paging Compose
     const val composePaging = "androidx.paging:paging-compose:${Versions.compose_paging}"
@@ -78,10 +76,8 @@ object Deps {
 
     // Core
     const val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
-    const val lifecycleViewModel =
-        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
-    const val lifecycleSavedstate =
-        "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
+    const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+    const val lifecycleSavedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
 
     // Hilt
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
@@ -99,10 +95,8 @@ object Deps {
     const val moshiCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}"
 
     // Coroutines
-    const val coroutinesCore =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
-    const val coroutinesAndroid =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
     // Coil
     const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
