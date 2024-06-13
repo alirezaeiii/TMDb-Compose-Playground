@@ -117,9 +117,11 @@ private fun TVShowsTabContent(
     navController: NavController,
     viewModel: BookmarkTVShowViewModel = hiltViewModel()
 ) {
-    TabContent(viewModel = viewModel,
+    TabContent(
+        viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
-        textResourceId = R1.string.tv_series)
+        textResourceId = R1.string.tv_series
+    )
 }
 
 @Composable
@@ -199,13 +201,8 @@ private fun EmptyView(@StringRes textResourceId: Int) {
 private fun isEmptyImageVisible(): Boolean {
     val configuration = LocalConfiguration.current
     val isPortrait = when (configuration.orientation) {
-        Configuration.ORIENTATION_PORTRAIT -> {
-            true
-        }
-
-        else -> {
-            false
-        }
+        Configuration.ORIENTATION_PORTRAIT -> true
+        else -> false
     }
     if (isPortrait) {
         return true

@@ -109,7 +109,7 @@ object Deps {
     const val roomKtx = "androidx.room:room-ktx:${Versions.room_version}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room_version}"
 
-
+    // Lottie
     const val lottieCompose = "com.airbnb.android:lottie-compose:${Versions.lottie_compose}"
 
 }
