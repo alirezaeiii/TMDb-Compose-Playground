@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
+import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
@@ -36,24 +37,26 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun ChangeSystemBarsTheme(lightTheme: Boolean) {
-        val barColor = MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque).toArgb()
+        val statusBarColor = MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque).toArgb()
+        val navigationBarColor =
+            MaterialTheme.colors.background.copy(alpha = AlphaNavigationBar).toArgb()
         LaunchedEffect(lightTheme) {
             if (lightTheme) {
                 enableEdgeToEdge(
                     statusBarStyle = SystemBarStyle.light(
-                        barColor, barColor,
+                        statusBarColor, statusBarColor,
                     ),
                     navigationBarStyle = SystemBarStyle.light(
-                        barColor, barColor,
+                        navigationBarColor, navigationBarColor,
                     ),
                 )
             } else {
                 enableEdgeToEdge(
                     statusBarStyle = SystemBarStyle.dark(
-                        barColor,
+                        statusBarColor
                     ),
                     navigationBarStyle = SystemBarStyle.dark(
-                        barColor,
+                        navigationBarColor,
                     ),
                 )
             }

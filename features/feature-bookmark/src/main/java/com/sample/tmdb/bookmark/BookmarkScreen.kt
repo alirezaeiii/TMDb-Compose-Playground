@@ -148,9 +148,7 @@ private fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Uni
             start = Dimens.PaddingMedium,
             end = Dimens.PaddingMedium,
             bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current)
-                .toDp().dp.plus(
-                    Dimens.PaddingMedium
-                )
+                .toDp().dp.plus(56.dp)
         ),
         horizontalArrangement = Arrangement.spacedBy(
             Dimens.PaddingMedium,

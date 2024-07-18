@@ -2,6 +2,9 @@ package com.sample.tmdb.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
@@ -23,6 +26,7 @@ import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -37,6 +41,7 @@ import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.R
 import com.sample.tmdb.bookmark.BookmarkScreen
 import com.sample.tmdb.common.MainDestinations
+import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.credit.CreditScreen
 import com.sample.tmdb.credit.PersonScreen
 import com.sample.tmdb.detail.MovieDetailScreen
@@ -79,10 +84,16 @@ fun TMDbApp() {
             }
         }
     ) { innerPaddingModifier ->
+        val newPadding = PaddingValues(
+            start = innerPaddingModifier.calculateStartPadding(LocalLayoutDirection.current),
+            end = innerPaddingModifier.calculateEndPadding(LocalLayoutDirection.current),
+            top = innerPaddingModifier.calculateTopPadding(),
+            bottom = 0.dp,
+        )
         NavHost(
             navController = appState.navController,
             startDestination = MainDestinations.HOME_ROUTE,
-            modifier = Modifier.padding(innerPaddingModifier)
+            modifier = Modifier.padding(newPadding)
         ) {
             navigationScreens(appState.navController)
             detailScreens(appState.navController)
@@ -107,7 +118,10 @@ private fun TMDbBottomBar(
     Box(
         Modifier.navigationBarsPadding()
     ) {
-        BottomNavigation(backgroundColor = MaterialTheme.colors.background, elevation = 0.dp) {
+        BottomNavigation(
+            backgroundColor = MaterialTheme.colors.background.copy(alpha = AlphaNavigationBar),
+            elevation = 0.dp
+        ) {
             tabs.forEach { section ->
                 val selected = section == currentSection
                 BottomNavigationItem(

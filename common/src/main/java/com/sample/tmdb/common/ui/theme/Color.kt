@@ -13,6 +13,7 @@ val Tornado = listOf(Color(0xff7057f5), Color(0xff86f7fa))
 val Neutral8 = Color(0xff121212)
 
 const val AlphaNearOpaque = 0.65f
+const val AlphaNavigationBar = 0.85f
 
 @Composable
 fun Color.Companion.rateColors(movieRate: Double): List<Color> = remember(movieRate) {
