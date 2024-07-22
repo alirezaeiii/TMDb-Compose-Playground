@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
 
 @Composable
@@ -26,11 +27,11 @@ fun TMDbCard(
     tmdbItem: TMDbItem,
     onFeedClick: (TMDbItem) -> Unit,
     imageUrl: String? = tmdbItem.posterUrl,
-    itemWidth: Dp = 120.dp
+    itemWidth: Dp = TMDb_120_dp
 ) {
     Card(
         modifier = Modifier
-            .padding(Dimens.PaddingSmall)
+            .padding(TMDb_6_dp)
             .clickable(onClick = { onFeedClick(tmdbItem) }),
         shape = RoundedCornerShape(10.dp)
     ) {

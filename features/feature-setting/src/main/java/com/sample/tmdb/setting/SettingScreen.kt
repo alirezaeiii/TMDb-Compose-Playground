@@ -35,7 +35,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.theme.Teal200
 
@@ -66,9 +70,9 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
         SettingsGroupItem(
             settings = aboutSettings, modifier = modifier
                 .padding(
-                    top = 56.dp + Dimens.PaddingLarge,
-                    start = Dimens.PaddingNormal,
-                    end = Dimens.PaddingNormal
+                    top = 56.dp + TMDb_16_dp,
+                    start = TMDb_12_dp,
+                    end = TMDb_12_dp
                 )
         )
         DestinationBar(title = stringResource(R.string.about))
@@ -82,7 +86,7 @@ private fun SettingsGroupItem(
 ) {
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(TMDb_16_dp),
         border = BorderStroke(
             width = 1.dp,
             color = MaterialTheme.colors.onSurface.copy(alpha = DIVIDER_ALPHA)
@@ -95,7 +99,7 @@ private fun SettingsGroupItem(
                 if (index < settings.lastIndex) {
                     Divider()
                 } else {
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(TMDb_4_dp))
                 }
             }
         }
@@ -117,7 +121,7 @@ private fun SettingsItem(
                     is Settings.Info -> Modifier
                 }
             )
-            .padding(Dimens.PaddingNormal)
+            .padding(TMDb_12_dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -127,7 +131,7 @@ private fun SettingsItem(
         )
         TitleText(
             modifier = Modifier
-                .padding(Dimens.PaddingMedium)
+                .padding(TMDb_8_dp)
                 .weight(1f),
             titleResourceId = settings.titleResourceId
         )
@@ -146,7 +150,7 @@ private fun IconBox(
 ) {
     Box(
         modifier = modifier
-            .size(iconShapeSize)
+            .size(TMDb_32_dp)
             .background(color = MaterialTheme.colors.background, shape = CircleShape),
         contentAlignment = Alignment.Center
 
@@ -200,7 +204,7 @@ private fun ForwardButton(
     color: Color = Teal200
 ) {
     Icon(
-        modifier = modifier.size(iconShapeSize),
+        modifier = modifier.size(TMDb_32_dp),
         painter = painterResource(id = R.drawable.ic_arrow_forward),
         contentDescription = stringResource(id = R.string.forward),
         tint = color
@@ -238,4 +242,3 @@ private const val TMDB_REPO_URL = "https://github.com/alirezaeiii/TMDb-Compose-P
 private const val TMDB_POLICY_URL =
     "https://docs.google.com/document/d/10tQW2au7MCCYI8D1CZKU5jkpdbsUvsB6wCQ-7ysoT04/edit"
 private const val DIVIDER_ALPHA = 0.12f
-private val iconShapeSize = 32.dp

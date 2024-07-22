@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- standard metrics -->
-    <dimen name="padding_micro">2dp</dimen>
-    <dimen name="padding_extra_small">4dp</dimen>
-    <dimen name="padding_small">6dp</dimen>
-    <dimen name="padding_medium">8dp</dimen>
-    <dimen name="padding_normal">12dp</dimen>
-    <dimen name="padding_large">16dp</dimen>
-    <dimen name="padding_extra_large">32dp</dimen>
+    <dimen name="TMDb_0_dp">0dp</dimen>
+    <dimen name="TMDb_2_dp">2dp</dimen>
+    <dimen name="TMDb_4_dp">4dp</dimen>
+    <dimen name="TMDb_6_dp">6dp</dimen>
+    <dimen name="TMDb_8_dp">8dp</dimen>
+    <dimen name="TMDb_12_dp">12dp</dimen>
+    <dimen name="TMDb_16_dp">16dp</dimen>
+    <dimen name="TMDb_24_dp">24dp</dimen>
+    <dimen name="TMDb_32_dp">32dp</dimen>
 </resources>

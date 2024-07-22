@@ -52,6 +52,11 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.Neutral8
 import com.sample.tmdb.common.ui.theme.Tornado
@@ -115,7 +120,7 @@ private fun Up(upPress: () -> Unit) {
         onClick = upPress,
         modifier = Modifier
             .statusBarsPadding()
-            .padding(horizontal = Dimens.PaddingLarge, vertical = 10.dp)
+            .padding(horizontal = TMDb_16_dp, vertical = 10.dp)
             .size(36.dp)
             .background(
                 color = Neutral8.copy(alpha = 0.32f),
@@ -159,7 +164,7 @@ private fun Body(
                             color = MaterialTheme.colors.onSurface,
                             modifier = HzPadding
                         )
-                        Spacer(Modifier.height(16.dp))
+                        Spacer(Modifier.height(TMDb_16_dp))
                         Text(
                             text = biography,
                             style = MaterialTheme.typography.body2.copy(
@@ -176,7 +181,7 @@ private fun Body(
                         modifier = Modifier
                             .padding(bottom = BottomBarHeight)
                             .navigationBarsPadding()
-                            .height(8.dp)
+                            .height(TMDb_8_dp)
                     )
                 }
             }
@@ -210,14 +215,14 @@ private fun Title(
             }
             .background(color = MaterialTheme.colors.surface)
     ) {
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(TMDb_16_dp))
         Text(
             text = person.name,
             style = MaterialTheme.typography.h4,
             color = MaterialTheme.colors.onSurface,
             modifier = HzPadding
         )
-        Spacer(Modifier.height(2.dp))
+        Spacer(Modifier.height(TMDb_2_dp))
         person.placeOfBirth?.let {
             Text(
                 text = stringResource(id = R.string.from, it),
@@ -225,7 +230,7 @@ private fun Title(
                 color = MaterialTheme.colors.onSurface,
                 modifier = HzPadding
             )
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(TMDb_4_dp))
         }
         person.birthDay?.let {
             Text(
@@ -234,7 +239,7 @@ private fun Title(
                 color = MaterialTheme.colors.onSurface,
                 modifier = HzPadding
             )
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(TMDb_4_dp))
         }
         person.deathDay?.let {
             Text(
@@ -243,9 +248,9 @@ private fun Title(
                 color = MaterialTheme.colors.onSurface,
                 modifier = HzPadding
             )
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(TMDb_4_dp))
         }
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(TMDb_12_dp))
         TMDbDivider()
     }
 }

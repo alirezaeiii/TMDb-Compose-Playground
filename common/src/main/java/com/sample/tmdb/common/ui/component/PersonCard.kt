@@ -20,7 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
@@ -29,7 +28,10 @@ import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R
 import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.placeholderIcon
-import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.utils.CircleTopCropTransformation
 
@@ -41,7 +43,7 @@ fun PersonCard(
 ) {
     Column(
         modifier
-            .padding(Dimens.PaddingExtraSmall)
+            .padding(TMDb_4_dp)
             .clickable {
                 navController.navigate("${MainDestinations.TMDB_PERSON_ROUTE}/${person.id}")
             },
@@ -49,8 +51,8 @@ fun PersonCard(
     ) {
         Card(
             shape = CircleShape,
-            elevation = 8.dp,
-            modifier = Modifier.size(Dimens.CreditCardSize)
+            elevation = TMDb_8_dp,
+            modifier = Modifier.size(TMDb_120_dp)
         ) {
             val request = ImageRequest.Builder(LocalContext.current)
                 .data(person.profileUrl)
@@ -87,7 +89,7 @@ fun PersonCard(
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(top = Dimens.PaddingExtraSmall)
+            modifier = Modifier.padding(top = TMDb_4_dp)
         )
         Text(
             text = person.role,
@@ -97,7 +99,7 @@ fun PersonCard(
             ),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(top = Dimens.PaddingMicro)
+            modifier = Modifier.padding(top = TMDb_2_dp)
         )
     }
 }

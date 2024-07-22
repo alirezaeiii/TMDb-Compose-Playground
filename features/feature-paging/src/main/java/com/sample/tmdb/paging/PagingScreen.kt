@@ -32,6 +32,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.ErrorScreen
 import com.sample.tmdb.common.ui.component.LoadingRow
 import com.sample.tmdb.common.ui.component.TMDbItemContent
@@ -78,13 +79,13 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
     onClick: (TMDbItem) -> Unit,
 ) {
     LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 140.dp), contentPadding = PaddingValues(
-        start = Dimens.PaddingMedium,
-        end = Dimens.PaddingMedium,
+        start = TMDb_8_dp,
+        end = TMDb_8_dp,
         bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current).toDp().dp.plus(
-            Dimens.PaddingMedium
+            TMDb_8_dp
         )
     ), horizontalArrangement = Arrangement.spacedBy(
-        Dimens.PaddingMedium, Alignment.CenterHorizontally
+        TMDb_8_dp, Alignment.CenterHorizontally
     ), content = {
 
         item(span = {
@@ -104,7 +105,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
                     it,
                     Modifier
                         .height(320.dp)
-                        .padding(vertical = Dimens.PaddingMedium),
+                        .padding(vertical = TMDb_8_dp),
                     onClick
                 )
             }
@@ -115,7 +116,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
                 item(span = {
                     GridItemSpan(maxLineSpan)
                 }) {
-                    LoadingRow(modifier = Modifier.padding(vertical = Dimens.PaddingMedium))
+                    LoadingRow(modifier = Modifier.padding(vertical = TMDb_8_dp))
                 }
             }
 
@@ -127,7 +128,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
                     GridItemSpan(maxLineSpan)
                 }) {
                     ErrorScreen(message = message,
-                        modifier = Modifier.padding(vertical = Dimens.PaddingMedium),
+                        modifier = Modifier.padding(vertical = TMDb_8_dp),
                         refresh = { lazyTMDbItems.retry() })
                 }
             }

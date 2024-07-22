@@ -40,7 +40,8 @@ import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
-import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.component.TMDbItemContent
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
@@ -145,13 +146,13 @@ private fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Uni
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 140.dp),
         contentPadding = PaddingValues(
-            start = Dimens.PaddingMedium,
-            end = Dimens.PaddingMedium,
+            start = TMDb_8_dp,
+            end = TMDb_8_dp,
             bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current)
                 .toDp().dp.plus(56.dp)
         ),
         horizontalArrangement = Arrangement.spacedBy(
-            Dimens.PaddingMedium,
+            TMDb_8_dp,
             Alignment.CenterHorizontally
         ),
         content = {
@@ -160,7 +161,7 @@ private fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Uni
                     items[index],
                     Modifier
                         .height(320.dp)
-                        .padding(vertical = Dimens.PaddingMedium),
+                        .padding(vertical = TMDb_8_dp),
                     onClick
                 )
             }
@@ -179,7 +180,7 @@ private fun EmptyView(@StringRes textResourceId: Int) {
     ) {
         if (isEmptyImageVisible()) {
             Image(
-                modifier = Modifier.padding(bottom = Dimens.PaddingLarge),
+                modifier = Modifier.padding(bottom = TMDb_16_dp),
                 painter = painterResource(id = R.drawable.ic_empty),
                 contentDescription = stringResource(id = R.string.empty_list)
             )
