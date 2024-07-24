@@ -30,9 +30,13 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.common.R as R1
 
@@ -60,8 +64,8 @@ private fun Poster(image: TMDbImage) {
         Card(
             Modifier
                 .systemBarsPadding()
-                .padding(12.dp)
-                .shadow(16.dp, RoundedCornerShape(12.dp))
+                .padding(TMDb_12_dp)
+                .shadow(TMDb_16_dp, RoundedCornerShape(TMDb_12_dp))
                 .animateContentSize()
                 .wrapContentSize()
         ) {
@@ -90,7 +94,7 @@ private fun BlurImage(url: String) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.surface)
-            .blur(16.dp),
+            .blur(TMDb_16_dp),
     )
 }
 
@@ -103,15 +107,15 @@ private fun BoxScope.VoteCount(voteCount: Int) {
             .align(Alignment.BottomStart)
             .background(
                 color = MaterialTheme.colors.surface.copy(alpha = 0.3f),
-                shape = RoundedCornerShape(bottomStart = 12.dp, topEnd = 12.dp),
+                shape = RoundedCornerShape(bottomStart = TMDb_12_dp, topEnd = TMDb_12_dp),
             )
-            .padding(4.dp),
+            .padding(TMDb_4_dp),
     ) {
         Icon(
             imageVector = Icons.Filled.Favorite,
             tint = MaterialTheme.colors.primary,
             contentDescription = stringResource(id = R.string.likes_content_description),
-            modifier = Modifier.padding(end = 4.dp),
+            modifier = Modifier.padding(end = TMDb_4_dp),
         )
         Text(text = voteCount.toString(), style = MaterialTheme.typography.body2)
     }
@@ -125,9 +129,9 @@ private fun BoxScope.Index(position: Int, imageCount: Int) {
         modifier = Modifier
             .align(Alignment.BottomCenter)
             .navigationBarsPadding()
-            .padding(4.dp)
-            .shadow(16.dp, RoundedCornerShape(16.dp))
+            .padding(TMDb_4_dp)
+            .shadow(TMDb_16_dp, RoundedCornerShape(TMDb_16_dp))
             .background(color = MaterialTheme.colors.surface.copy(alpha = 0.3f))
-            .padding(horizontal = 8.dp, vertical = 2.dp),
+            .padding(horizontal = TMDb_8_dp, vertical = TMDb_2_dp),
     )
 }

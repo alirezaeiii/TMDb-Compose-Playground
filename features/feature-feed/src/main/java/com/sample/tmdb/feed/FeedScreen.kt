@@ -51,6 +51,10 @@ import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.theme.Teal200
@@ -172,7 +176,7 @@ private fun PagerTMDbItemContainer(
     }
 
     HorizontalPager(
-        state = pagerState, contentPadding = PaddingValues(horizontal = Dimens.PaddingLarge)
+        state = pagerState, contentPadding = PaddingValues(horizontal = Dimens.TMDb_16_dp)
     ) { page ->
         with(item.feeds[page]) {
             TrendingItem(modifier = Modifier.pagerTransition(
@@ -194,10 +198,10 @@ private fun PagerTMDbItemContainer(
                 if (pagerState.currentPage == iteration) MaterialTheme.colors.primary else Teal200
             Box(
                 modifier = Modifier
-                    .padding(Dimens.PaddingExtraSmall)
+                    .padding(Dimens.TMDb_4_dp)
                     .clip(CircleShape)
                     .background(color)
-                    .size(6.dp)
+                    .size(TMDb_6_dp)
             )
         }
     }
@@ -230,7 +234,7 @@ private fun TrendingItem(
             Column(
                 modifier = Modifier
                     .padding(
-                        start = Dimens.PaddingNormal, bottom = Dimens.PaddingSmall
+                        start = TMDb_12_dp, bottom = TMDb_6_dp
                     )
                     .align(Alignment.BottomStart)
             ) {
@@ -239,7 +243,7 @@ private fun TrendingItem(
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(TMDb_6_dp))
                 releaseDate?.let { releaseDate ->
                     Text(
                         text = releaseDate,
@@ -259,7 +263,7 @@ private fun FeedCollection(
     index: Int,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.padding(top = 32.dp)) {
+    Column(modifier = modifier.padding(top = TMDb_32_dp)) {
         Header(titleId = feedCollection.sortTypeResourceId) {
             when (feedCollection.feeds.first()) {
                 is Movie -> {
@@ -303,7 +307,7 @@ private fun Header(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .heightIn(min = 36.dp)
-            .padding(start = Dimens.PaddingNormal)
+            .padding(start = TMDb_12_dp)
     ) {
         Text(
             text = stringResource(id = titleId),
@@ -318,7 +322,7 @@ private fun Header(
             color = MaterialTheme.colors.onSurface,
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .padding(Dimens.PaddingNormal)
+                .padding(TMDb_12_dp)
                 .clickable(onClick = onMoreClick)
         )
     }
@@ -333,7 +337,7 @@ private fun Feeds(
 ) {
     LazyRow(
         modifier = modifier,
-        contentPadding = PaddingValues(start = Dimens.PaddingMicro, end = Dimens.PaddingMicro)
+        contentPadding = PaddingValues(start = TMDb_2_dp, end = TMDb_2_dp)
     ) {
         items(feeds) { feed ->
             TMDbItem(feed, onFeedClick, index)

@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sample.tmdb.common.R
+import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 
 @Composable
 fun ErrorScreen(message: String, modifier: Modifier = Modifier, refresh: () -> Unit) {
@@ -34,7 +34,7 @@ fun ErrorScreen(message: String, modifier: Modifier = Modifier, refresh: () -> U
             )
 
         )
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(TMDb_16_dp))
         Button(onClick = refresh) {
             Text(text = stringResource(id = R.string.retry))
         }

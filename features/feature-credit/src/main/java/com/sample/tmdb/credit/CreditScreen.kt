@@ -19,6 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.utils.toDp
@@ -30,14 +33,14 @@ fun <T : Credit> CreditScreen(
     items: List<T>
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(Dimens.CreditCardSize),
+        columns = GridCells.Adaptive(TMDb_120_dp),
         contentPadding = PaddingValues(
-            start = Dimens.PaddingSmall,
-            end = Dimens.PaddingSmall,
-            top = Dimens.PaddingSmall,
+            start = TMDb_6_dp,
+            end = TMDb_6_dp,
+            top = TMDb_6_dp,
             bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current)
                 .toDp().dp.plus(
-                    Dimens.PaddingMedium
+                    TMDb_8_dp
                 )
         ),
         content = {

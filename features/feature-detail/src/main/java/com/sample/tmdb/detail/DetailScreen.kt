@@ -111,7 +111,12 @@ import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
-import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_24_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.theme.imageTint
@@ -266,8 +271,8 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                 ) {
                     val (appbar, backdrop, poster, title, originalTitle, genres, specs, rateStars, tagline, overview) = createRefs()
                     val (castSection, crewSection, imagesSection, similarSection, space) = createRefs()
-                    val startGuideline = createGuidelineFromStart(16.dp)
-                    val endGuideline = createGuidelineFromEnd(16.dp)
+                    val startGuideline = createGuidelineFromStart(TMDb_16_dp)
+                    val endGuideline = createGuidelineFromEnd(TMDb_16_dp)
 
                     it.details.posterPath?.let { posterPath ->
                         GetVibrantColorFromPoster(
@@ -290,7 +295,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         modifier = Modifier
                             .requiredWidth(posterWidth * 2.2f)
                             .constrainAs(appbar) { centerTo(poster) }
-                            .offset(y = 24.dp)
+                            .offset(y = TMDb_24_dp)
                     )
                     Poster(
                         it.details.posterPath,
@@ -313,7 +318,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                             textAlign = TextAlign.Center
                         ),
                         modifier = Modifier
-                            .padding(horizontal = Dimens.PaddingLarge)
+                            .padding(horizontal = TMDb_16_dp)
                             .constrainAs(title) {
                                 top.linkTo(poster.bottom, 8.dp)
                                 linkTo(startGuideline, endGuideline)
@@ -327,7 +332,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                                 letterSpacing = 2.sp
                             ),
                             modifier = Modifier
-                                .padding(horizontal = Dimens.PaddingLarge)
+                                .padding(horizontal = TMDb_16_dp)
                                 .constrainAs(originalTitle) {
                                     top.linkTo(title.bottom)
                                     linkTo(startGuideline, endGuideline)
@@ -376,7 +381,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                             fontWeight = FontWeight.Bold
                         ),
                         modifier = Modifier
-                            .padding(horizontal = Dimens.PaddingLarge)
+                            .padding(horizontal = TMDb_16_dp)
                             .constrainAs(tagline) {
                                 top.linkTo(rateStars.bottom, 32.dp)
                             }
@@ -390,7 +395,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                             fontFamily = FontFamily.SansSerif
                         ),
                         modifier = Modifier
-                            .padding(horizontal = Dimens.PaddingLarge)
+                            .padding(horizontal = TMDb_16_dp)
                             .constrainAs(overview) {
                                 top.linkTo(tagline.bottom, 8.dp)
                                 linkTo(startGuideline, endGuideline)
@@ -512,7 +517,7 @@ fun GetVibrantColorFromPoster(
 @Composable
 private fun Backdrop(backdropUrl: String, tmdbItemName: String, modifier: Modifier) {
     Card(
-        elevation = 16.dp,
+        elevation = TMDb_16_dp,
         shape = BottomArcShape(arcHeight = 120.dpToPx()),
         backgroundColor = localVibrantColor.current.value.copy(alpha = 0.1f),
         modifier = modifier.height(360.dp)
@@ -574,8 +579,8 @@ private fun Poster(posterUrl: String?, tmdbItemName: String, modifier: Modifier)
         ).value
 
     Card(
-        elevation = 24.dp,
-        shape = RoundedCornerShape(8.dp),
+        elevation = TMDb_24_dp,
+        shape = RoundedCornerShape(TMDb_8_dp),
         modifier = modifier.scale(scale),
         onClick = { isScaled.value = !isScaled.value }
     ) {
@@ -592,7 +597,7 @@ private fun GenreChips(genres: List<Genre>, modifier: Modifier) {
     Row(
         modifier
             .horizontalScroll(rememberScrollState())
-            .padding(horizontal = Dimens.PaddingLarge)
+            .padding(horizontal = TMDb_16_dp)
     ) {
         genres.map(Genre::name).forEachIndexed { index, name ->
             Text(
@@ -600,11 +605,11 @@ private fun GenreChips(genres: List<Genre>, modifier: Modifier) {
                 style = MaterialTheme.typography.subtitle1.copy(letterSpacing = 2.sp),
                 modifier = Modifier
                     .border(1.25.dp, localVibrantColor.current.value, RoundedCornerShape(50))
-                    .padding(horizontal = Dimens.PaddingSmall, vertical = 3.dp)
+                    .padding(horizontal = TMDb_6_dp, vertical = 3.dp)
             )
 
             if (index != genres.lastIndex) {
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(TMDb_8_dp))
             }
         }
     }
@@ -644,14 +649,14 @@ private fun TMDbItemField(name: String, value: String) {
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = Dimens.PaddingExtraSmall)
+                .padding(top = TMDb_4_dp)
         )
     }
 }
 
 @Composable
 private fun RateStars(voteAverage: Double, modifier: Modifier) {
-    Row(modifier.padding(start = Dimens.PaddingExtraSmall)) {
+    Row(modifier.padding(start = TMDb_4_dp)) {
         val maxVote = 10
         val starCount = 5
         repeat(starCount) { starIndex ->
@@ -666,7 +671,7 @@ private fun RateStars(voteAverage: Double, modifier: Modifier) {
                 contentDescription = null,
                 tint = localVibrantColor.current.value
             )
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = Modifier.width(TMDb_4_dp))
         }
     }
 }
@@ -684,13 +689,13 @@ private fun <T : Any> TMDbDetailItemSection(
         SectionHeader(headerResId, items, onSeeAllClicked, showSize)
         LazyRow(
             modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
-            contentPadding = PaddingValues(Dimens.PaddingLarge),
+            contentPadding = PaddingValues(TMDb_16_dp),
         ) {
             items(
                 count = items.size,
                 itemContent = { index ->
                     itemContent(items[index], index)
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(TMDb_16_dp))
                 },
             )
         }
@@ -708,7 +713,7 @@ private fun <T : Any> SectionHeader(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = Dimens.PaddingLarge)
+            .padding(horizontal = TMDb_16_dp)
     ) {
         Text(
             text = stringResource(headerResId),
@@ -719,7 +724,7 @@ private fun <T : Any> SectionHeader(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(Dimens.PaddingExtraSmall)
+                .padding(TMDb_4_dp)
                 .clickable {
                     onAllSelected.invoke(items)
                 }
@@ -728,7 +733,7 @@ private fun <T : Any> SectionHeader(
                 text = getHeaderText(showSize, items),
                 color = localVibrantColor.current.value,
                 style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Bold),
-                modifier = Modifier.padding(end = Dimens.PaddingExtraSmall)
+                modifier = Modifier.padding(end = TMDb_4_dp)
             )
             Icon(
                 Icons.AutoMirrored.Filled.ArrowForward,
@@ -749,8 +754,8 @@ private fun ImageSection(
             .width(240.dp)
             .height(160.dp)
             .clickable { onImageSelected.invoke() },
-        shape = RoundedCornerShape(12.dp),
-        elevation = 8.dp,
+        shape = RoundedCornerShape(TMDb_12_dp),
+        elevation = TMDb_8_dp,
     ) {
         val request = ImageRequest.Builder(LocalContext.current)
             .data(image.url)

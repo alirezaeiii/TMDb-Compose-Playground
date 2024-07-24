@@ -8,26 +8,32 @@ import com.sample.tmdb.common.R
 
 object Dimens {
 
-    val PaddingMicro: Dp
-        @Composable get() = dimensionResource(R.dimen.padding_micro)
+    val TMDb_0_dp: Dp
+        @Composable get() = dimensionResource(R.dimen.TMDb_0_dp)
 
-    val PaddingExtraSmall: Dp
-        @Composable get() = dimensionResource(R.dimen.padding_extra_small)
+    val TMDb_2_dp: Dp
+        @Composable get() = dimensionResource(R.dimen.TMDb_2_dp)
 
-    val PaddingSmall: Dp
-        @Composable get() = dimensionResource(R.dimen.padding_small)
+    val TMDb_4_dp: Dp
+        @Composable get() = dimensionResource(R.dimen.TMDb_4_dp)
 
-    val PaddingMedium: Dp
-        @Composable get() = dimensionResource(R.dimen.padding_medium)
+    val TMDb_6_dp: Dp
+        @Composable get() = dimensionResource(R.dimen.TMDb_6_dp)
 
-    val PaddingNormal: Dp
-        @Composable get() = dimensionResource(R.dimen.padding_normal)
+    val TMDb_8_dp: Dp
+        @Composable get() = dimensionResource(R.dimen.TMDb_8_dp)
 
-    val PaddingLarge: Dp
-        @Composable get() = dimensionResource(R.dimen.padding_large)
+    val TMDb_12_dp: Dp
+        @Composable get() = dimensionResource(R.dimen.TMDb_12_dp)
 
-    val PaddingExtraLarge: Dp
-        @Composable get() = dimensionResource(R.dimen.padding_extra_large)
+    val TMDb_16_dp: Dp
+        @Composable get() = dimensionResource(R.dimen.TMDb_16_dp)
 
-    val CreditCardSize = 120.dp
+    val TMDb_24_dp: Dp
+        @Composable get() = dimensionResource(R.dimen.TMDb_24_dp)
+
+    val TMDb_32_dp: Dp
+        @Composable get() = dimensionResource(R.dimen.TMDb_32_dp)
+
+    val TMDb_120_dp = 120.dp
 }

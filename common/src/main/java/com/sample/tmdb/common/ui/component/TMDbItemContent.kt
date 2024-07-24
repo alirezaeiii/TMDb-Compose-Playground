@@ -2,9 +2,23 @@ package com.sample.tmdb.common.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.DateRange
@@ -28,7 +42,11 @@ import androidx.compose.ui.zIndex
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.ui.theme.rateColors
 
@@ -49,9 +67,9 @@ fun <T : TMDbItem> TMDbItemContent(
         Card(
             modifier = Modifier
                 .fillMaxSize()
-                .offset(y = 12.dp),
-            shape = RoundedCornerShape(size = 8.dp),
-            elevation = 8.dp,
+                .offset(y = TMDb_12_dp),
+            shape = RoundedCornerShape(size = TMDb_8_dp),
+            elevation = TMDb_8_dp,
             onClick = { onClick.invoke(tmdbItem) }
         ) {
             Box {
@@ -73,7 +91,7 @@ private fun TMDbItemRate(rate: Double, modifier: Modifier) {
     val shape = RoundedCornerShape(percent = 50)
     Surface(
         shape = shape,
-        elevation = 12.dp,
+        elevation = TMDb_12_dp,
         modifier = modifier
     ) {
         Text(
@@ -116,10 +134,10 @@ private fun BoxScope.TMDbItemPoster(posterUrl: String?, tmdbItemName: String) {
 @Composable
 private fun <T : TMDbItem> TMDbItemInfo(tmdbItem: T, modifier: Modifier) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(TMDb_4_dp),
         modifier = modifier.padding(
-            horizontal = Dimens.PaddingSmall,
-            vertical = Dimens.PaddingExtraSmall
+            horizontal = TMDb_6_dp,
+            vertical = TMDb_4_dp
         )
     ) {
         TMDbItemName(name = tmdbItem.name)
@@ -165,7 +183,7 @@ private fun TMDbItemFeature(icon: ImageVector, field: String) {
             ),
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,
-            modifier = Modifier.padding(horizontal = Dimens.PaddingMicro)
+            modifier = Modifier.padding(horizontal = TMDb_2_dp)
         )
     }
 }

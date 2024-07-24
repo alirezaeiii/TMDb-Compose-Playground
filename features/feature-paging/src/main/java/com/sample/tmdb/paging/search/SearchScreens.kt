@@ -44,7 +44,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_24_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.paging.PagingScreen
@@ -113,17 +117,17 @@ fun <T : TMDbItem> Search(
             Row(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(Dimens.PaddingMedium),
+                    .padding(TMDb_8_dp),
                 horizontalArrangement = Arrangement.spacedBy(
-                    Dimens.PaddingLarge,
+                    TMDb_16_dp,
                     Alignment.CenterHorizontally
                 ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 val iconModifier = Modifier
                     .sizeIn(
-                        maxWidth = 32.dp,
-                        maxHeight = 32.dp
+                        maxWidth = TMDb_32_dp,
+                        maxHeight = TMDb_32_dp
                     )
                     .border(1.dp, MaterialTheme.colors.primary, CircleShape)
                     .background(
@@ -133,7 +137,7 @@ fun <T : TMDbItem> Search(
                 IconButton(
                     onClick = upPress,
                     modifier = Modifier
-                        .padding(start = Dimens.PaddingNormal)
+                        .padding(start = TMDb_12_dp)
                         .then(iconModifier)
                 ) {
                     Icon(
@@ -174,7 +178,7 @@ private fun SearchBar(
             .height(46.dp)
             .border(1.dp, MaterialTheme.colors.primary, CircleShape)
             .background(MaterialTheme.colors.background, CircleShape)
-            .padding(horizontal = 24.dp, vertical = Dimens.PaddingMedium)
+            .padding(horizontal = TMDb_24_dp, vertical = TMDb_8_dp)
     ) {
         Box(
             Modifier
@@ -228,7 +232,7 @@ private fun SearchHint(@StringRes resourceId: Int) {
             tint = MaterialTheme.colors.primary,
             contentDescription = stringResource(id = R.string.search_desc)
         )
-        Spacer(Modifier.width(8.dp))
+        Spacer(Modifier.width(TMDb_8_dp))
         Text(
             text = stringResource(R.string.search, stringResource(resourceId)),
             color = MaterialTheme.colors.primary

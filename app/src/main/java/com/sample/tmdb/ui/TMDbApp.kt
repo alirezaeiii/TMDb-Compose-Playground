@@ -41,6 +41,7 @@ import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.R
 import com.sample.tmdb.bookmark.BookmarkScreen
 import com.sample.tmdb.common.MainDestinations
+import com.sample.tmdb.common.ui.Dimens.TMDb_0_dp
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.credit.CreditScreen
 import com.sample.tmdb.credit.PersonScreen
@@ -120,7 +121,7 @@ private fun TMDbBottomBar(
     ) {
         BottomNavigation(
             backgroundColor = MaterialTheme.colors.background.copy(alpha = AlphaNavigationBar),
-            elevation = 0.dp
+            elevation = TMDb_0_dp
         ) {
             tabs.forEach { section ->
                 val selected = section == currentSection
