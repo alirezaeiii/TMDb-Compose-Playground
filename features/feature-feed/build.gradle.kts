@@ -52,4 +52,7 @@ dependencies {
     implementation(Deps.composeMaterial)
     implementation(Deps.composeUiToolingPreview)
     implementation(Deps.coil)
+    androidTestImplementation(Deps.composeUiTest)
+    androidTestImplementation(Deps.mockito)
+    debugImplementation(Deps.composeManifest)
 }

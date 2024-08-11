@@ -25,6 +25,7 @@ object Versions {
     const val room_version = "2.6.1"
     const val annotation = "1.7.1"
     const val lottie_compose = "4.0.0"
+    const val mockito = "5.4.0"
 }
 
 object AppMetaData {
@@ -112,4 +113,12 @@ object Deps {
     // Lottie
     const val lottieCompose = "com.airbnb.android:lottie-compose:${Versions.lottie_compose}"
 
+    // Test rules and transitive dependencies:
+    const val composeUiTest = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
+
+    // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>():
+    const val composeManifest = "androidx.compose.ui:ui-test-manifest:${Versions.compose}"
+
+    // Mockito-Kotlin
+    const val mockito = "org.mockito.kotlin:mockito-kotlin:${Versions.mockito}"
 }

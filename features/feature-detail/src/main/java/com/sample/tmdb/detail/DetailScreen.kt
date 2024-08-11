@@ -565,7 +565,7 @@ private val springAnimation = spring(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun Poster(posterUrl: String?, tmdbItemName: String, modifier: Modifier) {
+fun Poster(posterUrl: String?, tmdbItemName: String, modifier: Modifier = Modifier) {
     val isScaled = remember { mutableStateOf(false) }
     val scale =
         animateFloatAsState(
@@ -611,7 +611,7 @@ private fun GenreChips(genres: List<Genre>, modifier: Modifier) {
 }
 
 @Composable
-private fun TMDbItemFields(tmdbItemDetails: TMDbItemDetails, modifier: Modifier) {
+fun TMDbItemFields(tmdbItemDetails: TMDbItemDetails, modifier: Modifier = Modifier) {
     Row(horizontalArrangement = Arrangement.spacedBy(20.dp), modifier = modifier) {
         val context = LocalContext.current
         tmdbItemDetails.releaseDate?.let {
@@ -629,7 +629,7 @@ private fun TMDbItemFields(tmdbItemDetails: TMDbItemDetails, modifier: Modifier)
 }
 
 @Composable
-private fun TMDbItemField(name: String, value: String) {
+fun TMDbItemField(name: String, value: String) {
     Column {
         Text(
             text = name,
@@ -740,7 +740,7 @@ private fun <T : Any> SectionHeader(
 }
 
 @Composable
-private fun ImageSection(
+fun ImageSection(
     image: TMDbImage,
     onImageSelected: () -> Unit,
 ) {
@@ -777,7 +777,7 @@ private fun ImageSection(
 }
 
 @Composable
-private fun ToggleBookmarkFab(
+fun ToggleBookmarkFab(
     isBookmark: Boolean,
     isVisible: MutableState<Boolean>,
     onClick: () -> Unit
