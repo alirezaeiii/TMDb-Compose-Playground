@@ -208,7 +208,7 @@ private fun PagerTMDbItemContainer(
 }
 
 @Composable
-private fun TrendingItem(
+fun TrendingItem(
     title: String,
     imageUrl: String?,
     releaseDate: String?,
@@ -300,7 +300,7 @@ private fun FeedCollection(
 }
 
 @Composable
-private fun Header(
+fun Header(
     @StringRes titleId: Int, onMoreClick: () -> Unit
 ) {
     Row(
@@ -329,7 +329,7 @@ private fun Header(
 }
 
 @Composable
-private fun Feeds(
+fun Feeds(
     feeds: List<TMDbItem>,
     onFeedClick: (TMDbItem) -> Unit,
     index: Int,
@@ -346,7 +346,7 @@ private fun Feeds(
 }
 
 @Composable
-private fun TMDbItem(
+fun TMDbItem(
     tmdbItem: TMDbItem, onFeedClick: (TMDbItem) -> Unit, index: Int
 ) {
     val itemWidth: Dp

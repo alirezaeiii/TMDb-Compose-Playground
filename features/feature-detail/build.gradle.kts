@@ -58,4 +58,7 @@ dependencies {
     implementation(Deps.composeConstraintLayout)
     implementation(Deps.browser)
     implementation(Deps.gson)
+    androidTestImplementation(Deps.composeUiTest)
+    androidTestImplementation(Deps.mockito)
+    debugImplementation(Deps.composeManifest)
 }
