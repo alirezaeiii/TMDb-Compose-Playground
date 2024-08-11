@@ -114,7 +114,7 @@ private fun <T : TMDbItem> FeedScreen(
 }
 
 @Composable
-private fun FeedCollectionList(
+fun FeedCollectionList(
     navController: NavController, collection: List<FeedWrapper>, onFeedClick: (TMDbItem) -> Unit
 ) {
     LazyColumn {
@@ -152,7 +152,7 @@ private fun FeedCollectionList(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun PagerTMDbItemContainer(
+fun PagerTMDbItemContainer(
     item: FeedWrapper, navController: NavController, onFeedClick: (TMDbItem) -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = { item.feeds.size })
