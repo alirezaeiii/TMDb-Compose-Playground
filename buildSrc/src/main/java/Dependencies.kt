@@ -26,6 +26,9 @@ object Versions {
     const val annotation = "1.7.1"
     const val lottie_compose = "4.0.0"
     const val mockito = "5.4.0"
+    const val junit = "4.13"
+    const val mockk = "1.13.12"
+    const val turbine = "1.1.0"
 }
 
 object AppMetaData {
@@ -41,6 +44,7 @@ object AppMetaData {
 object BuildModules {
     const val APP = ":app"
     const val COMMON = ":common"
+    const val COMMON_TEST = ":common-test"
     const val DATA = ":core:data"
     const val DOMAIN = ":core:domain"
     const val FEATURE_FEED = ":features:feature-feed"
@@ -98,6 +102,7 @@ object Deps {
     // Coroutines
     const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    const val coroutineTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
 
     // Coil
     const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
@@ -121,4 +126,9 @@ object Deps {
 
     // Mockito-Kotlin
     const val mockito = "org.mockito.kotlin:mockito-kotlin:${Versions.mockito}"
+
+    // Unit test
+    const val junit4 = "junit:junit:${Versions.junit}"
+    const val mockk = "io.mockk:mockk:${Versions.mockk}"
+    const val turbine = "app.cash.turbine:turbine:${Versions.turbine}"
 }
