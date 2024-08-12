@@ -51,13 +51,13 @@ class PersonRepositoryTest {
                 assertEquals(Resource.Loading, awaitItem())
                 awaitItem()
                 val person = Resource.Success(personResponse.asDomainModel()).data
-                assertEquals(person.birthDay, "birth")
-                assertEquals(person.deathDay, "death")
-                assertEquals(person.id, 1)
-                assertEquals(person.name, "name")
-                assertEquals(person.biography, "biography")
-                assertEquals(person.placeOfBirth, "placeOfBirth")
-                assertEquals(person.profilePath, "http://image.tmdb.org/t/p/w342profilePath")
+                assertEquals("birth", person.birthDay)
+                assertEquals("death", person.deathDay)
+                assertEquals(1, person.id)
+                assertEquals("name", person.name)
+                assertEquals("biography", person.biography)
+                assertEquals("placeOfBirth", person.placeOfBirth)
+                assertEquals("http://image.tmdb.org/t/p/w342profilePath", person.profilePath)
                 awaitComplete()
             }
         }

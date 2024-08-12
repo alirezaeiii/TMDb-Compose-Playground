@@ -8,6 +8,8 @@ import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkItemDetailsRepository
+import io.mockk.coEvery
+import io.mockk.coJustRun
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -32,6 +34,8 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
 
     private val detailWrapper = mockk<DetailWrapper>()
 
+    protected abstract val tmdbItem : R
+
     @Test
     fun `load details`() {
         every { repository.getResult(any()) } returns flowOf(Resource.Loading)
@@ -51,5 +55,43 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
         every { repository.getResult(any()) } returns flowOf(Resource.Error(""))
         initViewModel()
         assertEquals(Resource.Error(""), viewModel.stateFlow.value)
+    }
+
+    @Test
+    fun `add bookmark`() {
+        coJustRun { bookmarkRepository.addBookmark(tmdbItem) }
+        coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns true
+        initViewModel()
+        viewModel.addBookmark(tmdbItem)
+        assertEquals(true, viewModel.isBookmarked.value)
+    }
+
+    @Test
+    fun `remove bookmark`() {
+        coJustRun { bookmarkRepository.deleteBookmark(TMDB_ITEM_ID) }
+        coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns false
+        initViewModel()
+        viewModel.removeBookmark(TMDB_ITEM_ID)
+        assertEquals(false, viewModel.isBookmarked.value)
+    }
+
+    @Test
+    fun `is bookmarked`() {
+        coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns true
+        initViewModel()
+        viewModel.isBookmarked(TMDB_ITEM_ID)
+        assertEquals(true, viewModel.isBookmarked.value)
+    }
+
+    @Test
+    fun `is not bookmarked`() {
+        coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns false
+        initViewModel()
+        viewModel.isBookmarked(TMDB_ITEM_ID)
+        assertEquals(false, viewModel.isBookmarked.value)
+    }
+
+    companion object {
+        const val TMDB_ITEM_ID = 1
     }
 }
