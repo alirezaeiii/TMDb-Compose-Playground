@@ -53,6 +53,11 @@ dependencies {
     ksp(Deps.roomCompiler)
     implementation(Deps.hilt)
     ksp(Deps.hilt_compiler)
+    testImplementation(project(BuildModules.COMMON_TEST))
+    testImplementation(Deps.junit4)
+    testImplementation(Deps.mockito)
+    testImplementation(Deps.coroutineTest)
+    testImplementation(Deps.turbine)
 }
 
 fun getProperty(filename: String, propName: String): String? {

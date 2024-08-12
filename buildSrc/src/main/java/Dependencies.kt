@@ -26,7 +26,7 @@ object Versions {
     const val annotation = "1.7.1"
     const val lottie_compose = "4.0.0"
     const val mockito = "5.4.0"
-    const val junit = "4.13"
+    const val junit = "4.13.2"
     const val mockk = "1.13.12"
     const val turbine = "1.1.0"
 }
