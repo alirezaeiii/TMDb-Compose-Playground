@@ -44,6 +44,9 @@ tmdb_api_key=YOUR_API_KEY
 * [Gson](https://github.com/google/gson) is a serialization/deserialization library to convert objects into JSON and back.
 * [OkHttp interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor) Logs HTTP requests and responses.
 * [Material Design](https://material.io/develop/android/) Build beautiful, usable products using Material Components for Android.
+* [Mockito-kotlin](https://github.com/mockito/mockito-kotlin) A small library that provides helper functions to work with Mockito in Kotlin.
+* [Mockk](https://github.com/mockk/mockk) A mocking library for Kotlin.
+* [Turbine](https://github.com/cashapp/turbine) is a small testing library for kotlinx.coroutines Flow.
 
 ## Licence
     MIT License
