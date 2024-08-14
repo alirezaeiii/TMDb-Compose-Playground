@@ -1,4 +1,4 @@
-package com.sample.tmdb.data.repository.movie
+package com.sample.tmdb.data.repository
 
 import android.content.Context
 import com.sample.tmdb.common.model.TMDbItem

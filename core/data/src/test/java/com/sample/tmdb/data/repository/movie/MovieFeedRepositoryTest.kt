@@ -1,6 +1,7 @@
 package com.sample.tmdb.data.repository.movie
 
 import com.sample.tmdb.data.network.MovieService
+import com.sample.tmdb.data.repository.BaseFeedRepositoryTest
 import com.sample.tmdb.data.response.TMDbWrapper
 import com.sample.tmdb.domain.model.Movie
 import kotlinx.coroutines.Dispatchers

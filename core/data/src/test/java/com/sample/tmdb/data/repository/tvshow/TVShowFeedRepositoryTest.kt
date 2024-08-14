@@ -1,7 +1,7 @@
-package com.sample.tmdb.data.repository.movie
+package com.sample.tmdb.data.repository.tvshow
 
 import com.sample.tmdb.data.network.TVShowService
-import com.sample.tmdb.data.repository.tvshow.TVShowFeedRepository
+import com.sample.tmdb.data.repository.BaseFeedRepositoryTest
 import com.sample.tmdb.data.response.TMDbWrapper
 import com.sample.tmdb.domain.model.TVShow
 import kotlinx.coroutines.Dispatchers
