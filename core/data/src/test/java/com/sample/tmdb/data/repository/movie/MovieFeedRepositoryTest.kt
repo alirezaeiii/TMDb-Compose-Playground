@@ -29,6 +29,4 @@ class MovieFeedRepositoryTest : BaseFeedRepositoryTest<Movie>() {
         `when`(api.topRatedMovies()).thenReturn(TMDbWrapper(emptyList()))
         `when`(api.discoverMovies()).thenReturn(TMDbWrapper(emptyList()))
     }
-
-
 }
