@@ -54,7 +54,7 @@ abstract class BaseDetailRepositoryTest<T : TMDbItemDetails>: BaseRepositoryTest
     }
 
     @Test
-    fun `load feeds failed`() {
+    fun `load details failed`() {
         val errorMsg = "error message"
         `when`(context.getString(anyInt())).thenReturn(errorMsg)
         runTest {
