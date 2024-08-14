@@ -2,11 +2,13 @@ package com.sample.tmdb.data.repository
 
 import android.content.Context
 import app.cash.turbine.test
+import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Resource
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.PersonResponse
 import com.sample.tmdb.data.response.asDomainModel
+import com.sample.tmdb.domain.model.Person
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
@@ -32,7 +34,7 @@ class PersonRepositoryTest {
     @Mock
     private lateinit var api: PersonService
 
-    private lateinit var repository: PersonRepository
+    private lateinit var repository: BaseRepository<Person>
 
     @Before
     fun setup() {
