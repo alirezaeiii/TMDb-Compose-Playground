@@ -10,6 +10,7 @@ import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkItemDetailsRepository
 import io.mockk.coEvery
 import io.mockk.coJustRun
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -63,6 +64,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
         coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns true
         initViewModel()
         viewModel.addBookmark(tmdbItem)
+        coVerify { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) }
         assertEquals(true, viewModel.isBookmarked.value)
     }
 
@@ -72,6 +74,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
         coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns false
         initViewModel()
         viewModel.removeBookmark(TMDB_ITEM_ID)
+        coVerify { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) }
         assertEquals(false, viewModel.isBookmarked.value)
     }
 
