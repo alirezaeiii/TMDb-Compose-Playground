@@ -1,7 +1,6 @@
-package com.sample.tmdb.data.repository.tvshow.detail
+package com.sample.tmdb.data.repository.movie.detail
 
 import com.sample.tmdb.data.repository.BaseBookmarkDetailsRepositoryTest
-import com.sample.tmdb.data.repository.movie.detail.BookmarkMovieDetailsRepositoryImpl
 import com.sample.tmdb.data.source.local.MovieDao
 import com.sample.tmdb.domain.model.Movie
 import kotlinx.coroutines.test.runTest
