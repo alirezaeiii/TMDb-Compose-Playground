@@ -49,5 +49,7 @@ dependencies {
     implementation(Deps.composeFoundation)
     implementation(Deps.composeMaterial)
     implementation(Deps.coil)
-
+    testImplementation(project(BuildModules.COMMON_TEST))
+    testImplementation(Deps.junit4)
+    testImplementation(Deps.mockk)
 }
