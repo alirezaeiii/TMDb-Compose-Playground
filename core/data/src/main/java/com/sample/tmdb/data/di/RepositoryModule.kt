@@ -37,7 +37,7 @@ import com.sample.tmdb.domain.utils.Trending
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.repository.BasePagingRepository
-import com.sample.tmdb.domain.repository.BookmarkItemDetailsRepository
+import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.domain.utils.Similar
 import dagger.Binds
 import dagger.Module
@@ -153,11 +153,11 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    internal abstract fun bindBookmarkMovieDetailsRepository(bookmarkMovieDetailsRepository: BookmarkMovieDetailsRepositoryImpl): BookmarkItemDetailsRepository<Movie>
+    internal abstract fun bindBookmarkMovieDetailsRepository(bookmarkMovieDetailsRepository: BookmarkMovieDetailsRepositoryImpl): BookmarkDetailsRepository<Movie>
 
     @Singleton
     @Binds
-    internal abstract fun bindBookmarkTVShowDetailsRepository(bookmarkTVShowDetailsRepository: BookmarkTVShowDetailsRepositoryImpl): BookmarkItemDetailsRepository<TVShow>
+    internal abstract fun bindBookmarkTVShowDetailsRepository(bookmarkTVShowDetailsRepository: BookmarkTVShowDetailsRepositoryImpl): BookmarkDetailsRepository<TVShow>
 
     @Singleton
     @Binds

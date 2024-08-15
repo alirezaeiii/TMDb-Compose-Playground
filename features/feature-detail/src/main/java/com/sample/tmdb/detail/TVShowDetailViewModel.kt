@@ -4,13 +4,13 @@ import androidx.lifecycle.SavedStateHandle
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TvDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
-import com.sample.tmdb.domain.repository.BookmarkItemDetailsRepository
+import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class TVShowDetailViewModel @Inject constructor(
-    bookmarkRepository: BookmarkItemDetailsRepository<TVShow>,
+    bookmarkRepository: BookmarkDetailsRepository<TVShow>,
     repository: BaseDetailRepository<TvDetails>,
     savedStateHandle: SavedStateHandle
 ) : BaseDetailViewModel<TvDetails, TVShow>(bookmarkRepository, repository, savedStateHandle)

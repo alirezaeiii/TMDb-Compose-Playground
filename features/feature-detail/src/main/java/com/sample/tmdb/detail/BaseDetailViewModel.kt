@@ -8,13 +8,13 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
-import com.sample.tmdb.domain.repository.BookmarkItemDetailsRepository
+import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 open class BaseDetailViewModel<T : TMDbItemDetails, R : TMDbItem>(
-    private val bookmarkRepository: BookmarkItemDetailsRepository<R>,
+    private val bookmarkRepository: BookmarkDetailsRepository<R>,
     repository: BaseDetailRepository<T>,
     savedStateHandle: SavedStateHandle
 ) : TMDbViewModel<DetailWrapper>(

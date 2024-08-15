@@ -7,7 +7,7 @@ import com.sample.tmdb.common.utils.Resource
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
-import com.sample.tmdb.domain.repository.BookmarkItemDetailsRepository
+import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.coVerify
@@ -23,7 +23,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    protected val bookmarkRepository = mockk<BookmarkItemDetailsRepository<R>>()
+    protected val bookmarkRepository = mockk<BookmarkDetailsRepository<R>>()
 
     protected val repository = mockk<BaseDetailRepository<T>>()
 
