@@ -31,7 +31,6 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.common.ui.Dimens
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.ErrorScreen
 import com.sample.tmdb.common.ui.component.LoadingRow
@@ -139,7 +138,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
 }
 
 @Composable
-fun NoDataFoundAnimation(modifier: Modifier = Modifier) {
+private fun NoDataFoundAnimation(modifier: Modifier = Modifier) {
     val preloaderLottieComposition by rememberLottieComposition(
         LottieCompositionSpec.RawRes(
             R.raw.no_data_found

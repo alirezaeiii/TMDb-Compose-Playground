@@ -58,7 +58,7 @@ fun ImagesScreen(images: List<TMDbImage>, initialPage: Int) {
 }
 
 @Composable
-private fun Poster(image: TMDbImage) {
+fun Poster(image: TMDbImage) {
     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
         BlurImage(image.url)
         Card(
@@ -86,7 +86,7 @@ private fun Poster(image: TMDbImage) {
 }
 
 @Composable
-private fun BlurImage(url: String) {
+fun BlurImage(url: String) {
     AsyncImage(
         model = url,
         contentDescription = stringResource(id = R1.string.poster_content_description),

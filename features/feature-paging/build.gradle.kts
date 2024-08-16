@@ -51,4 +51,7 @@ dependencies {
     ksp(Deps.hilt_compiler)
     implementation(Deps.hilt_compose)
     implementation(Deps.lottieCompose)
+    androidTestImplementation(Deps.composeUiTest)
+    androidTestImplementation(Deps.mockito)
+    debugImplementation(Deps.composeManifest)
 }

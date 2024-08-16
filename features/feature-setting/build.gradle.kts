@@ -49,4 +49,7 @@ dependencies {
     implementation(Deps.composeFoundation)
     implementation(Deps.composeMaterial)
     implementation(Deps.navigationCompose)
+    androidTestImplementation(Deps.composeUiTest)
+    androidTestImplementation(Deps.mockito)
+    debugImplementation(Deps.composeManifest)
 }

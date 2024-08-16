@@ -161,7 +161,7 @@ fun <T : TMDbItem> Search(
 }
 
 @Composable
-private fun SearchBar(
+fun SearchBar(
     query: String,
     @StringRes resourceId: Int,
     onQueryChange: (String) -> Unit,
@@ -220,7 +220,7 @@ private fun SearchBar(
 }
 
 @Composable
-private fun SearchHint(@StringRes resourceId: Int) {
+fun SearchHint(@StringRes resourceId: Int) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier

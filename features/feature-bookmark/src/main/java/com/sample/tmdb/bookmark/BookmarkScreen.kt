@@ -142,7 +142,7 @@ private fun <T : TMDbItem> TabContent(
 }
 
 @Composable
-private fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Unit) {
+fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 140.dp),
         contentPadding = PaddingValues(
@@ -170,7 +170,7 @@ private fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Uni
 }
 
 @Composable
-private fun EmptyView(@StringRes textResourceId: Int) {
+fun EmptyView(@StringRes textResourceId: Int) {
     Column(
         modifier = Modifier
             .fillMaxSize()
