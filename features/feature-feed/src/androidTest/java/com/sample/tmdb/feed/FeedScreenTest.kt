@@ -1,13 +1,14 @@
 package com.sample.tmdb.feed
 
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
-import com.sample.tmdb.domain.R
+import com.sample.tmdb.domain.R as domainR
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
@@ -17,11 +18,10 @@ import org.mockito.ArgumentMatchers.anyDouble
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyString
 
-
 class FeedScreenTest {
 
     @get:Rule
-    val composeTestRule = createComposeRule()
+    val composeTestRule = createAndroidComposeRule< ComponentActivity>()
 
     @Test
     fun feedCollectionListTest() {
@@ -35,21 +35,21 @@ class FeedScreenTest {
                                     anyInt(), anyString(), anyString(), anyString(),
                                     anyString(), "title", anyDouble(), anyInt()
                                 )
-                            ), R.string.text_trending, SortType.TRENDING
+                            ), domainR.string.text_trending, SortType.TRENDING
                         ), FeedWrapper(
                             feeds = listOf(
                                 Movie(
                                     anyInt(), anyString(), anyString(), anyString(),
                                     anyString(), "name", anyDouble(), anyInt()
                                 )
-                            ), R.string.text_popular, SortType.MOST_POPULAR
+                            ), domainR.string.text_popular, SortType.MOST_POPULAR
                         )
                     )
                 ) {}
             }
-            onNodeWithText("Trending").assertIsDisplayed()
-            onNodeWithText("Popular").assertIsDisplayed()
-            onAllNodesWithText("More").assertCountEquals(2)
+            onNodeWithText(activity.getString(domainR.string.text_trending)).assertIsDisplayed()
+            onNodeWithText(activity.getString(domainR.string.text_popular)).assertIsDisplayed()
+            onAllNodesWithText(activity.getString(R.string.more_item)).assertCountEquals(2)
             onNodeWithText("title").assertIsDisplayed()
             onNodeWithText("name").assertIsDisplayed()
         }
@@ -66,12 +66,12 @@ class FeedScreenTest {
                                 anyInt(), anyString(), anyString(), anyString(),
                                 anyString(), "title", anyDouble(), anyInt()
                             )
-                        ), R.string.text_popular, SortType.MOST_POPULAR
+                        ), domainR.string.text_popular, SortType.MOST_POPULAR
                     ), navController = rememberNavController()
                 ) {}
             }
-            onNodeWithText("Popular").assertIsDisplayed()
-            onNodeWithText("More").assertIsDisplayed()
+            onNodeWithText(activity.getString(domainR.string.text_popular)).assertIsDisplayed()
+            onNodeWithText(activity.getString(R.string.more_item)).assertIsDisplayed()
             onNodeWithText("title").assertIsDisplayed()
         }
 
@@ -81,12 +81,12 @@ class FeedScreenTest {
     fun trendingItemTest() {
         with(composeTestRule) {
             setContent {
-                TrendingItem(stringResource(id = R.string.text_trending),
+                TrendingItem(stringResource(id = domainR.string.text_trending),
                     null,
                     "2024-12-29", {}
                 )
             }
-            onNodeWithText("Trending").assertIsDisplayed()
+            onNodeWithText(activity.getString(domainR.string.text_trending)).assertIsDisplayed()
             onNodeWithText("2024-12-29").assertIsDisplayed()
         }
     }
@@ -95,9 +95,9 @@ class FeedScreenTest {
     fun headerTest() {
         with(composeTestRule) {
             setContent {
-                Header(titleId = R.string.text_popular) {}
+                Header(titleId = domainR.string.text_popular) {}
             }
-            onNodeWithText("Popular").assertIsDisplayed()
+            onNodeWithText(activity.getString(domainR.string.text_popular)).assertIsDisplayed()
             onNodeWithText("More").assertIsDisplayed()
         }
     }
