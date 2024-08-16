@@ -80,7 +80,7 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun SettingsGroupItem(
+fun SettingsGroupItem(
     settings: List<Settings>,
     modifier: Modifier = Modifier
 ) {
@@ -182,7 +182,7 @@ private fun TitleText(
 }
 
 @Composable
-private fun TitleText(
+fun TitleText(
     modifier: Modifier = Modifier,
     title: String,
     style: TextStyle = MaterialTheme.typography.subtitle1,
