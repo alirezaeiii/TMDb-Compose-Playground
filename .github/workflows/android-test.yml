@@ -25,9 +25,6 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      - name: Run Android Tests
-        run: ./gradlew connectedAndroidTest --continue
-
       - name: SetupAndroidSDK
         uses: android-actions/setup-android@v2
         with:
@@ -40,6 +37,9 @@ jobs:
            target: default
            arch: x86_64
            emulator-options: -no-audio-no-boot-anim
+
+      - name: Run Android Tests
+        run: ./gradlew connectedAndroidTest --continue
 
       - name: Upload Test Reports
         if: failure()
