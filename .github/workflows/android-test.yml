@@ -34,6 +34,10 @@ jobs:
         run: sdkmanager "build-tools;34.0.0"
 
       - name: SetupAndStartAndroidEmulator
+        run: |
+          $ANDROID_HOME/emulator/emulator -avd your_avd_name -no-skin -no-audio -no-boot-anim &
+          adb wait-for-device
+          adb shell input keyevent 82
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 33
