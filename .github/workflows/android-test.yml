@@ -38,7 +38,6 @@ jobs:
           $ANDROID_HOME/emulator/emulator -avd your_avd_name -no-skin -no-audio -no-boot-anim &
           adb wait-for-device
           adb shell input keyevent 82
-        uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 33
           target: default
