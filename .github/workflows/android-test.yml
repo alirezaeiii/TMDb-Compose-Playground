@@ -38,16 +38,6 @@ jobs:
           $ANDROID_HOME/emulator/emulator -avd your_avd_name -no-skin -no-audio -no-boot-anim &
           adb wait-for-device
           adb shell input keyevent 82
-        with:
-          api-level: 33
-          target: default
-          arch: x86_64
-          emulator-options: -no-boot-anim-no-audio-no-snapshot-load
-          script: |
-            emulator -avd test -no-boot-anim -no-audio -no-snapshot-load &
-            adb wait-for-device
-            sleep 30
-            ./gradlew connectedAndroidTest
 
       - name: Build the app
         run: ./gradlewassembleDebug
