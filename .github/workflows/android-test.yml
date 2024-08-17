@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '8'
+          distribution: 'adoptopenjdk'
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
