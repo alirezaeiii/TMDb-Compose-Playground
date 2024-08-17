@@ -1,4 +1,4 @@
-name: AndroidInstrumentationTests
+name: Android Instrumentation Tests
 on:
   push:
     branches:
