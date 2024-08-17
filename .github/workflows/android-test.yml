@@ -37,6 +37,7 @@ jobs:
            target: default
            arch: x86_64
            emulator-options: -no-audio-no-boot-anim
+           script: ./gradlewconnectedAndroidTest
 
       - name: Run Android Tests
         run: ./gradlew connectedAndroidTest --continue
