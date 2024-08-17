@@ -9,42 +9,46 @@ on:
 
 jobs:
   android_test:
-    name: Running Android Tests
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
+     name: Running Android Tests
+     runs-on: macos-latest
+     continue-on-error: true
+     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up JDK 8
-        uses: actions/setup-java@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
         with:
-          java-version: '8'
-          distribution: 'zulu'
+          java-version: 17
+          distribution: 'adopt'
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
       - name: SetupAndroidSDK
-        uses: android-actions/setup-android@v2
+        uses: android-actions/setup-android@v3
         with:
-          api-level: 33
+           api-level: 33
 
-      - name: Installspecificbuildtools
+      - name: Install specific build tools
         run: sdkmanager "build-tools;34.0.0"
 
-      - name: Create AVD
-        run: |
-          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test -k "system-images;android-30;google_apis;x86" --device "pixel"
-
-
       - name: SetupAndStartAndroidEmulator
-        run: |
-          $ANDROID_HOME/emulator/emulator -avd your_avd_name -no-skin -no-audio -no-boot-anim &
-          adb wait-for-device
-          adb shell input keyevent 82
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+           api-level: 33
+           target: default
+           arch: x86_64
+           emulator-options: -no-boot-anim-no-audio-no-snapshot-load
+           script: |
+          # Start the emulator
+            emulator -avd test -no-boot-anim -no-audio -no-snapshot-load &
+          # Wait for the emulator to fully start
+            adb wait-for-device
+            adb shell input keyevent 82
+            ./gradlew connectedAndroidTest
 
-      - name: Build the app
+      - name: Buildtheapp
         run: ./gradlewassembleDebug
 
       - name: Run Android Tests
