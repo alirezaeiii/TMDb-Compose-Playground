@@ -10,7 +10,7 @@ on:
 jobs:
   android_test:
      name: Running Android Tests
-     runs-on: ubuntu-latest timeout-minutes:30
+     runs-on: ubuntu-latest
      continue-on-error: true
      steps:
       - name: Checkout
@@ -28,12 +28,15 @@ jobs:
       - name: SetupAndroidSDK
         uses: android-actions/setup-android@v2
         with:
-           api-level: 34
+           api-level: 33
+
+      - name: Installspecificbuildtools
+        run: sdkmanager"build-tools;33.0.0"
 
       - name: SetupAndStartAndroidEmulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-           api-level: 34
+           api-level: 33
            target: default
            arch: x86_64
            emulator-options: -no-boot-anim-no-audio-no-snapshot-load
