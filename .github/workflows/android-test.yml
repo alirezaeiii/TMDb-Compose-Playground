@@ -31,7 +31,7 @@ jobs:
            api-level: 33
 
       - name: Installspecificbuildtools
-        run: sdkmanager"build-tools;33.0.0"
+        run: sdkmanager "build-tools;33.0.0"
 
       - name: SetupAndStartAndroidEmulator
         uses: reactivecircus/android-emulator-runner@v2
