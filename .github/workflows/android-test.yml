@@ -41,9 +41,7 @@ jobs:
            arch: x86_64
            emulator-options: -no-boot-anim-no-audio-no-snapshot-load
            script: |
-          # Start the emulator
             emulator -avd test -no-boot-anim -no-audio -no-snapshot-load &
-          # Wait for the emulator to fully start
             adb wait-for-device
             adb shell input keyevent 82
             ./gradlew connectedAndroidTest
