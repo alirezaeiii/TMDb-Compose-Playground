@@ -23,7 +23,7 @@ jobs:
       - name: Run Android Tests
         run: ./gradlew connectedAndroidTest --continue
       - name: SetupAndroidSDK
-        uses: android-actions/setup-android@v4
+        uses: android-actions/setup-android@v2
         with:
            api-level: 34
       - name: Upload Test Reports
