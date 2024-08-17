@@ -39,14 +39,12 @@ jobs:
            api-level: 33
            target: default
            arch: x86_64
-           emulator-options: -no-boot-anim-no-audio-no-snapshot-load
+           emulator-options: -no-boot-anim -no-audio -no-snapshot-load
            script: |
-            emulator -avd test -no-boot-anim -no-audio -no-snapshot-load &
             adb wait-for-device
             adb shell input keyevent 82
-            ./gradlew connectedAndroidTest
 
-      - name: Buildtheapp
+      - name: Build the app
         run: ./gradlewassembleDebug
 
       - name: Run Android Tests
