@@ -1,4 +1,4 @@
-name: Push and Pull request
+name: Local Unit Test
 
 on:
   push:
