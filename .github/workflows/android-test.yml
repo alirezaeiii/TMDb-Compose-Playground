@@ -25,10 +25,14 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      - name: SetupAndroidSDK
+      - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
-           api-level: 33
+          packages: |
+            platform-tools
+            platforms;android-33
+            build-tools;34.0.0
+            system-images;android-33;default;x86_64
 
       - name: Install specific build tools
         run: sdkmanager "build-tools;34.0.0"
