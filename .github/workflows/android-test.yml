@@ -33,6 +33,11 @@ jobs:
       - name: Installspecificbuildtools
         run: sdkmanager "build-tools;34.0.0"
 
+      - name: Create AVD
+        run: |
+          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test -k "system-images;android-30;google_apis;x86" --device "pixel"
+
+
       - name: SetupAndStartAndroidEmulator
         run: |
           $ANDROID_HOME/emulator/emulator -avd your_avd_name -no-skin -no-audio -no-boot-anim &
