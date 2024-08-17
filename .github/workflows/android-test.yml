@@ -36,8 +36,11 @@ jobs:
            api-level: 34
            target: default
            arch: x86_64
-           emulator-options: -no-audio-no-boot-anim
+           emulator-options: -no-boot-anim-no-audio-no-snapshot-load
            script: ./gradlewconnectedAndroidTest
+
+      - name: Buildtheapp
+        run: ./gradlewassembleDebug
 
       - name: Run Android Tests
         run: ./gradlew connectedAndroidTest --continue
