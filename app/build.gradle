@@ -23,7 +23,6 @@ android {
         compileSdk AppMetaData.compileSdkVersion
         versionCode generateVersionCode(appVersion)
         versionName appVersion
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
