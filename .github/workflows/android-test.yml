@@ -9,10 +9,10 @@ on:
 
 jobs:
   android_test:
-     name: Running Android Tests
-     runs-on: ubuntu-latest
-     continue-on-error: true
-     steps:
+    name: Running Android Tests
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -28,7 +28,7 @@ jobs:
       - name: SetupAndroidSDK
         uses: android-actions/setup-android@v2
         with:
-           api-level: 33
+          api-level: 33
 
       - name: Installspecificbuildtools
         run: sdkmanager "build-tools;33.0.0"
@@ -36,19 +36,17 @@ jobs:
       - name: SetupAndStartAndroidEmulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-           api-level: 33
-           target: default
-           arch: x86_64
-           emulator-options: -no-boot-anim-no-audio-no-snapshot-load
-           script: |
-          # Start the emulator
+          api-level: 33
+          target: default
+          arch: x86_64
+          emulator-options: -no-boot-anim-no-audio-no-snapshot-load
+          script: |
             emulator -avd test -no-boot-anim -no-audio -no-snapshot-load &
-          # Wait for the emulator to fully start
             adb wait-for-device
-            adb shell input keyevent 82
+            sleep 30
             ./gradlew connectedAndroidTest
 
-      - name: Buildtheapp
+      - name: Build the app
         run: ./gradlewassembleDebug
 
       - name: Run Android Tests
