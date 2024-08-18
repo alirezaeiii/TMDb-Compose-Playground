@@ -39,6 +39,10 @@ jobs:
            script: |
             adb wait-for-device
             adb shell input keyevent 82
+            ./gradlew connectedCheck
+
+      - name: Run connectedCheck
+        run: ./gradlew connectedCheck
 
       - name: Run Android Tests
         run: ./gradlew connectedAndroidTest --continue
