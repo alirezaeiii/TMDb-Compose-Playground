@@ -40,9 +40,6 @@ jobs:
             adb wait-for-device
             adb shell input keyevent 82
 
-      - name: Build the app
-        run: ./gradlewassembleDebug
-
       - name: Run Android Tests
         run: ./gradlew connectedAndroidTest --continue
 
