@@ -25,9 +25,6 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      - name: Install specific build tools
-        run: sdkmanager "build-tools;34.0.0"
-
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
