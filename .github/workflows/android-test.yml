@@ -31,7 +31,7 @@ jobs:
       - name: Start Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-           api-level: 33
+           api-level: 26
            target: default
            arch: x86_64
            profile: Nexus 4
@@ -39,9 +39,7 @@ jobs:
            script: |
             adb wait-for-device
             adb shell input keyevent 82
-
-      - name: Run connectedCheck
-        run: ./gradlew connectedCheck
+            ./gradlew connectedCheck
 
       - name: Run Android Tests
         run: ./gradlew connectedAndroidTest --continue
