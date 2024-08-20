@@ -23,7 +23,6 @@ class BookmarkScreenTest {
 
                 }
             }
-            //onNodeWithText("1").assertIsDisplayed()
             onNodeWithText("releaseDate").assertIsDisplayed()
             onNodeWithText("name").assertIsDisplayed()
             onNodeWithText("5.0").assertIsDisplayed()
