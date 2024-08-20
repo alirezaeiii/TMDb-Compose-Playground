@@ -52,4 +52,7 @@ dependencies {
     testImplementation(project(BuildModules.COMMON_TEST))
     testImplementation(Deps.junit4)
     testImplementation(Deps.mockk)
+    androidTestImplementation(Deps.composeUiTest)
+    androidTestImplementation(Deps.mockito)
+    debugImplementation(Deps.composeManifest)
 }

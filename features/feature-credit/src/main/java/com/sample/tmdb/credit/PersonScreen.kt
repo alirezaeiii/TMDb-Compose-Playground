@@ -51,11 +51,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sample.tmdb.common.ui.Content
-import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
-import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.Neutral8
@@ -88,7 +87,7 @@ fun PersonScreen(
 }
 
 @Composable
-private fun PersonScreen(person: Person, upPress: () -> Unit) {
+fun PersonScreen(person: Person, upPress: () -> Unit) {
     val titleHeight = remember { mutableStateOf(0.dp) }
     Box(
         modifier = Modifier.fillMaxSize()
@@ -115,7 +114,7 @@ private fun Header() {
 }
 
 @Composable
-private fun Up(upPress: () -> Unit) {
+fun Up(upPress: () -> Unit) {
     IconButton(
         onClick = upPress,
         modifier = Modifier
@@ -136,7 +135,7 @@ private fun Up(upPress: () -> Unit) {
 }
 
 @Composable
-private fun Body(
+fun Body(
     biography: String,
     titleHeight: MutableState<Dp>,
     scroll: ScrollState
@@ -190,7 +189,7 @@ private fun Body(
 }
 
 @Composable
-private fun Title(
+fun Title(
     person: Person,
     titleHeight: MutableState<Dp>,
     scrollProvider: () -> Int
