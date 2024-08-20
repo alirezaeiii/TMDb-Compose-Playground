@@ -24,7 +24,7 @@ class PersonScreenTest {
         with(composeTestRule) {
             setContent {
                 PersonScreen(Person("birthDay","deathDay", anyInt(), "name",
-                    "biography", "PlaceOfBirth", null)) {
+                    "bio", "PlaceOfBirth", null)) {
 
                 }
             }
@@ -33,7 +33,7 @@ class PersonScreenTest {
             onNodeWithText(activity.getString(R.string.death, "deathDay")).assertIsDisplayed()
             onNodeWithText(activity.getString(R.string.from, "PlaceOfBirth")).assertIsDisplayed()
             onNodeWithText(activity.getString(R.string.biography)).assertIsDisplayed()
-            onNodeWithText("biography").assertIsDisplayed()
+            onNodeWithText("bio").assertIsDisplayed()
         }
     }
 
