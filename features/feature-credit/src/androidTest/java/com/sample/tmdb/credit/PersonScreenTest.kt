@@ -5,7 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onAllNodesWithContentDescription
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.unit.dp
 import com.sample.tmdb.domain.model.Person
@@ -43,7 +43,7 @@ class PersonScreenTest {
             setContent {
                 Up {}
             }
-            onAllNodesWithContentDescription(activity.getString(commonR.string.back))
+            onNodeWithContentDescription(activity.getString(commonR.string.back)).assertIsDisplayed()
         }
     }
 
