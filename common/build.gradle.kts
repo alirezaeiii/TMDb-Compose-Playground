@@ -48,4 +48,6 @@ dependencies {
     implementation(Deps.composeUiToolingPreview)
     implementation(Deps.coil)
     implementation(Deps.iconExtended)
+    androidTestImplementation(Deps.composeUiTest)
+    debugImplementation(Deps.composeManifest)
 }

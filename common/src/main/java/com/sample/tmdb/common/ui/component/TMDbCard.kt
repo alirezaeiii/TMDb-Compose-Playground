@@ -38,7 +38,7 @@ fun TMDbCard(
         Column {
             AsyncImage(
                 model = imageUrl,
-                contentDescription = null,
+                contentDescription = tmdbItem.name,
                 modifier = Modifier
                     .size(width = itemWidth, height = 180.dp),
                 contentScale = ContentScale.Crop

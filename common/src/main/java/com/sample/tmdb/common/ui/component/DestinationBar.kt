@@ -17,7 +17,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.sample.tmdb.common.R
 import com.sample.tmdb.common.ui.Dimens.TMDb_0_dp
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque

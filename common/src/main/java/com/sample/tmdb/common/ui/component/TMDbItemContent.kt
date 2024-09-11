@@ -87,7 +87,7 @@ fun <T : TMDbItem> TMDbItemContent(
 }
 
 @Composable
-private fun TMDbItemRate(rate: Double, modifier: Modifier) {
+fun TMDbItemRate(rate: Double, modifier: Modifier = Modifier) {
     val shape = RoundedCornerShape(percent = 50)
     Surface(
         shape = shape,
@@ -105,7 +105,7 @@ private fun TMDbItemRate(rate: Double, modifier: Modifier) {
 }
 
 @Composable
-private fun BoxScope.TMDbItemPoster(posterUrl: String?, tmdbItemName: String) {
+fun BoxScope.TMDbItemPoster(posterUrl: String?, tmdbItemName: String) {
     val painter = rememberAsyncImagePainter(
         model = posterUrl,
         error = rememberVectorPainter(Icons.Filled.BrokenImage),
@@ -132,7 +132,7 @@ private fun BoxScope.TMDbItemPoster(posterUrl: String?, tmdbItemName: String) {
 }
 
 @Composable
-private fun <T : TMDbItem> TMDbItemInfo(tmdbItem: T, modifier: Modifier) {
+fun <T : TMDbItem> TMDbItemInfo(tmdbItem: T, modifier: Modifier = Modifier) {
     Column(
         verticalArrangement = Arrangement.spacedBy(TMDb_4_dp),
         modifier = modifier.padding(
@@ -152,7 +152,7 @@ private fun <T : TMDbItem> TMDbItemInfo(tmdbItem: T, modifier: Modifier) {
 }
 
 @Composable
-private fun TMDbItemName(name: String) = Text(
+fun TMDbItemName(name: String) = Text(
     text = name,
     style = MaterialTheme.typography.subtitle1.copy(
         color = Color.White,
@@ -165,7 +165,7 @@ private fun TMDbItemName(name: String) = Text(
 )
 
 @Composable
-private fun TMDbItemFeature(icon: ImageVector, field: String) {
+fun TMDbItemFeature(icon: ImageVector, field: String) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(
             imageVector = icon,
