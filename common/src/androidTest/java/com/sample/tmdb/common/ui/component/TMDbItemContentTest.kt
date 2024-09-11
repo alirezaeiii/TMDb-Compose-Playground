@@ -1,6 +1,5 @@
 package com.sample.tmdb.common.ui.component
 
-import android.os.Parcel
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -8,7 +7,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.domain.model.Movie
 import org.junit.Rule
 import org.junit.Test
 
@@ -21,7 +20,7 @@ class TMDbItemContentTest {
     fun tmdbItemContentTest() {
         with(composeTestRule) {
             setContent {
-                TMDbItemContent(tmdbItem = TMDbItemSample(1, "overview",
+                TMDbItemContent(tmdbItem = Movie(1, "overview",
                     "releaseDate", null, null, "name",
                     1.1, 1)) {
                 }
@@ -60,7 +59,7 @@ class TMDbItemContentTest {
     fun tmdbItemInfo() {
         with(composeTestRule) {
             setContent {
-                TMDbItemInfo(tmdbItem = TMDbItemSample(1, "overview",
+                TMDbItemInfo(tmdbItem = Movie(1, "overview",
                     "releaseDate", null, null, "name",
                     1.1, 1))
             }

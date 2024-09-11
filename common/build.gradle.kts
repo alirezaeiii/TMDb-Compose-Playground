@@ -49,5 +49,6 @@ dependencies {
     implementation(Deps.coil)
     implementation(Deps.iconExtended)
     androidTestImplementation(Deps.composeUiTest)
+    androidTestImplementation(project(BuildModules.DOMAIN))
     debugImplementation(Deps.composeManifest)
 }
