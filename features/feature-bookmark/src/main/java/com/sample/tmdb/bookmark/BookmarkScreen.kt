@@ -43,7 +43,7 @@ import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.TMDbDivider
-import com.sample.tmdb.common.ui.component.TMDbItemContent
+import com.sample.tmdb.common.ui.component.TMDbContent
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.utils.toDp
 import kotlinx.coroutines.CoroutineScope
@@ -157,7 +157,7 @@ fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Unit) {
         ),
         content = {
             items(items.size) { index ->
-                TMDbItemContent(
+                TMDbContent(
                     items[index],
                     Modifier
                         .height(320.dp)

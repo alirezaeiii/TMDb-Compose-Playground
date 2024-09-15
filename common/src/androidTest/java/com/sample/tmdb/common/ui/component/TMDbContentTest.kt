@@ -11,16 +11,16 @@ import com.sample.tmdb.domain.model.Movie
 import org.junit.Rule
 import org.junit.Test
 
-class TMDbItemContentTest {
+class TMDbContentTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
-    fun tmdbItemContentTest() {
+    fun tmdbContentTest() {
         with(composeTestRule) {
             setContent {
-                TMDbItemContent(tmdbItem = Movie(1, "overview",
+                TMDbContent(tmdbItem = Movie(1, "overview",
                     "releaseDate", null, null, "name",
                     1.1, 1)) {
                 }

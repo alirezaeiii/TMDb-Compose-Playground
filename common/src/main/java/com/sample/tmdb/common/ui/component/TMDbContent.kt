@@ -52,7 +52,7 @@ import com.sample.tmdb.common.ui.theme.rateColors
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun <T : TMDbItem> TMDbItemContent(
+fun <T : TMDbItem> TMDbContent(
     tmdbItem: T,
     modifier: Modifier = Modifier,
     onClick: (TMDbItem) -> Unit

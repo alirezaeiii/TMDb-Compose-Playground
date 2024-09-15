@@ -34,7 +34,7 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.ErrorScreen
 import com.sample.tmdb.common.ui.component.LoadingRow
-import com.sample.tmdb.common.ui.component.TMDbItemContent
+import com.sample.tmdb.common.ui.component.TMDbContent
 import com.sample.tmdb.common.ui.component.TMDbProgressBar
 import com.sample.tmdb.common.utils.toDp
 
@@ -100,7 +100,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(
         items(lazyTMDbItems.itemCount) { index ->
             val tmdbItem = lazyTMDbItems[index]
             tmdbItem?.let {
-                TMDbItemContent(
+                TMDbContent(
                     it,
                     Modifier
                         .height(320.dp)
