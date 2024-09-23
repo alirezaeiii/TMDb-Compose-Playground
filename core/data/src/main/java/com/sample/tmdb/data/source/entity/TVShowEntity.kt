@@ -13,29 +13,31 @@ class TVShowEntity(
     val backdropUrl: String?,
     val name: String,
     val voteAverage: Double,
-    val voteCount: Int
+    val voteCount: Int,
 )
 
-fun List<TVShowEntity>.asDomainModel(): List<TVShow> = map {
-    TVShow(
-        id = it.id,
-        overview = it.overview,
-        releaseDate = it.releaseDate,
-        posterUrl = it.posterUrl,
-        backdropUrl = it.backdropUrl,
-        name = it.name,
-        voteAverage = it.voteAverage,
-        voteCount = it.voteCount
+fun List<TVShowEntity>.asDomainModel(): List<TVShow> =
+    map {
+        TVShow(
+            id = it.id,
+            overview = it.overview,
+            releaseDate = it.releaseDate,
+            posterUrl = it.posterUrl,
+            backdropUrl = it.backdropUrl,
+            name = it.name,
+            voteAverage = it.voteAverage,
+            voteCount = it.voteCount,
+        )
+    }
+
+fun TVShow.asDatabaseModel(): TVShowEntity =
+    TVShowEntity(
+        id = id,
+        overview = overview,
+        releaseDate = releaseDate,
+        posterUrl = posterUrl,
+        backdropUrl = backdropUrl,
+        name = name,
+        voteAverage = voteAverage,
+        voteCount = voteCount,
     )
-}
-
-fun TVShow.asDatabaseModel(): TVShowEntity = TVShowEntity(
-    id = id,
-    overview = overview,
-    releaseDate = releaseDate,
-    posterUrl = posterUrl,
-    backdropUrl = backdropUrl,
-    name = name,
-    voteAverage = voteAverage,
-    voteCount = voteCount
-)

@@ -42,8 +42,8 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
-import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.component.TMDbContent
+import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.utils.toDp
 import kotlinx.coroutines.CoroutineScope
@@ -54,23 +54,25 @@ import com.sample.tmdb.common.R as R1
 @Composable
 fun BookmarkScreen(
     navController: NavController,
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ) {
     val tabs = remember { MediaTab.values() }
-    val pagerState = rememberPagerState(pageCount = {
-        tabs.size
-    })
+    val pagerState =
+        rememberPagerState(pageCount = {
+            tabs.size
+        })
     val selectedTabIndex = pagerState.currentPage
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .statusBarsPadding()
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .statusBarsPadding(),
     ) {
         TabRow(
             selectedTabIndex = selectedTabIndex,
             backgroundColor = MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque),
-            divider = { TMDbDivider() }
+            divider = { TMDbDivider() },
         ) {
             tabs.forEach { tab ->
                 val index = tab.ordinal
@@ -81,9 +83,9 @@ fun BookmarkScreen(
                     text = {
                         Text(
                             text = stringResource(id = tab.titleResourceId),
-                            style = MaterialTheme.typography.subtitle1
+                            style = MaterialTheme.typography.subtitle1,
                         )
-                    }
+                    },
                 )
             }
         }
@@ -91,7 +93,7 @@ fun BookmarkScreen(
         HorizontalPager(
             modifier = Modifier.fillMaxSize(),
             state = pagerState,
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.Top,
         ) { page ->
             when (page) {
                 MediaTab.Movies.ordinal -> MoviesTabContent(navController)
@@ -104,24 +106,24 @@ fun BookmarkScreen(
 @Composable
 private fun MoviesTabContent(
     navController: NavController,
-    viewModel: BookmarkMovieViewModel = hiltViewModel()
+    viewModel: BookmarkMovieViewModel = hiltViewModel(),
 ) {
     TabContent(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
-        textResourceId = R1.string.movies
+        textResourceId = R1.string.movies,
     )
 }
 
 @Composable
 private fun TVShowsTabContent(
     navController: NavController,
-    viewModel: BookmarkTVShowViewModel = hiltViewModel()
+    viewModel: BookmarkTVShowViewModel = hiltViewModel(),
 ) {
     TabContent(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
-        textResourceId = R1.string.tv_series
+        textResourceId = R1.string.tv_series,
     )
 }
 
@@ -129,7 +131,7 @@ private fun TVShowsTabContent(
 private fun <T : TMDbItem> TabContent(
     viewModel: BaseViewModel<List<T>>,
     onClick: (TMDbItem) -> Unit,
-    @StringRes textResourceId: Int
+    @StringRes textResourceId: Int,
 ) {
     viewModel.refresh()
     Content(viewModel = viewModel) {
@@ -142,19 +144,28 @@ private fun <T : TMDbItem> TabContent(
 }
 
 @Composable
-fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Unit) {
+fun <T : TMDbItem> TabContent(
+    items: List<T>,
+    onClick: (TMDbItem) -> Unit,
+) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 140.dp),
-        contentPadding = PaddingValues(
-            start = TMDb_8_dp,
-            end = TMDb_8_dp,
-            bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current)
-                .toDp().dp.plus(56.dp)
-        ),
-        horizontalArrangement = Arrangement.spacedBy(
-            TMDb_8_dp,
-            Alignment.CenterHorizontally
-        ),
+        contentPadding =
+            PaddingValues(
+                start = TMDb_8_dp,
+                end = TMDb_8_dp,
+                bottom =
+                    WindowInsets.navigationBars
+                        .getBottom(LocalDensity.current)
+                        .toDp()
+                        .dp
+                        .plus(56.dp),
+            ),
+        horizontalArrangement =
+            Arrangement.spacedBy(
+                TMDb_8_dp,
+                Alignment.CenterHorizontally,
+            ),
         content = {
             items(items.size) { index ->
                 TMDbContent(
@@ -162,36 +173,40 @@ fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Unit) {
                     Modifier
                         .height(320.dp)
                         .padding(vertical = TMDb_8_dp),
-                    onClick
+                    onClick,
                 )
             }
-        }
+        },
     )
 }
 
 @Composable
-fun EmptyView(@StringRes textResourceId: Int) {
+fun EmptyView(
+    @StringRes textResourceId: Int,
+) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 64.dp),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(bottom = 64.dp),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (isEmptyImageVisible()) {
             Image(
                 modifier = Modifier.padding(bottom = TMDb_16_dp),
                 painter = painterResource(id = R.drawable.ic_empty),
-                contentDescription = stringResource(id = R.string.empty_list)
+                contentDescription = stringResource(id = R.string.empty_list),
             )
         }
         Text(
-            text = stringResource(
-                id = R.string.empty_list,
-                stringResource(id = textResourceId)
-            ),
+            text =
+                stringResource(
+                    id = R.string.empty_list,
+                    stringResource(id = textResourceId),
+                ),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -199,10 +214,11 @@ fun EmptyView(@StringRes textResourceId: Int) {
 @Composable
 private fun isEmptyImageVisible(): Boolean {
     val configuration = LocalConfiguration.current
-    val isPortrait = when (configuration.orientation) {
-        Configuration.ORIENTATION_PORTRAIT -> true
-        else -> false
-    }
+    val isPortrait =
+        when (configuration.orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> true
+            else -> false
+        }
     if (isPortrait) {
         return true
     } else {
@@ -214,7 +230,9 @@ private fun isEmptyImageVisible(): Boolean {
     return false
 }
 
-enum class MediaTab(@StringRes val titleResourceId: Int) {
+enum class MediaTab(
+    @StringRes val titleResourceId: Int,
+) {
     Movies(titleResourceId = R.string.movie),
-    TvShows(titleResourceId = R.string.tv_show)
+    TvShows(titleResourceId = R.string.tv_show),
 }

@@ -42,13 +42,17 @@ import com.sample.tmdb.common.R as R1
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ImagesScreen(images: List<TMDbImage>, initialPage: Int) {
+fun ImagesScreen(
+    images: List<TMDbImage>,
+    initialPage: Int,
+) {
     if (images.isEmpty() || initialPage !in images.indices) return
 
-    val pagerState = rememberPagerState(
-        initialPage = initialPage,
-        initialPageOffsetFraction = 0f
-    ) { images.size }
+    val pagerState =
+        rememberPagerState(
+            initialPage = initialPage,
+            initialPageOffsetFraction = 0f,
+        ) { images.size }
     Box {
         HorizontalPager(state = pagerState, key = { images[it].url + it }, beyondBoundsPageCount = 4) {
             Poster(images[it])
@@ -67,16 +71,17 @@ fun Poster(image: TMDbImage) {
                 .padding(TMDb_12_dp)
                 .shadow(TMDb_16_dp, RoundedCornerShape(TMDb_12_dp))
                 .animateContentSize()
-                .wrapContentSize()
+                .wrapContentSize(),
         ) {
             Box {
                 Image(
                     painter = rememberAsyncImagePainter(image.url),
                     contentDescription = null,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .fillMaxWidth()
-                        .wrapContentHeight(),
+                    modifier =
+                        Modifier
+                            .align(Alignment.Center)
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
                     contentScale = ContentScale.FillWidth,
                 )
                 VoteCount(image.voteCount)
@@ -91,10 +96,11 @@ fun BlurImage(url: String) {
         model = url,
         contentDescription = stringResource(id = R1.string.poster_content_description),
         contentScale = ContentScale.FillHeight,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.surface)
-            .blur(TMDb_16_dp),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.surface)
+                .blur(TMDb_16_dp),
     )
 }
 
@@ -102,14 +108,14 @@ fun BlurImage(url: String) {
 private fun BoxScope.VoteCount(voteCount: Int) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .wrapContentSize()
-            .align(Alignment.BottomStart)
-            .background(
-                color = MaterialTheme.colors.surface.copy(alpha = 0.3f),
-                shape = RoundedCornerShape(bottomStart = TMDb_12_dp, topEnd = TMDb_12_dp),
-            )
-            .padding(TMDb_4_dp),
+        modifier =
+            Modifier
+                .wrapContentSize()
+                .align(Alignment.BottomStart)
+                .background(
+                    color = MaterialTheme.colors.surface.copy(alpha = 0.3f),
+                    shape = RoundedCornerShape(bottomStart = TMDb_12_dp, topEnd = TMDb_12_dp),
+                ).padding(TMDb_4_dp),
     ) {
         Icon(
             imageVector = Icons.Filled.Favorite,
@@ -122,16 +128,20 @@ private fun BoxScope.VoteCount(voteCount: Int) {
 }
 
 @Composable
-private fun BoxScope.Index(position: Int, imageCount: Int) {
+private fun BoxScope.Index(
+    position: Int,
+    imageCount: Int,
+) {
     Text(
         text = "$position / $imageCount",
         style = MaterialTheme.typography.body2,
-        modifier = Modifier
-            .align(Alignment.BottomCenter)
-            .navigationBarsPadding()
-            .padding(TMDb_4_dp)
-            .shadow(TMDb_16_dp, RoundedCornerShape(TMDb_16_dp))
-            .background(color = MaterialTheme.colors.surface.copy(alpha = 0.3f))
-            .padding(horizontal = TMDb_8_dp, vertical = TMDb_2_dp),
+        modifier =
+            Modifier
+                .align(Alignment.BottomCenter)
+                .navigationBarsPadding()
+                .padding(TMDb_4_dp)
+                .shadow(TMDb_16_dp, RoundedCornerShape(TMDb_16_dp))
+                .background(color = MaterialTheme.colors.surface.copy(alpha = 0.3f))
+                .padding(horizontal = TMDb_8_dp, vertical = TMDb_2_dp),
     )
 }

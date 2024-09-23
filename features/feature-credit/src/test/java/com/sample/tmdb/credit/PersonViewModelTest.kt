@@ -13,7 +13,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class PersonViewModelTest {
-
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 

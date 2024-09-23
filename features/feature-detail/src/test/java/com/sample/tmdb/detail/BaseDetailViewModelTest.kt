@@ -19,7 +19,6 @@ import org.junit.Rule
 import org.junit.Test
 
 abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
-
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
@@ -35,7 +34,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
 
     private val detailWrapper = mockk<DetailWrapper>()
 
-    protected abstract val tmdbItem : R
+    protected abstract val tmdbItem: R
 
     @Test
     fun `load details`() {

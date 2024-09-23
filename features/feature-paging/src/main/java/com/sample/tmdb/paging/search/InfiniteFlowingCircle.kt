@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.graphicsLayer
  */
 @Composable
 fun InfinitelyFlowingCircles() {
-
     // Same color with different variants for different circles.
     val primaryColor = MaterialTheme.colors.primary
     val frontCircle = primaryColor.copy(0.75f)
@@ -26,19 +25,19 @@ fun InfinitelyFlowingCircles() {
     DrawCircleOnCanvas(
         scale = scaleInfiniteTransition(targetValue = 2f, durationMillis = 600),
         color = backCircle,
-        radiusRatio = 4f
+        radiusRatio = 4f,
     )
 
     DrawCircleOnCanvas(
         scale = scaleInfiniteTransition(targetValue = 2.5f, durationMillis = 800),
         color = midCircle,
-        radiusRatio = 6f
+        radiusRatio = 6f,
     )
 
     DrawCircleOnCanvas(
         scale = scaleInfiniteTransition(targetValue = 3f, durationMillis = 1000),
         color = frontCircle,
-        radiusRatio = 12f
+        radiusRatio = 12f,
     )
 }
 
@@ -51,24 +50,26 @@ fun InfinitelyFlowingCircles() {
 private fun DrawCircleOnCanvas(
     scale: Float,
     color: Color,
-    radiusRatio: Float
+    radiusRatio: Float,
 ) {
     Canvas(
-        modifier = Modifier
-            .fillMaxSize()
-            .graphicsLayer {
-                scaleX = scale
-                scaleY = scale
-            }
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                },
     ) {
         val canvasWidth = size.width
         val canvasHeight = size.height
         drawCircle(
             color = color,
-            center = Offset(
-                x = canvasWidth / 2,
-                y = canvasHeight / 2
-            ),
+            center =
+                Offset(
+                    x = canvasWidth / 2,
+                    y = canvasHeight / 2,
+                ),
             radius = size.minDimension / radiusRatio,
         )
     }
@@ -91,10 +92,11 @@ private fun scaleInfiniteTransition(
     val scale: Float by infiniteTransition.animateFloat(
         initialValue = initialValue,
         targetValue = targetValue,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        )
+        animationSpec =
+            infiniteRepeatable(
+                animation = tween(durationMillis, easing = LinearEasing),
+                repeatMode = RepeatMode.Reverse,
+            ),
     )
     return scale
 }

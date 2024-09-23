@@ -15,7 +15,6 @@ import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.`when`
 
 abstract class BaseBookmarkRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
-
     protected lateinit var repository: BaseRepository<List<T>>
 
     @Test
@@ -29,13 +28,14 @@ abstract class BaseBookmarkRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
     }
 
     @Test
-    fun `load bookmark failed`() = runTest {
-        val errorMsg = "error message"
-        `when`(context.getString(anyInt())).thenReturn(errorMsg)
-        repository.getResult(null).test {
-            assertEquals(Resource.Loading, awaitItem())
-            assertEquals(Resource.Error(errorMsg), awaitItem())
-            awaitComplete()
+    fun `load bookmark failed`() =
+        runTest {
+            val errorMsg = "error message"
+            `when`(context.getString(anyInt())).thenReturn(errorMsg)
+            repository.getResult(null).test {
+                assertEquals(Resource.Loading, awaitItem())
+                assertEquals(Resource.Error(errorMsg), awaitItem())
+                awaitComplete()
+            }
         }
-    }
 }

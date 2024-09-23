@@ -8,9 +8,7 @@ import com.sample.tmdb.domain.paging.BasePagingSource
 
 class TrendingMoviesPagingSource(
     context: Context,
-    private val movieApi: MovieService
+    private val movieApi: MovieService,
 ) : BasePagingSource<Movie>(context) {
-
-    override suspend fun fetchItems(page: Int): List<Movie> =
-        movieApi.trendingMovies(page).items.asMovieDomainModel()
+    override suspend fun fetchItems(page: Int): List<Movie> = movieApi.trendingMovies(page).items.asMovieDomainModel()
 }

@@ -27,21 +27,23 @@ fun TMDbCard(
     tmdbItem: TMDbItem,
     onFeedClick: (TMDbItem) -> Unit,
     imageUrl: String? = tmdbItem.posterUrl,
-    itemWidth: Dp = TMDb_120_dp
+    itemWidth: Dp = TMDb_120_dp,
 ) {
     Card(
-        modifier = Modifier
-            .padding(TMDb_6_dp)
-            .clickable(onClick = { onFeedClick(tmdbItem) }),
-        shape = RoundedCornerShape(10.dp)
+        modifier =
+            Modifier
+                .padding(TMDb_6_dp)
+                .clickable(onClick = { onFeedClick(tmdbItem) }),
+        shape = RoundedCornerShape(10.dp),
     ) {
         Column {
             AsyncImage(
                 model = imageUrl,
                 contentDescription = tmdbItem.name,
-                modifier = Modifier
-                    .size(width = itemWidth, height = 180.dp),
-                contentScale = ContentScale.Crop
+                modifier =
+                    Modifier
+                        .size(width = itemWidth, height = 180.dp),
+                contentScale = ContentScale.Crop,
             )
             Text(
                 text = tmdbItem.name,
@@ -50,9 +52,10 @@ fun TMDbCard(
                 textAlign = TextAlign.Center,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier
-                    .size(width = itemWidth, height = 36.dp)
-                    .wrapContentHeight()
+                modifier =
+                    Modifier
+                        .size(width = itemWidth, height = 36.dp)
+                        .wrapContentHeight(),
             )
         }
     }

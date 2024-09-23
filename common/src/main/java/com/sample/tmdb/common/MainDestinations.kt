@@ -21,7 +21,7 @@ object MainDestinations {
     const val TMDB_SEARCH_TV_SHOW_ROUTE = "search_tv_show"
     const val TMDB_CAST_ROUTE = "cast_list"
     const val TMDB_CREW_ROUTE = "crew_list"
-    const val TMDB_CREDIT_KEY =  "credit_list"
+    const val TMDB_CREDIT_KEY = "credit_list"
     const val TMDB_PERSON_ROUTE = "person"
     const val TMDB_PERSON_KEY = "personId"
     const val TMDB_IMAGES_ROUTE = "images"

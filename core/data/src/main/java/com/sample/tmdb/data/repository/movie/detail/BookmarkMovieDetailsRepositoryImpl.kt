@@ -8,17 +8,18 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BookmarkMovieDetailsRepositoryImpl @Inject constructor(
-    private val movieDao: MovieDao
-) : BookmarkDetailsRepository<Movie> {
+class BookmarkMovieDetailsRepositoryImpl
+    @Inject
+    constructor(
+        private val movieDao: MovieDao,
+    ) : BookmarkDetailsRepository<Movie> {
+        override suspend fun addBookmark(item: Movie) {
+            movieDao.addBookmark(item.asDatabaseModel())
+        }
 
-    override suspend fun addBookmark(item: Movie) {
-        movieDao.addBookmark(item.asDatabaseModel())
+        override suspend fun deleteBookmark(id: Int) {
+            movieDao.deleteBookmark(id)
+        }
+
+        override suspend fun isBookmarked(id: Int): Boolean = movieDao.isBookmarked(id)
     }
-
-    override suspend fun deleteBookmark(id: Int) {
-        movieDao.deleteBookmark(id)
-    }
-
-    override suspend fun isBookmarked(id: Int): Boolean = movieDao.isBookmarked(id)
-}

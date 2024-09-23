@@ -15,15 +15,17 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class DatabaseModule {
-
     @Singleton
     @Provides
-    fun provideTMDbDatabase(@ApplicationContext context: Context): TMDbDatabase =
-        Room.databaseBuilder(
-            context,
-            TMDbDatabase::class.java,
-            "TMDb.db"
-        ).build()
+    fun provideTMDbDatabase(
+        @ApplicationContext context: Context,
+    ): TMDbDatabase =
+        Room
+            .databaseBuilder(
+                context,
+                TMDbDatabase::class.java,
+                "TMDb.db",
+            ).build()
 
     @Provides
     @Singleton

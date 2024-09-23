@@ -11,8 +11,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class BookmarkMovieRepositoryTest: BaseBookmarkRepositoryTest<Movie>() {
-
+class BookmarkMovieRepositoryTest : BaseBookmarkRepositoryTest<Movie>() {
     @Mock
     private lateinit var dao: MovieDao
 
@@ -20,7 +19,8 @@ class BookmarkMovieRepositoryTest: BaseBookmarkRepositoryTest<Movie>() {
         repository = BookmarkMovieRepository(dao, context, Dispatchers.Main)
     }
 
-    override fun mockApiResponse() = runTest {
-        `when`(dao.getBookmarks()).thenReturn(emptyList())
-    }
+    override fun mockApiResponse() =
+        runTest {
+            `when`(dao.getBookmarks()).thenReturn(emptyList())
+        }
 }

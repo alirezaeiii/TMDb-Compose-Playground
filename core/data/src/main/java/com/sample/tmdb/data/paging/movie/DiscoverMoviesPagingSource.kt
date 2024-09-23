@@ -8,9 +8,7 @@ import com.sample.tmdb.domain.paging.BasePagingSource
 
 class DiscoverMoviesPagingSource(
     context: Context,
-    private val movieApi: MovieService
+    private val movieApi: MovieService,
 ) : BasePagingSource<Movie>(context) {
-
-    override suspend fun fetchItems(page: Int): List<Movie> =
-        movieApi.discoverMovies(page).items.asMovieDomainModel()
+    override suspend fun fetchItems(page: Int): List<Movie> = movieApi.discoverMovies(page).items.asMovieDomainModel()
 }

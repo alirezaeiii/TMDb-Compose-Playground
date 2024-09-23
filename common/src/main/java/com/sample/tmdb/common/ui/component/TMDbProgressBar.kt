@@ -18,7 +18,7 @@ fun TMDbProgressBar() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         HorizontalDottedProgressBar()
     }
@@ -29,49 +29,51 @@ fun HorizontalDottedProgressBar() {
     val color = MaterialTheme.colors.primary
 
     val infiniteTransition = rememberInfiniteTransition(label = "")
-    val state = infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 6f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(
-                durationMillis = 700,
-                easing = LinearEasing
-            )
-        ), label = ""
-    )
+    val state =
+        infiniteTransition.animateFloat(
+            initialValue = 0f,
+            targetValue = 6f,
+            animationSpec =
+                infiniteRepeatable(
+                    animation =
+                        tween(
+                            durationMillis = 700,
+                            easing = LinearEasing,
+                        ),
+                ),
+            label = "",
+        )
 
     DrawCanvas(state = state.value, radius = 15.dp, color = color)
 }
-
 
 @Composable
 fun DrawCanvas(
     state: Float,
     radius: Dp,
     color: Color,
-){
+) {
     Canvas(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(55.dp),
-    ){
-
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .height(55.dp),
+    ) {
         val radiusValue = radius.value
         val padding = (radiusValue + (radiusValue * 0.5f))
 
-        for(i in 1..5) {
-            if(i-1 == state.toInt()){
+        for (i in 1..5) {
+            if (i - 1 == state.toInt()) {
                 drawCircle(
-                    radius = radiusValue*2,
+                    radius = radiusValue * 2,
                     brush = SolidColor(color),
-                    center = Offset(x = this.center.x + radiusValue * 2 * (i-3)  + padding * (i-3), y = this.center.y)
+                    center = Offset(x = this.center.x + radiusValue * 2 * (i - 3) + padding * (i - 3), y = this.center.y),
                 )
-            }
-            else{
+            } else {
                 drawCircle(
                     radius = radiusValue,
                     brush = SolidColor(color),
-                    center = Offset(x = this.center.x + radiusValue * 2 * (i-3) + padding * (i-3), y = this.center.y)
+                    center = Offset(x = this.center.x + radiusValue * 2 * (i - 3) + padding * (i - 3), y = this.center.y),
                 )
             }
         }

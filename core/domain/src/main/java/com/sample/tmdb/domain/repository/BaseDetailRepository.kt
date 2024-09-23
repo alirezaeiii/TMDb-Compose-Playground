@@ -15,9 +15,8 @@ import kotlinx.coroutines.coroutineScope
 
 abstract class BaseDetailRepository<T : TMDbItemDetails>(
     context: Context,
-    ioDispatcher: CoroutineDispatcher
+    ioDispatcher: CoroutineDispatcher,
 ) : BaseRepository<DetailWrapper>(context, ioDispatcher) {
-
     protected abstract suspend fun getDetails(id: Int): T
 
     protected abstract suspend fun getCredit(id: Int): Pair<List<Cast>, List<Crew>>
@@ -47,7 +46,7 @@ abstract class BaseDetailRepository<T : TMDbItemDetails>(
             creditWrapper.second,
             details,
             images,
-            similarItems
+            similarItems,
         )
     }
 }

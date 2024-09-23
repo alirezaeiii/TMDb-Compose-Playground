@@ -1,6 +1,7 @@
 buildscript {
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
+        classpath("com.diffplug.spotless:spotless-plugin-gradle:${Versions.spotless}")
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
@@ -8,8 +9,18 @@ plugins {
     id 'com.android.library' version '8.3.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.9.23' apply false
     id 'com.google.devtools.ksp' version "1.9.23-1.0.19" apply false
+    id 'com.diffplug.spotless' version '7.0.0.BETA2' apply false
 }
 
-tasks.register('clean', Delete) {
-    delete rootProject.layout.buildDirectory
+apply from: "$project.rootDir/spotless.gradle"
+
+task createSpotlessPreCommitHook() {
+    def gitHooksDirectory = new File("$project.rootDir/.git/hooks/")
+    if (!gitHooksDirectory.exists()) gitHooksDirectory.mkdirs()
+    new File("$project.rootDir/.git/hooks", "pre-commit").text = """
+    #!/bin/bash
+    echo "Running spotless check"
+    ./gradlew spotlessApply
+"""
+    "chmod +x .git/hooks/pre-commit".execute()
 }

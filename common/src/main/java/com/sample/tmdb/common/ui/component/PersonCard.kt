@@ -39,7 +39,7 @@ import com.sample.tmdb.common.utils.CircleTopCropTransformation
 fun PersonCard(
     person: Credit,
     navController: NavController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier
@@ -47,41 +47,46 @@ fun PersonCard(
             .clickable {
                 navController.navigate("${MainDestinations.TMDB_PERSON_ROUTE}/${person.id}")
             },
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Card(
             shape = CircleShape,
             elevation = TMDb_8_dp,
-            modifier = Modifier.size(TMDb_120_dp)
+            modifier = Modifier.size(TMDb_120_dp),
         ) {
-            val request = ImageRequest.Builder(LocalContext.current)
-                .data(person.profileUrl)
-                .crossfade(true)
-                .transformations(CircleTopCropTransformation())
-                .build()
+            val request =
+                ImageRequest
+                    .Builder(LocalContext.current)
+                    .data(person.profileUrl)
+                    .crossfade(true)
+                    .transformations(CircleTopCropTransformation())
+                    .build()
             val placeholderPainter = rememberVectorPainter(person.gender.placeholderIcon)
             val painter =
                 rememberAsyncImagePainter(
                     model = request,
                     error = placeholderPainter,
-                    placeholder = placeholderPainter
+                    placeholder = placeholderPainter,
                 )
-            val colorFilter = when (painter.state) {
-                is AsyncImagePainter.State.Error, is AsyncImagePainter.State.Loading -> ColorFilter.tint(
-                    MaterialTheme.colors.imageTint
-                )
+            val colorFilter =
+                when (painter.state) {
+                    is AsyncImagePainter.State.Error, is AsyncImagePainter.State.Loading ->
+                        ColorFilter.tint(
+                            MaterialTheme.colors.imageTint,
+                        )
 
-                else -> null
-            }
+                    else -> null
+                }
             Image(
                 painter = painter,
                 colorFilter = colorFilter,
-                contentDescription = stringResource(
-                    id = R.string.person_content_description,
-                    person.name,
-                    person.role
-                ),
-                contentScale = ContentScale.FillHeight
+                contentDescription =
+                    stringResource(
+                        id = R.string.person_content_description,
+                        person.name,
+                        person.role,
+                    ),
+                contentScale = ContentScale.FillHeight,
             )
         }
         Text(
@@ -89,17 +94,18 @@ fun PersonCard(
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(top = TMDb_4_dp)
+            modifier = Modifier.padding(top = TMDb_4_dp),
         )
         Text(
             text = person.role,
-            style = MaterialTheme.typography.subtitle2.copy(
-                fontWeight = FontWeight.Normal,
-                fontStyle = FontStyle.Italic
-            ),
+            style =
+                MaterialTheme.typography.subtitle2.copy(
+                    fontWeight = FontWeight.Normal,
+                    fontStyle = FontStyle.Italic,
+                ),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(top = TMDb_2_dp)
+            modifier = Modifier.padding(top = TMDb_2_dp),
         )
     }
 }

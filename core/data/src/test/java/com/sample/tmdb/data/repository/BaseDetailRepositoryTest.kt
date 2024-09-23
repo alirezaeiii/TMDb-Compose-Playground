@@ -20,8 +20,7 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.`when`
 
-abstract class BaseDetailRepositoryTest<T : TMDbItemDetails>: BaseRepositoryTest() {
-
+abstract class BaseDetailRepositoryTest<T : TMDbItemDetails> : BaseRepositoryTest() {
     protected lateinit var repository: BaseDetailRepository<T>
 
     @Test

@@ -58,26 +58,26 @@ import com.sample.tmdb.common.R as R1
 @Composable
 fun SearchMoviesScreen(
     navController: NavController,
-    viewModel: SearchMoviesViewModel = hiltViewModel()
+    viewModel: SearchMoviesViewModel = hiltViewModel(),
 ) {
     Search(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
         upPress = { navController.navigateUp() },
-        resourceId = R1.string.movies
+        resourceId = R1.string.movies,
     )
 }
 
 @Composable
 fun SearchTVSeriesScreen(
     navController: NavController,
-    viewModel: SearchTvSeriesViewModel = hiltViewModel()
+    viewModel: SearchTvSeriesViewModel = hiltViewModel(),
 ) {
     Search(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
         upPress = { navController.navigateUp() },
-        resourceId = R1.string.tv_series
+        resourceId = R1.string.tv_series,
     )
 }
 
@@ -87,7 +87,7 @@ fun <T : TMDbItem> Search(
     onClick: (TMDbItem) -> Unit,
     upPress: () -> Unit,
     @StringRes resourceId: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var query by rememberSaveable { mutableStateOf("") }
     var focused by rememberSaveable { mutableStateOf(false) }
@@ -95,10 +95,11 @@ fun <T : TMDbItem> Search(
         if (query.isEmpty()) {
             InfinitelyFlowingCircles()
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 28.dp, end = 28.dp),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 28.dp, end = 28.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 AnimatedSearch()
             }
@@ -106,44 +107,48 @@ fun <T : TMDbItem> Search(
             viewModel.showResult(query)
             PagingScreen(
                 viewModel = viewModel,
-                onClick = onClick
+                onClick = onClick,
             )
         }
         Column(
-            modifier = Modifier
-                .statusBarsPadding()
-                .background(MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque))
+            modifier =
+                Modifier
+                    .statusBarsPadding()
+                    .background(MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque)),
         ) {
             Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(TMDb_8_dp),
-                horizontalArrangement = Arrangement.spacedBy(
-                    TMDb_16_dp,
-                    Alignment.CenterHorizontally
-                ),
-                verticalAlignment = Alignment.CenterVertically
+                modifier =
+                    modifier
+                        .fillMaxWidth()
+                        .padding(TMDb_8_dp),
+                horizontalArrangement =
+                    Arrangement.spacedBy(
+                        TMDb_16_dp,
+                        Alignment.CenterHorizontally,
+                    ),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                val iconModifier = Modifier
-                    .sizeIn(
-                        maxWidth = TMDb_32_dp,
-                        maxHeight = TMDb_32_dp
-                    )
-                    .border(1.dp, MaterialTheme.colors.primary, CircleShape)
-                    .background(
-                        color = MaterialTheme.colors.background,
-                        shape = CircleShape
-                    )
+                val iconModifier =
+                    Modifier
+                        .sizeIn(
+                            maxWidth = TMDb_32_dp,
+                            maxHeight = TMDb_32_dp,
+                        ).border(1.dp, MaterialTheme.colors.primary, CircleShape)
+                        .background(
+                            color = MaterialTheme.colors.background,
+                            shape = CircleShape,
+                        )
                 IconButton(
                     onClick = upPress,
-                    modifier = Modifier
-                        .padding(start = TMDb_12_dp)
-                        .then(iconModifier)
+                    modifier =
+                        Modifier
+                            .padding(start = TMDb_12_dp)
+                            .then(iconModifier),
                 ) {
                     Icon(
                         Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(id = R1.string.back),
-                        tint = MaterialTheme.colors.primary
+                        tint = MaterialTheme.colors.primary,
                     )
                 }
                 SearchBar(
@@ -168,49 +173,52 @@ fun SearchBar(
     searchFocused: Boolean,
     onSearchFocusChange: (Boolean) -> Unit,
     onClearQuery: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Surface(
         contentColor = MaterialTheme.colors.surface,
         shape = MaterialTheme.shapes.small,
-        modifier = modifier
-            .fillMaxWidth()
-            .height(46.dp)
-            .border(1.dp, MaterialTheme.colors.primary, CircleShape)
-            .background(MaterialTheme.colors.background, CircleShape)
-            .padding(horizontal = TMDb_24_dp, vertical = TMDb_8_dp)
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(46.dp)
+                .border(1.dp, MaterialTheme.colors.primary, CircleShape)
+                .background(MaterialTheme.colors.background, CircleShape)
+                .padding(horizontal = TMDb_24_dp, vertical = TMDb_8_dp),
     ) {
         Box(
             Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.background)
+                .background(MaterialTheme.colors.background),
         ) {
             if (query.isEmpty()) {
                 SearchHint(resourceId)
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .wrapContentHeight()
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .wrapContentHeight(),
             ) {
                 BasicTextField(
                     value = query,
                     textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colors.onBackground),
                     cursorBrush = SolidColor(MaterialTheme.colors.onBackground),
                     onValueChange = onQueryChange,
-                    modifier = Modifier
-                        .weight(1f)
-                        .onFocusChanged {
-                            onSearchFocusChange(it.isFocused)
-                        }
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .onFocusChanged {
+                                onSearchFocusChange(it.isFocused)
+                            },
                 )
                 if (searchFocused && query.isNotEmpty()) {
                     IconButton(onClick = onClearQuery) {
                         Icon(
                             imageVector = Icons.Default.Clear,
                             tint = MaterialTheme.colors.primary,
-                            contentDescription = stringResource(id = R.string.clear)
+                            contentDescription = stringResource(id = R.string.clear),
                         )
                     }
                 }
@@ -220,22 +228,25 @@ fun SearchBar(
 }
 
 @Composable
-fun SearchHint(@StringRes resourceId: Int) {
+fun SearchHint(
+    @StringRes resourceId: Int,
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize()
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .wrapContentSize(),
     ) {
         Icon(
             imageVector = Icons.Outlined.Search,
             tint = MaterialTheme.colors.primary,
-            contentDescription = stringResource(id = R.string.search_desc)
+            contentDescription = stringResource(id = R.string.search_desc),
         )
         Spacer(Modifier.width(TMDb_8_dp))
         Text(
             text = stringResource(R.string.search, stringResource(resourceId)),
-            color = MaterialTheme.colors.primary
+            color = MaterialTheme.colors.primary,
         )
     }
 }

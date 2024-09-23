@@ -11,7 +11,6 @@ import javax.inject.Qualifier
 @Module
 @InstallIn(SingletonComponent::class)
 object DispatcherModule {
-
     @IoDispatcher
     @Provides
     fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO

@@ -11,16 +11,16 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class BookmarkTVShowRepositoryTest: BaseBookmarkRepositoryTest<TVShow>() {
-
+class BookmarkTVShowRepositoryTest : BaseBookmarkRepositoryTest<TVShow>() {
     @Mock
     private lateinit var dao: TVShowDao
 
     override fun initRepository() {
-       repository = BookmarkTVShowRepository(dao, context, Dispatchers.Main)
+        repository = BookmarkTVShowRepository(dao, context, Dispatchers.Main)
     }
 
-    override fun mockApiResponse() = runTest {
-        `when`(dao.getBookmarks()).thenReturn(emptyList())
-    }
+    override fun mockApiResponse() =
+        runTest {
+            `when`(dao.getBookmarks()).thenReturn(emptyList())
+        }
 }

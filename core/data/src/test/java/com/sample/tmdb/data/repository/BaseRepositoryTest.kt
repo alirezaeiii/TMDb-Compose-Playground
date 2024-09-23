@@ -7,7 +7,6 @@ import org.junit.Rule
 import org.mockito.Mock
 
 abstract class BaseRepositoryTest {
-
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 

@@ -8,9 +8,7 @@ import com.sample.tmdb.domain.paging.BasePagingSource
 
 class DiscoverTvSeriesPagingSource(
     context: Context,
-    private val tvShowApi: TVShowService
+    private val tvShowApi: TVShowService,
 ) : BasePagingSource<TVShow>(context) {
-
-    override suspend fun fetchItems(page: Int): List<TVShow> =
-        tvShowApi.discoverTVSeries(page).items.asTVShowDomainModel()
+    override suspend fun fetchItems(page: Int): List<TVShow> = tvShowApi.discoverTVSeries(page).items.asTVShowDomainModel()
 }

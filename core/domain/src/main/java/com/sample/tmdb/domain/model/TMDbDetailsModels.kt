@@ -35,7 +35,7 @@ data class MovieDetails(
     override val tagline: String,
     override val title: String,
     override val voteAverage: Double,
-    override val voteCount: Int
+    override val voteCount: Int,
 ) : TMDbItemDetails
 
 data class TvDetails(
@@ -59,10 +59,10 @@ data class TvDetails(
 
 data class Genre(
     val id: Int,
-    val name: String?
+    val name: String?,
 )
 
 data class SpokenLanguage(
     val iso6391: String,
-    val name: String
+    val name: String,
 )

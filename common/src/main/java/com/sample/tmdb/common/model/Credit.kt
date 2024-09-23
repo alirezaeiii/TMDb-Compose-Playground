@@ -16,7 +16,8 @@ interface Credit : Parcelable {
 enum class Gender { MALE, FEMALE }
 
 val Gender.placeholderIcon
-    get() = when (this) {
-        Gender.MALE -> Icons.Rounded.Man
-        Gender.FEMALE -> Icons.Rounded.Woman
-    }
+    get() =
+        when (this) {
+            Gender.MALE -> Icons.Rounded.Man
+            Gender.FEMALE -> Icons.Rounded.Woman
+        }

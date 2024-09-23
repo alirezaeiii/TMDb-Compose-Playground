@@ -16,11 +16,12 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 @Composable
 fun LoadingRow(modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(TMDb_8_dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(TMDb_8_dp),
         horizontalArrangement = Arrangement.spacedBy(TMDb_8_dp, Alignment.CenterHorizontally),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         CircularProgressIndicator(modifier = Modifier.size(40.dp))
     }

@@ -11,7 +11,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class DestinationBarTest {
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
@@ -19,18 +18,18 @@ class DestinationBarTest {
     fun destinationBarTest() {
         with(composeTestRule) {
             setContent {
-                DestinationBar(Modifier,"title", {}, {})
+                DestinationBar(Modifier, "title", {}, {})
             }
             onNodeWithText("title").assertIsDisplayed()
             onNodeWithContentDescription(
                 activity.getString(
-                    R.string.back
-                )
+                    R.string.back,
+                ),
             ).assertIsDisplayed()
             onNodeWithContentDescription(
                 activity.getString(
-                    R.string.search_desc
-                )
+                    R.string.search_desc,
+                ),
             ).assertIsDisplayed()
         }
     }

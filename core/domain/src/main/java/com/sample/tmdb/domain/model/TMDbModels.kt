@@ -12,7 +12,7 @@ data class Movie(
     override val backdropUrl: String?,
     override val name: String,
     override val voteAverage: Double,
-    override val voteCount: Int
+    override val voteCount: Int,
 ) : TMDbItem
 
 @Parcelize
@@ -24,5 +24,5 @@ data class TVShow(
     override val backdropUrl: String?,
     override val name: String,
     override val voteAverage: Double,
-    override val voteCount: Int
+    override val voteCount: Int,
 ) : TMDbItem

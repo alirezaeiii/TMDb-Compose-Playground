@@ -79,7 +79,7 @@ private val HzPadding = Modifier.padding(horizontal = 24.dp)
 @Composable
 fun PersonScreen(
     upPress: () -> Unit,
-    viewModel: PersonViewModel = hiltViewModel()
+    viewModel: PersonViewModel = hiltViewModel(),
 ) {
     Content(viewModel = viewModel) {
         PersonScreen(it, upPress)
@@ -87,10 +87,13 @@ fun PersonScreen(
 }
 
 @Composable
-fun PersonScreen(person: Person, upPress: () -> Unit) {
+fun PersonScreen(
+    person: Person,
+    upPress: () -> Unit,
+) {
     val titleHeight = remember { mutableStateOf(0.dp) }
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         val scroll = rememberScrollState(0)
         Header()
@@ -106,10 +109,11 @@ fun PersonScreen(person: Person, upPress: () -> Unit) {
 @Composable
 private fun Header() {
     Spacer(
-        modifier = Modifier
-            .height(280.dp)
-            .fillMaxWidth()
-            .background(Brush.horizontalGradient(Tornado))
+        modifier =
+            Modifier
+                .height(280.dp)
+                .fillMaxWidth()
+                .background(Brush.horizontalGradient(Tornado)),
     )
 }
 
@@ -117,19 +121,20 @@ private fun Header() {
 fun Up(upPress: () -> Unit) {
     IconButton(
         onClick = upPress,
-        modifier = Modifier
-            .statusBarsPadding()
-            .padding(horizontal = TMDb_16_dp, vertical = 10.dp)
-            .size(36.dp)
-            .background(
-                color = Neutral8.copy(alpha = 0.32f),
-                shape = CircleShape
-            )
+        modifier =
+            Modifier
+                .statusBarsPadding()
+                .padding(horizontal = TMDb_16_dp, vertical = 10.dp)
+                .size(36.dp)
+                .background(
+                    color = Neutral8.copy(alpha = 0.32f),
+                    shape = CircleShape,
+                ),
     ) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             tint = MaterialTheme.colors.onSurface,
-            contentDescription = stringResource(R1.string.back)
+            contentDescription = stringResource(R1.string.back),
         )
     }
 }
@@ -138,17 +143,18 @@ fun Up(upPress: () -> Unit) {
 fun Body(
     biography: String,
     titleHeight: MutableState<Dp>,
-    scroll: ScrollState
+    scroll: ScrollState,
 ) {
     Column {
         Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .statusBarsPadding()
-                .height(MinTitleOffset)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .statusBarsPadding()
+                    .height(MinTitleOffset),
         )
         Column(
-            modifier = Modifier.verticalScroll(scroll)
+            modifier = Modifier.verticalScroll(scroll),
         ) {
             Spacer(Modifier.height(GradientScroll))
             Surface(Modifier.fillMaxWidth()) {
@@ -161,26 +167,28 @@ fun Body(
                             text = stringResource(R.string.biography),
                             style = MaterialTheme.typography.overline,
                             color = MaterialTheme.colors.onSurface,
-                            modifier = HzPadding
+                            modifier = HzPadding,
                         )
                         Spacer(Modifier.height(TMDb_16_dp))
                         Text(
                             text = biography,
-                            style = MaterialTheme.typography.body2.copy(
-                                letterSpacing = 2.sp,
-                                lineHeight = 30.sp,
-                                fontFamily = FontFamily.SansSerif
-                            ),
+                            style =
+                                MaterialTheme.typography.body2.copy(
+                                    letterSpacing = 2.sp,
+                                    lineHeight = 30.sp,
+                                    fontFamily = FontFamily.SansSerif,
+                                ),
                             color = MaterialTheme.colors.onSurface,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = HzPadding
+                            modifier = HzPadding,
                         )
                     }
                     Spacer(
-                        modifier = Modifier
-                            .padding(bottom = BottomBarHeight)
-                            .navigationBarsPadding()
-                            .height(TMDb_8_dp)
+                        modifier =
+                            Modifier
+                                .padding(bottom = BottomBarHeight)
+                                .navigationBarsPadding()
+                                .height(TMDb_8_dp),
                     )
                 }
             }
@@ -192,34 +200,34 @@ fun Body(
 fun Title(
     person: Person,
     titleHeight: MutableState<Dp>,
-    scrollProvider: () -> Int
+    scrollProvider: () -> Int,
 ) {
     val localDestiny = LocalDensity.current
-    val maxOffset = with(localDestiny) {
-        (if (person.profilePath == null) MediumTitleOffset else MaxTitleOffset).toPx()
-    }
+    val maxOffset =
+        with(localDestiny) {
+            (if (person.profilePath == null) MediumTitleOffset else MaxTitleOffset).toPx()
+        }
     val minOffset = with(localDestiny) { MinTitleOffset.toPx() }
     Column(
         verticalArrangement = Arrangement.Bottom,
-        modifier = Modifier
-            .onGloballyPositioned { coordinates ->
-                with(localDestiny) { titleHeight.value = coordinates.size.height.toDp() }
-            }
-            .heightIn(min = titleHeight.value)
-            .statusBarsPadding()
-            .offset {
-                val scroll = scrollProvider()
-                val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
-                IntOffset(x = 0, y = offset.toInt())
-            }
-            .background(color = MaterialTheme.colors.surface)
+        modifier =
+            Modifier
+                .onGloballyPositioned { coordinates ->
+                    with(localDestiny) { titleHeight.value = coordinates.size.height.toDp() }
+                }.heightIn(min = titleHeight.value)
+                .statusBarsPadding()
+                .offset {
+                    val scroll = scrollProvider()
+                    val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
+                    IntOffset(x = 0, y = offset.toInt())
+                }.background(color = MaterialTheme.colors.surface),
     ) {
         Spacer(Modifier.height(TMDb_16_dp))
         Text(
             text = person.name,
             style = MaterialTheme.typography.h4,
             color = MaterialTheme.colors.onSurface,
-            modifier = HzPadding
+            modifier = HzPadding,
         )
         Spacer(Modifier.height(TMDb_2_dp))
         person.placeOfBirth?.let {
@@ -227,7 +235,7 @@ fun Title(
                 text = stringResource(id = R.string.from, it),
                 style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
                 color = MaterialTheme.colors.onSurface,
-                modifier = HzPadding
+                modifier = HzPadding,
             )
             Spacer(Modifier.height(TMDb_4_dp))
         }
@@ -236,7 +244,7 @@ fun Title(
                 text = stringResource(id = R.string.born, it),
                 style = MaterialTheme.typography.subtitle2.copy(fontWeight = FontWeight.Normal),
                 color = MaterialTheme.colors.onSurface,
-                modifier = HzPadding
+                modifier = HzPadding,
             )
             Spacer(Modifier.height(TMDb_4_dp))
         }
@@ -245,7 +253,7 @@ fun Title(
                 text = stringResource(id = R.string.death, it),
                 style = MaterialTheme.typography.subtitle2.copy(fontWeight = FontWeight.Normal),
                 color = MaterialTheme.colors.onSurface,
-                modifier = HzPadding
+                modifier = HzPadding,
             )
             Spacer(Modifier.height(TMDb_4_dp))
         }
@@ -257,7 +265,7 @@ fun Title(
 @Composable
 private fun Image(
     imageUrl: String,
-    scrollProvider: () -> Int
+    scrollProvider: () -> Int,
 ) {
     val collapseRange = with(LocalDensity.current) { (MaxTitleOffset - MinTitleOffset).toPx() }
     val collapseFractionProvider = {
@@ -266,17 +274,19 @@ private fun Image(
 
     CollapsingImageLayout(
         collapseFractionProvider = collapseFractionProvider,
-        modifier = HzPadding.then(Modifier.statusBarsPadding())
+        modifier = HzPadding.then(Modifier.statusBarsPadding()),
     ) {
-        val request = ImageRequest.Builder(LocalContext.current)
-            .data(imageUrl)
-            .transformations(CircleTopCropTransformation())
-            .build()
+        val request =
+            ImageRequest
+                .Builder(LocalContext.current)
+                .data(imageUrl)
+                .transformations(CircleTopCropTransformation())
+                .build()
         val painter = rememberAsyncImagePainter(model = request)
         Image(
             painter = painter,
             contentDescription = null,
-            contentScale = ContentScale.FillHeight
+            contentScale = ContentScale.FillHeight,
         )
     }
 }
@@ -285,11 +295,11 @@ private fun Image(
 private fun CollapsingImageLayout(
     collapseFractionProvider: () -> Float,
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Layout(
         modifier = modifier,
-        content = content
+        content = content,
     ) { measurables, constraints ->
         check(measurables.size == 1)
 
@@ -298,22 +308,24 @@ private fun CollapsingImageLayout(
         val imageMaxSize = min(ExpandedImageSize.roundToPx(), constraints.maxWidth).toDp()
         val imageMinSize = max(CollapsedImageSize.roundToPx(), constraints.minWidth).toDp()
         val imageWidth = lerp(imageMaxSize, imageMinSize, collapseFraction).roundToPx()
-        val imagePlaceable = measurables[0].measure(
-            Constraints.fixed(
-                imageWidth,
-                imageWidth
+        val imagePlaceable =
+            measurables[0].measure(
+                Constraints.fixed(
+                    imageWidth,
+                    imageWidth,
+                ),
             )
-        )
 
         val imageY = lerp(MinTitleOffset, MinImageOffset, collapseFraction).roundToPx()
-        val imageX = lerp(
-            ((constraints.maxWidth - imageWidth) / 2).toDp(), // centered when expanded
-            (constraints.maxWidth - imageWidth).toDp(), // right aligned when collapsed
-            collapseFraction
-        ).roundToPx()
+        val imageX =
+            lerp(
+                ((constraints.maxWidth - imageWidth) / 2).toDp(), // centered when expanded
+                (constraints.maxWidth - imageWidth).toDp(), // right aligned when collapsed
+                collapseFraction,
+            ).roundToPx()
         layout(
             width = constraints.maxWidth,
-            height = imageY + imageWidth
+            height = imageY + imageWidth,
         ) {
             imagePlaceable.placeRelative(imageX, imageY)
         }

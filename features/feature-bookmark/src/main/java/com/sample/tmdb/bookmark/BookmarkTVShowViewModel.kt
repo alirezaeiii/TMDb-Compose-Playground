@@ -7,6 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class BookmarkTVShowViewModel @Inject constructor(
-    repository: @JvmSuppressWildcards BaseRepository<List<TVShow>>
-) : BaseViewModel<List<TVShow>>(repository)
+class BookmarkTVShowViewModel
+    @Inject
+    constructor(
+        repository: @JvmSuppressWildcards BaseRepository<List<TVShow>>,
+    ) : BaseViewModel<List<TVShow>>(repository)

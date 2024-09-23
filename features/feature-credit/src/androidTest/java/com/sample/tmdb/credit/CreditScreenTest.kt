@@ -13,7 +13,6 @@ import org.junit.Test
 import com.sample.tmdb.common.R as commonR
 
 class CreditScreenTest {
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
@@ -24,7 +23,7 @@ class CreditScreenTest {
                 CreditScreen(
                     R.string.biography,
                     rememberNavController(),
-                    listOf(Cast("role", "name", null, Gender.MALE, 1))
+                    listOf(Cast("role", "name", null, Gender.MALE, 1)),
                 )
             }
             onNodeWithText(activity.getString(R.string.biography)).assertIsDisplayed()
@@ -34,8 +33,8 @@ class CreditScreenTest {
                 activity.getString(
                     commonR.string.person_content_description,
                     "name",
-                    "role"
-                )
+                    "role",
+                ),
             ).assertIsDisplayed()
         }
     }

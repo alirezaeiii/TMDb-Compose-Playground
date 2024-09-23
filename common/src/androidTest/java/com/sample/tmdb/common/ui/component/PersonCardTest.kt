@@ -13,7 +13,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class PersonCardTest {
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
@@ -22,23 +21,26 @@ class PersonCardTest {
         with(composeTestRule) {
             setContent {
                 PersonCard(
-                    person = Cast(
-                        "role", "name", null,
-                        Gender.MALE, 1
-                    ),
-                    navController = rememberNavController()
+                    person =
+                        Cast(
+                            "role",
+                            "name",
+                            null,
+                            Gender.MALE,
+                            1,
+                        ),
+                    navController = rememberNavController(),
                 )
             }
             onNodeWithContentDescription(
                 activity.getString(
                     R.string.person_content_description,
                     "name",
-                    "role"
-                )
+                    "role",
+                ),
             ).assertIsDisplayed()
             onNodeWithText("role").assertIsDisplayed()
             onNodeWithText("name").assertIsDisplayed()
-
         }
     }
 }

@@ -8,7 +8,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class SettingScreenTest {
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
@@ -34,9 +33,9 @@ class SettingScreenTest {
                         Settings.Info(
                             R.drawable.ic_info,
                             R.string.version,
-                            "1.1"
-                        )
-                    )
+                            "1.1",
+                        ),
+                    ),
                 )
             }
             onNodeWithText(activity.getString(R.string.version)).assertIsDisplayed()

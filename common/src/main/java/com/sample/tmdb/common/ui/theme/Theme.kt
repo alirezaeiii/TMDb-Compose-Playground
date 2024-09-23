@@ -20,20 +20,21 @@ object TmdbPagingComposeTheme {
 
 @Immutable
 data class FontSizes(
-    val sp_11: TextUnit = 11.sp
+    val sp_11: TextUnit = 11.sp,
 )
 
-private val DarkColorPalette = darkColors(
-    primary = AshGray,
-    primaryVariant = DarkGray,
-    secondary = Teal200
-)
+private val DarkColorPalette =
+    darkColors(
+        primary = AshGray,
+        primaryVariant = DarkGray,
+        secondary = Teal200,
+    )
 
-private val LightColorPalette = lightColors(
-    primary = GRAY,
-    primaryVariant = DarkGray,
-    secondary = Teal200
-
+private val LightColorPalette =
+    lightColors(
+        primary = GRAY,
+        primaryVariant = DarkGray,
+        secondary = Teal200,
     /* Other default colors to override
     background = Color.White,
     surface = Color.White,
@@ -41,24 +42,25 @@ private val LightColorPalette = lightColors(
     onSecondary = Color.Black,
     onBackground = Color.Black,
     onSurface = Color.Black,
-    */
-)
+     */
+    )
 
 @Composable
 fun TmdbPagingComposeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
+    val colors =
+        if (darkTheme) {
+            DarkColorPalette
+        } else {
+            LightColorPalette
+        }
 
     MaterialTheme(
         colors = colors,
         typography = Typography,
         shapes = Shapes,
-        content = content
+        content = content,
     )
 }

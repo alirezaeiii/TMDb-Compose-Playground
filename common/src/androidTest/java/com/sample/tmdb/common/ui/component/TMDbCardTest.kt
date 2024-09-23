@@ -9,7 +9,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class TMDbCardTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -17,9 +16,20 @@ class TMDbCardTest {
     fun tmdbCardTest() {
         with(composeTestRule) {
             setContent {
-                TMDbCard(tmdbItem = Movie(1, "overview",
-                    "releaseDate", null, null, "name",
-                    1.1, 1), {})
+                TMDbCard(
+                    tmdbItem =
+                        Movie(
+                            1,
+                            "overview",
+                            "releaseDate",
+                            null,
+                            null,
+                            "name",
+                            1.1,
+                            1,
+                        ),
+                    {},
+                )
             }
             onNodeWithText("name").assertIsDisplayed()
             onNodeWithContentDescription("name").assertIsDisplayed()

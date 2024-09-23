@@ -12,8 +12,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class TVShowFeedRepositoryTest: BaseFeedRepositoryTest<TVShow>() {
-
+class TVShowFeedRepositoryTest : BaseFeedRepositoryTest<TVShow>() {
     @Mock
     private lateinit var api: TVShowService
 
@@ -21,12 +20,13 @@ class TVShowFeedRepositoryTest: BaseFeedRepositoryTest<TVShow>() {
         repository = TVShowFeedRepository(context, Dispatchers.Main, api)
     }
 
-    override fun mockApiResponse() = runTest {
-        `when`(api.trendingTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.popularTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.airingTodayTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.onTheAirTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.topRatedTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.discoverTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-    }
+    override fun mockApiResponse() =
+        runTest {
+            `when`(api.trendingTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+            `when`(api.popularTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+            `when`(api.airingTodayTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+            `when`(api.onTheAirTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+            `when`(api.topRatedTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+            `when`(api.discoverTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+        }
 }

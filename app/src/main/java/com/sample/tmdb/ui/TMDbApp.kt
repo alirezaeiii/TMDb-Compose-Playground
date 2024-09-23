@@ -83,18 +83,19 @@ fun TMDbApp() {
                     navigateToRoute = appState::navigateToBottomBarRoute,
                 )
             }
-        }
+        },
     ) { innerPaddingModifier ->
-        val newPadding = PaddingValues(
-            start = innerPaddingModifier.calculateStartPadding(LocalLayoutDirection.current),
-            end = innerPaddingModifier.calculateEndPadding(LocalLayoutDirection.current),
-            top = innerPaddingModifier.calculateTopPadding(),
-            bottom = 0.dp,
-        )
+        val newPadding =
+            PaddingValues(
+                start = innerPaddingModifier.calculateStartPadding(LocalLayoutDirection.current),
+                end = innerPaddingModifier.calculateEndPadding(LocalLayoutDirection.current),
+                top = innerPaddingModifier.calculateTopPadding(),
+                bottom = 0.dp,
+            )
         NavHost(
             navController = appState.navController,
             startDestination = MainDestinations.HOME_ROUTE,
-            modifier = Modifier.padding(newPadding)
+            modifier = Modifier.padding(newPadding),
         ) {
             navigationScreens(appState.navController)
             detailScreens(appState.navController)
@@ -112,16 +113,16 @@ fun TMDbApp() {
 private fun TMDbBottomBar(
     tabs: Array<HomeSections>,
     currentRoute: String,
-    navigateToRoute: (String) -> Unit
+    navigateToRoute: (String) -> Unit,
 ) {
     val currentSection = tabs.first { it.route == currentRoute }
 
     Box(
-        Modifier.navigationBarsPadding()
+        Modifier.navigationBarsPadding(),
     ) {
         BottomNavigation(
             backgroundColor = MaterialTheme.colors.background.copy(alpha = AlphaNavigationBar),
-            elevation = TMDb_0_dp
+            elevation = TMDb_0_dp,
         ) {
             tabs.forEach { section ->
                 val selected = section == currentSection
@@ -132,13 +133,13 @@ private fun TMDbBottomBar(
                     icon = {
                         Icon(
                             imageVector = if (selected) section.selectedIcon else section.unselectedIcon,
-                            contentDescription = stringResource(id = section.title)
+                            contentDescription = stringResource(id = section.title),
                         )
                     },
                     selected = selected,
                     unselectedContentColor = MaterialTheme.colors.onBackground.copy(alpha = ContentAlpha.disabled),
                     selectedContentColor = MaterialTheme.colors.onBackground,
-                    onClick = { navigateToRoute(section.route) }
+                    onClick = { navigateToRoute(section.route) },
                 )
             }
         }
@@ -148,7 +149,7 @@ private fun TMDbBottomBar(
 private fun NavGraphBuilder.navigationScreens(navController: NavController) {
     navigation(
         route = MainDestinations.HOME_ROUTE,
-        startDestination = HomeSections.MOVIE_SECTION.route
+        startDestination = HomeSections.MOVIE_SECTION.route,
     ) {
         composable(route = HomeSections.MOVIE_SECTION.route) {
             MovieFeedScreen(navController = navController)
@@ -168,15 +169,19 @@ private fun NavGraphBuilder.navigationScreens(navController: NavController) {
 private fun NavGraphBuilder.detailScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
-        arguments = listOf(
-            navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType })
+        arguments =
+            listOf(
+                navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType },
+            ),
     ) {
         MovieDetailScreen(navController)
     }
     composable(
         route = "${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
-        arguments = listOf(
-            navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType })
+        arguments =
+            listOf(
+                navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType },
+            ),
     ) {
         TVShowDetailScreen(navController)
     }
@@ -203,8 +208,10 @@ private fun NavGraphBuilder.moviePagingScreens(navController: NavController) {
     }
     composable(
         route = "${MainDestinations.TMDB_SIMILAR_MOVIES_ROUTE}/{${MainDestinations.TMDB_SIMILAR_ID}}",
-        arguments = listOf(
-            navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType })
+        arguments =
+            listOf(
+                navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType },
+            ),
     ) {
         SimilarMovieScreen(navController = navController)
     }
@@ -231,8 +238,10 @@ private fun NavGraphBuilder.tvShowPagingScreens(navController: NavController) {
     }
     composable(
         route = "${MainDestinations.TMDB_SIMILAR_TV_SHOW_ROUTE}/{${MainDestinations.TMDB_SIMILAR_ID}}",
-        arguments = listOf(
-            navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType })
+        arguments =
+            listOf(
+                navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType },
+            ),
     ) {
         SimilarTVShowScreen(navController = navController)
     }
@@ -250,30 +259,34 @@ private fun NavGraphBuilder.searchScreens(navController: NavController) {
 private fun NavGraphBuilder.creditScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_CAST_ROUTE}/{${MainDestinations.TMDB_CREDIT_KEY}}",
-        arguments = listOf(
-            navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType })
+        arguments =
+            listOf(
+                navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType },
+            ),
     ) { from ->
         CreditScreen(
             R.string.cast,
             navController,
             gson.fromJson<List<Cast>>(
                 from.arguments?.getString(MainDestinations.TMDB_CREDIT_KEY),
-                object : TypeToken<List<Cast>>() {}.type
-            )
+                object : TypeToken<List<Cast>>() {}.type,
+            ),
         )
     }
     composable(
         route = "${MainDestinations.TMDB_CREW_ROUTE}/{${MainDestinations.TMDB_CREDIT_KEY}}",
-        arguments = listOf(
-            navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType })
+        arguments =
+            listOf(
+                navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType },
+            ),
     ) { from ->
         CreditScreen(
             R.string.crew,
             navController,
             gson.fromJson<List<Crew>>(
                 from.arguments?.getString(MainDestinations.TMDB_CREDIT_KEY),
-                object : TypeToken<List<Crew>>() {}.type
-            )
+                object : TypeToken<List<Crew>>() {}.type,
+            ),
         )
     }
 }
@@ -281,8 +294,10 @@ private fun NavGraphBuilder.creditScreens(navController: NavController) {
 private fun NavGraphBuilder.personScreen(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_PERSON_ROUTE}/{${MainDestinations.TMDB_PERSON_KEY}}",
-        arguments = listOf(
-            navArgument(MainDestinations.TMDB_PERSON_KEY) { type = NavType.StringType })
+        arguments =
+            listOf(
+                navArgument(MainDestinations.TMDB_PERSON_KEY) { type = NavType.StringType },
+            ),
     ) {
         PersonScreen({ navController.navigateUp() })
     }
@@ -291,17 +306,19 @@ private fun NavGraphBuilder.personScreen(navController: NavController) {
 private fun NavGraphBuilder.imagesScreen() {
     composable(
         route = "${MainDestinations.TMDB_IMAGES_ROUTE}/{${MainDestinations.TMDB_IMAGES_KEY}}/{${MainDestinations.TMDB_IMAGE_PAGE}}",
-        arguments = listOf(
-            navArgument(MainDestinations.TMDB_IMAGES_KEY) { type = NavType.StringType },
-            navArgument(MainDestinations.TMDB_IMAGE_PAGE) { type = NavType.IntType }
-        )
+        arguments =
+            listOf(
+                navArgument(MainDestinations.TMDB_IMAGES_KEY) { type = NavType.StringType },
+                navArgument(MainDestinations.TMDB_IMAGE_PAGE) { type = NavType.IntType },
+            ),
     ) { from ->
         ImagesScreen(
-            images = gson.fromJson(
-                from.arguments?.getString(MainDestinations.TMDB_IMAGES_KEY),
-                object : TypeToken<List<TMDbImage>>() {}.type
-            ),
-            initialPage = from.arguments?.getInt(MainDestinations.TMDB_IMAGE_PAGE)!!
+            images =
+                gson.fromJson(
+                    from.arguments?.getString(MainDestinations.TMDB_IMAGES_KEY),
+                    object : TypeToken<List<TMDbImage>>() {}.type,
+                ),
+            initialPage = from.arguments?.getInt(MainDestinations.TMDB_IMAGE_PAGE)!!,
         )
     }
 }
@@ -310,12 +327,12 @@ enum class HomeSections(
     val route: String,
     @StringRes val title: Int,
     val unselectedIcon: ImageVector,
-    val selectedIcon: ImageVector
+    val selectedIcon: ImageVector,
 ) {
     MOVIE_SECTION("Movie", R.string.movie, Icons.Outlined.Movie, Icons.Filled.Movie),
     TV_SHOW_SECTION("TVShow", R.string.tv_show, Icons.Outlined.Tv, Icons.Filled.Tv),
     BOOKMARK_SECTION("Bookmark", R.string.favorite, Icons.Outlined.Favorite, Icons.Filled.Favorite),
-    SETTING_SECTION("Setting", R.string.setting, Icons.Outlined.Settings, Icons.Filled.Settings)
+    SETTING_SECTION("Setting", R.string.setting, Icons.Outlined.Settings, Icons.Filled.Settings),
 }
 
 private val gson = Gson()

@@ -11,11 +11,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SimilarTvSeriesPagingRepository @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val tvShowApi: TVShowService
-) : BasePagingRepository<TVShow>() {
-
-    override fun pagingSource(query: String?, id: Int?): BasePagingSource<TVShow> =
-        SimilarTvSeriesPagingSource(context, tvShowApi, id!!)
-}
+class SimilarTvSeriesPagingRepository
+    @Inject
+    constructor(
+        @ApplicationContext private val context: Context,
+        private val tvShowApi: TVShowService,
+    ) : BasePagingRepository<TVShow>() {
+        override fun pagingSource(
+            query: String?,
+            id: Int?,
+        ): BasePagingSource<TVShow> = SimilarTvSeriesPagingSource(context, tvShowApi, id!!)
+    }

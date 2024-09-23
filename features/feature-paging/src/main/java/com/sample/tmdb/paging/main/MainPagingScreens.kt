@@ -36,205 +36,219 @@ fun TrendingMovieScreen(
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.trending,
-            stringResource(com.sample.tmdb.common.R.string.movies)
-        )
+        title =
+            stringResource(
+                R.string.trending,
+                stringResource(com.sample.tmdb.common.R.string.movies),
+            ),
     )
 }
 
 @Composable
 fun PopularMovieScreen(
     navController: NavController,
-    viewModel: PopularMoviesViewModel = hiltViewModel()
+    viewModel: PopularMoviesViewModel = hiltViewModel(),
 ) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.popular,
-            stringResource(com.sample.tmdb.common.R.string.movies)
-        )
+        title =
+            stringResource(
+                R.string.popular,
+                stringResource(com.sample.tmdb.common.R.string.movies),
+            ),
     )
 }
 
 @Composable
 fun NowPlayingMovieScreen(
     navController: NavController,
-    viewModel: NowPlayingMoviesViewModel = hiltViewModel()
+    viewModel: NowPlayingMoviesViewModel = hiltViewModel(),
 ) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.now_playing,
-            stringResource(com.sample.tmdb.common.R.string.movies)
-        )
+        title =
+            stringResource(
+                R.string.now_playing,
+                stringResource(com.sample.tmdb.common.R.string.movies),
+            ),
     )
 }
 
 @Composable
 fun UpcomingMovieScreen(
     navController: NavController,
-    viewModel: UpcomingMoviesViewModel = hiltViewModel()
+    viewModel: UpcomingMoviesViewModel = hiltViewModel(),
 ) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.upcoming,
-            stringResource(com.sample.tmdb.common.R.string.movies)
-        )
+        title =
+            stringResource(
+                R.string.upcoming,
+                stringResource(com.sample.tmdb.common.R.string.movies),
+            ),
     )
 }
 
 @Composable
 fun TopRatedMovieScreen(
     navController: NavController,
-    viewModel: TopRatedMoviesViewModel = hiltViewModel()
+    viewModel: TopRatedMoviesViewModel = hiltViewModel(),
 ) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.highest_rate,
-            stringResource(com.sample.tmdb.common.R.string.movies)
-        )
+        title =
+            stringResource(
+                R.string.highest_rate,
+                stringResource(com.sample.tmdb.common.R.string.movies),
+            ),
     )
 }
 
 @Composable
 fun DiscoverMovieScreen(
     navController: NavController,
-    viewModel: DiscoverMoviesViewModel = hiltViewModel()
+    viewModel: DiscoverMoviesViewModel = hiltViewModel(),
 ) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.discover,
-            stringResource(com.sample.tmdb.common.R.string.movies)
-        )
+        title =
+            stringResource(
+                R.string.discover,
+                stringResource(com.sample.tmdb.common.R.string.movies),
+            ),
     )
 }
 
 @Composable
 fun SimilarMovieScreen(
     navController: NavController,
-    viewModel: SimilarMoviesViewModel = hiltViewModel()
+    viewModel: SimilarMoviesViewModel = hiltViewModel(),
 ) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.similar_items,
-            stringResource(com.sample.tmdb.common.R.string.movies)
-        )
+        title =
+            stringResource(
+                R.string.similar_items,
+                stringResource(com.sample.tmdb.common.R.string.movies),
+            ),
     )
 }
 
 @Composable
 fun TrendingTVShowScreen(
     navController: NavController,
-    viewModel: TrendingTvSeriesViewModel = hiltViewModel()
+    viewModel: TrendingTvSeriesViewModel = hiltViewModel(),
 ) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.trending,
-            stringResource(com.sample.tmdb.common.R.string.tv_series)
-        )
+        title =
+            stringResource(
+                R.string.trending,
+                stringResource(com.sample.tmdb.common.R.string.tv_series),
+            ),
     )
 }
 
 @Composable
 fun PopularTVShowScreen(
     navController: NavController,
-    viewModel: PopularTvSeriesViewModel = hiltViewModel()
+    viewModel: PopularTvSeriesViewModel = hiltViewModel(),
 ) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.popular,
-            stringResource(com.sample.tmdb.common.R.string.tv_series)
-        )
+        title =
+            stringResource(
+                R.string.popular,
+                stringResource(com.sample.tmdb.common.R.string.tv_series),
+            ),
     )
 }
 
 @Composable
 fun AiringTodayTVShowScreen(
     navController: NavController,
-    viewModel: AiringTodayTvSeriesViewModel = hiltViewModel()
+    viewModel: AiringTodayTvSeriesViewModel = hiltViewModel(),
 ) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.airing_today,
-            stringResource(com.sample.tmdb.common.R.string.tv_series)
-        )
+        title =
+            stringResource(
+                R.string.airing_today,
+                stringResource(com.sample.tmdb.common.R.string.tv_series),
+            ),
     )
 }
 
 @Composable
 fun OnTheAirTVShowScreen(
     navController: NavController,
-    viewModel: OnTheAirTvSeriesViewModel = hiltViewModel()
+    viewModel: OnTheAirTvSeriesViewModel = hiltViewModel(),
 ) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.on_the_air,
-            stringResource(com.sample.tmdb.common.R.string.tv_series)
-        )
+        title =
+            stringResource(
+                R.string.on_the_air,
+                stringResource(com.sample.tmdb.common.R.string.tv_series),
+            ),
     )
 }
 
 @Composable
 fun TopRatedTVShowScreen(
     navController: NavController,
-    viewModel: TopRatedTvSeriesViewModel = hiltViewModel()
+    viewModel: TopRatedTvSeriesViewModel = hiltViewModel(),
 ) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.highest_rate,
-            stringResource(com.sample.tmdb.common.R.string.tv_series)
-        )
+        title =
+            stringResource(
+                R.string.highest_rate,
+                stringResource(com.sample.tmdb.common.R.string.tv_series),
+            ),
     )
 }
 
 @Composable
 fun DiscoverTVShowScreen(
     navController: NavController,
-    viewModel: DiscoverTvSeriesViewModel = hiltViewModel()
+    viewModel: DiscoverTvSeriesViewModel = hiltViewModel(),
 ) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.discover,
-            stringResource(com.sample.tmdb.common.R.string.tv_series)
-        )
+        title =
+            stringResource(
+                R.string.discover,
+                stringResource(com.sample.tmdb.common.R.string.tv_series),
+            ),
     )
 }
 
 @Composable
 fun SimilarTVShowScreen(
     navController: NavController,
-    viewModel: SimilarTvSeriesViewModel = hiltViewModel()
+    viewModel: SimilarTvSeriesViewModel = hiltViewModel(),
 ) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
-        title = stringResource(
-            R.string.similar_items,
-            stringResource(com.sample.tmdb.common.R.string.tv_series)
-        )
+        title =
+            stringResource(
+                R.string.similar_items,
+                stringResource(com.sample.tmdb.common.R.string.tv_series),
+            ),
     )
 }
 
@@ -242,14 +256,14 @@ fun SimilarTVShowScreen(
 private fun MoviePagingScreen(
     viewModel: BasePagingViewModel<Movie>,
     navController: NavController,
-    title: String
+    title: String,
 ) {
     PagingScreen(
         viewModel = viewModel,
         navController = navController,
         onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
         onSearchClicked = { navController.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE) },
-        title = title
+        title = title,
     )
 }
 
@@ -257,14 +271,14 @@ private fun MoviePagingScreen(
 private fun TVShowPagingScreen(
     viewModel: BasePagingViewModel<TVShow>,
     navController: NavController,
-    title: String
+    title: String,
 ) {
     PagingScreen(
         viewModel = viewModel,
         navController = navController,
         onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
         onSearchClicked = { navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) },
-        title = title
+        title = title,
     )
 }
 
@@ -281,7 +295,7 @@ private fun <T : TMDbItem> PagingScreen(
         DestinationBar(
             title = title,
             upPress = { navController.navigateUp() },
-            onSearchClicked = onSearchClicked
+            onSearchClicked = onSearchClicked,
         )
     }
 }

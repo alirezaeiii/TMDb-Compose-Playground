@@ -1,13 +1,12 @@
 package com.sample.tmdb.data.di
 
 import com.sample.tmdb.common.base.BaseRepository
-import com.sample.tmdb.domain.model.*
-import com.sample.tmdb.data.repository.*
+import com.sample.tmdb.data.repository.PersonRepository
+import com.sample.tmdb.data.repository.movie.MovieFeedRepository
 import com.sample.tmdb.data.repository.movie.detail.BookmarkMovieDetailsRepositoryImpl
 import com.sample.tmdb.data.repository.movie.detail.BookmarkMovieRepository
-import com.sample.tmdb.data.repository.movie.paging.DiscoverMoviesPagingRepository
 import com.sample.tmdb.data.repository.movie.detail.MovieDetailRepository
-import com.sample.tmdb.data.repository.movie.MovieFeedRepository
+import com.sample.tmdb.data.repository.movie.paging.DiscoverMoviesPagingRepository
 import com.sample.tmdb.data.repository.movie.paging.NowPlayingMoviesPagingRepository
 import com.sample.tmdb.data.repository.movie.paging.PopularMoviesPagingRepository
 import com.sample.tmdb.data.repository.movie.paging.SearchMoviesPagingRepository
@@ -15,30 +14,35 @@ import com.sample.tmdb.data.repository.movie.paging.SimilarMoviesPagingRepositor
 import com.sample.tmdb.data.repository.movie.paging.TopRatedMoviesPagingRepository
 import com.sample.tmdb.data.repository.movie.paging.TrendingMoviesPagingRepository
 import com.sample.tmdb.data.repository.movie.paging.UpcomingMoviesPagingRepository
-import com.sample.tmdb.data.repository.tvshow.paging.AiringTodayTvSeriesPagingRepository
+import com.sample.tmdb.data.repository.tvshow.TVShowFeedRepository
 import com.sample.tmdb.data.repository.tvshow.detail.BookmarkTVShowDetailsRepositoryImpl
 import com.sample.tmdb.data.repository.tvshow.detail.BookmarkTVShowRepository
+import com.sample.tmdb.data.repository.tvshow.detail.TVShowDetailRepository
+import com.sample.tmdb.data.repository.tvshow.paging.AiringTodayTvSeriesPagingRepository
 import com.sample.tmdb.data.repository.tvshow.paging.DiscoverTvSeriesPagingRepository
 import com.sample.tmdb.data.repository.tvshow.paging.OnTheAirTvSeriesPagingRepository
 import com.sample.tmdb.data.repository.tvshow.paging.PopularTvSeriesPagingRepository
 import com.sample.tmdb.data.repository.tvshow.paging.SearchTvSeriesPagingRepository
 import com.sample.tmdb.data.repository.tvshow.paging.SimilarTvSeriesPagingRepository
-import com.sample.tmdb.data.repository.tvshow.detail.TVShowDetailRepository
-import com.sample.tmdb.data.repository.tvshow.TVShowFeedRepository
 import com.sample.tmdb.data.repository.tvshow.paging.TopRatedTvSeriesPagingRepository
 import com.sample.tmdb.data.repository.tvshow.paging.TrendingTvSeriesPagingRepository
+import com.sample.tmdb.domain.model.Movie
+import com.sample.tmdb.domain.model.MovieDetails
+import com.sample.tmdb.domain.model.Person
+import com.sample.tmdb.domain.model.TVShow
+import com.sample.tmdb.domain.model.TvDetails
+import com.sample.tmdb.domain.repository.BaseDetailRepository
+import com.sample.tmdb.domain.repository.BaseFeedRepository
+import com.sample.tmdb.domain.repository.BasePagingRepository
+import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.domain.utils.Discover
 import com.sample.tmdb.domain.utils.Latest
 import com.sample.tmdb.domain.utils.NowPlaying
 import com.sample.tmdb.domain.utils.Popular
 import com.sample.tmdb.domain.utils.Search
+import com.sample.tmdb.domain.utils.Similar
 import com.sample.tmdb.domain.utils.TopRated
 import com.sample.tmdb.domain.utils.Trending
-import com.sample.tmdb.domain.repository.BaseDetailRepository
-import com.sample.tmdb.domain.repository.BaseFeedRepository
-import com.sample.tmdb.domain.repository.BasePagingRepository
-import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
-import com.sample.tmdb.domain.utils.Similar
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -48,7 +52,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
-
     @Singleton
     @Binds
     internal abstract fun bindMovieFeedRepository(movieFeedRepository: MovieFeedRepository): BaseFeedRepository<Movie>
@@ -68,84 +71,114 @@ abstract class RepositoryModule {
     @Singleton
     @Trending
     @Binds
-    internal abstract fun bindTrendingMoviesRepository(trendingMoviesPagingRepository: TrendingMoviesPagingRepository): BasePagingRepository<Movie>
+    internal abstract fun bindTrendingMoviesRepository(
+        trendingMoviesPagingRepository: TrendingMoviesPagingRepository,
+    ): BasePagingRepository<Movie>
 
     @Singleton
     @Popular
     @Binds
-    internal abstract fun bindPopularMoviesRepository(popularMoviesPagingRepository: PopularMoviesPagingRepository): BasePagingRepository<Movie>
+    internal abstract fun bindPopularMoviesRepository(
+        popularMoviesPagingRepository: PopularMoviesPagingRepository,
+    ): BasePagingRepository<Movie>
 
     @Singleton
     @NowPlaying
     @Binds
-    internal abstract fun bindNowPlayingMoviesRepository(nowPlayingMoviesPagingRepository: NowPlayingMoviesPagingRepository): BasePagingRepository<Movie>
+    internal abstract fun bindNowPlayingMoviesRepository(
+        nowPlayingMoviesPagingRepository: NowPlayingMoviesPagingRepository,
+    ): BasePagingRepository<Movie>
 
     @Singleton
     @Latest
     @Binds
-    internal abstract fun bindUpcomingMoviesRepository(upcomingMoviesPagingRepository: UpcomingMoviesPagingRepository): BasePagingRepository<Movie>
+    internal abstract fun bindUpcomingMoviesRepository(
+        upcomingMoviesPagingRepository: UpcomingMoviesPagingRepository,
+    ): BasePagingRepository<Movie>
 
     @Singleton
     @TopRated
     @Binds
-    internal abstract fun bindTopRatedMoviesRepository(topRatedMoviesPagingRepository: TopRatedMoviesPagingRepository): BasePagingRepository<Movie>
+    internal abstract fun bindTopRatedMoviesRepository(
+        topRatedMoviesPagingRepository: TopRatedMoviesPagingRepository,
+    ): BasePagingRepository<Movie>
 
     @Singleton
     @Discover
     @Binds
-    internal abstract fun bindDiscoverMoviesRepository(discoverMoviesPagingRepository: DiscoverMoviesPagingRepository): BasePagingRepository<Movie>
+    internal abstract fun bindDiscoverMoviesRepository(
+        discoverMoviesPagingRepository: DiscoverMoviesPagingRepository,
+    ): BasePagingRepository<Movie>
 
     @Singleton
     @Similar
     @Binds
-    internal abstract fun bindSimilarMoviesRepository(similarMoviesPagingRepository: SimilarMoviesPagingRepository): BasePagingRepository<Movie>
-
+    internal abstract fun bindSimilarMoviesRepository(
+        similarMoviesPagingRepository: SimilarMoviesPagingRepository,
+    ): BasePagingRepository<Movie>
 
     @Singleton
     @Search
     @Binds
-    internal abstract fun bindSearchMoviesRepository(searchMoviesPagingRepository: SearchMoviesPagingRepository): BasePagingRepository<Movie>
+    internal abstract fun bindSearchMoviesRepository(
+        searchMoviesPagingRepository: SearchMoviesPagingRepository,
+    ): BasePagingRepository<Movie>
 
     @Singleton
     @Trending
     @Binds
-    internal abstract fun bindTrendingTVShowRepository(trendingTvSeriesPagingRepository: TrendingTvSeriesPagingRepository): BasePagingRepository<TVShow>
+    internal abstract fun bindTrendingTVShowRepository(
+        trendingTvSeriesPagingRepository: TrendingTvSeriesPagingRepository,
+    ): BasePagingRepository<TVShow>
 
     @Singleton
     @Popular
     @Binds
-    internal abstract fun bindPopularTVShowRepository(popularTvSeriesPagingRepository: PopularTvSeriesPagingRepository): BasePagingRepository<TVShow>
+    internal abstract fun bindPopularTVShowRepository(
+        popularTvSeriesPagingRepository: PopularTvSeriesPagingRepository,
+    ): BasePagingRepository<TVShow>
 
     @Singleton
     @NowPlaying
     @Binds
-    internal abstract fun bindAiringTodayTVShowRepository(airingTodayTvSeriesPagingRepository: AiringTodayTvSeriesPagingRepository): BasePagingRepository<TVShow>
+    internal abstract fun bindAiringTodayTVShowRepository(
+        airingTodayTvSeriesPagingRepository: AiringTodayTvSeriesPagingRepository,
+    ): BasePagingRepository<TVShow>
 
     @Singleton
     @Latest
     @Binds
-    internal abstract fun bindOnTheAirTVShowRepository(onTheAirTvSeriesPagingRepository: OnTheAirTvSeriesPagingRepository): BasePagingRepository<TVShow>
+    internal abstract fun bindOnTheAirTVShowRepository(
+        onTheAirTvSeriesPagingRepository: OnTheAirTvSeriesPagingRepository,
+    ): BasePagingRepository<TVShow>
 
     @Singleton
     @TopRated
     @Binds
-    internal abstract fun bindTopRatedTVShowRepository(topRatedTvSeriesPagingRepository: TopRatedTvSeriesPagingRepository): BasePagingRepository<TVShow>
+    internal abstract fun bindTopRatedTVShowRepository(
+        topRatedTvSeriesPagingRepository: TopRatedTvSeriesPagingRepository,
+    ): BasePagingRepository<TVShow>
 
     @Singleton
     @Discover
     @Binds
-    internal abstract fun bindDiscoverTVShowRepository(discoverTvSeriesPagingRepository: DiscoverTvSeriesPagingRepository): BasePagingRepository<TVShow>
+    internal abstract fun bindDiscoverTVShowRepository(
+        discoverTvSeriesPagingRepository: DiscoverTvSeriesPagingRepository,
+    ): BasePagingRepository<TVShow>
 
     @Singleton
     @Similar
     @Binds
-    internal abstract fun bindSimilarTVShowRepository(similarTvSeriesPagingRepository: SimilarTvSeriesPagingRepository): BasePagingRepository<TVShow>
-
+    internal abstract fun bindSimilarTVShowRepository(
+        similarTvSeriesPagingRepository: SimilarTvSeriesPagingRepository,
+    ): BasePagingRepository<TVShow>
 
     @Singleton
     @Search
     @Binds
-    internal abstract fun bindSearchTVShowRepository(searchTvSeriesPagingRepository: SearchTvSeriesPagingRepository): BasePagingRepository<TVShow>
+    internal abstract fun bindSearchTVShowRepository(
+        searchTvSeriesPagingRepository: SearchTvSeriesPagingRepository,
+    ): BasePagingRepository<TVShow>
 
     @Singleton
     @Binds
@@ -153,11 +186,15 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    internal abstract fun bindBookmarkMovieDetailsRepository(bookmarkMovieDetailsRepository: BookmarkMovieDetailsRepositoryImpl): BookmarkDetailsRepository<Movie>
+    internal abstract fun bindBookmarkMovieDetailsRepository(
+        bookmarkMovieDetailsRepository: BookmarkMovieDetailsRepositoryImpl,
+    ): BookmarkDetailsRepository<Movie>
 
     @Singleton
     @Binds
-    internal abstract fun bindBookmarkTVShowDetailsRepository(bookmarkTVShowDetailsRepository: BookmarkTVShowDetailsRepositoryImpl): BookmarkDetailsRepository<TVShow>
+    internal abstract fun bindBookmarkTVShowDetailsRepository(
+        bookmarkTVShowDetailsRepository: BookmarkTVShowDetailsRepositoryImpl,
+    ): BookmarkDetailsRepository<TVShow>
 
     @Singleton
     @Binds
@@ -168,5 +205,4 @@ abstract class RepositoryModule {
     @Binds
     @JvmSuppressWildcards
     internal abstract fun bindBookmarkTVShowRepository(bookmarkTVShowRepository: BookmarkTVShowRepository): BaseRepository<List<TVShow>>
-
 }

@@ -10,9 +10,8 @@ import kotlinx.coroutines.flow.Flow
 
 open class BaseMainPagingViewModel<T : TMDbItem>(
     repository: BasePagingRepository<T>,
-    id: Int? = null
+    id: Int? = null,
 ) : BasePagingViewModel<T>() {
-
     override val pagingDataFlow: Flow<PagingData<T>> =
         repository.fetchResultStream(id = id).cachedIn(viewModelScope)
 }

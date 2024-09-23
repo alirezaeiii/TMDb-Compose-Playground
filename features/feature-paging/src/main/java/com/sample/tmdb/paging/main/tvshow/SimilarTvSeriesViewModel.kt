@@ -10,7 +10,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SimilarTvSeriesViewModel @Inject constructor(
-    @Similar repository: BasePagingRepository<TVShow>,
-    savedStateHandle: SavedStateHandle,
-) : BaseMainPagingViewModel<TVShow>(repository, savedStateHandle[MainDestinations.TMDB_SIMILAR_ID])
+class SimilarTvSeriesViewModel
+    @Inject
+    constructor(
+        @Similar repository: BasePagingRepository<TVShow>,
+        savedStateHandle: SavedStateHandle,
+    ) : BaseMainPagingViewModel<TVShow>(repository, savedStateHandle[MainDestinations.TMDB_SIMILAR_ID])

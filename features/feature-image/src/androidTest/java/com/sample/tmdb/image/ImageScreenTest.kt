@@ -5,13 +5,12 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import com.sample.tmdb.common.R
 import com.sample.tmdb.domain.model.TMDbImage
 import org.junit.Rule
 import org.junit.Test
-import com.sample.tmdb.common.R
 
 class ImageScreenTest {
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 

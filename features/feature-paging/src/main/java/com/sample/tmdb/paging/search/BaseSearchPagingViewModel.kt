@@ -14,23 +14,23 @@ import kotlinx.coroutines.flow.flatMapLatest
 
 open class BaseSearchPagingViewModel<T : TMDbItem>(
     repository: BasePagingRepository<T>,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
 ) : BasePagingViewModel<T>() {
-
     @OptIn(ExperimentalCoroutinesApi::class)
     override val pagingDataFlow: Flow<PagingData<T>> =
-        savedStateHandle.getLiveData<String>(KEY_QUERY).asFlow().flatMapLatest {
-            repository.fetchResultStream(it)
-        }.cachedIn(viewModelScope)
-
+        savedStateHandle
+            .getLiveData<String>(KEY_QUERY)
+            .asFlow()
+            .flatMapLatest {
+                repository.fetchResultStream(it)
+            }.cachedIn(viewModelScope)
 
     fun showResult(query: String) {
         if (!shouldShowResult(query)) return
         savedStateHandle[KEY_QUERY] = query
     }
 
-    private fun shouldShowResult(query: String): Boolean =
-        savedStateHandle.get<String>(KEY_QUERY) != query
+    private fun shouldShowResult(query: String): Boolean = savedStateHandle.get<String>(KEY_QUERY) != query
 
     companion object {
         private const val KEY_QUERY = "query"

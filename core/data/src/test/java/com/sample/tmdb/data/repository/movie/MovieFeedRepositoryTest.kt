@@ -13,7 +13,6 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class MovieFeedRepositoryTest : BaseFeedRepositoryTest<Movie>() {
-
     @Mock
     private lateinit var api: MovieService
 
@@ -21,12 +20,13 @@ class MovieFeedRepositoryTest : BaseFeedRepositoryTest<Movie>() {
         repository = MovieFeedRepository(context, Dispatchers.Main, api)
     }
 
-    override fun mockApiResponse() = runTest {
-        `when`(api.trendingMovies()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.popularMovies()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.nowPlayingMovies()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.upcomingMovies()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.topRatedMovies()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.discoverMovies()).thenReturn(TMDbWrapper(emptyList()))
-    }
+    override fun mockApiResponse() =
+        runTest {
+            `when`(api.trendingMovies()).thenReturn(TMDbWrapper(emptyList()))
+            `when`(api.popularMovies()).thenReturn(TMDbWrapper(emptyList()))
+            `when`(api.nowPlayingMovies()).thenReturn(TMDbWrapper(emptyList()))
+            `when`(api.upcomingMovies()).thenReturn(TMDbWrapper(emptyList()))
+            `when`(api.topRatedMovies()).thenReturn(TMDbWrapper(emptyList()))
+            `when`(api.discoverMovies()).thenReturn(TMDbWrapper(emptyList()))
+        }
 }

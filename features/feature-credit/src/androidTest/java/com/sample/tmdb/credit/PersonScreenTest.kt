@@ -15,7 +15,6 @@ import org.mockito.ArgumentMatchers.anyInt
 import com.sample.tmdb.common.R as commonR
 
 class PersonScreenTest {
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
@@ -23,9 +22,17 @@ class PersonScreenTest {
     fun personScreenTest() {
         with(composeTestRule) {
             setContent {
-                PersonScreen(Person("birthDay","deathDay", anyInt(), "name",
-                    "biography", "PlaceOfBirth", null)) {
-
+                PersonScreen(
+                    Person(
+                        "birthDay",
+                        "deathDay",
+                        anyInt(),
+                        "name",
+                        "biography",
+                        "PlaceOfBirth",
+                        null,
+                    ),
+                ) {
                 }
             }
             onNodeWithText("name").assertIsDisplayed()
@@ -64,8 +71,17 @@ class PersonScreenTest {
         val titleHeight = mutableStateOf(0.dp)
         with(composeTestRule) {
             setContent {
-                Title(Person("birthDay","deathDay", anyInt(), "name",
-                    "biography", "PlaceOfBirth", null), titleHeight
+                Title(
+                    Person(
+                        "birthDay",
+                        "deathDay",
+                        anyInt(),
+                        "name",
+                        "biography",
+                        "PlaceOfBirth",
+                        null,
+                    ),
+                    titleHeight,
                 ) { 0 }
             }
             onNodeWithText("name").assertExists()

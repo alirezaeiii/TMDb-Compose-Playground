@@ -8,7 +8,6 @@ import com.sample.tmdb.data.source.entity.TVShowEntity
 
 @Dao
 interface TVShowDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addBookmark(tvShowEntity: TVShowEntity)
 

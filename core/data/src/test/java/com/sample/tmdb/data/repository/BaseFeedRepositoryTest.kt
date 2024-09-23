@@ -14,8 +14,7 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.`when`
 
-abstract class BaseFeedRepositoryTest<T: TMDbItem>: BaseRepositoryTest() {
-
+abstract class BaseFeedRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
     protected lateinit var repository: BaseFeedRepository<T>
 
     @Test

@@ -13,9 +13,8 @@ import kotlinx.coroutines.coroutineScope
 
 abstract class BaseFeedRepository<T : TMDbItem>(
     context: Context,
-    ioDispatcher: CoroutineDispatcher
+    ioDispatcher: CoroutineDispatcher,
 ) : BaseRepository<List<FeedWrapper>>(context, ioDispatcher) {
-
     protected abstract suspend fun popularItems(): List<T>
 
     protected abstract suspend fun nowPlayingItems(): List<T>
@@ -51,33 +50,33 @@ abstract class BaseFeedRepository<T : TMDbItem>(
             FeedWrapper(
                 trendingDeferred.await(),
                 R.string.text_trending,
-                SortType.TRENDING
+                SortType.TRENDING,
             ),
             FeedWrapper(
                 popularDeferred.await(),
                 R.string.text_popular,
-                SortType.MOST_POPULAR
+                SortType.MOST_POPULAR,
             ),
             FeedWrapper(
                 nowPlayingDeferred.await(),
                 getNowPlayingResId(),
-                SortType.NOW_PLAYING
+                SortType.NOW_PLAYING,
             ),
             FeedWrapper(
                 discoverDeferred.await(),
                 R.string.text_discover,
-                SortType.DISCOVER
+                SortType.DISCOVER,
             ),
             FeedWrapper(
                 latestDeferred.await(),
                 getLatestResId(),
-                SortType.UPCOMING
+                SortType.UPCOMING,
             ),
             FeedWrapper(
                 topRatedDeferred.await(),
                 R.string.text_highest_rate,
-                SortType.HIGHEST_RATED
-            )
+                SortType.HIGHEST_RATED,
+            ),
         )
     }
 }

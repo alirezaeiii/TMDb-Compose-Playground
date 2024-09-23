@@ -8,7 +8,6 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
-import com.sample.tmdb.domain.R as domainR
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
@@ -17,34 +16,55 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers.anyDouble
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyString
+import com.sample.tmdb.domain.R as domainR
 
 class FeedScreenTest {
-
     @get:Rule
-    val composeTestRule = createAndroidComposeRule< ComponentActivity>()
+    val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @Test
     fun feedCollectionListTest() {
         with(composeTestRule) {
             setContent {
                 FeedCollectionList(
-                    navController = rememberNavController(), collection = listOf(
-                        FeedWrapper(
-                            feeds = listOf(
-                                Movie(
-                                    anyInt(), anyString(), anyString(), anyString(),
-                                    anyString(), "title", anyDouble(), anyInt()
-                                )
-                            ), domainR.string.text_trending, SortType.TRENDING
-                        ), FeedWrapper(
-                            feeds = listOf(
-                                Movie(
-                                    anyInt(), anyString(), anyString(), anyString(),
-                                    anyString(), "name", anyDouble(), anyInt()
-                                )
-                            ), domainR.string.text_popular, SortType.MOST_POPULAR
-                        )
-                    )
+                    navController = rememberNavController(),
+                    collection =
+                        listOf(
+                            FeedWrapper(
+                                feeds =
+                                    listOf(
+                                        Movie(
+                                            anyInt(),
+                                            anyString(),
+                                            anyString(),
+                                            anyString(),
+                                            anyString(),
+                                            "title",
+                                            anyDouble(),
+                                            anyInt(),
+                                        ),
+                                    ),
+                                domainR.string.text_trending,
+                                SortType.TRENDING,
+                            ),
+                            FeedWrapper(
+                                feeds =
+                                    listOf(
+                                        Movie(
+                                            anyInt(),
+                                            anyString(),
+                                            anyString(),
+                                            anyString(),
+                                            anyString(),
+                                            "name",
+                                            anyDouble(),
+                                            anyInt(),
+                                        ),
+                                    ),
+                                domainR.string.text_popular,
+                                SortType.MOST_POPULAR,
+                            ),
+                        ),
                 ) {}
             }
             onNodeWithText(activity.getString(domainR.string.text_trending)).assertIsDisplayed()
@@ -60,30 +80,42 @@ class FeedScreenTest {
         with(composeTestRule) {
             setContent {
                 PagerTMDbItemContainer(
-                    item = FeedWrapper(
-                        feeds = listOf(
-                            Movie(
-                                anyInt(), anyString(), anyString(), anyString(),
-                                anyString(), "title", anyDouble(), anyInt()
-                            )
-                        ), domainR.string.text_popular, SortType.MOST_POPULAR
-                    ), navController = rememberNavController()
+                    item =
+                        FeedWrapper(
+                            feeds =
+                                listOf(
+                                    Movie(
+                                        anyInt(),
+                                        anyString(),
+                                        anyString(),
+                                        anyString(),
+                                        anyString(),
+                                        "title",
+                                        anyDouble(),
+                                        anyInt(),
+                                    ),
+                                ),
+                            domainR.string.text_popular,
+                            SortType.MOST_POPULAR,
+                        ),
+                    navController = rememberNavController(),
                 ) {}
             }
             onNodeWithText(activity.getString(domainR.string.text_popular)).assertIsDisplayed()
             onNodeWithText(activity.getString(R.string.more_item)).assertIsDisplayed()
             onNodeWithText("title").assertIsDisplayed()
         }
-
     }
 
     @Test
     fun trendingItemTest() {
         with(composeTestRule) {
             setContent {
-                TrendingItem(stringResource(id = domainR.string.text_trending),
+                TrendingItem(
+                    stringResource(id = domainR.string.text_trending),
                     null,
-                    "2024-12-29", {}
+                    "2024-12-29",
+                    {},
                 )
             }
             onNodeWithText(activity.getString(domainR.string.text_trending)).assertIsDisplayed()
@@ -107,14 +139,21 @@ class FeedScreenTest {
         with(composeTestRule) {
             setContent {
                 Feeds(
-                    feeds = listOf(
-                        Movie(
-                            anyInt(), anyString(), anyString(), anyString(),
-                            anyString(), "title", anyDouble(), anyInt()
-                        )
-                    ),
+                    feeds =
+                        listOf(
+                            Movie(
+                                anyInt(),
+                                anyString(),
+                                anyString(),
+                                anyString(),
+                                anyString(),
+                                "title",
+                                anyDouble(),
+                                anyInt(),
+                            ),
+                        ),
                     onFeedClick = {},
-                    index = 0
+                    index = 0,
                 )
             }
             onNodeWithText("title").assertIsDisplayed()
@@ -126,12 +165,19 @@ class FeedScreenTest {
         with(composeTestRule) {
             setContent {
                 TMDbItem(
-                    tmdbItem = Movie(
-                        anyInt(), anyString(), anyString(), anyString(),
-                        anyString(), "title", anyDouble(), anyInt()
-                    ),
+                    tmdbItem =
+                        Movie(
+                            anyInt(),
+                            anyString(),
+                            anyString(),
+                            anyString(),
+                            anyString(),
+                            "title",
+                            anyDouble(),
+                            anyInt(),
+                        ),
                     onFeedClick = {},
-                    index = 0
+                    index = 0,
                 )
             }
             onNodeWithText("title").assertIsDisplayed()

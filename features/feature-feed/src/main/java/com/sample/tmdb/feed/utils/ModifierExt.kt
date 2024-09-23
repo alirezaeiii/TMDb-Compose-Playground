@@ -9,22 +9,27 @@ import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 fun Modifier.pagerTransition(
-    pagerState: PagerState, page: Int
+    pagerState: PagerState,
+    page: Int,
 ) = graphicsLayer {
     val pageOffset = pagerState.calculatePageOffset(page)
 
     lerp(
-        start = 0.85f, stop = 1f, fraction = 1f - pageOffset.coerceIn(0f, 1f)
+        start = 0.85f,
+        stop = 1f,
+        fraction = 1f - pageOffset.coerceIn(0f, 1f),
     ).also { scale ->
         scaleX = scale
         scaleY = scale
     }
 
-    alpha = lerp(
-        start = 0.5f, stop = 1f, fraction = 1f - pageOffset.coerceIn(0f, 1f)
-    )
+    alpha =
+        lerp(
+            start = 0.5f,
+            stop = 1f,
+            fraction = 1f - pageOffset.coerceIn(0f, 1f),
+        )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
-private fun PagerState.calculatePageOffset(page: Int) =
-    ((currentPage - page) + currentPageOffsetFraction).absoluteValue
+private fun PagerState.calculatePageOffset(page: Int) = ((currentPage - page) + currentPageOffsetFraction).absoluteValue

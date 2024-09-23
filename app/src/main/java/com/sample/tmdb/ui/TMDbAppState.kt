@@ -9,14 +9,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
-
 /**
  * Remembers and creates an instance of [TMDbAppState]
  */
 @Composable
-fun rememberTMDbAppState(
-    navController: NavHostController = rememberNavController(),
-) =
+fun rememberTMDbAppState(navController: NavHostController = rememberNavController()) =
     remember(navController) {
         TMDbAppState(navController)
     }
@@ -25,7 +22,6 @@ fun rememberTMDbAppState(
 class TMDbAppState(
     val navController: NavHostController,
 ) {
-
     // ----------------------------------------------------------
     // BottomBar state source of truth
     // ----------------------------------------------------------
@@ -36,8 +32,12 @@ class TMDbAppState(
     // Reading this attribute will cause recompositions when the bottom bar needs shown, or not.
     // Not all routes need to show the bottom bar.
     val shouldShowBottomBar: Boolean
-        @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination?.route in bottomBarRoutes
+        @Composable get() =
+            navController
+                .currentBackStackEntryAsState()
+                .value
+                ?.destination
+                ?.route in bottomBarRoutes
 
     // ----------------------------------------------------------
     // Navigation state source of truth
@@ -69,6 +69,5 @@ private val NavGraph.startDestination: NavDestination?
  *
  * https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:navigation/navigation-ui/src/main/java/androidx/navigation/ui/NavigationUI.kt
  */
-private tailrec fun findStartDestination(graph: NavDestination): NavDestination {
-    return if (graph is NavGraph) findStartDestination(graph.startDestination!!) else graph
-}
+private tailrec fun findStartDestination(graph: NavDestination): NavDestination =
+    if (graph is NavGraph) findStartDestination(graph.startDestination!!) else graph

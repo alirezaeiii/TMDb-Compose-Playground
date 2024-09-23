@@ -10,7 +10,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class BookmarkScreenTest {
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
@@ -18,9 +17,21 @@ class BookmarkScreenTest {
     fun bookmarkScreenTest() {
         with(composeTestRule) {
             setContent {
-                TabContent(items = listOf(Movie(1, "overview", "releaseDate",
-                    null, null, "name", 5.0,5))) {
-
+                TabContent(
+                    items =
+                        listOf(
+                            Movie(
+                                1,
+                                "overview",
+                                "releaseDate",
+                                null,
+                                null,
+                                "name",
+                                5.0,
+                                5,
+                            ),
+                        ),
+                ) {
                 }
             }
             onNodeWithText("releaseDate").assertIsDisplayed()

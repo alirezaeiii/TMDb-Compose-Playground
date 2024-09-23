@@ -45,35 +45,39 @@ import com.sample.tmdb.common.ui.theme.Teal200
 
 @Composable
 fun SettingsScreen(modifier: Modifier = Modifier) {
-    val aboutSettings = listOf(
-        Settings.IntentAction(
-            iconResourceId = R.drawable.ic_github,
-            titleResourceId = R.string.source_code_github,
-            intent = Intent(Intent.ACTION_VIEW, Uri.parse(TMDB_REPO_URL))
-        ),
-        Settings.IntentAction(
-            iconResourceId = R.drawable.ic_shield,
-            titleResourceId = R.string.privacy_policy,
-            intent = Intent(Intent.ACTION_VIEW, Uri.parse(TMDB_POLICY_URL))
-        ),
-        Settings.Info(
-            iconResourceId = R.drawable.ic_info,
-            titleResourceId = R.string.version,
-            value = BuildConfig.VERSION_NAME
+    val aboutSettings =
+        listOf(
+            Settings.IntentAction(
+                iconResourceId = R.drawable.ic_github,
+                titleResourceId = R.string.source_code_github,
+                intent = Intent(Intent.ACTION_VIEW, Uri.parse(TMDB_REPO_URL)),
+            ),
+            Settings.IntentAction(
+                iconResourceId = R.drawable.ic_shield,
+                titleResourceId = R.string.privacy_policy,
+                intent = Intent(Intent.ACTION_VIEW, Uri.parse(TMDB_POLICY_URL)),
+            ),
+            Settings.Info(
+                iconResourceId = R.drawable.ic_info,
+                titleResourceId = R.string.version,
+                value = BuildConfig.VERSION_NAME,
+            ),
         )
-    )
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .statusBarsPadding()
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .statusBarsPadding(),
     ) {
         SettingsGroupItem(
-            settings = aboutSettings, modifier = modifier
-                .padding(
-                    top = 56.dp + TMDb_16_dp,
-                    start = TMDb_12_dp,
-                    end = TMDb_12_dp
-                )
+            settings = aboutSettings,
+            modifier =
+                modifier
+                    .padding(
+                        top = 56.dp + TMDb_16_dp,
+                        start = TMDb_12_dp,
+                        end = TMDb_12_dp,
+                    ),
         )
         DestinationBar(title = stringResource(R.string.about))
     }
@@ -82,15 +86,16 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
 @Composable
 fun SettingsGroupItem(
     settings: List<Settings>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(TMDb_16_dp),
-        border = BorderStroke(
-            width = 1.dp,
-            color = MaterialTheme.colors.onSurface.copy(alpha = DIVIDER_ALPHA)
-        )
+        border =
+            BorderStroke(
+                width = 1.dp,
+                color = MaterialTheme.colors.onSurface.copy(alpha = DIVIDER_ALPHA),
+            ),
     ) {
         Column {
             settings.forEachIndexed { index, settingsItem ->
@@ -110,30 +115,31 @@ fun SettingsGroupItem(
 private fun SettingsItem(
     settings: Settings,
     modifier: Modifier = Modifier,
-    context: Context = LocalContext.current
+    context: Context = LocalContext.current,
 ) {
     Row(
-        modifier = modifier
-            .then(
-                when (settings) {
-                    is Settings.Action -> Modifier.clickable(onClick = settings.onClick)
-                    is Settings.IntentAction -> Modifier.clickable { context.startActivity(settings.intent) }
-                    is Settings.Info -> Modifier
-                }
-            )
-            .padding(TMDb_12_dp)
-            .fillMaxWidth(),
+        modifier =
+            modifier
+                .then(
+                    when (settings) {
+                        is Settings.Action -> Modifier.clickable(onClick = settings.onClick)
+                        is Settings.IntentAction -> Modifier.clickable { context.startActivity(settings.intent) }
+                        is Settings.Info -> Modifier
+                    },
+                ).padding(TMDb_12_dp)
+                .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconBox(
             iconResourceId = settings.iconResourceId,
-            contentDescription = stringResource(id = settings.titleResourceId)
+            contentDescription = stringResource(id = settings.titleResourceId),
         )
         TitleText(
-            modifier = Modifier
-                .padding(TMDb_8_dp)
-                .weight(1f),
-            titleResourceId = settings.titleResourceId
+            modifier =
+                Modifier
+                    .padding(TMDb_8_dp)
+                    .weight(1f),
+            titleResourceId = settings.titleResourceId,
         )
         when (settings) {
             is Settings.Info -> TitleText(title = settings.value)
@@ -146,20 +152,20 @@ private fun SettingsItem(
 private fun IconBox(
     @DrawableRes iconResourceId: Int,
     contentDescription: String?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .size(TMDb_32_dp)
-            .background(color = MaterialTheme.colors.background, shape = CircleShape),
-        contentAlignment = Alignment.Center
-
+        modifier =
+            modifier
+                .size(TMDb_32_dp)
+                .background(color = MaterialTheme.colors.background, shape = CircleShape),
+        contentAlignment = Alignment.Center,
     ) {
         Icon(
             painter = painterResource(id = iconResourceId),
             contentDescription = contentDescription,
             modifier = modifier,
-            tint = MaterialTheme.colors.onSurface
+            tint = MaterialTheme.colors.onSurface,
         )
     }
 }
@@ -177,7 +183,7 @@ private fun TitleText(
         style = style,
         color = color,
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
@@ -194,20 +200,20 @@ fun TitleText(
         style = style,
         color = color,
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
 @Composable
 private fun ForwardButton(
     modifier: Modifier = Modifier,
-    color: Color = Teal200
+    color: Color = Teal200,
 ) {
     Icon(
         modifier = modifier.size(TMDb_32_dp),
         painter = painterResource(id = R.drawable.ic_arrow_forward),
         contentDescription = stringResource(id = R.string.forward),
-        tint = color
+        tint = color,
     )
 }
 
@@ -221,22 +227,21 @@ sealed interface Settings {
     data class Info(
         @DrawableRes override val iconResourceId: Int,
         @StringRes override val titleResourceId: Int,
-        val value: String
+        val value: String,
     ) : Settings
 
     data class Action(
         @DrawableRes override val iconResourceId: Int,
         @StringRes override val titleResourceId: Int,
-        val onClick: () -> Unit
+        val onClick: () -> Unit,
     ) : Settings
 
     data class IntentAction(
         @DrawableRes override val iconResourceId: Int,
         @StringRes override val titleResourceId: Int,
-        val intent: Intent
+        val intent: Intent,
     ) : Settings
 }
-
 
 private const val TMDB_REPO_URL = "https://github.com/alirezaeiii/TMDb-Compose-Playground"
 private const val TMDB_POLICY_URL =

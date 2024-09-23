@@ -9,8 +9,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(
-    bookmarkRepository: BookmarkDetailsRepository<Movie>,
-    repository: BaseDetailRepository<MovieDetails>,
-    savedStateHandle: SavedStateHandle
-) : BaseDetailViewModel<MovieDetails, Movie>(bookmarkRepository, repository, savedStateHandle)
+class MovieDetailViewModel
+    @Inject
+    constructor(
+        bookmarkRepository: BookmarkDetailsRepository<Movie>,
+        repository: BaseDetailRepository<MovieDetails>,
+        savedStateHandle: SavedStateHandle,
+    ) : BaseDetailViewModel<MovieDetails, Movie>(bookmarkRepository, repository, savedStateHandle)

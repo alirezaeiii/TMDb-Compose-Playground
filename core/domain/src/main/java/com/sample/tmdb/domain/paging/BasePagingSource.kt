@@ -10,8 +10,9 @@ import java.io.IOException
 
 private const val STARTING_PAGE_INDEX = 1
 
-abstract class BasePagingSource<T : TMDbItem>(private val context: Context) : PagingSource<Int, T>() {
-
+abstract class BasePagingSource<T : TMDbItem>(
+    private val context: Context,
+) : PagingSource<Int, T>() {
     protected abstract suspend fun fetchItems(page: Int): List<T>
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
@@ -21,7 +22,7 @@ abstract class BasePagingSource<T : TMDbItem>(private val context: Context) : Pa
             LoadResult.Page(
                 data = response,
                 prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1,
-                nextKey = if (response.isEmpty()) null else page + 1
+                nextKey = if (response.isEmpty()) null else page + 1,
             )
         } catch (exception: IOException) {
             LoadResult.Error(TMDbException(context.getString(R.string.failed_loading_msg)))
@@ -30,10 +31,9 @@ abstract class BasePagingSource<T : TMDbItem>(private val context: Context) : Pa
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, T>): Int? {
-        return state.anchorPosition?.let {
+    override fun getRefreshKey(state: PagingState<Int, T>): Int? =
+        state.anchorPosition?.let {
             state.closestPageToPosition(it)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
         }
-    }
 }

@@ -6,6 +6,5 @@ import com.sample.tmdb.common.model.TMDbItem
 import kotlinx.coroutines.flow.Flow
 
 abstract class BasePagingViewModel<T : TMDbItem> : ViewModel() {
-
     abstract val pagingDataFlow: Flow<PagingData<T>>
 }

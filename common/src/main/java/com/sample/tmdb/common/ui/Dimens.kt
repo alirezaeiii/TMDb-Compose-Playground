@@ -7,7 +7,6 @@ import androidx.compose.ui.unit.dp
 import com.sample.tmdb.common.R
 
 object Dimens {
-
     val TMDb_0_dp: Dp
         @Composable get() = dimensionResource(R.dimen.TMDb_0_dp)
 

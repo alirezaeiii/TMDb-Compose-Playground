@@ -54,9 +54,11 @@ fun <T : TMDbItem> PagingScreen(
             val message =
                 (lazyTMDbItems.loadState.refresh as? LoadState.Error)?.error?.message ?: return
 
-            ErrorScreen(message = message,
+            ErrorScreen(
+                message = message,
                 modifier = Modifier.fillMaxSize(),
-                refresh = { lazyTMDbItems.retry() })
+                refresh = { lazyTMDbItems.retry() },
+            )
         }
 
         else -> {
@@ -71,83 +73,97 @@ fun <T : TMDbItem> PagingScreen(
     }
 }
 
-
 @Composable
 private fun <T : TMDbItem> LazyTMDbItemGrid(
     lazyTMDbItems: LazyPagingItems<T>,
     onClick: (TMDbItem) -> Unit,
 ) {
-    LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 140.dp), contentPadding = PaddingValues(
-        start = TMDb_8_dp,
-        end = TMDb_8_dp,
-        bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current).toDp().dp.plus(
-            TMDb_8_dp
-        )
-    ), horizontalArrangement = Arrangement.spacedBy(
-        TMDb_8_dp, Alignment.CenterHorizontally
-    ), content = {
-
-        item(span = {
-            GridItemSpan(maxLineSpan)
-        }) {
-            Spacer(
-                Modifier.windowInsetsTopHeight(
-                    WindowInsets.statusBars.add(WindowInsets(top = 56.dp))
-                )
-            )
-        }
-
-        items(lazyTMDbItems.itemCount) { index ->
-            val tmdbItem = lazyTMDbItems[index]
-            tmdbItem?.let {
-                TMDbContent(
-                    it,
-                    Modifier
-                        .height(320.dp)
-                        .padding(vertical = TMDb_8_dp),
-                    onClick
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = 140.dp),
+        contentPadding =
+            PaddingValues(
+                start = TMDb_8_dp,
+                end = TMDb_8_dp,
+                bottom =
+                    WindowInsets.navigationBars.getBottom(LocalDensity.current).toDp().dp.plus(
+                        TMDb_8_dp,
+                    ),
+            ),
+        horizontalArrangement =
+            Arrangement.spacedBy(
+                TMDb_8_dp,
+                Alignment.CenterHorizontally,
+            ),
+        content = {
+            item(span = {
+                GridItemSpan(maxLineSpan)
+            }) {
+                Spacer(
+                    Modifier.windowInsetsTopHeight(
+                        WindowInsets.statusBars.add(WindowInsets(top = 56.dp)),
+                    ),
                 )
             }
-        }
 
-        when (lazyTMDbItems.loadState.append) {
-            is LoadState.Loading -> {
-                item(span = {
-                    GridItemSpan(maxLineSpan)
-                }) {
-                    LoadingRow(modifier = Modifier.padding(vertical = TMDb_8_dp))
+            items(lazyTMDbItems.itemCount) { index ->
+                val tmdbItem = lazyTMDbItems[index]
+                tmdbItem?.let {
+                    TMDbContent(
+                        it,
+                        Modifier
+                            .height(320.dp)
+                            .padding(vertical = TMDb_8_dp),
+                        onClick,
+                    )
                 }
             }
 
-            is LoadState.Error -> {
-                val message = (lazyTMDbItems.loadState.append as? LoadState.Error)?.error?.message
-                    ?: return@LazyVerticalGrid
-
-                item(span = {
-                    GridItemSpan(maxLineSpan)
-                }) {
-                    ErrorScreen(message = message,
-                        modifier = Modifier.padding(vertical = TMDb_8_dp),
-                        refresh = { lazyTMDbItems.retry() })
+            when (lazyTMDbItems.loadState.append) {
+                is LoadState.Loading -> {
+                    item(span = {
+                        GridItemSpan(maxLineSpan)
+                    }) {
+                        LoadingRow(modifier = Modifier.padding(vertical = TMDb_8_dp))
+                    }
                 }
-            }
 
-            else -> Unit
-        }
-    })
+                is LoadState.Error -> {
+                    val message =
+                        (lazyTMDbItems.loadState.append as? LoadState.Error)?.error?.message
+                            ?: return@LazyVerticalGrid
+
+                    item(span = {
+                        GridItemSpan(maxLineSpan)
+                    }) {
+                        ErrorScreen(
+                            message = message,
+                            modifier = Modifier.padding(vertical = TMDb_8_dp),
+                            refresh = { lazyTMDbItems.retry() },
+                        )
+                    }
+                }
+
+                else -> Unit
+            }
+        },
+    )
 }
 
 @Composable
 private fun NoDataFoundAnimation(modifier: Modifier = Modifier) {
     val preloaderLottieComposition by rememberLottieComposition(
         LottieCompositionSpec.RawRes(
-            R.raw.no_data_found
-        )
+            R.raw.no_data_found,
+        ),
     )
     val preloaderProgress by animateLottieCompositionAsState(
-        preloaderLottieComposition, iterations = LottieConstants.IterateForever, isPlaying = true
+        preloaderLottieComposition,
+        iterations = LottieConstants.IterateForever,
+        isPlaying = true,
     )
     LottieAnimation(
-        composition = preloaderLottieComposition, progress = preloaderProgress, modifier = modifier
+        composition = preloaderLottieComposition,
+        progress = preloaderProgress,
+        modifier = modifier,
     )
 }

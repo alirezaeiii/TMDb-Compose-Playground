@@ -1,9 +1,5 @@
 package com.sample.tmdb.data.response
 
-import com.sample.tmdb.domain.model.Genre
-import com.sample.tmdb.domain.model.MovieDetails
-import com.sample.tmdb.domain.model.SpokenLanguage
-import com.sample.tmdb.domain.model.TvDetails
 import com.sample.tmdb.common.utils.Constants.BACKDROP_PATH
 import com.sample.tmdb.common.utils.Constants.BASE_WIDTH_342_PATH
 import com.sample.tmdb.common.utils.Constants.BASE_WIDTH_780_PATH
@@ -16,6 +12,10 @@ import com.sample.tmdb.common.utils.Constants.RELEASE_DATE
 import com.sample.tmdb.common.utils.Constants.TITLE
 import com.sample.tmdb.common.utils.Constants.VOTE_AVERAGE
 import com.sample.tmdb.common.utils.Constants.VOTE_COUNT
+import com.sample.tmdb.domain.model.Genre
+import com.sample.tmdb.domain.model.MovieDetails
+import com.sample.tmdb.domain.model.SpokenLanguage
+import com.sample.tmdb.domain.model.TvDetails
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -55,7 +55,7 @@ data class MovieDetailResponse(
     @Json(name = TAGLINE) override val tagline: String,
     @Json(name = TITLE) override val title: String,
     @Json(name = VOTE_AVERAGE) override val voteAverage: Double,
-    @Json(name = VOTE_COUNT) override val voteCount: Int
+    @Json(name = VOTE_COUNT) override val voteCount: Int,
 ) : TMDbItemDetailsResponse
 
 @JsonClass(generateAdapter = true)
@@ -76,72 +76,89 @@ data class TvDetailResponse(
     @Json(name = NAME) override val title: String,
     @Json(name = VOTE_AVERAGE) override val voteAverage: Double,
     @Json(name = VOTE_COUNT) override val voteCount: Int,
-    ) : TMDbItemDetailsResponse
+) : TMDbItemDetailsResponse
 
 @JsonClass(generateAdapter = true)
 data class GenreResponse(
     @Json(name = ID) val id: Int,
-    @Json(name = NAME) val name: String?
+    @Json(name = NAME) val name: String?,
 )
 
 @JsonClass(generateAdapter = true)
 data class SpokenLanguageResponse(
     @Json(name = "iso_639_1") val iso6391: String,
-    @Json(name = NAME) val name: String
+    @Json(name = NAME) val name: String,
 )
 
-fun MovieDetailResponse.asDomainModel(): MovieDetails = MovieDetails(
-    backdropPath?.let {
-        String.format(
-            BASE_WIDTH_780_PATH,
-            it
-        )
-    }, genres.asGenreDomainModel(),
-    homepage, id, originalLanguage, originalTitle, overview, popularity, posterPath?.let {
-        String.format(
-            BASE_WIDTH_342_PATH,
-            it
-        )
-    }, releaseDate,
-    spokenLanguages.asLanguageDomainModel(), status, tagline, title, voteAverage, voteCount
-)
+fun MovieDetailResponse.asDomainModel(): MovieDetails =
+    MovieDetails(
+        backdropPath?.let {
+            String.format(
+                BASE_WIDTH_780_PATH,
+                it,
+            )
+        },
+        genres.asGenreDomainModel(),
+        homepage,
+        id,
+        originalLanguage,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath?.let {
+            String.format(
+                BASE_WIDTH_342_PATH,
+                it,
+            )
+        },
+        releaseDate,
+        spokenLanguages.asLanguageDomainModel(),
+        status,
+        tagline,
+        title,
+        voteAverage,
+        voteCount,
+    )
 
-fun TvDetailResponse.asDomainModel(): TvDetails = TvDetails(
-    backdropPath?.let {
-        String.format(
-            BASE_WIDTH_780_PATH,
-            it
-        )
-    },
-    genres.asGenreDomainModel(),
-    homepage,
-    id,
-    originalLanguage,
-    originalTitle,
-    overview,
-    popularity,
-    posterPath?.let {
-        String.format(
-            BASE_WIDTH_342_PATH,
-            it
-        )
-    },
-    releaseDate,
-    spokenLanguages.asLanguageDomainModel(),
-    status,
-    tagline,
-    title,
-    voteAverage,
-    voteCount
-)
+fun TvDetailResponse.asDomainModel(): TvDetails =
+    TvDetails(
+        backdropPath?.let {
+            String.format(
+                BASE_WIDTH_780_PATH,
+                it,
+            )
+        },
+        genres.asGenreDomainModel(),
+        homepage,
+        id,
+        originalLanguage,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath?.let {
+            String.format(
+                BASE_WIDTH_342_PATH,
+                it,
+            )
+        },
+        releaseDate,
+        spokenLanguages.asLanguageDomainModel(),
+        status,
+        tagline,
+        title,
+        voteAverage,
+        voteCount,
+    )
 
-private fun List<GenreResponse>.asGenreDomainModel(): List<Genre> = map {
-    Genre(it.id, it.name)
-}
+private fun List<GenreResponse>.asGenreDomainModel(): List<Genre> =
+    map {
+        Genre(it.id, it.name)
+    }
 
-private fun List<SpokenLanguageResponse>.asLanguageDomainModel(): List<SpokenLanguage> = map {
-    SpokenLanguage(it.iso6391, it.name)
-}
+private fun List<SpokenLanguageResponse>.asLanguageDomainModel(): List<SpokenLanguage> =
+    map {
+        SpokenLanguage(it.iso6391, it.name)
+    }
 
 private const val GENRES = "genres"
 private const val HOMEPAGE = "homepage"

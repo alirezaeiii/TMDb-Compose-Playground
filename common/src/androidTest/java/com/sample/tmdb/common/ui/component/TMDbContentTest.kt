@@ -12,7 +12,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class TMDbContentTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -20,9 +19,19 @@ class TMDbContentTest {
     fun tmdbContentTest() {
         with(composeTestRule) {
             setContent {
-                TMDbContent(tmdbItem = Movie(1, "overview",
-                    "releaseDate", null, null, "name",
-                    1.1, 1)) {
+                TMDbContent(
+                    tmdbItem =
+                        Movie(
+                            1,
+                            "overview",
+                            "releaseDate",
+                            null,
+                            null,
+                            "name",
+                            1.1,
+                            1,
+                        ),
+                ) {
                 }
             }
             onNodeWithText("name").assertIsDisplayed()
@@ -59,9 +68,19 @@ class TMDbContentTest {
     fun tmdbItemInfo() {
         with(composeTestRule) {
             setContent {
-                TMDbItemInfo(tmdbItem = Movie(1, "overview",
-                    "releaseDate", null, null, "name",
-                    1.1, 1))
+                TMDbItemInfo(
+                    tmdbItem =
+                        Movie(
+                            1,
+                            "overview",
+                            "releaseDate",
+                            null,
+                            null,
+                            "name",
+                            1.1,
+                            1,
+                        ),
+                )
             }
             onNodeWithText("name").assertIsDisplayed()
             onNodeWithText("releaseDate").assertIsDisplayed()

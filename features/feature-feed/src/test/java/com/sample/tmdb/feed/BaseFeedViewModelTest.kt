@@ -12,8 +12,7 @@ import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
 import org.junit.Test
 
-abstract class BaseFeedViewModelTest<T: TMDbItem> {
-
+abstract class BaseFeedViewModelTest<T : TMDbItem> {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 

@@ -18,7 +18,6 @@ import org.mockito.ArgumentMatchers.anyString
 import com.sample.tmdb.common.R as commonR
 
 class DetailScreenTest {
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
@@ -53,8 +52,8 @@ class DetailScreenTest {
                         anyString(),
                         anyString(),
                         1.0,
-                        1
-                    )
+                        1,
+                    ),
                 )
             }
             onNodeWithText(activity.getString(R.string.release_date)).assertIsDisplayed()

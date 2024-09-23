@@ -7,5 +7,5 @@ class DetailWrapper(
     val crew: List<Crew>,
     val details: TMDbItemDetails,
     val images: List<TMDbImage>,
-    val similarItems: List<TMDbItem>
+    val similarItems: List<TMDbItem>,
 )

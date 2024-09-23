@@ -32,17 +32,18 @@ fun DestinationBar(
         TopAppBar(
             backgroundColor = MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque),
             contentColor = MaterialTheme.colors.onSurface,
-            elevation = TMDb_0_dp
+            elevation = TMDb_0_dp,
         ) {
             IconButton(
                 onClick = { upPress?.invoke() },
-                modifier = Modifier
-                    .alpha(if (upPress == null) 0f else 1f)
-                    .align(Alignment.CenterVertically)
+                modifier =
+                    Modifier
+                        .alpha(if (upPress == null) 0f else 1f)
+                        .align(Alignment.CenterVertically),
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.back)
+                    contentDescription = stringResource(R.string.back),
                 )
             }
             Text(
@@ -52,19 +53,21 @@ fun DestinationBar(
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier
-                    .weight(1f)
-                    .align(Alignment.CenterVertically)
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically),
             )
             IconButton(
                 onClick = { onSearchClicked?.invoke() },
-                modifier = Modifier
-                    .alpha(if (onSearchClicked == null) 0f else 1f)
-                    .align(Alignment.CenterVertically)
+                modifier =
+                    Modifier
+                        .alpha(if (onSearchClicked == null) 0f else 1f)
+                        .align(Alignment.CenterVertically),
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_search),
-                    contentDescription = stringResource(id = R.string.search_desc)
+                    contentDescription = stringResource(id = R.string.search_desc),
                 )
             }
         }

@@ -19,13 +19,13 @@ fun TMDbDivider(
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colors.onSurface.copy(alpha = DIVIDER_ALPHA),
     thickness: Dp = 1.dp,
-    startIndent: Dp = 0.dp
+    startIndent: Dp = 0.dp,
 ) {
     Divider(
         modifier = modifier,
         color = color,
         thickness = thickness,
-        startIndent = startIndent
+        startIndent = startIndent,
     )
 }
 

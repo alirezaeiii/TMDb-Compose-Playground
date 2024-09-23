@@ -1,14 +1,14 @@
 package com.sample.tmdb.data.response
 
-import com.sample.tmdb.domain.model.Person
 import com.sample.tmdb.common.utils.Constants
 import com.sample.tmdb.common.utils.Constants.ID
 import com.sample.tmdb.common.utils.Constants.NAME
+import com.sample.tmdb.domain.model.Person
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class PersonResponse(
+data class PersonDto(
     @Json(name = "birthday")
     val birthDay: String?,
     @Json(name = "deathday")
@@ -25,7 +25,7 @@ data class PersonResponse(
     val profilePath: String?,
 )
 
-fun PersonResponse.asDomainModel(): Person =
+fun PersonDto.asDomainModel(): Person =
     Person(
         birthDay,
         deathDay,
@@ -36,6 +36,7 @@ fun PersonResponse.asDomainModel(): Person =
         profilePath?.let { profilePath ->
             String.format(
                 Constants.BASE_WIDTH_342_PATH,
-                profilePath
+                profilePath,
             )
-        })
+        },
+    )

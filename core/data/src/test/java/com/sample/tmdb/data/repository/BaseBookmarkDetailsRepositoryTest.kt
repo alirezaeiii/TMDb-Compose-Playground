@@ -8,7 +8,6 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
 
 abstract class BaseBookmarkDetailsRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
-
     protected lateinit var repository: BookmarkDetailsRepository<T>
 
     @Test

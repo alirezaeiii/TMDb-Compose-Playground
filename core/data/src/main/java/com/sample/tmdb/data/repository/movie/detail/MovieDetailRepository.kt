@@ -19,26 +19,24 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MovieDetailRepository @Inject constructor(
-    private val movieApi: MovieService,
-    @ApplicationContext context: Context,
-    @IoDispatcher ioDispatcher: CoroutineDispatcher,
-) : BaseDetailRepository<MovieDetails>(context, ioDispatcher) {
+class MovieDetailRepository
+    @Inject
+    constructor(
+        private val movieApi: MovieService,
+        @ApplicationContext context: Context,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+    ) : BaseDetailRepository<MovieDetails>(context, ioDispatcher) {
+        override suspend fun getDetails(id: Int): MovieDetails = movieApi.fetchMovieDetail(id).asDomainModel()
 
-    override suspend fun getDetails(id: Int): MovieDetails =
-        movieApi.fetchMovieDetail(id).asDomainModel()
+        override suspend fun getCredit(id: Int): Pair<List<Cast>, List<Crew>> {
+            val networkCreditWrapper = movieApi.movieCredit(id)
+            return Pair(
+                networkCreditWrapper.cast.asCastDomainModel(),
+                networkCreditWrapper.crew.asCrewDomainModel(),
+            )
+        }
 
-    override suspend fun getCredit(id: Int): Pair<List<Cast>, List<Crew>> {
-        val networkCreditWrapper = movieApi.movieCredit(id)
-        return Pair(
-            networkCreditWrapper.cast.asCastDomainModel(),
-            networkCreditWrapper.crew.asCrewDomainModel()
-        )
+        override suspend fun getImages(id: Int): List<TMDbImage> = movieApi.fetchImages(id).asDomainModel()
+
+        override suspend fun getSimilarItems(id: Int): List<TMDbItem> = movieApi.fetchSimilarMovies(id).items.asMovieDomainModel()
     }
-
-    override suspend fun getImages(id: Int): List<TMDbImage> =
-        movieApi.fetchImages(id).asDomainModel()
-
-    override suspend fun getSimilarItems(id: Int): List<TMDbItem> =
-        movieApi.fetchSimilarMovies(id).items.asMovieDomainModel()
-}

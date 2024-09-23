@@ -29,35 +29,39 @@ import com.sample.tmdb.common.utils.toDp
 fun <T : Credit> CreditScreen(
     @StringRes resourceId: Int,
     navController: NavController,
-    items: List<T>
+    items: List<T>,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(TMDb_120_dp),
-        contentPadding = PaddingValues(
-            start = TMDb_6_dp,
-            end = TMDb_6_dp,
-            top = TMDb_6_dp,
-            bottom = WindowInsets.navigationBars.getBottom(LocalDensity.current)
-                .toDp().dp.plus(
-                    TMDb_8_dp
-                )
-        ),
+        contentPadding =
+            PaddingValues(
+                start = TMDb_6_dp,
+                end = TMDb_6_dp,
+                top = TMDb_6_dp,
+                bottom =
+                    WindowInsets.navigationBars
+                        .getBottom(LocalDensity.current)
+                        .toDp()
+                        .dp
+                        .plus(
+                            TMDb_8_dp,
+                        ),
+            ),
         content = {
-
             item(span = {
                 GridItemSpan(maxLineSpan)
             }) {
                 Spacer(
                     Modifier.windowInsetsTopHeight(
-                        WindowInsets.statusBars.add(WindowInsets(top = 56.dp))
-                    )
+                        WindowInsets.statusBars.add(WindowInsets(top = 56.dp)),
+                    ),
                 )
             }
 
             items(items.size) { index ->
                 PersonCard(person = items[index], navController = navController)
             }
-        }
+        },
     )
     DestinationBar(title = stringResource(resourceId), upPress = { navController.navigateUp() })
 }

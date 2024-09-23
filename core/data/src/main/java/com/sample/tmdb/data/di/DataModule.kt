@@ -15,23 +15,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class DataModule {
-
     @Singleton
     @Provides
     fun provideNetworkClient(): Retrofit = createNetworkClient(BuildConfig.TMDB_BASE_URL)
 
     @Singleton
     @Provides
-    fun provideMovieService(retrofit: Retrofit): MovieService =
-        retrofit.create(MovieService::class.java)
+    fun provideMovieService(retrofit: Retrofit): MovieService = retrofit.create(MovieService::class.java)
 
     @Singleton
     @Provides
-    fun provideTVShowService(retrofit: Retrofit): TVShowService =
-        retrofit.create(TVShowService::class.java)
+    fun provideTVShowService(retrofit: Retrofit): TVShowService = retrofit.create(TVShowService::class.java)
 
     @Singleton
     @Provides
-    fun providePersonService(retrofit: Retrofit): PersonService =
-        retrofit.create(PersonService::class.java)
+    fun providePersonService(retrofit: Retrofit): PersonService = retrofit.create(PersonService::class.java)
 }

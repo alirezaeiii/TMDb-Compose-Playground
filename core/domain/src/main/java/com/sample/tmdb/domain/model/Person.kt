@@ -7,5 +7,5 @@ class Person(
     val name: String,
     val biography: String,
     val placeOfBirth: String?,
-    val profilePath: String?
+    val profilePath: String?,
 )

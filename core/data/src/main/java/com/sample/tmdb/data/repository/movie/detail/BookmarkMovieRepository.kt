@@ -12,12 +12,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BookmarkMovieRepository @Inject constructor(
-    private val movieDao: MovieDao,
-    @ApplicationContext context: Context,
-    @IoDispatcher ioDispatcher: CoroutineDispatcher,
-) : BaseRepository<List<@JvmSuppressWildcards Movie>>(context, ioDispatcher) {
-
-    override suspend fun getSuccessResult(id: Any?): List<Movie> =
-        movieDao.getBookmarks().asDomainModel()
-}
+class BookmarkMovieRepository
+    @Inject
+    constructor(
+        private val movieDao: MovieDao,
+        @ApplicationContext context: Context,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+    ) : BaseRepository<List<@JvmSuppressWildcards Movie>>(context, ioDispatcher) {
+        override suspend fun getSuccessResult(id: Any?): List<Movie> = movieDao.getBookmarks().asDomainModel()
+    }
