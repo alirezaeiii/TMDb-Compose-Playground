@@ -7,6 +7,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.domain.model.MovieDetails
 import com.sample.tmdb.domain.model.TMDbImage
 import org.junit.Rule
@@ -15,7 +16,6 @@ import org.mockito.ArgumentMatchers.anyDouble
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyList
 import org.mockito.ArgumentMatchers.anyString
-import com.sample.tmdb.common.R as commonR
 
 class DetailScreenTest {
     @get:Rule

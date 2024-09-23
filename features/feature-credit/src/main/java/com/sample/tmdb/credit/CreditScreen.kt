@@ -26,27 +26,23 @@ import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.utils.toDp
 
 @Composable
-fun <T : Credit> CreditScreen(
-    @StringRes resourceId: Int,
-    navController: NavController,
-    items: List<T>,
-) {
+fun <T : Credit> CreditScreen(@StringRes resourceId: Int, navController: NavController, items: List<T>) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(TMDb_120_dp),
         contentPadding =
-            PaddingValues(
-                start = TMDb_6_dp,
-                end = TMDb_6_dp,
-                top = TMDb_6_dp,
-                bottom =
-                    WindowInsets.navigationBars
-                        .getBottom(LocalDensity.current)
-                        .toDp()
-                        .dp
-                        .plus(
-                            TMDb_8_dp,
-                        ),
-            ),
+        PaddingValues(
+            start = TMDb_6_dp,
+            end = TMDb_6_dp,
+            top = TMDb_6_dp,
+            bottom =
+            WindowInsets.navigationBars
+                .getBottom(LocalDensity.current)
+                .toDp()
+                .dp
+                .plus(
+                    TMDb_8_dp,
+                ),
+        ),
         content = {
             item(span = {
                 GridItemSpan(maxLineSpan)

@@ -36,11 +36,7 @@ import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.utils.CircleTopCropTransformation
 
 @Composable
-fun PersonCard(
-    person: Credit,
-    navController: NavController,
-    modifier: Modifier = Modifier,
-) {
+fun PersonCard(person: Credit, navController: NavController, modifier: Modifier = Modifier) {
     Column(
         modifier
             .padding(TMDb_4_dp)
@@ -81,11 +77,11 @@ fun PersonCard(
                 painter = painter,
                 colorFilter = colorFilter,
                 contentDescription =
-                    stringResource(
-                        id = R.string.person_content_description,
-                        person.name,
-                        person.role,
-                    ),
+                stringResource(
+                    id = R.string.person_content_description,
+                    person.name,
+                    person.role,
+                ),
                 contentScale = ContentScale.FillHeight,
             )
         }
@@ -99,10 +95,10 @@ fun PersonCard(
         Text(
             text = person.role,
             style =
-                MaterialTheme.typography.subtitle2.copy(
-                    fontWeight = FontWeight.Normal,
-                    fontStyle = FontStyle.Italic,
-                ),
+            MaterialTheme.typography.subtitle2.copy(
+                fontWeight = FontWeight.Normal,
+                fontStyle = FontStyle.Italic,
+            ),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(top = TMDb_2_dp),

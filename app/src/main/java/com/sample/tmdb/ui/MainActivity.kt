@@ -47,26 +47,26 @@ class MainActivity : ComponentActivity() {
             if (lightTheme) {
                 enableEdgeToEdge(
                     statusBarStyle =
-                        SystemBarStyle.light(
-                            statusBarColor,
-                            statusBarColor,
-                        ),
+                    SystemBarStyle.light(
+                        statusBarColor,
+                        statusBarColor,
+                    ),
                     navigationBarStyle =
-                        SystemBarStyle.light(
-                            navigationBarColor,
-                            navigationBarColor,
-                        ),
+                    SystemBarStyle.light(
+                        navigationBarColor,
+                        navigationBarColor,
+                    ),
                 )
             } else {
                 enableEdgeToEdge(
                     statusBarStyle =
-                        SystemBarStyle.dark(
-                            statusBarColor,
-                        ),
+                    SystemBarStyle.dark(
+                        statusBarColor,
+                    ),
                     navigationBarStyle =
-                        SystemBarStyle.dark(
-                            navigationBarColor,
-                        ),
+                    SystemBarStyle.dark(
+                        navigationBarColor,
+                    ),
                 )
             }
         }

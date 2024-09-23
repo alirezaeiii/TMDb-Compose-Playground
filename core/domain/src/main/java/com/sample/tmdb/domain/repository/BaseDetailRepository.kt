@@ -13,10 +13,8 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
-abstract class BaseDetailRepository<T : TMDbItemDetails>(
-    context: Context,
-    ioDispatcher: CoroutineDispatcher,
-) : BaseRepository<DetailWrapper>(context, ioDispatcher) {
+abstract class BaseDetailRepository<T : TMDbItemDetails>(context: Context, ioDispatcher: CoroutineDispatcher) :
+    BaseRepository<DetailWrapper>(context, ioDispatcher) {
     protected abstract suspend fun getDetails(id: Int): T
 
     protected abstract suspend fun getCredit(id: Int): Pair<List<Cast>, List<Crew>>

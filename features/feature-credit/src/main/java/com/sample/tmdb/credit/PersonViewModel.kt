@@ -10,11 +10,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PersonViewModel
-    @Inject
-    constructor(
-        repository: BaseRepository<Person>,
-        savedStateHandle: SavedStateHandle,
-    ) : TMDbViewModel<Person>(
-            repository,
-            savedStateHandle[MainDestinations.TMDB_PERSON_KEY],
-        )
+@Inject
+constructor(repository: BaseRepository<Person>, savedStateHandle: SavedStateHandle) :
+    TMDbViewModel<Person>(
+        repository,
+        savedStateHandle[MainDestinations.TMDB_PERSON_KEY],
+    )

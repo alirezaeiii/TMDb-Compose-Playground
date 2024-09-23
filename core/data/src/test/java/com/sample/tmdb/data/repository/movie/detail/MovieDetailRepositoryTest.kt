@@ -24,30 +24,29 @@ class MovieDetailRepositoryTest : BaseDetailRepositoryTest<MovieDetails>() {
         repository = MovieDetailRepository(api, context, Dispatchers.Main)
     }
 
-    override fun mockApiResponse() =
-        runTest {
-            `when`(api.fetchMovieDetail(anyInt())).thenReturn(
-                MovieDetailResponse(
-                    BACKDROP_PATH,
-                    emptyList(),
-                    HOMEPAGE,
-                    ID,
-                    ORIGINAL_LANGUAGE,
-                    ORIGINAL_TITLE,
-                    OVERVIEW,
-                    POPULARITY,
-                    POSTER_PATH,
-                    RELEASE_DATE,
-                    emptyList(),
-                    STATUS,
-                    TAG_LINE,
-                    TITLE,
-                    VOTE_AVERAGE,
-                    VOTE_COUNT,
-                ),
-            )
-            `when`(api.movieCredit(anyInt())).thenReturn(NetworkCreditWrapper(emptyList(), emptyList()))
-            `when`(api.fetchImages(anyInt())).thenReturn(ImagesResponse(emptyList(), ID, emptyList()))
-            `when`(api.fetchSimilarMovies(anyInt())).thenReturn(TMDbWrapper(emptyList()))
-        }
+    override fun mockApiResponse() = runTest {
+        `when`(api.fetchMovieDetail(anyInt())).thenReturn(
+            MovieDetailResponse(
+                BACKDROP_PATH,
+                emptyList(),
+                HOMEPAGE,
+                ID,
+                ORIGINAL_LANGUAGE,
+                ORIGINAL_TITLE,
+                OVERVIEW,
+                POPULARITY,
+                POSTER_PATH,
+                RELEASE_DATE,
+                emptyList(),
+                STATUS,
+                TAG_LINE,
+                TITLE,
+                VOTE_AVERAGE,
+                VOTE_COUNT,
+            ),
+        )
+        `when`(api.movieCredit(anyInt())).thenReturn(NetworkCreditWrapper(emptyList(), emptyList()))
+        `when`(api.fetchImages(anyInt())).thenReturn(ImagesResponse(emptyList(), ID, emptyList()))
+        `when`(api.fetchSimilarMovies(anyInt())).thenReturn(TMDbWrapper(emptyList()))
+    }
 }

@@ -8,11 +8,11 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.unit.dp
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.domain.model.Person
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
-import com.sample.tmdb.common.R as commonR
 
 class PersonScreenTest {
     @get:Rule

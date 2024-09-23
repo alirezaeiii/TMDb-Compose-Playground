@@ -6,9 +6,9 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import com.sample.tmdb.common.R
+import com.sample.tmdb.paging.R as pagingR
 import org.junit.Rule
 import org.junit.Test
-import com.sample.tmdb.paging.R as pagingR
 
 class SearchBarTest {
     @get:Rule

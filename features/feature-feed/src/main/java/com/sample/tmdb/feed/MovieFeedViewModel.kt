@@ -7,7 +7,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieFeedViewModel
-    @Inject
-    constructor(
-        repository: BaseFeedRepository<Movie>,
-    ) : BaseFeedViewModel<Movie>(repository)
+@Inject
+constructor(repository: BaseFeedRepository<Movie>) :
+    BaseFeedViewModel<Movie>(repository)

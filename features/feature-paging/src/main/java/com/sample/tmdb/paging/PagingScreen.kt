@@ -39,10 +39,7 @@ import com.sample.tmdb.common.ui.component.TMDbProgressBar
 import com.sample.tmdb.common.utils.toDp
 
 @Composable
-fun <T : TMDbItem> PagingScreen(
-    viewModel: BasePagingViewModel<T>,
-    onClick: (TMDbItem) -> Unit,
-) {
+fun <T : TMDbItem> PagingScreen(viewModel: BasePagingViewModel<T>, onClick: (TMDbItem) -> Unit) {
     val lazyTMDbItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
 
     when (lazyTMDbItems.loadState.refresh) {
@@ -74,26 +71,23 @@ fun <T : TMDbItem> PagingScreen(
 }
 
 @Composable
-private fun <T : TMDbItem> LazyTMDbItemGrid(
-    lazyTMDbItems: LazyPagingItems<T>,
-    onClick: (TMDbItem) -> Unit,
-) {
+private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, onClick: (TMDbItem) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 140.dp),
         contentPadding =
-            PaddingValues(
-                start = TMDb_8_dp,
-                end = TMDb_8_dp,
-                bottom =
-                    WindowInsets.navigationBars.getBottom(LocalDensity.current).toDp().dp.plus(
-                        TMDb_8_dp,
-                    ),
-            ),
-        horizontalArrangement =
-            Arrangement.spacedBy(
+        PaddingValues(
+            start = TMDb_8_dp,
+            end = TMDb_8_dp,
+            bottom =
+            WindowInsets.navigationBars.getBottom(LocalDensity.current).toDp().dp.plus(
                 TMDb_8_dp,
-                Alignment.CenterHorizontally,
             ),
+        ),
+        horizontalArrangement =
+        Arrangement.spacedBy(
+            TMDb_8_dp,
+            Alignment.CenterHorizontally,
+        ),
         content = {
             item(span = {
                 GridItemSpan(maxLineSpan)

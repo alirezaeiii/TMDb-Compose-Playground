@@ -26,12 +26,11 @@ data class ImageResponse(
     @Json(name = WIDTH) val width: Int,
 )
 
-fun ImagesResponse.asDomainModel(): List<TMDbImage> =
-    buildList {
-        addAll(backdrops.map { TMDbImage(String.format(BASE_IMAGE_PATH, it.filePath), it.voteCount) })
-        addAll(posters.map { TMDbImage(String.format(BASE_IMAGE_PATH, it.filePath), it.voteCount) })
-        sortByDescending { it.voteCount }
-    }
+fun ImagesResponse.asDomainModel(): List<TMDbImage> = buildList {
+    addAll(backdrops.map { TMDbImage(String.format(BASE_IMAGE_PATH, it.filePath), it.voteCount) })
+    addAll(posters.map { TMDbImage(String.format(BASE_IMAGE_PATH, it.filePath), it.voteCount) })
+    sortByDescending { it.voteCount }
+}
 
 private const val BACKDROPS = "backdrops"
 private const val POSTERS = "posters"

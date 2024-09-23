@@ -48,6 +48,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.sample.tmdb.common.MainDestinations
+import com.sample.tmdb.common.R as R1
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
@@ -64,13 +65,9 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feed.utils.pagerTransition
-import com.sample.tmdb.common.R as R1
 
 @Composable
-fun MovieFeedScreen(
-    navController: NavController,
-    viewModel: MovieFeedViewModel = hiltViewModel(),
-) {
+fun MovieFeedScreen(navController: NavController, viewModel: MovieFeedViewModel = hiltViewModel()) {
     FeedScreen(
         viewModel = viewModel,
         navController = navController,
@@ -81,10 +78,7 @@ fun MovieFeedScreen(
 }
 
 @Composable
-fun TVShowFeedScreen(
-    navController: NavController,
-    viewModel: TVShowFeedViewModel = hiltViewModel(),
-) {
+fun TVShowFeedScreen(navController: NavController, viewModel: TVShowFeedViewModel = hiltViewModel()) {
     FeedScreen(
         viewModel = viewModel,
         navController = navController,
@@ -107,10 +101,10 @@ private fun <T : TMDbItem> FeedScreen(
             FeedCollectionList(navController, feeds, onClick)
             DestinationBar(
                 title =
-                    stringResource(
-                        R.string.app_title,
-                        stringResource(resourceId),
-                    ),
+                stringResource(
+                    R.string.app_title,
+                    stringResource(resourceId),
+                ),
                 onSearchClicked = onSearchClicked,
             )
         }
@@ -118,11 +112,7 @@ private fun <T : TMDbItem> FeedScreen(
 }
 
 @Composable
-fun FeedCollectionList(
-    navController: NavController,
-    collection: List<FeedWrapper>,
-    onFeedClick: (TMDbItem) -> Unit,
-) {
+fun FeedCollectionList(navController: NavController, collection: List<FeedWrapper>, onFeedClick: (TMDbItem) -> Unit) {
     LazyColumn {
         item {
             Spacer(
@@ -158,11 +148,7 @@ fun FeedCollectionList(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PagerTMDbItemContainer(
-    item: FeedWrapper,
-    navController: NavController,
-    onFeedClick: (TMDbItem) -> Unit,
-) {
+fun PagerTMDbItemContainer(item: FeedWrapper, navController: NavController, onFeedClick: (TMDbItem) -> Unit) {
     val pagerState = rememberPagerState(pageCount = { item.feeds.size })
 
     Header(titleId = item.sortTypeResourceId) {
@@ -190,10 +176,10 @@ fun PagerTMDbItemContainer(
         with(item.feeds[page]) {
             TrendingItem(
                 modifier =
-                    Modifier.pagerTransition(
-                        pagerState = pagerState,
-                        page = page,
-                    ),
+                Modifier.pagerTransition(
+                    pagerState = pagerState,
+                    page = page,
+                ),
                 title = name,
                 imageUrl = backdropUrl,
                 releaseDate = releaseDate,
@@ -212,11 +198,11 @@ fun PagerTMDbItemContainer(
                 if (pagerState.currentPage == iteration) MaterialTheme.colors.primary else Teal200
             Box(
                 modifier =
-                    Modifier
-                        .padding(Dimens.TMDb_4_dp)
-                        .clip(CircleShape)
-                        .background(color)
-                        .size(TMDb_6_dp),
+                Modifier
+                    .padding(Dimens.TMDb_4_dp)
+                    .clip(CircleShape)
+                    .background(color)
+                    .size(TMDb_6_dp),
             )
         }
     }
@@ -232,11 +218,11 @@ fun TrendingItem(
 ) {
     Card(
         modifier =
-            modifier
-                .fillMaxWidth()
-                .height(180.dp)
-                .clip(RoundedCornerShape(10.dp))
-                .then(Modifier.clickable(onClick = onClick)),
+        modifier
+            .fillMaxWidth()
+            .height(180.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .then(Modifier.clickable(onClick = onClick)),
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
@@ -248,11 +234,11 @@ fun TrendingItem(
 
             Column(
                 modifier =
-                    Modifier
-                        .padding(
-                            start = TMDb_12_dp,
-                            bottom = TMDb_6_dp,
-                        ).align(Alignment.BottomStart),
+                Modifier
+                    .padding(
+                        start = TMDb_12_dp,
+                        bottom = TMDb_6_dp,
+                    ).align(Alignment.BottomStart),
             ) {
                 Text(
                     text = title,
@@ -318,45 +304,37 @@ private fun FeedCollection(
 }
 
 @Composable
-fun Header(
-    @StringRes titleId: Int,
-    onMoreClick: () -> Unit,
-) {
+fun Header(@StringRes titleId: Int, onMoreClick: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier =
-            Modifier
-                .heightIn(min = 36.dp)
-                .padding(start = TMDb_12_dp),
+        Modifier
+            .heightIn(min = 36.dp)
+            .padding(start = TMDb_12_dp),
     ) {
         Text(
             text = stringResource(id = titleId),
             maxLines = 1,
             color = MaterialTheme.colors.onSurface,
             modifier =
-                Modifier
-                    .weight(1f)
-                    .wrapContentWidth(Alignment.Start),
+            Modifier
+                .weight(1f)
+                .wrapContentWidth(Alignment.Start),
         )
         Text(
             text = stringResource(R.string.more_item),
             color = MaterialTheme.colors.onSurface,
             modifier =
-                Modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(TMDb_12_dp)
-                    .clickable(onClick = onMoreClick),
+            Modifier
+                .align(Alignment.CenterVertically)
+                .padding(TMDb_12_dp)
+                .clickable(onClick = onMoreClick),
         )
     }
 }
 
 @Composable
-fun Feeds(
-    feeds: List<TMDbItem>,
-    onFeedClick: (TMDbItem) -> Unit,
-    index: Int,
-    modifier: Modifier = Modifier,
-) {
+fun Feeds(feeds: List<TMDbItem>, onFeedClick: (TMDbItem) -> Unit, index: Int, modifier: Modifier = Modifier) {
     LazyRow(
         modifier = modifier,
         contentPadding = PaddingValues(start = TMDb_2_dp, end = TMDb_2_dp),
@@ -368,11 +346,7 @@ fun Feeds(
 }
 
 @Composable
-fun TMDbItem(
-    tmdbItem: TMDbItem,
-    onFeedClick: (TMDbItem) -> Unit,
-    index: Int,
-) {
+fun TMDbItem(tmdbItem: TMDbItem, onFeedClick: (TMDbItem) -> Unit, index: Int) {
     val itemWidth: Dp
     val imageUrl: String?
     if (index % 3 == 0) {

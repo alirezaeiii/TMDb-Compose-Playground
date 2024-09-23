@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.sample.tmdb.common.R as R1
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -63,7 +64,6 @@ import com.sample.tmdb.common.utils.CircleTopCropTransformation
 import com.sample.tmdb.domain.model.Person
 import kotlin.math.max
 import kotlin.math.min
-import com.sample.tmdb.common.R as R1
 
 private val BottomBarHeight = 36.dp
 private val GradientScroll = 180.dp
@@ -77,20 +77,14 @@ private val CollapsedImageSize = 150.dp
 private val HzPadding = Modifier.padding(horizontal = 24.dp)
 
 @Composable
-fun PersonScreen(
-    upPress: () -> Unit,
-    viewModel: PersonViewModel = hiltViewModel(),
-) {
+fun PersonScreen(upPress: () -> Unit, viewModel: PersonViewModel = hiltViewModel()) {
     Content(viewModel = viewModel) {
         PersonScreen(it, upPress)
     }
 }
 
 @Composable
-fun PersonScreen(
-    person: Person,
-    upPress: () -> Unit,
-) {
+fun PersonScreen(person: Person, upPress: () -> Unit) {
     val titleHeight = remember { mutableStateOf(0.dp) }
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -110,10 +104,10 @@ fun PersonScreen(
 private fun Header() {
     Spacer(
         modifier =
-            Modifier
-                .height(280.dp)
-                .fillMaxWidth()
-                .background(Brush.horizontalGradient(Tornado)),
+        Modifier
+            .height(280.dp)
+            .fillMaxWidth()
+            .background(Brush.horizontalGradient(Tornado)),
     )
 }
 
@@ -122,14 +116,14 @@ fun Up(upPress: () -> Unit) {
     IconButton(
         onClick = upPress,
         modifier =
-            Modifier
-                .statusBarsPadding()
-                .padding(horizontal = TMDb_16_dp, vertical = 10.dp)
-                .size(36.dp)
-                .background(
-                    color = Neutral8.copy(alpha = 0.32f),
-                    shape = CircleShape,
-                ),
+        Modifier
+            .statusBarsPadding()
+            .padding(horizontal = TMDb_16_dp, vertical = 10.dp)
+            .size(36.dp)
+            .background(
+                color = Neutral8.copy(alpha = 0.32f),
+                shape = CircleShape,
+            ),
     ) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -140,18 +134,14 @@ fun Up(upPress: () -> Unit) {
 }
 
 @Composable
-fun Body(
-    biography: String,
-    titleHeight: MutableState<Dp>,
-    scroll: ScrollState,
-) {
+fun Body(biography: String, titleHeight: MutableState<Dp>, scroll: ScrollState) {
     Column {
         Spacer(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .statusBarsPadding()
-                    .height(MinTitleOffset),
+            Modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .height(MinTitleOffset),
         )
         Column(
             modifier = Modifier.verticalScroll(scroll),
@@ -173,11 +163,11 @@ fun Body(
                         Text(
                             text = biography,
                             style =
-                                MaterialTheme.typography.body2.copy(
-                                    letterSpacing = 2.sp,
-                                    lineHeight = 30.sp,
-                                    fontFamily = FontFamily.SansSerif,
-                                ),
+                            MaterialTheme.typography.body2.copy(
+                                letterSpacing = 2.sp,
+                                lineHeight = 30.sp,
+                                fontFamily = FontFamily.SansSerif,
+                            ),
                             color = MaterialTheme.colors.onSurface,
                             overflow = TextOverflow.Ellipsis,
                             modifier = HzPadding,
@@ -185,10 +175,10 @@ fun Body(
                     }
                     Spacer(
                         modifier =
-                            Modifier
-                                .padding(bottom = BottomBarHeight)
-                                .navigationBarsPadding()
-                                .height(TMDb_8_dp),
+                        Modifier
+                            .padding(bottom = BottomBarHeight)
+                            .navigationBarsPadding()
+                            .height(TMDb_8_dp),
                     )
                 }
             }
@@ -197,11 +187,7 @@ fun Body(
 }
 
 @Composable
-fun Title(
-    person: Person,
-    titleHeight: MutableState<Dp>,
-    scrollProvider: () -> Int,
-) {
+fun Title(person: Person, titleHeight: MutableState<Dp>, scrollProvider: () -> Int) {
     val localDestiny = LocalDensity.current
     val maxOffset =
         with(localDestiny) {
@@ -211,16 +197,16 @@ fun Title(
     Column(
         verticalArrangement = Arrangement.Bottom,
         modifier =
-            Modifier
-                .onGloballyPositioned { coordinates ->
-                    with(localDestiny) { titleHeight.value = coordinates.size.height.toDp() }
-                }.heightIn(min = titleHeight.value)
-                .statusBarsPadding()
-                .offset {
-                    val scroll = scrollProvider()
-                    val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
-                    IntOffset(x = 0, y = offset.toInt())
-                }.background(color = MaterialTheme.colors.surface),
+        Modifier
+            .onGloballyPositioned { coordinates ->
+                with(localDestiny) { titleHeight.value = coordinates.size.height.toDp() }
+            }.heightIn(min = titleHeight.value)
+            .statusBarsPadding()
+            .offset {
+                val scroll = scrollProvider()
+                val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
+                IntOffset(x = 0, y = offset.toInt())
+            }.background(color = MaterialTheme.colors.surface),
     ) {
         Spacer(Modifier.height(TMDb_16_dp))
         Text(
@@ -263,10 +249,7 @@ fun Title(
 }
 
 @Composable
-private fun Image(
-    imageUrl: String,
-    scrollProvider: () -> Int,
-) {
+private fun Image(imageUrl: String, scrollProvider: () -> Int) {
     val collapseRange = with(LocalDensity.current) { (MaxTitleOffset - MinTitleOffset).toPx() }
     val collapseFractionProvider = {
         (scrollProvider() / collapseRange).coerceIn(0f, 1f)

@@ -31,9 +31,9 @@ fun TMDbCard(
 ) {
     Card(
         modifier =
-            Modifier
-                .padding(TMDb_6_dp)
-                .clickable(onClick = { onFeedClick(tmdbItem) }),
+        Modifier
+            .padding(TMDb_6_dp)
+            .clickable(onClick = { onFeedClick(tmdbItem) }),
         shape = RoundedCornerShape(10.dp),
     ) {
         Column {
@@ -41,8 +41,8 @@ fun TMDbCard(
                 model = imageUrl,
                 contentDescription = tmdbItem.name,
                 modifier =
-                    Modifier
-                        .size(width = itemWidth, height = 180.dp),
+                Modifier
+                    .size(width = itemWidth, height = 180.dp),
                 contentScale = ContentScale.Crop,
             )
             Text(
@@ -53,9 +53,9 @@ fun TMDbCard(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 modifier =
-                    Modifier
-                        .size(width = itemWidth, height = 36.dp)
-                        .wrapContentHeight(),
+                Modifier
+                    .size(width = itemWidth, height = 36.dp)
+                    .wrapContentHeight(),
             )
         }
     }

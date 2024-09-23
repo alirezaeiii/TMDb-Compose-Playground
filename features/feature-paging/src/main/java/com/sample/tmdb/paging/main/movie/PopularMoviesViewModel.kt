@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PopularMoviesViewModel
-    @Inject
-    constructor(
-        @Popular repository: BasePagingRepository<Movie>,
-    ) : BaseMainPagingViewModel<Movie>(repository)
+@Inject
+constructor(@Popular repository: BasePagingRepository<Movie>) :
+    BaseMainPagingViewModel<Movie>(repository)

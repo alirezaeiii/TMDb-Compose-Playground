@@ -18,27 +18,24 @@ open class BaseDetailViewModel<T : TMDbItemDetails, R : TMDbItem>(
     repository: BaseDetailRepository<T>,
     savedStateHandle: SavedStateHandle,
 ) : TMDbViewModel<DetailWrapper>(
-        repository,
-        savedStateHandle[MainDestinations.TMDB_ID_KEY],
-    ) {
+    repository,
+    savedStateHandle[MainDestinations.TMDB_ID_KEY],
+) {
     private val _isBookmarked = MutableStateFlow(false)
     val isBookmarked: StateFlow<Boolean>
         get() = _isBookmarked
 
-    fun addBookmark(item: R) =
-        viewModelScope.launch {
-            bookmarkRepository.addBookmark(item)
-            isBookmarked(item.id)
-        }
+    fun addBookmark(item: R) = viewModelScope.launch {
+        bookmarkRepository.addBookmark(item)
+        isBookmarked(item.id)
+    }
 
-    fun removeBookmark(id: Int) =
-        viewModelScope.launch {
-            bookmarkRepository.deleteBookmark(id)
-            isBookmarked(id)
-        }
+    fun removeBookmark(id: Int) = viewModelScope.launch {
+        bookmarkRepository.deleteBookmark(id)
+        isBookmarked(id)
+    }
 
-    fun isBookmarked(id: Int) =
-        viewModelScope.launch {
-            _isBookmarked.emit(bookmarkRepository.isBookmarked(id))
-        }
+    fun isBookmarked(id: Int) = viewModelScope.launch {
+        _isBookmarked.emit(bookmarkRepository.isBookmarked(id))
+    }
 }

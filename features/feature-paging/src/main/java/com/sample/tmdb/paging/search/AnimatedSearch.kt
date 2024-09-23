@@ -32,14 +32,14 @@ private fun AnimateShapeInfinitely(
         animateShape.animateTo(
             targetValue = targetValue,
             animationSpec =
-                infiniteRepeatable(
-                    animation =
-                        tween(
-                            durationMillis = durationMillis,
-                            easing = LinearEasing,
-                        ),
-                    repeatMode = RepeatMode.Restart,
+            infiniteRepeatable(
+                animation =
+                tween(
+                    durationMillis = durationMillis,
+                    easing = LinearEasing,
                 ),
+                repeatMode = RepeatMode.Restart,
+            ),
         )
     }
 }
@@ -87,15 +87,15 @@ fun AnimatedSearch() {
             strokeWidth = 16f,
             cap = StrokeCap.Round,
             start =
-                Offset(
-                    animateLine.value * 80f,
-                    animateLine.value * 80f,
-                ),
+            Offset(
+                animateLine.value * 80f,
+                animateLine.value * 80f,
+            ),
             end =
-                Offset(
-                    animateLine.value * 110f,
-                    animateLine.value * 110f,
-                ),
+            Offset(
+                animateLine.value * 110f,
+                animateLine.value * 110f,
+            ),
         )
     }
 }

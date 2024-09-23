@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sample.tmdb.common.MainDestinations
+import com.sample.tmdb.common.R as R1
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
@@ -48,14 +49,10 @@ import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.utils.toDp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import com.sample.tmdb.common.R as R1
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BookmarkScreen(
-    navController: NavController,
-    coroutineScope: CoroutineScope = rememberCoroutineScope(),
-) {
+fun BookmarkScreen(navController: NavController, coroutineScope: CoroutineScope = rememberCoroutineScope()) {
     val tabs = remember { MediaTab.values() }
     val pagerState =
         rememberPagerState(pageCount = {
@@ -65,9 +62,9 @@ fun BookmarkScreen(
 
     Column(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .statusBarsPadding(),
+        Modifier
+            .fillMaxSize()
+            .statusBarsPadding(),
     ) {
         TabRow(
             selectedTabIndex = selectedTabIndex,
@@ -104,10 +101,7 @@ fun BookmarkScreen(
 }
 
 @Composable
-private fun MoviesTabContent(
-    navController: NavController,
-    viewModel: BookmarkMovieViewModel = hiltViewModel(),
-) {
+private fun MoviesTabContent(navController: NavController, viewModel: BookmarkMovieViewModel = hiltViewModel()) {
     TabContent(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
@@ -116,10 +110,7 @@ private fun MoviesTabContent(
 }
 
 @Composable
-private fun TVShowsTabContent(
-    navController: NavController,
-    viewModel: BookmarkTVShowViewModel = hiltViewModel(),
-) {
+private fun TVShowsTabContent(navController: NavController, viewModel: BookmarkTVShowViewModel = hiltViewModel()) {
     TabContent(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
@@ -144,28 +135,25 @@ private fun <T : TMDbItem> TabContent(
 }
 
 @Composable
-fun <T : TMDbItem> TabContent(
-    items: List<T>,
-    onClick: (TMDbItem) -> Unit,
-) {
+fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 140.dp),
         contentPadding =
-            PaddingValues(
-                start = TMDb_8_dp,
-                end = TMDb_8_dp,
-                bottom =
-                    WindowInsets.navigationBars
-                        .getBottom(LocalDensity.current)
-                        .toDp()
-                        .dp
-                        .plus(56.dp),
-            ),
+        PaddingValues(
+            start = TMDb_8_dp,
+            end = TMDb_8_dp,
+            bottom =
+            WindowInsets.navigationBars
+                .getBottom(LocalDensity.current)
+                .toDp()
+                .dp
+                .plus(56.dp),
+        ),
         horizontalArrangement =
-            Arrangement.spacedBy(
-                TMDb_8_dp,
-                Alignment.CenterHorizontally,
-            ),
+        Arrangement.spacedBy(
+            TMDb_8_dp,
+            Alignment.CenterHorizontally,
+        ),
         content = {
             items(items.size) { index ->
                 TMDbContent(
@@ -181,14 +169,12 @@ fun <T : TMDbItem> TabContent(
 }
 
 @Composable
-fun EmptyView(
-    @StringRes textResourceId: Int,
-) {
+fun EmptyView(@StringRes textResourceId: Int) {
     Column(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(bottom = 64.dp),
+        Modifier
+            .fillMaxSize()
+            .padding(bottom = 64.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -201,10 +187,10 @@ fun EmptyView(
         }
         Text(
             text =
-                stringResource(
-                    id = R.string.empty_list,
-                    stringResource(id = textResourceId),
-                ),
+            stringResource(
+                id = R.string.empty_list,
+                stringResource(id = textResourceId),
+            ),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
             textAlign = TextAlign.Center,
         )
@@ -230,9 +216,7 @@ private fun isEmptyImageVisible(): Boolean {
     return false
 }
 
-enum class MediaTab(
-    @StringRes val titleResourceId: Int,
-) {
+enum class MediaTab(@StringRes val titleResourceId: Int) {
     Movies(titleResourceId = R.string.movie),
     TvShows(titleResourceId = R.string.tv_show),
 }

@@ -25,18 +25,17 @@ data class PersonDto(
     val profilePath: String?,
 )
 
-fun PersonDto.asDomainModel(): Person =
-    Person(
-        birthDay,
-        deathDay,
-        id,
-        name,
-        biography,
-        placeOfBirth,
-        profilePath?.let { profilePath ->
-            String.format(
-                Constants.BASE_WIDTH_342_PATH,
-                profilePath,
-            )
-        },
-    )
+fun PersonDto.asDomainModel(): Person = Person(
+    birthDay,
+    deathDay,
+    id,
+    name,
+    biography,
+    placeOfBirth,
+    profilePath?.let { profilePath ->
+        String.format(
+            Constants.BASE_WIDTH_342_PATH,
+            profilePath,
+        )
+    },
+)

@@ -8,7 +8,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkMovieViewModel
-    @Inject
-    constructor(
-        repository: @JvmSuppressWildcards BaseRepository<List<Movie>>,
-    ) : BaseViewModel<List<Movie>>(repository)
+@Inject
+constructor(repository: @JvmSuppressWildcards BaseRepository<List<Movie>>) :
+    BaseViewModel<List<Movie>>(repository)

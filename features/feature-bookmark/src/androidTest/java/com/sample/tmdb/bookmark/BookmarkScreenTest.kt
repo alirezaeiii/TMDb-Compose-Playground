@@ -19,18 +19,18 @@ class BookmarkScreenTest {
             setContent {
                 TabContent(
                     items =
-                        listOf(
-                            Movie(
-                                1,
-                                "overview",
-                                "releaseDate",
-                                null,
-                                null,
-                                "name",
-                                5.0,
-                                5,
-                            ),
+                    listOf(
+                        Movie(
+                            1,
+                            "overview",
+                            "releaseDate",
+                            null,
+                            null,
+                            "name",
+                            5.0,
+                            5,
                         ),
+                    ),
                 ) {
                 }
             }

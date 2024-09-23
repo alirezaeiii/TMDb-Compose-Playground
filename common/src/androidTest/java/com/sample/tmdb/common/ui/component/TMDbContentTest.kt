@@ -21,16 +21,16 @@ class TMDbContentTest {
             setContent {
                 TMDbContent(
                     tmdbItem =
-                        Movie(
-                            1,
-                            "overview",
-                            "releaseDate",
-                            null,
-                            null,
-                            "name",
-                            1.1,
-                            1,
-                        ),
+                    Movie(
+                        1,
+                        "overview",
+                        "releaseDate",
+                        null,
+                        null,
+                        "name",
+                        1.1,
+                        1,
+                    ),
                 ) {
                 }
             }
@@ -70,16 +70,16 @@ class TMDbContentTest {
             setContent {
                 TMDbItemInfo(
                     tmdbItem =
-                        Movie(
-                            1,
-                            "overview",
-                            "releaseDate",
-                            null,
-                            null,
-                            "name",
-                            1.1,
-                            1,
-                        ),
+                    Movie(
+                        1,
+                        "overview",
+                        "releaseDate",
+                        null,
+                        null,
+                        "name",
+                        1.1,
+                        1,
+                    ),
                 )
             }
             onNodeWithText("name").assertIsDisplayed()

@@ -19,9 +19,7 @@ object TmdbPagingComposeTheme {
 }
 
 @Immutable
-data class FontSizes(
-    val sp_11: TextUnit = 11.sp,
-)
+data class FontSizes(val sp_11: TextUnit = 11.sp)
 
 private val DarkColorPalette =
     darkColors(
@@ -46,10 +44,7 @@ private val LightColorPalette =
     )
 
 @Composable
-fun TmdbPagingComposeTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit,
-) {
+fun TmdbPagingComposeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors =
         if (darkTheme) {
             DarkColorPalette

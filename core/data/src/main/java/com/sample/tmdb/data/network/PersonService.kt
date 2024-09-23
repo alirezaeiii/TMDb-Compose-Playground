@@ -6,7 +6,5 @@ import retrofit2.http.Path
 
 interface PersonService {
     @GET("3/person/{personId}")
-    suspend fun getPerson(
-        @Path("personId") personId: String,
-    ): PersonDto
+    suspend fun getPerson(@Path("personId") personId: String): PersonDto
 }

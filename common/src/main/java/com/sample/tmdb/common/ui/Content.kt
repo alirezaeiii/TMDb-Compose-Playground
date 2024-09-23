@@ -10,10 +10,7 @@ import com.sample.tmdb.common.ui.component.TMDbProgressBar
 import com.sample.tmdb.common.utils.Resource
 
 @Composable
-fun <T> Content(
-    viewModel: BaseViewModel<T>,
-    successScreen: @Composable (T) -> Unit,
-) {
+fun <T> Content(viewModel: BaseViewModel<T>, successScreen: @Composable (T) -> Unit) {
     when (val resource = viewModel.stateFlow.collectAsState().value) {
         is Resource.Loading -> TMDbProgressBar()
         is Resource.Success -> successScreen(resource.data)

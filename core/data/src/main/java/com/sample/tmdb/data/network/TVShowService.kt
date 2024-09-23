@@ -29,64 +29,38 @@ interface TVShowService {
     suspend fun discoverTVSeries(): TMDbWrapper<NetworkTVShow>
 
     @GET("3/trending/tv/day")
-    suspend fun trendingTVSeries(
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkTVShow>
+    suspend fun trendingTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/popular")
-    suspend fun popularTVSeries(
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkTVShow>
+    suspend fun popularTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/airing_today")
-    suspend fun airingTodayTVSeries(
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkTVShow>
+    suspend fun airingTodayTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/on_the_air")
-    suspend fun onTheAirTVSeries(
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkTVShow>
+    suspend fun onTheAirTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/top_rated")
-    suspend fun topRatedTVSeries(
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkTVShow>
+    suspend fun topRatedTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
 
     @GET("3/discover/tv")
-    suspend fun discoverTVSeries(
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkTVShow>
+    suspend fun discoverTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/{tvId}/credits")
-    suspend fun tvCredit(
-        @Path("tvId") tvId: Int,
-    ): NetworkCreditWrapper
+    suspend fun tvCredit(@Path("tvId") tvId: Int): NetworkCreditWrapper
 
     @GET("3/tv/{tvId}")
-    suspend fun fetchTvDetail(
-        @Path("tvId") tvId: Int,
-    ): TvDetailResponse
+    suspend fun fetchTvDetail(@Path("tvId") tvId: Int): TvDetailResponse
 
     @GET("3/search/tv")
-    suspend fun searchTVSeries(
-        @Query("page") page: Int,
-        @Query("query") query: String,
-    ): TMDbWrapper<NetworkTVShow>
+    suspend fun searchTVSeries(@Query("page") page: Int, @Query("query") query: String): TMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/{tvId}/images")
-    suspend fun fetchImages(
-        @Path("tvId") tvId: Int,
-    ): ImagesResponse
+    suspend fun fetchImages(@Path("tvId") tvId: Int): ImagesResponse
 
     @GET("3/tv/{tvId}/similar")
-    suspend fun fetchSimilarMovies(
-        @Path("tvId") tvId: Int,
-    ): TMDbWrapper<NetworkTVShow>
+    suspend fun fetchSimilarMovies(@Path("tvId") tvId: Int): TMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/{TvId}/similar")
-    suspend fun fetchSimilarMovies(
-        @Path("TvId") tvId: Int,
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkTVShow>
+    suspend fun fetchSimilarMovies(@Path("TvId") tvId: Int, @Query("page") page: Int): TMDbWrapper<NetworkTVShow>
 }

@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SimilarMoviesViewModel
-    @Inject
-    constructor(
-        @Similar repository: BasePagingRepository<Movie>,
-        savedStateHandle: SavedStateHandle,
-    ) : BaseMainPagingViewModel<Movie>(repository, savedStateHandle[MainDestinations.TMDB_SIMILAR_ID])
+@Inject
+constructor(
+    @Similar repository: BasePagingRepository<Movie>,
+    savedStateHandle: SavedStateHandle,
+) : BaseMainPagingViewModel<Movie>(repository, savedStateHandle[MainDestinations.TMDB_SIMILAR_ID])

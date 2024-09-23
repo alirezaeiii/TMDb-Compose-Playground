@@ -40,10 +40,9 @@ class PersonRepositoryTest : BaseRepositoryTest() {
         repository = PersonRepository(api, context, Dispatchers.Main)
     }
 
-    override fun mockApiResponse() =
-        runTest {
-            `when`(api.getPerson(anyString())).thenReturn(personDto)
-        }
+    override fun mockApiResponse() = runTest {
+        `when`(api.getPerson(anyString())).thenReturn(personDto)
+    }
 
     @Test
     fun `load person success`() {

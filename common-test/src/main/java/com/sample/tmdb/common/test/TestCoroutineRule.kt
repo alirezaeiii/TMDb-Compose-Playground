@@ -10,10 +10,7 @@ import org.junit.runners.model.Statement
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TestCoroutineRule : TestRule {
-    override fun apply(
-        base: Statement,
-        description: Description?,
-    ) = object : Statement() {
+    override fun apply(base: Statement, description: Description?) = object : Statement() {
         override fun evaluate() {
             Dispatchers.setMain(Dispatchers.Unconfined)
 

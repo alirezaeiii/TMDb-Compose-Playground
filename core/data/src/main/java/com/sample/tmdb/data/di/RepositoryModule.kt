@@ -58,15 +58,21 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    internal abstract fun bindTVShowFeedRepository(tvShowFeedRepository: TVShowFeedRepository): BaseFeedRepository<TVShow>
+    internal abstract fun bindTVShowFeedRepository(
+        tvShowFeedRepository: TVShowFeedRepository,
+    ): BaseFeedRepository<TVShow>
 
     @Singleton
     @Binds
-    internal abstract fun bindMovieDetailRepository(movieDetailRepository: MovieDetailRepository): BaseDetailRepository<MovieDetails>
+    internal abstract fun bindMovieDetailRepository(
+        movieDetailRepository: MovieDetailRepository,
+    ): BaseDetailRepository<MovieDetails>
 
     @Singleton
     @Binds
-    internal abstract fun bindTVShowDetailRepository(tvShowDetailRepository: TVShowDetailRepository): BaseDetailRepository<TvDetails>
+    internal abstract fun bindTVShowDetailRepository(
+        tvShowDetailRepository: TVShowDetailRepository,
+    ): BaseDetailRepository<TvDetails>
 
     @Singleton
     @Trending
@@ -199,10 +205,14 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     @JvmSuppressWildcards
-    internal abstract fun bindBookmarkMovieRepository(bookmarkMovieRepository: BookmarkMovieRepository): BaseRepository<List<Movie>>
+    internal abstract fun bindBookmarkMovieRepository(
+        bookmarkMovieRepository: BookmarkMovieRepository,
+    ): BaseRepository<List<Movie>>
 
     @Singleton
     @Binds
     @JvmSuppressWildcards
-    internal abstract fun bindBookmarkTVShowRepository(bookmarkTVShowRepository: BookmarkTVShowRepository): BaseRepository<List<TVShow>>
+    internal abstract fun bindBookmarkTVShowRepository(
+        bookmarkTVShowRepository: BookmarkTVShowRepository,
+    ): BaseRepository<List<TVShow>>
 }

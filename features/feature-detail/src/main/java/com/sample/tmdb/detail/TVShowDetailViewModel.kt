@@ -10,9 +10,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TVShowDetailViewModel
-    @Inject
-    constructor(
-        bookmarkRepository: BookmarkDetailsRepository<TVShow>,
-        repository: BaseDetailRepository<TvDetails>,
-        savedStateHandle: SavedStateHandle,
-    ) : BaseDetailViewModel<TvDetails, TVShow>(bookmarkRepository, repository, savedStateHandle)
+@Inject
+constructor(
+    bookmarkRepository: BookmarkDetailsRepository<TVShow>,
+    repository: BaseDetailRepository<TvDetails>,
+    savedStateHandle: SavedStateHandle,
+) : BaseDetailViewModel<TvDetails, TVShow>(bookmarkRepository, repository, savedStateHandle)

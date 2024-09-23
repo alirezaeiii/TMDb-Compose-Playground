@@ -29,64 +29,38 @@ interface MovieService {
     suspend fun discoverMovies(): TMDbWrapper<NetworkMovie>
 
     @GET("3/trending/movie/day")
-    suspend fun trendingMovies(
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkMovie>
+    suspend fun trendingMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
 
     @GET("3/movie/popular")
-    suspend fun popularMovies(
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkMovie>
+    suspend fun popularMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
 
     @GET("3/movie/now_playing")
-    suspend fun nowPlayingMovies(
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkMovie>
+    suspend fun nowPlayingMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
 
     @GET("3/movie/upcoming")
-    suspend fun upcomingMovies(
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkMovie>
+    suspend fun upcomingMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
 
     @GET("3/movie/top_rated")
-    suspend fun topRatedMovies(
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkMovie>
+    suspend fun topRatedMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
 
     @GET("3/discover/movie")
-    suspend fun discoverMovies(
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkMovie>
+    suspend fun discoverMovies(@Query("page") page: Int): TMDbWrapper<NetworkMovie>
 
     @GET("3/movie/{movieId}/credits")
-    suspend fun movieCredit(
-        @Path("movieId") movieId: Int,
-    ): NetworkCreditWrapper
+    suspend fun movieCredit(@Path("movieId") movieId: Int): NetworkCreditWrapper
 
     @GET("3/movie/{movie_id}")
-    suspend fun fetchMovieDetail(
-        @Path("movie_id") movieId: Int,
-    ): MovieDetailResponse
+    suspend fun fetchMovieDetail(@Path("movie_id") movieId: Int): MovieDetailResponse
 
     @GET("3/search/movie")
-    suspend fun searchMovies(
-        @Query("page") page: Int,
-        @Query("query") query: String,
-    ): TMDbWrapper<NetworkMovie>
+    suspend fun searchMovies(@Query("page") page: Int, @Query("query") query: String): TMDbWrapper<NetworkMovie>
 
     @GET("3/movie/{movie_id}/images")
-    suspend fun fetchImages(
-        @Path("movie_id") movieId: Int,
-    ): ImagesResponse
+    suspend fun fetchImages(@Path("movie_id") movieId: Int): ImagesResponse
 
     @GET("3/movie/{movie_id}/similar")
-    suspend fun fetchSimilarMovies(
-        @Path("movie_id") movieId: Int,
-    ): TMDbWrapper<NetworkMovie>
+    suspend fun fetchSimilarMovies(@Path("movie_id") movieId: Int): TMDbWrapper<NetworkMovie>
 
     @GET("3/movie/{movie_id}/similar")
-    suspend fun fetchSimilarMovies(
-        @Path("movie_id") movieId: Int,
-        @Query("page") page: Int,
-    ): TMDbWrapper<NetworkMovie>
+    suspend fun fetchSimilarMovies(@Path("movie_id") movieId: Int, @Query("page") page: Int): TMDbWrapper<NetworkMovie>
 }

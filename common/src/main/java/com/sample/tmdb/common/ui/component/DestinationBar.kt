@@ -37,9 +37,9 @@ fun DestinationBar(
             IconButton(
                 onClick = { upPress?.invoke() },
                 modifier =
-                    Modifier
-                        .alpha(if (upPress == null) 0f else 1f)
-                        .align(Alignment.CenterVertically),
+                Modifier
+                    .alpha(if (upPress == null) 0f else 1f)
+                    .align(Alignment.CenterVertically),
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -54,16 +54,16 @@ fun DestinationBar(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier =
-                    Modifier
-                        .weight(1f)
-                        .align(Alignment.CenterVertically),
+                Modifier
+                    .weight(1f)
+                    .align(Alignment.CenterVertically),
             )
             IconButton(
                 onClick = { onSearchClicked?.invoke() },
                 modifier =
-                    Modifier
-                        .alpha(if (onSearchClicked == null) 0f else 1f)
-                        .align(Alignment.CenterVertically),
+                Modifier
+                    .alpha(if (onSearchClicked == null) 0f else 1f)
+                    .align(Alignment.CenterVertically),
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_search),

@@ -110,11 +110,7 @@ fun TMDbApp() {
 }
 
 @Composable
-private fun TMDbBottomBar(
-    tabs: Array<HomeSections>,
-    currentRoute: String,
-    navigateToRoute: (String) -> Unit,
-) {
+private fun TMDbBottomBar(tabs: Array<HomeSections>, currentRoute: String, navigateToRoute: (String) -> Unit) {
     val currentSection = tabs.first { it.route == currentRoute }
 
     Box(
@@ -170,18 +166,18 @@ private fun NavGraphBuilder.detailScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments =
-            listOf(
-                navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType },
-            ),
+        listOf(
+            navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType },
+        ),
     ) {
         MovieDetailScreen(navController)
     }
     composable(
         route = "${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments =
-            listOf(
-                navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType },
-            ),
+        listOf(
+            navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType },
+        ),
     ) {
         TVShowDetailScreen(navController)
     }
@@ -209,9 +205,9 @@ private fun NavGraphBuilder.moviePagingScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_SIMILAR_MOVIES_ROUTE}/{${MainDestinations.TMDB_SIMILAR_ID}}",
         arguments =
-            listOf(
-                navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType },
-            ),
+        listOf(
+            navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType },
+        ),
     ) {
         SimilarMovieScreen(navController = navController)
     }
@@ -239,9 +235,9 @@ private fun NavGraphBuilder.tvShowPagingScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_SIMILAR_TV_SHOW_ROUTE}/{${MainDestinations.TMDB_SIMILAR_ID}}",
         arguments =
-            listOf(
-                navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType },
-            ),
+        listOf(
+            navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType },
+        ),
     ) {
         SimilarTVShowScreen(navController = navController)
     }
@@ -260,9 +256,9 @@ private fun NavGraphBuilder.creditScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_CAST_ROUTE}/{${MainDestinations.TMDB_CREDIT_KEY}}",
         arguments =
-            listOf(
-                navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType },
-            ),
+        listOf(
+            navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType },
+        ),
     ) { from ->
         CreditScreen(
             R.string.cast,
@@ -276,9 +272,9 @@ private fun NavGraphBuilder.creditScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_CREW_ROUTE}/{${MainDestinations.TMDB_CREDIT_KEY}}",
         arguments =
-            listOf(
-                navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType },
-            ),
+        listOf(
+            navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType },
+        ),
     ) { from ->
         CreditScreen(
             R.string.crew,
@@ -295,9 +291,9 @@ private fun NavGraphBuilder.personScreen(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_PERSON_ROUTE}/{${MainDestinations.TMDB_PERSON_KEY}}",
         arguments =
-            listOf(
-                navArgument(MainDestinations.TMDB_PERSON_KEY) { type = NavType.StringType },
-            ),
+        listOf(
+            navArgument(MainDestinations.TMDB_PERSON_KEY) { type = NavType.StringType },
+        ),
     ) {
         PersonScreen({ navController.navigateUp() })
     }
@@ -305,19 +301,20 @@ private fun NavGraphBuilder.personScreen(navController: NavController) {
 
 private fun NavGraphBuilder.imagesScreen() {
     composable(
-        route = "${MainDestinations.TMDB_IMAGES_ROUTE}/{${MainDestinations.TMDB_IMAGES_KEY}}/{${MainDestinations.TMDB_IMAGE_PAGE}}",
+        route = "${MainDestinations.TMDB_IMAGES_ROUTE}/{${MainDestinations.TMDB_IMAGES_KEY}}" +
+            "/{${MainDestinations.TMDB_IMAGE_PAGE}}",
         arguments =
-            listOf(
-                navArgument(MainDestinations.TMDB_IMAGES_KEY) { type = NavType.StringType },
-                navArgument(MainDestinations.TMDB_IMAGE_PAGE) { type = NavType.IntType },
-            ),
+        listOf(
+            navArgument(MainDestinations.TMDB_IMAGES_KEY) { type = NavType.StringType },
+            navArgument(MainDestinations.TMDB_IMAGE_PAGE) { type = NavType.IntType },
+        ),
     ) { from ->
         ImagesScreen(
             images =
-                gson.fromJson(
-                    from.arguments?.getString(MainDestinations.TMDB_IMAGES_KEY),
-                    object : TypeToken<List<TMDbImage>>() {}.type,
-                ),
+            gson.fromJson(
+                from.arguments?.getString(MainDestinations.TMDB_IMAGES_KEY),
+                object : TypeToken<List<TMDbImage>>() {}.type,
+            ),
             initialPage = from.arguments?.getInt(MainDestinations.TMDB_IMAGE_PAGE)!!,
         )
     }

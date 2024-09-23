@@ -29,235 +29,189 @@ import com.sample.tmdb.paging.main.tvshow.TopRatedTvSeriesViewModel
 import com.sample.tmdb.paging.main.tvshow.TrendingTvSeriesViewModel
 
 @Composable
-fun TrendingMovieScreen(
-    navController: NavController,
-    viewModel: TrendingMoviesViewModel = hiltViewModel(),
-) {
+fun TrendingMovieScreen(navController: NavController, viewModel: TrendingMoviesViewModel = hiltViewModel()) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.trending,
-                stringResource(com.sample.tmdb.common.R.string.movies),
-            ),
+        stringResource(
+            R.string.trending,
+            stringResource(com.sample.tmdb.common.R.string.movies),
+        ),
     )
 }
 
 @Composable
-fun PopularMovieScreen(
-    navController: NavController,
-    viewModel: PopularMoviesViewModel = hiltViewModel(),
-) {
+fun PopularMovieScreen(navController: NavController, viewModel: PopularMoviesViewModel = hiltViewModel()) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.popular,
-                stringResource(com.sample.tmdb.common.R.string.movies),
-            ),
+        stringResource(
+            R.string.popular,
+            stringResource(com.sample.tmdb.common.R.string.movies),
+        ),
     )
 }
 
 @Composable
-fun NowPlayingMovieScreen(
-    navController: NavController,
-    viewModel: NowPlayingMoviesViewModel = hiltViewModel(),
-) {
+fun NowPlayingMovieScreen(navController: NavController, viewModel: NowPlayingMoviesViewModel = hiltViewModel()) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.now_playing,
-                stringResource(com.sample.tmdb.common.R.string.movies),
-            ),
+        stringResource(
+            R.string.now_playing,
+            stringResource(com.sample.tmdb.common.R.string.movies),
+        ),
     )
 }
 
 @Composable
-fun UpcomingMovieScreen(
-    navController: NavController,
-    viewModel: UpcomingMoviesViewModel = hiltViewModel(),
-) {
+fun UpcomingMovieScreen(navController: NavController, viewModel: UpcomingMoviesViewModel = hiltViewModel()) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.upcoming,
-                stringResource(com.sample.tmdb.common.R.string.movies),
-            ),
+        stringResource(
+            R.string.upcoming,
+            stringResource(com.sample.tmdb.common.R.string.movies),
+        ),
     )
 }
 
 @Composable
-fun TopRatedMovieScreen(
-    navController: NavController,
-    viewModel: TopRatedMoviesViewModel = hiltViewModel(),
-) {
+fun TopRatedMovieScreen(navController: NavController, viewModel: TopRatedMoviesViewModel = hiltViewModel()) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.highest_rate,
-                stringResource(com.sample.tmdb.common.R.string.movies),
-            ),
+        stringResource(
+            R.string.highest_rate,
+            stringResource(com.sample.tmdb.common.R.string.movies),
+        ),
     )
 }
 
 @Composable
-fun DiscoverMovieScreen(
-    navController: NavController,
-    viewModel: DiscoverMoviesViewModel = hiltViewModel(),
-) {
+fun DiscoverMovieScreen(navController: NavController, viewModel: DiscoverMoviesViewModel = hiltViewModel()) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.discover,
-                stringResource(com.sample.tmdb.common.R.string.movies),
-            ),
+        stringResource(
+            R.string.discover,
+            stringResource(com.sample.tmdb.common.R.string.movies),
+        ),
     )
 }
 
 @Composable
-fun SimilarMovieScreen(
-    navController: NavController,
-    viewModel: SimilarMoviesViewModel = hiltViewModel(),
-) {
+fun SimilarMovieScreen(navController: NavController, viewModel: SimilarMoviesViewModel = hiltViewModel()) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.similar_items,
-                stringResource(com.sample.tmdb.common.R.string.movies),
-            ),
+        stringResource(
+            R.string.similar_items,
+            stringResource(com.sample.tmdb.common.R.string.movies),
+        ),
     )
 }
 
 @Composable
-fun TrendingTVShowScreen(
-    navController: NavController,
-    viewModel: TrendingTvSeriesViewModel = hiltViewModel(),
-) {
+fun TrendingTVShowScreen(navController: NavController, viewModel: TrendingTvSeriesViewModel = hiltViewModel()) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.trending,
-                stringResource(com.sample.tmdb.common.R.string.tv_series),
-            ),
+        stringResource(
+            R.string.trending,
+            stringResource(com.sample.tmdb.common.R.string.tv_series),
+        ),
     )
 }
 
 @Composable
-fun PopularTVShowScreen(
-    navController: NavController,
-    viewModel: PopularTvSeriesViewModel = hiltViewModel(),
-) {
+fun PopularTVShowScreen(navController: NavController, viewModel: PopularTvSeriesViewModel = hiltViewModel()) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.popular,
-                stringResource(com.sample.tmdb.common.R.string.tv_series),
-            ),
+        stringResource(
+            R.string.popular,
+            stringResource(com.sample.tmdb.common.R.string.tv_series),
+        ),
     )
 }
 
 @Composable
-fun AiringTodayTVShowScreen(
-    navController: NavController,
-    viewModel: AiringTodayTvSeriesViewModel = hiltViewModel(),
-) {
+fun AiringTodayTVShowScreen(navController: NavController, viewModel: AiringTodayTvSeriesViewModel = hiltViewModel()) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.airing_today,
-                stringResource(com.sample.tmdb.common.R.string.tv_series),
-            ),
+        stringResource(
+            R.string.airing_today,
+            stringResource(com.sample.tmdb.common.R.string.tv_series),
+        ),
     )
 }
 
 @Composable
-fun OnTheAirTVShowScreen(
-    navController: NavController,
-    viewModel: OnTheAirTvSeriesViewModel = hiltViewModel(),
-) {
+fun OnTheAirTVShowScreen(navController: NavController, viewModel: OnTheAirTvSeriesViewModel = hiltViewModel()) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.on_the_air,
-                stringResource(com.sample.tmdb.common.R.string.tv_series),
-            ),
+        stringResource(
+            R.string.on_the_air,
+            stringResource(com.sample.tmdb.common.R.string.tv_series),
+        ),
     )
 }
 
 @Composable
-fun TopRatedTVShowScreen(
-    navController: NavController,
-    viewModel: TopRatedTvSeriesViewModel = hiltViewModel(),
-) {
+fun TopRatedTVShowScreen(navController: NavController, viewModel: TopRatedTvSeriesViewModel = hiltViewModel()) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.highest_rate,
-                stringResource(com.sample.tmdb.common.R.string.tv_series),
-            ),
+        stringResource(
+            R.string.highest_rate,
+            stringResource(com.sample.tmdb.common.R.string.tv_series),
+        ),
     )
 }
 
 @Composable
-fun DiscoverTVShowScreen(
-    navController: NavController,
-    viewModel: DiscoverTvSeriesViewModel = hiltViewModel(),
-) {
+fun DiscoverTVShowScreen(navController: NavController, viewModel: DiscoverTvSeriesViewModel = hiltViewModel()) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.discover,
-                stringResource(com.sample.tmdb.common.R.string.tv_series),
-            ),
+        stringResource(
+            R.string.discover,
+            stringResource(com.sample.tmdb.common.R.string.tv_series),
+        ),
     )
 }
 
 @Composable
-fun SimilarTVShowScreen(
-    navController: NavController,
-    viewModel: SimilarTvSeriesViewModel = hiltViewModel(),
-) {
+fun SimilarTVShowScreen(navController: NavController, viewModel: SimilarTvSeriesViewModel = hiltViewModel()) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
         title =
-            stringResource(
-                R.string.similar_items,
-                stringResource(com.sample.tmdb.common.R.string.tv_series),
-            ),
+        stringResource(
+            R.string.similar_items,
+            stringResource(com.sample.tmdb.common.R.string.tv_series),
+        ),
     )
 }
 
 @Composable
-private fun MoviePagingScreen(
-    viewModel: BasePagingViewModel<Movie>,
-    navController: NavController,
-    title: String,
-) {
+private fun MoviePagingScreen(viewModel: BasePagingViewModel<Movie>, navController: NavController, title: String) {
     PagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -268,11 +222,7 @@ private fun MoviePagingScreen(
 }
 
 @Composable
-private fun TVShowPagingScreen(
-    viewModel: BasePagingViewModel<TVShow>,
-    navController: NavController,
-    title: String,
-) {
+private fun TVShowPagingScreen(viewModel: BasePagingViewModel<TVShow>, navController: NavController, title: String) {
     PagingScreen(
         viewModel = viewModel,
         navController = navController,

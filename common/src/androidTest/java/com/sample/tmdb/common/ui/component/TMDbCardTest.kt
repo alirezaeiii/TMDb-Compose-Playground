@@ -18,16 +18,16 @@ class TMDbCardTest {
             setContent {
                 TMDbCard(
                     tmdbItem =
-                        Movie(
-                            1,
-                            "overview",
-                            "releaseDate",
-                            null,
-                            null,
-                            "name",
-                            1.1,
-                            1,
-                        ),
+                    Movie(
+                        1,
+                        "overview",
+                        "releaseDate",
+                        null,
+                        null,
+                        "name",
+                        1.1,
+                        1,
+                    ),
                     {},
                 )
             }

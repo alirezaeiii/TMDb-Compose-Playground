@@ -32,20 +32,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import com.sample.tmdb.common.R as R1
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.domain.model.TMDbImage
-import com.sample.tmdb.common.R as R1
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ImagesScreen(
-    images: List<TMDbImage>,
-    initialPage: Int,
-) {
+fun ImagesScreen(images: List<TMDbImage>, initialPage: Int) {
     if (images.isEmpty() || initialPage !in images.indices) return
 
     val pagerState =
@@ -78,10 +75,10 @@ fun Poster(image: TMDbImage) {
                     painter = rememberAsyncImagePainter(image.url),
                     contentDescription = null,
                     modifier =
-                        Modifier
-                            .align(Alignment.Center)
-                            .fillMaxWidth()
-                            .wrapContentHeight(),
+                    Modifier
+                        .align(Alignment.Center)
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
                     contentScale = ContentScale.FillWidth,
                 )
                 VoteCount(image.voteCount)
@@ -97,10 +94,10 @@ fun BlurImage(url: String) {
         contentDescription = stringResource(id = R1.string.poster_content_description),
         contentScale = ContentScale.FillHeight,
         modifier =
-            Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.surface)
-                .blur(TMDb_16_dp),
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.surface)
+            .blur(TMDb_16_dp),
     )
 }
 
@@ -109,13 +106,13 @@ private fun BoxScope.VoteCount(voteCount: Int) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier =
-            Modifier
-                .wrapContentSize()
-                .align(Alignment.BottomStart)
-                .background(
-                    color = MaterialTheme.colors.surface.copy(alpha = 0.3f),
-                    shape = RoundedCornerShape(bottomStart = TMDb_12_dp, topEnd = TMDb_12_dp),
-                ).padding(TMDb_4_dp),
+        Modifier
+            .wrapContentSize()
+            .align(Alignment.BottomStart)
+            .background(
+                color = MaterialTheme.colors.surface.copy(alpha = 0.3f),
+                shape = RoundedCornerShape(bottomStart = TMDb_12_dp, topEnd = TMDb_12_dp),
+            ).padding(TMDb_4_dp),
     ) {
         Icon(
             imageVector = Icons.Filled.Favorite,
@@ -128,20 +125,17 @@ private fun BoxScope.VoteCount(voteCount: Int) {
 }
 
 @Composable
-private fun BoxScope.Index(
-    position: Int,
-    imageCount: Int,
-) {
+private fun BoxScope.Index(position: Int, imageCount: Int) {
     Text(
         text = "$position / $imageCount",
         style = MaterialTheme.typography.body2,
         modifier =
-            Modifier
-                .align(Alignment.BottomCenter)
-                .navigationBarsPadding()
-                .padding(TMDb_4_dp)
-                .shadow(TMDb_16_dp, RoundedCornerShape(TMDb_16_dp))
-                .background(color = MaterialTheme.colors.surface.copy(alpha = 0.3f))
-                .padding(horizontal = TMDb_8_dp, vertical = TMDb_2_dp),
+        Modifier
+            .align(Alignment.BottomCenter)
+            .navigationBarsPadding()
+            .padding(TMDb_4_dp)
+            .shadow(TMDb_16_dp, RoundedCornerShape(TMDb_16_dp))
+            .background(color = MaterialTheme.colors.surface.copy(alpha = 0.3f))
+            .padding(horizontal = TMDb_8_dp, vertical = TMDb_2_dp),
     )
 }

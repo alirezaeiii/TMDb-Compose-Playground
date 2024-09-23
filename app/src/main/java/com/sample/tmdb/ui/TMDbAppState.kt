@@ -13,15 +13,12 @@ import androidx.navigation.compose.rememberNavController
  * Remembers and creates an instance of [TMDbAppState]
  */
 @Composable
-fun rememberTMDbAppState(navController: NavHostController = rememberNavController()) =
-    remember(navController) {
-        TMDbAppState(navController)
-    }
+fun rememberTMDbAppState(navController: NavHostController = rememberNavController()) = remember(navController) {
+    TMDbAppState(navController)
+}
 
 @Stable
-class TMDbAppState(
-    val navController: NavHostController,
-) {
+class TMDbAppState(val navController: NavHostController) {
     // ----------------------------------------------------------
     // BottomBar state source of truth
     // ----------------------------------------------------------

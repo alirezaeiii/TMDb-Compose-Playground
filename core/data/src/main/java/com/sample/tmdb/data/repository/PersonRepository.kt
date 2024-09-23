@@ -7,17 +7,17 @@ import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.domain.model.Person
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineDispatcher
 
 @Singleton
 class PersonRepository
-    @Inject
-    constructor(
-        private val personApi: PersonService,
-        @ApplicationContext context: Context,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher,
-    ) : BaseRepository<Person>(context, ioDispatcher) {
-        override suspend fun getSuccessResult(id: Any?): Person = personApi.getPerson(id as String).asDomainModel()
-    }
+@Inject
+constructor(
+    private val personApi: PersonService,
+    @ApplicationContext context: Context,
+    @IoDispatcher ioDispatcher: CoroutineDispatcher,
+) : BaseRepository<Person>(context, ioDispatcher) {
+    override suspend fun getSuccessResult(id: Any?): Person = personApi.getPerson(id as String).asDomainModel()
+}

@@ -9,17 +9,16 @@ import javax.inject.Singleton
 
 @Singleton
 class BookmarkTVShowDetailsRepositoryImpl
-    @Inject
-    constructor(
-        private val tvShowDao: TVShowDao,
-    ) : BookmarkDetailsRepository<TVShow> {
-        override suspend fun addBookmark(item: TVShow) {
-            tvShowDao.addBookmark(item.asDatabaseModel())
-        }
-
-        override suspend fun deleteBookmark(id: Int) {
-            tvShowDao.deleteBookmark(id)
-        }
-
-        override suspend fun isBookmarked(id: Int): Boolean = tvShowDao.isBookmarked(id)
+@Inject
+constructor(private val tvShowDao: TVShowDao) :
+    BookmarkDetailsRepository<TVShow> {
+    override suspend fun addBookmark(item: TVShow) {
+        tvShowDao.addBookmark(item.asDatabaseModel())
     }
+
+    override suspend fun deleteBookmark(id: Int) {
+        tvShowDao.deleteBookmark(id)
+    }
+
+    override suspend fun isBookmarked(id: Int): Boolean = tvShowDao.isBookmarked(id)
+}

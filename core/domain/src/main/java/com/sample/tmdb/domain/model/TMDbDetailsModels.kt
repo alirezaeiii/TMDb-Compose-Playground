@@ -57,12 +57,6 @@ data class TvDetails(
     override val voteCount: Int,
 ) : TMDbItemDetails
 
-data class Genre(
-    val id: Int,
-    val name: String?,
-)
+data class Genre(val id: Int, val name: String?)
 
-data class SpokenLanguage(
-    val iso6391: String,
-    val name: String,
-)
+data class SpokenLanguage(val iso6391: String, val name: String)

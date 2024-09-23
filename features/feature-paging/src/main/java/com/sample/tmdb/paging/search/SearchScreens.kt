@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sample.tmdb.common.MainDestinations
+import com.sample.tmdb.common.R as R1
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -53,13 +54,9 @@ import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.paging.PagingScreen
 import com.sample.tmdb.paging.R
-import com.sample.tmdb.common.R as R1
 
 @Composable
-fun SearchMoviesScreen(
-    navController: NavController,
-    viewModel: SearchMoviesViewModel = hiltViewModel(),
-) {
+fun SearchMoviesScreen(navController: NavController, viewModel: SearchMoviesViewModel = hiltViewModel()) {
     Search(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
@@ -69,10 +66,7 @@ fun SearchMoviesScreen(
 }
 
 @Composable
-fun SearchTVSeriesScreen(
-    navController: NavController,
-    viewModel: SearchTvSeriesViewModel = hiltViewModel(),
-) {
+fun SearchTVSeriesScreen(navController: NavController, viewModel: SearchTvSeriesViewModel = hiltViewModel()) {
     Search(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
@@ -96,9 +90,9 @@ fun <T : TMDbItem> Search(
             InfinitelyFlowingCircles()
             Box(
                 modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 28.dp, end = 28.dp),
+                Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 28.dp, end = 28.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 AnimatedSearch()
@@ -112,20 +106,20 @@ fun <T : TMDbItem> Search(
         }
         Column(
             modifier =
-                Modifier
-                    .statusBarsPadding()
-                    .background(MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque)),
+            Modifier
+                .statusBarsPadding()
+                .background(MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque)),
         ) {
             Row(
                 modifier =
-                    modifier
-                        .fillMaxWidth()
-                        .padding(TMDb_8_dp),
+                modifier
+                    .fillMaxWidth()
+                    .padding(TMDb_8_dp),
                 horizontalArrangement =
-                    Arrangement.spacedBy(
-                        TMDb_16_dp,
-                        Alignment.CenterHorizontally,
-                    ),
+                Arrangement.spacedBy(
+                    TMDb_16_dp,
+                    Alignment.CenterHorizontally,
+                ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 val iconModifier =
@@ -141,9 +135,9 @@ fun <T : TMDbItem> Search(
                 IconButton(
                     onClick = upPress,
                     modifier =
-                        Modifier
-                            .padding(start = TMDb_12_dp)
-                            .then(iconModifier),
+                    Modifier
+                        .padding(start = TMDb_12_dp)
+                        .then(iconModifier),
                 ) {
                     Icon(
                         Icons.AutoMirrored.Filled.ArrowBack,
@@ -179,12 +173,12 @@ fun SearchBar(
         contentColor = MaterialTheme.colors.surface,
         shape = MaterialTheme.shapes.small,
         modifier =
-            modifier
-                .fillMaxWidth()
-                .height(46.dp)
-                .border(1.dp, MaterialTheme.colors.primary, CircleShape)
-                .background(MaterialTheme.colors.background, CircleShape)
-                .padding(horizontal = TMDb_24_dp, vertical = TMDb_8_dp),
+        modifier
+            .fillMaxWidth()
+            .height(46.dp)
+            .border(1.dp, MaterialTheme.colors.primary, CircleShape)
+            .background(MaterialTheme.colors.background, CircleShape)
+            .padding(horizontal = TMDb_24_dp, vertical = TMDb_8_dp),
     ) {
         Box(
             Modifier
@@ -197,9 +191,9 @@ fun SearchBar(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .wrapContentHeight(),
+                Modifier
+                    .fillMaxSize()
+                    .wrapContentHeight(),
             ) {
                 BasicTextField(
                     value = query,
@@ -207,11 +201,11 @@ fun SearchBar(
                     cursorBrush = SolidColor(MaterialTheme.colors.onBackground),
                     onValueChange = onQueryChange,
                     modifier =
-                        Modifier
-                            .weight(1f)
-                            .onFocusChanged {
-                                onSearchFocusChange(it.isFocused)
-                            },
+                    Modifier
+                        .weight(1f)
+                        .onFocusChanged {
+                            onSearchFocusChange(it.isFocused)
+                        },
                 )
                 if (searchFocused && query.isNotEmpty()) {
                     IconButton(onClick = onClearQuery) {
@@ -228,15 +222,13 @@ fun SearchBar(
 }
 
 @Composable
-fun SearchHint(
-    @StringRes resourceId: Int,
-) {
+fun SearchHint(@StringRes resourceId: Int) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier =
-            Modifier
-                .fillMaxSize()
-                .wrapContentSize(),
+        Modifier
+            .fillMaxSize()
+            .wrapContentSize(),
     ) {
         Icon(
             imageVector = Icons.Outlined.Search,

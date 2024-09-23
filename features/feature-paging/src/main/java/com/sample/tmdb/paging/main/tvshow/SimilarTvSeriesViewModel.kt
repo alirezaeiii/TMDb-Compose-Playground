@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SimilarTvSeriesViewModel
-    @Inject
-    constructor(
-        @Similar repository: BasePagingRepository<TVShow>,
-        savedStateHandle: SavedStateHandle,
-    ) : BaseMainPagingViewModel<TVShow>(repository, savedStateHandle[MainDestinations.TMDB_SIMILAR_ID])
+@Inject
+constructor(
+    @Similar repository: BasePagingRepository<TVShow>,
+    savedStateHandle: SavedStateHandle,
+) : BaseMainPagingViewModel<TVShow>(repository, savedStateHandle[MainDestinations.TMDB_SIMILAR_ID])

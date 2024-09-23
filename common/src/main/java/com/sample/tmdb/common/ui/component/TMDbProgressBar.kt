@@ -42,13 +42,13 @@ fun HorizontalDottedProgressBar() {
             initialValue = 0f,
             targetValue = 6f,
             animationSpec =
-                infiniteRepeatable(
-                    animation =
-                        tween(
-                            durationMillis = 700,
-                            easing = LinearEasing,
-                        ),
+            infiniteRepeatable(
+                animation =
+                tween(
+                    durationMillis = 700,
+                    easing = LinearEasing,
                 ),
+            ),
             label = "",
         )
 
@@ -56,16 +56,12 @@ fun HorizontalDottedProgressBar() {
 }
 
 @Composable
-fun DrawCanvas(
-    state: Float,
-    radius: Dp,
-    color: Color,
-) {
+fun DrawCanvas(state: Float, radius: Dp, color: Color) {
     Canvas(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(55.dp),
+        Modifier
+            .fillMaxWidth()
+            .height(55.dp),
     ) {
         val radiusValue = radius.value
         val padding = (radiusValue + (radiusValue * 0.5f))
@@ -75,13 +71,19 @@ fun DrawCanvas(
                 drawCircle(
                     radius = radiusValue * 2,
                     brush = SolidColor(color),
-                    center = Offset(x = this.center.x + radiusValue * 2 * (i - 3) + padding * (i - 3), y = this.center.y),
+                    center = Offset(
+                        x = this.center.x + radiusValue * 2 * (i - 3) + padding * (i - 3),
+                        y = this.center.y,
+                    ),
                 )
             } else {
                 drawCircle(
                     radius = radiusValue,
                     brush = SolidColor(color),
-                    center = Offset(x = this.center.x + radiusValue * 2 * (i - 3) + padding * (i - 3), y = this.center.y),
+                    center = Offset(
+                        x = this.center.x + radiusValue * 2 * (i - 3) + padding * (i - 3),
+                        y = this.center.y,
+                    ),
                 )
             }
         }

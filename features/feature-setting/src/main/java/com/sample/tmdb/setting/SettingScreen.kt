@@ -65,37 +65,34 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
         )
     Box(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .statusBarsPadding(),
+        Modifier
+            .fillMaxSize()
+            .statusBarsPadding(),
     ) {
         SettingsGroupItem(
             settings = aboutSettings,
             modifier =
-                modifier
-                    .padding(
-                        top = 56.dp + TMDb_16_dp,
-                        start = TMDb_12_dp,
-                        end = TMDb_12_dp,
-                    ),
+            modifier
+                .padding(
+                    top = 56.dp + TMDb_16_dp,
+                    start = TMDb_12_dp,
+                    end = TMDb_12_dp,
+                ),
         )
         DestinationBar(title = stringResource(R.string.about))
     }
 }
 
 @Composable
-fun SettingsGroupItem(
-    settings: List<Settings>,
-    modifier: Modifier = Modifier,
-) {
+fun SettingsGroupItem(settings: List<Settings>, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(TMDb_16_dp),
         border =
-            BorderStroke(
-                width = 1.dp,
-                color = MaterialTheme.colors.onSurface.copy(alpha = DIVIDER_ALPHA),
-            ),
+        BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colors.onSurface.copy(alpha = DIVIDER_ALPHA),
+        ),
     ) {
         Column {
             settings.forEachIndexed { index, settingsItem ->
@@ -112,22 +109,18 @@ fun SettingsGroupItem(
 }
 
 @Composable
-private fun SettingsItem(
-    settings: Settings,
-    modifier: Modifier = Modifier,
-    context: Context = LocalContext.current,
-) {
+private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
     Row(
         modifier =
-            modifier
-                .then(
-                    when (settings) {
-                        is Settings.Action -> Modifier.clickable(onClick = settings.onClick)
-                        is Settings.IntentAction -> Modifier.clickable { context.startActivity(settings.intent) }
-                        is Settings.Info -> Modifier
-                    },
-                ).padding(TMDb_12_dp)
-                .fillMaxWidth(),
+        modifier
+            .then(
+                when (settings) {
+                    is Settings.Action -> Modifier.clickable(onClick = settings.onClick)
+                    is Settings.IntentAction -> Modifier.clickable { context.startActivity(settings.intent) }
+                    is Settings.Info -> Modifier
+                },
+            ).padding(TMDb_12_dp)
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconBox(
@@ -136,9 +129,9 @@ private fun SettingsItem(
         )
         TitleText(
             modifier =
-                Modifier
-                    .padding(TMDb_8_dp)
-                    .weight(1f),
+            Modifier
+                .padding(TMDb_8_dp)
+                .weight(1f),
             titleResourceId = settings.titleResourceId,
         )
         when (settings) {
@@ -149,16 +142,12 @@ private fun SettingsItem(
 }
 
 @Composable
-private fun IconBox(
-    @DrawableRes iconResourceId: Int,
-    contentDescription: String?,
-    modifier: Modifier = Modifier,
-) {
+private fun IconBox(@DrawableRes iconResourceId: Int, contentDescription: String?, modifier: Modifier = Modifier) {
     Box(
         modifier =
-            modifier
-                .size(TMDb_32_dp)
-                .background(color = MaterialTheme.colors.background, shape = CircleShape),
+        modifier
+            .size(TMDb_32_dp)
+            .background(color = MaterialTheme.colors.background, shape = CircleShape),
         contentAlignment = Alignment.Center,
     ) {
         Icon(
@@ -205,10 +194,7 @@ fun TitleText(
 }
 
 @Composable
-private fun ForwardButton(
-    modifier: Modifier = Modifier,
-    color: Color = Teal200,
-) {
+private fun ForwardButton(modifier: Modifier = Modifier, color: Color = Teal200) {
     Icon(
         modifier = modifier.size(TMDb_32_dp),
         painter = painterResource(id = R.drawable.ic_arrow_forward),

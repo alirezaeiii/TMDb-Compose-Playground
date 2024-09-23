@@ -17,9 +17,9 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 fun LoadingRow(modifier: Modifier = Modifier) {
     Row(
         modifier =
-            modifier
-                .fillMaxWidth()
-                .padding(TMDb_8_dp),
+        modifier
+            .fillMaxWidth()
+            .padding(TMDb_8_dp),
         horizontalArrangement = Arrangement.spacedBy(TMDb_8_dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {

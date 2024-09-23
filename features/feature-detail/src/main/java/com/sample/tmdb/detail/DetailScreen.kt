@@ -109,6 +109,7 @@ import coil.request.SuccessResult
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.MainDestinations
+import com.sample.tmdb.common.R as R1
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
@@ -130,13 +131,9 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TVShow
-import com.sample.tmdb.common.R as R1
 
 @Composable
-fun MovieDetailScreen(
-    navController: NavController,
-    viewModel: MovieDetailViewModel = hiltViewModel(),
-) {
+fun MovieDetailScreen(navController: NavController, viewModel: MovieDetailViewModel = hiltViewModel()) {
     DetailScreen(
         viewModel = viewModel,
         navController = navController,
@@ -157,10 +154,7 @@ fun MovieDetailScreen(
 }
 
 @Composable
-fun TVShowDetailScreen(
-    navController: NavController,
-    viewModel: TVShowDetailViewModel = hiltViewModel(),
-) {
+fun TVShowDetailScreen(navController: NavController, viewModel: TVShowDetailViewModel = hiltViewModel()) {
     DetailScreen(
         viewModel = viewModel,
         navController = navController,
@@ -236,10 +230,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
         val nestedScrollConnection =
             remember {
                 object : NestedScrollConnection {
-                    override fun onPreScroll(
-                        available: Offset,
-                        source: NestedScrollSource,
-                    ): Offset {
+                    override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                         // Hide FAB
                         if (available.y < -1) {
                             isFabVisible.value = false
@@ -273,7 +264,10 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         .verticalScroll(rememberScrollState())
                         .padding(contentPadding),
                 ) {
-                    val (appbar, backdrop, poster, title, originalTitle, genres, specs, rateStars, tagline, overview) = createRefs()
+                    val (
+                        appbar, backdrop, poster, title, originalTitle, genres, specs,
+                        rateStars, tagline, overview,
+                    ) = createRefs()
                     val (castSection, crewSection, imagesSection, similarSection, space) = createRefs()
                     val startGuideline = createGuidelineFromStart(TMDb_16_dp)
                     val endGuideline = createGuidelineFromEnd(TMDb_16_dp)
@@ -298,10 +292,10 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         homepage = it.details.homepage,
                         upPress = { navController.navigateUp() },
                         modifier =
-                            Modifier
-                                .requiredWidth(posterWidth * 2.2f)
-                                .constrainAs(appbar) { centerTo(poster) }
-                                .offset(y = TMDb_24_dp),
+                        Modifier
+                            .requiredWidth(posterWidth * 2.2f)
+                            .constrainAs(appbar) { centerTo(poster) }
+                            .offset(y = TMDb_24_dp),
                     )
                     Poster(
                         it.details.posterPath,
@@ -318,106 +312,106 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                     Text(
                         text = it.details.title,
                         style =
-                            MaterialTheme.typography.subtitle1.copy(
-                                fontSize = 26.sp,
-                                letterSpacing = 3.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                textAlign = TextAlign.Center,
-                            ),
+                        MaterialTheme.typography.subtitle1.copy(
+                            fontSize = 26.sp,
+                            letterSpacing = 3.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Center,
+                        ),
                         modifier =
-                            Modifier
-                                .padding(horizontal = TMDb_16_dp)
-                                .constrainAs(title) {
-                                    top.linkTo(poster.bottom, 8.dp)
-                                    linkTo(startGuideline, endGuideline)
-                                },
+                        Modifier
+                            .padding(horizontal = TMDb_16_dp)
+                            .constrainAs(title) {
+                                top.linkTo(poster.bottom, 8.dp)
+                                linkTo(startGuideline, endGuideline)
+                            },
                     )
                     if (it.details.title != it.details.originalTitle) {
                         Text(
                             text = "(${it.details.originalTitle})",
                             style =
-                                MaterialTheme.typography.subtitle2.copy(
-                                    fontStyle = FontStyle.Italic,
-                                    letterSpacing = 2.sp,
-                                ),
+                            MaterialTheme.typography.subtitle2.copy(
+                                fontStyle = FontStyle.Italic,
+                                letterSpacing = 2.sp,
+                            ),
                             modifier =
-                                Modifier
-                                    .padding(horizontal = TMDb_16_dp)
-                                    .constrainAs(originalTitle) {
-                                        top.linkTo(title.bottom)
-                                        linkTo(startGuideline, endGuideline)
-                                    },
+                            Modifier
+                                .padding(horizontal = TMDb_16_dp)
+                                .constrainAs(originalTitle) {
+                                    top.linkTo(title.bottom)
+                                    linkTo(startGuideline, endGuideline)
+                                },
                         )
                     } else {
                         Spacer(
                             modifier =
-                                Modifier.constrainAs(originalTitle) {
-                                    top.linkTo(title.bottom)
-                                    linkTo(startGuideline, endGuideline)
-                                },
+                            Modifier.constrainAs(originalTitle) {
+                                top.linkTo(title.bottom)
+                                linkTo(startGuideline, endGuideline)
+                            },
                         )
                     }
 
                     GenreChips(
                         it.details.genres.take(4),
                         modifier =
-                            Modifier.constrainAs(genres) {
-                                top.linkTo(originalTitle.bottom, 16.dp)
-                                linkTo(startGuideline, endGuideline)
-                            },
+                        Modifier.constrainAs(genres) {
+                            top.linkTo(originalTitle.bottom, 16.dp)
+                            linkTo(startGuideline, endGuideline)
+                        },
                     )
 
                     TMDbItemFields(
                         it.details,
                         modifier =
-                            Modifier.constrainAs(specs) {
-                                top.linkTo(genres.bottom, 12.dp)
-                                linkTo(startGuideline, endGuideline)
-                            },
+                        Modifier.constrainAs(specs) {
+                            top.linkTo(genres.bottom, 12.dp)
+                            linkTo(startGuideline, endGuideline)
+                        },
                     )
 
                     RateStars(
                         it.details.voteAverage,
                         modifier =
-                            Modifier.constrainAs(rateStars) {
-                                top.linkTo(specs.bottom, 12.dp)
-                                linkTo(startGuideline, endGuideline)
-                            },
+                        Modifier.constrainAs(rateStars) {
+                            top.linkTo(specs.bottom, 12.dp)
+                            linkTo(startGuideline, endGuideline)
+                        },
                     )
 
                     Text(
                         text = it.details.tagline,
                         color = localVibrantColor.current.value,
                         style =
-                            MaterialTheme.typography.body1.copy(
-                                letterSpacing = 2.sp,
-                                lineHeight = 24.sp,
-                                fontFamily = FontFamily.Serif,
-                                fontWeight = FontWeight.Bold,
-                            ),
+                        MaterialTheme.typography.body1.copy(
+                            letterSpacing = 2.sp,
+                            lineHeight = 24.sp,
+                            fontFamily = FontFamily.Serif,
+                            fontWeight = FontWeight.Bold,
+                        ),
                         modifier =
-                            Modifier
-                                .padding(horizontal = TMDb_16_dp)
-                                .constrainAs(tagline) {
-                                    top.linkTo(rateStars.bottom, 32.dp)
-                                },
+                        Modifier
+                            .padding(horizontal = TMDb_16_dp)
+                            .constrainAs(tagline) {
+                                top.linkTo(rateStars.bottom, 32.dp)
+                            },
                     )
 
                     Text(
                         text = it.details.overview,
                         style =
-                            MaterialTheme.typography.body2.copy(
-                                letterSpacing = 2.sp,
-                                lineHeight = 30.sp,
-                                fontFamily = FontFamily.SansSerif,
-                            ),
+                        MaterialTheme.typography.body2.copy(
+                            letterSpacing = 2.sp,
+                            lineHeight = 30.sp,
+                            fontFamily = FontFamily.SansSerif,
+                        ),
                         modifier =
-                            Modifier
-                                .padding(horizontal = TMDb_16_dp)
-                                .constrainAs(overview) {
-                                    top.linkTo(tagline.bottom, 8.dp)
-                                    linkTo(startGuideline, endGuideline)
-                                },
+                        Modifier
+                            .padding(horizontal = TMDb_16_dp)
+                            .constrainAs(overview) {
+                                top.linkTo(tagline.bottom, 8.dp)
+                                linkTo(startGuideline, endGuideline)
+                            },
                     )
                     TMDbDetailItemSection(
                         items = it.cast,
@@ -439,10 +433,10 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                             )
                         },
                         modifier =
-                            Modifier.constrainAs(castSection) {
-                                top.linkTo(overview.bottom, 16.dp)
-                                linkTo(startGuideline, endGuideline)
-                            },
+                        Modifier.constrainAs(castSection) {
+                            top.linkTo(overview.bottom, 16.dp)
+                            linkTo(startGuideline, endGuideline)
+                        },
                     )
 
                     TMDbDetailItemSection(
@@ -465,10 +459,10 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                             )
                         },
                         modifier =
-                            Modifier.constrainAs(crewSection) {
-                                top.linkTo(castSection.bottom, 16.dp)
-                                linkTo(startGuideline, endGuideline)
-                            },
+                        Modifier.constrainAs(crewSection) {
+                            top.linkTo(castSection.bottom, 16.dp)
+                            linkTo(startGuideline, endGuideline)
+                        },
                     )
 
                     TMDbDetailItemSection(
@@ -481,10 +475,10 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                             ) { onImagesSelected.invoke(it.images, index) }
                         },
                         modifier =
-                            Modifier.constrainAs(imagesSection) {
-                                top.linkTo(crewSection.bottom, 16.dp)
-                                linkTo(startGuideline, endGuideline)
-                            },
+                        Modifier.constrainAs(imagesSection) {
+                            top.linkTo(crewSection.bottom, 16.dp)
+                            linkTo(startGuideline, endGuideline)
+                        },
                     )
 
                     TMDbDetailItemSection(
@@ -496,19 +490,19 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         },
                         showSize = false,
                         modifier =
-                            Modifier.constrainAs(similarSection) {
-                                top.linkTo(imagesSection.bottom, 16.dp)
-                                linkTo(startGuideline, endGuideline)
-                            },
+                        Modifier.constrainAs(similarSection) {
+                            top.linkTo(imagesSection.bottom, 16.dp)
+                            linkTo(startGuideline, endGuideline)
+                        },
                     )
 
                     Spacer(
                         modifier =
-                            Modifier
-                                .windowInsetsBottomHeight(WindowInsets.navigationBars)
-                                .constrainAs(space) {
-                                    top.linkTo(similarSection.bottom)
-                                },
+                        Modifier
+                            .windowInsetsBottomHeight(WindowInsets.navigationBars)
+                            .constrainAs(space) {
+                                top.linkTo(similarSection.bottom)
+                            },
                     )
                 }
             }
@@ -517,10 +511,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
 }
 
 @Composable
-fun GetVibrantColorFromPoster(
-    posterUrl: String,
-    color: Animatable<Color, AnimationVector4D>,
-) {
+fun GetVibrantColorFromPoster(posterUrl: String, color: Animatable<Color, AnimationVector4D>) {
     val context = LocalContext.current
     LaunchedEffect(posterUrl) {
         val loader = ImageLoader(context)
@@ -541,11 +532,7 @@ fun GetVibrantColorFromPoster(
 }
 
 @Composable
-private fun Backdrop(
-    backdropUrl: String,
-    tmdbItemName: String,
-    modifier: Modifier,
-) {
+private fun Backdrop(backdropUrl: String, tmdbItemName: String, modifier: Modifier) {
     Card(
         elevation = TMDb_16_dp,
         shape = BottomArcShape(arcHeight = 120.dpToPx()),
@@ -554,11 +541,11 @@ private fun Backdrop(
     ) {
         AsyncImage(
             model =
-                ImageRequest
-                    .Builder(LocalContext.current)
-                    .data(data = backdropUrl)
-                    .crossfade(1500)
-                    .build(),
+            ImageRequest
+                .Builder(LocalContext.current)
+                .data(data = backdropUrl)
+                .crossfade(1500)
+                .build(),
             contentScale = ContentScale.FillHeight,
             contentDescription = tmdbItemName,
             modifier = modifier.fillMaxWidth(),
@@ -567,11 +554,7 @@ private fun Backdrop(
 }
 
 @Composable
-private fun AppBar(
-    modifier: Modifier,
-    homepage: String?,
-    upPress: () -> Unit,
-) {
+private fun AppBar(modifier: Modifier, homepage: String?, upPress: () -> Unit) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier,
@@ -609,11 +592,7 @@ private val springAnimation =
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Poster(
-    posterUrl: String?,
-    tmdbItemName: String,
-    modifier: Modifier = Modifier,
-) {
+fun Poster(posterUrl: String?, tmdbItemName: String, modifier: Modifier = Modifier) {
     val isScaled = remember { mutableStateOf(false) }
     val scale =
         animateFloatAsState(
@@ -637,10 +616,7 @@ fun Poster(
 }
 
 @Composable
-private fun GenreChips(
-    genres: List<Genre>,
-    modifier: Modifier,
-) {
+private fun GenreChips(genres: List<Genre>, modifier: Modifier) {
     Row(
         modifier
             .horizontalScroll(rememberScrollState())
@@ -651,9 +627,9 @@ private fun GenreChips(
                 text = name.orEmpty(),
                 style = MaterialTheme.typography.subtitle1.copy(letterSpacing = 2.sp),
                 modifier =
-                    Modifier
-                        .border(1.25.dp, localVibrantColor.current.value, RoundedCornerShape(50))
-                        .padding(horizontal = TMDb_6_dp, vertical = 3.dp),
+                Modifier
+                    .border(1.25.dp, localVibrantColor.current.value, RoundedCornerShape(50))
+                    .padding(horizontal = TMDb_6_dp, vertical = 3.dp),
             )
 
             if (index != genres.lastIndex) {
@@ -664,10 +640,7 @@ private fun GenreChips(
 }
 
 @Composable
-fun TMDbItemFields(
-    tmdbItemDetails: TMDbItemDetails,
-    modifier: Modifier = Modifier,
-) {
+fun TMDbItemFields(tmdbItemDetails: TMDbItemDetails, modifier: Modifier = Modifier) {
     Row(horizontalArrangement = Arrangement.spacedBy(20.dp), modifier = modifier) {
         val context = LocalContext.current
         tmdbItemDetails.releaseDate?.let {
@@ -685,36 +658,30 @@ fun TMDbItemFields(
 }
 
 @Composable
-fun TMDbItemField(
-    name: String,
-    value: String,
-) {
+fun TMDbItemField(name: String, value: String) {
     Column {
         Text(
             text = name,
             style =
-                MaterialTheme.typography.subtitle2.copy(
-                    fontSize = 13.sp,
-                    letterSpacing = 1.sp,
-                ),
+            MaterialTheme.typography.subtitle2.copy(
+                fontSize = 13.sp,
+                letterSpacing = 1.sp,
+            ),
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
         Text(
             text = value,
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
             modifier =
-                Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = TMDb_4_dp),
+            Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = TMDb_4_dp),
         )
     }
 }
 
 @Composable
-private fun RateStars(
-    voteAverage: Double,
-    modifier: Modifier,
-) {
+private fun RateStars(voteAverage: Double, modifier: Modifier) {
     Row(modifier.padding(start = TMDb_4_dp)) {
         val maxVote = 10
         val starCount = 5
@@ -723,7 +690,8 @@ private fun RateStars(
             val asset =
                 when {
                     voteStarCount >= starIndex + 1 -> Icons.Filled.Star
-                    voteStarCount in starIndex.toDouble()..(starIndex + 1).toDouble() -> Icons.AutoMirrored.Filled.StarHalf
+                    voteStarCount in starIndex.toDouble()..(starIndex + 1).toDouble() ->
+                        Icons.AutoMirrored.Filled.StarHalf
                     else -> Icons.Filled.StarOutline
                 }
             Icon(
@@ -772,9 +740,9 @@ private fun <T : Any> SectionHeader(
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = TMDb_16_dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = TMDb_16_dp),
     ) {
         Text(
             text = stringResource(headerResId),
@@ -785,11 +753,11 @@ private fun <T : Any> SectionHeader(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier =
-                Modifier
-                    .padding(TMDb_4_dp)
-                    .clickable {
-                        onAllSelected.invoke(items)
-                    },
+            Modifier
+                .padding(TMDb_4_dp)
+                .clickable {
+                    onAllSelected.invoke(items)
+                },
         ) {
             Text(
                 text = getHeaderText(showSize, items),
@@ -807,10 +775,7 @@ private fun <T : Any> SectionHeader(
 }
 
 @Composable
-fun ImageSection(
-    image: TMDbImage,
-    onImageSelected: () -> Unit,
-) {
+fun ImageSection(image: TMDbImage, onImageSelected: () -> Unit) {
     Card(
         Modifier
             .width(240.dp)
@@ -848,11 +813,7 @@ fun ImageSection(
 }
 
 @Composable
-fun ToggleBookmarkFab(
-    isBookmark: Boolean,
-    isVisible: MutableState<Boolean>,
-    onClick: () -> Unit,
-) {
+fun ToggleBookmarkFab(isBookmark: Boolean, isVisible: MutableState<Boolean>, onClick: () -> Unit) {
     AnimatedVisibility(
         visible = isVisible.value,
         enter = slideInVertically(initialOffsetY = { it * 2 }),
@@ -860,13 +821,13 @@ fun ToggleBookmarkFab(
     ) {
         FloatingActionButton(
             modifier =
-                Modifier.padding(
-                    bottom =
-                        WindowInsets.navigationBars
-                            .getBottom(LocalDensity.current)
-                            .toDp()
-                            .dp,
-                ),
+            Modifier.padding(
+                bottom =
+                WindowInsets.navigationBars
+                    .getBottom(LocalDensity.current)
+                    .toDp()
+                    .dp,
+            ),
             shape = CircleShape,
             onClick = onClick,
         ) {
@@ -874,26 +835,20 @@ fun ToggleBookmarkFab(
                 imageVector = Icons.Filled.Favorite,
                 tint = if (isBookmark) Color.Red else MaterialTheme.colors.surface,
                 contentDescription =
-                    if (isBookmark) {
-                        stringResource(R.string.favorite)
-                    } else {
-                        stringResource(
-                            R.string.un_favorite,
-                        )
-                    },
+                if (isBookmark) {
+                    stringResource(R.string.favorite)
+                } else {
+                    stringResource(
+                        R.string.un_favorite,
+                    )
+                },
             )
         }
     }
 }
 
-class BottomArcShape(
-    private val arcHeight: Float,
-) : Shape {
-    override fun createOutline(
-        size: Size,
-        layoutDirection: LayoutDirection,
-        density: Density,
-    ): Outline {
+class BottomArcShape(private val arcHeight: Float) : Shape {
+    override fun createOutline(size: Size, layoutDirection: LayoutDirection, density: Density): Outline {
         val path =
             Path().apply {
                 moveTo(size.width, 0f)
@@ -915,10 +870,7 @@ class BottomArcShape(
 }
 
 @Composable
-private fun <T : Any> getHeaderText(
-    showSize: Boolean,
-    items: List<T>,
-) = if (showSize) {
+private fun <T : Any> getHeaderText(showSize: Boolean, items: List<T>) = if (showSize) {
     stringResource(
         R.string.see_all,
         items.size,

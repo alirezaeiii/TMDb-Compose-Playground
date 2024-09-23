@@ -7,7 +7,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TVShowFeedViewModel
-    @Inject
-    constructor(
-        repository: BaseFeedRepository<TVShow>,
-    ) : BaseFeedViewModel<TVShow>(repository)
+@Inject
+constructor(repository: BaseFeedRepository<TVShow>) :
+    BaseFeedViewModel<TVShow>(repository)

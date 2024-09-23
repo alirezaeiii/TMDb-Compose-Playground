@@ -19,8 +19,7 @@ class BookmarkMovieDetailsRepositoryTest : BaseBookmarkDetailsRepositoryTest<Mov
         repository = BookmarkMovieDetailsRepositoryImpl(dao)
     }
 
-    override fun mockApiResponse() =
-        runTest {
-            `when`(dao.isBookmarked(anyInt())).thenReturn(true)
-        }
+    override fun mockApiResponse() = runTest {
+        `when`(dao.isBookmarked(anyInt())).thenReturn(true)
+    }
 }

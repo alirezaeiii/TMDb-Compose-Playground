@@ -12,13 +12,11 @@ import javax.inject.Singleton
 
 @Singleton
 class TopRatedMoviesPagingRepository
-    @Inject
-    constructor(
-        @ApplicationContext private val context: Context,
-        private val movieApi: MovieService,
-    ) : BasePagingRepository<Movie>() {
-        override fun pagingSource(
-            query: String?,
-            id: Int?,
-        ): BasePagingSource<Movie> = TopRatedMoviesPagingSource(context, movieApi)
-    }
+@Inject
+constructor(
+    @ApplicationContext private val context: Context,
+    private val movieApi: MovieService,
+) : BasePagingRepository<Movie>() {
+    override fun pagingSource(query: String?, id: Int?): BasePagingSource<Movie> =
+        TopRatedMoviesPagingSource(context, movieApi)
+}

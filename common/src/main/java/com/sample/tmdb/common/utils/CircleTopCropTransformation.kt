@@ -12,10 +12,7 @@ import kotlin.math.min
 class CircleTopCropTransformation : Transformation {
     override val cacheKey: String = CircleTopCropTransformation::class.java.name
 
-    override suspend fun transform(
-        input: Bitmap,
-        size: Size,
-    ): Bitmap {
+    override suspend fun transform(input: Bitmap, size: Size): Bitmap {
         val minSize = min(input.width, input.height)
         val radius = minSize / 2f
         val output = Bitmap.createBitmap(minSize, minSize, input.config)

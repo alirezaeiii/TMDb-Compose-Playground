@@ -52,29 +52,25 @@ fun InfinitelyFlowingCircles() {
  * @param radiusRatio
  */
 @Composable
-private fun DrawCircleOnCanvas(
-    scale: Float,
-    color: Color,
-    radiusRatio: Float,
-) {
+private fun DrawCircleOnCanvas(scale: Float, color: Color, radiusRatio: Float) {
     Canvas(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .graphicsLayer {
-                    scaleX = scale
-                    scaleY = scale
-                },
+        Modifier
+            .fillMaxSize()
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            },
     ) {
         val canvasWidth = size.width
         val canvasHeight = size.height
         drawCircle(
             color = color,
             center =
-                Offset(
-                    x = canvasWidth / 2,
-                    y = canvasHeight / 2,
-                ),
+            Offset(
+                x = canvasWidth / 2,
+                y = canvasHeight / 2,
+            ),
             radius = size.minDimension / radiusRatio,
         )
     }
@@ -88,20 +84,16 @@ private fun DrawCircleOnCanvas(
  * @return float state with
  */
 @Composable
-private fun scaleInfiniteTransition(
-    initialValue: Float = 0f,
-    targetValue: Float,
-    durationMillis: Int,
-): Float {
+private fun scaleInfiniteTransition(initialValue: Float = 0f, targetValue: Float, durationMillis: Int): Float {
     val infiniteTransition = rememberInfiniteTransition(label = "")
     val scale: Float by infiniteTransition.animateFloat(
         initialValue = initialValue,
         targetValue = targetValue,
         animationSpec =
-            infiniteRepeatable(
-                animation = tween(durationMillis, easing = LinearEasing),
-                repeatMode = RepeatMode.Reverse,
-            ),
+        infiniteRepeatable(
+            animation = tween(durationMillis, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse,
+        ),
         label = "",
     )
     return scale

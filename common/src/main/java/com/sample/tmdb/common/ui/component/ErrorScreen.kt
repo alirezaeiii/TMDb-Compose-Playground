@@ -18,11 +18,7 @@ import com.sample.tmdb.common.R
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 
 @Composable
-fun ErrorScreen(
-    message: String,
-    modifier: Modifier = Modifier,
-    refresh: () -> Unit,
-) {
+fun ErrorScreen(message: String, modifier: Modifier = Modifier, refresh: () -> Unit) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
@@ -31,12 +27,12 @@ fun ErrorScreen(
         Text(
             text = message,
             style =
-                MaterialTheme.typography.subtitle1.copy(
-                    color = MaterialTheme.colors.onSurface,
-                    letterSpacing = 1.5.sp,
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.W400,
-                ),
+            MaterialTheme.typography.subtitle1.copy(
+                color = MaterialTheme.colors.onSurface,
+                letterSpacing = 1.5.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.W400,
+            ),
         )
         Spacer(Modifier.height(TMDb_16_dp))
         Button(onClick = refresh) {

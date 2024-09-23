@@ -52,24 +52,20 @@ import com.sample.tmdb.common.ui.theme.rateColors
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun <T : TMDbItem> TMDbContent(
-    tmdbItem: T,
-    modifier: Modifier = Modifier,
-    onClick: (TMDbItem) -> Unit,
-) {
+fun <T : TMDbItem> TMDbContent(tmdbItem: T, modifier: Modifier = Modifier, onClick: (TMDbItem) -> Unit) {
     Box(modifier = modifier) {
         TMDbItemRate(
             tmdbItem.voteAverage,
             modifier =
-                Modifier
-                    .align(Alignment.TopCenter)
-                    .zIndex(2f),
+            Modifier
+                .align(Alignment.TopCenter)
+                .zIndex(2f),
         )
         Card(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .offset(y = TMDb_12_dp),
+            Modifier
+                .fillMaxSize()
+                .offset(y = TMDb_12_dp),
             shape = RoundedCornerShape(size = TMDb_8_dp),
             elevation = TMDb_8_dp,
             onClick = { onClick.invoke(tmdbItem) },
@@ -79,10 +75,10 @@ fun <T : TMDbItem> TMDbContent(
                 TMDbItemInfo(
                     tmdbItem,
                     modifier =
-                        Modifier
-                            .align(Alignment.BottomCenter)
-                            .fillMaxWidth()
-                            .background(Color(0x97000000)),
+                    Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                        .background(Color(0x97000000)),
                 )
             }
         }
@@ -90,10 +86,7 @@ fun <T : TMDbItem> TMDbContent(
 }
 
 @Composable
-fun TMDbItemRate(
-    rate: Double,
-    modifier: Modifier = Modifier,
-) {
+fun TMDbItemRate(rate: Double, modifier: Modifier = Modifier) {
     val shape = RoundedCornerShape(percent = 50)
     Surface(
         shape = shape,
@@ -104,18 +97,15 @@ fun TMDbItemRate(
             text = rate.toString(),
             style = MaterialTheme.typography.body1.copy(color = Color.White),
             modifier =
-                Modifier
-                    .background(Brush.horizontalGradient(Color.rateColors(movieRate = rate)))
-                    .padding(horizontal = 10.dp),
+            Modifier
+                .background(Brush.horizontalGradient(Color.rateColors(movieRate = rate)))
+                .padding(horizontal = 10.dp),
         )
     }
 }
 
 @Composable
-fun BoxScope.TMDbItemPoster(
-    posterUrl: String?,
-    tmdbItemName: String,
-) {
+fun BoxScope.TMDbItemPoster(posterUrl: String?, tmdbItemName: String) {
     val painter =
         rememberAsyncImagePainter(
             model = posterUrl,
@@ -139,24 +129,21 @@ fun BoxScope.TMDbItemPoster(
         contentDescription = tmdbItemName,
         contentScale = scale,
         modifier =
-            Modifier
-                .fillMaxSize()
-                .align(Alignment.Center),
+        Modifier
+            .fillMaxSize()
+            .align(Alignment.Center),
     )
 }
 
 @Composable
-fun <T : TMDbItem> TMDbItemInfo(
-    tmdbItem: T,
-    modifier: Modifier = Modifier,
-) {
+fun <T : TMDbItem> TMDbItemInfo(tmdbItem: T, modifier: Modifier = Modifier) {
     Column(
         verticalArrangement = Arrangement.spacedBy(TMDb_4_dp),
         modifier =
-            modifier.padding(
-                horizontal = TMDb_6_dp,
-                vertical = TMDb_4_dp,
-            ),
+        modifier.padding(
+            horizontal = TMDb_6_dp,
+            vertical = TMDb_4_dp,
+        ),
     ) {
         TMDbItemName(name = tmdbItem.name)
         Row(
@@ -170,25 +157,21 @@ fun <T : TMDbItem> TMDbItemInfo(
 }
 
 @Composable
-fun TMDbItemName(name: String) =
-    Text(
-        text = name,
-        style =
-            MaterialTheme.typography.subtitle1.copy(
-                color = Color.White,
-                letterSpacing = 1.5.sp,
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.W500,
-            ),
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
-    )
+fun TMDbItemName(name: String) = Text(
+    text = name,
+    style =
+    MaterialTheme.typography.subtitle1.copy(
+        color = Color.White,
+        letterSpacing = 1.5.sp,
+        fontFamily = FontFamily.Serif,
+        fontWeight = FontWeight.W500,
+    ),
+    maxLines = 1,
+    overflow = TextOverflow.Ellipsis,
+)
 
 @Composable
-fun TMDbItemFeature(
-    icon: ImageVector,
-    field: String,
-) {
+fun TMDbItemFeature(icon: ImageVector, field: String) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(
             imageVector = icon,
@@ -199,12 +182,12 @@ fun TMDbItemFeature(
         Text(
             text = field,
             style =
-                MaterialTheme.typography.subtitle2.copy(
-                    color = Color.White,
-                    letterSpacing = 1.5.sp,
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.W400,
-                ),
+            MaterialTheme.typography.subtitle2.copy(
+                color = Color.White,
+                letterSpacing = 1.5.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.W400,
+            ),
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,
             modifier = Modifier.padding(horizontal = TMDb_2_dp),

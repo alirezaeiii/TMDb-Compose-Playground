@@ -22,13 +22,13 @@ class PersonCardTest {
             setContent {
                 PersonCard(
                     person =
-                        Cast(
-                            "role",
-                            "name",
-                            null,
-                            Gender.MALE,
-                            1,
-                        ),
+                    Cast(
+                        "role",
+                        "name",
+                        null,
+                        Gender.MALE,
+                        1,
+                    ),
                     navController = rememberNavController(),
                 )
             }

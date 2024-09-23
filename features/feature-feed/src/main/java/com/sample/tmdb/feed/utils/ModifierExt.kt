@@ -8,10 +8,7 @@ import androidx.compose.ui.util.lerp
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
-fun Modifier.pagerTransition(
-    pagerState: PagerState,
-    page: Int,
-) = graphicsLayer {
+fun Modifier.pagerTransition(pagerState: PagerState, page: Int) = graphicsLayer {
     val pageOffset = pagerState.calculatePageOffset(page)
 
     lerp(

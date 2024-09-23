@@ -14,29 +14,30 @@ import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TvDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineDispatcher
 
 @Singleton
 class TVShowDetailRepository
-    @Inject
-    constructor(
-        private val tvShowApi: TVShowService,
-        @ApplicationContext context: Context,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher,
-    ) : BaseDetailRepository<TvDetails>(context, ioDispatcher) {
-        override suspend fun getDetails(id: Int): TvDetails = tvShowApi.fetchTvDetail(id).asDomainModel()
+@Inject
+constructor(
+    private val tvShowApi: TVShowService,
+    @ApplicationContext context: Context,
+    @IoDispatcher ioDispatcher: CoroutineDispatcher,
+) : BaseDetailRepository<TvDetails>(context, ioDispatcher) {
+    override suspend fun getDetails(id: Int): TvDetails = tvShowApi.fetchTvDetail(id).asDomainModel()
 
-        override suspend fun getCredit(id: Int): Pair<List<Cast>, List<Crew>> {
-            val networkCreditWrapper = tvShowApi.tvCredit(id)
-            return Pair(
-                networkCreditWrapper.cast.asCastDomainModel(),
-                networkCreditWrapper.crew.asCrewDomainModel(),
-            )
-        }
-
-        override suspend fun getImages(id: Int): List<TMDbImage> = tvShowApi.fetchImages(id).asDomainModel()
-
-        override suspend fun getSimilarItems(id: Int): List<TMDbItem> = tvShowApi.fetchSimilarMovies(id).items.asTVShowDomainModel()
+    override suspend fun getCredit(id: Int): Pair<List<Cast>, List<Crew>> {
+        val networkCreditWrapper = tvShowApi.tvCredit(id)
+        return Pair(
+            networkCreditWrapper.cast.asCastDomainModel(),
+            networkCreditWrapper.crew.asCrewDomainModel(),
+        )
     }
+
+    override suspend fun getImages(id: Int): List<TMDbImage> = tvShowApi.fetchImages(id).asDomainModel()
+
+    override suspend fun getSimilarItems(id: Int): List<TMDbItem> =
+        tvShowApi.fetchSimilarMovies(id).items.asTVShowDomainModel()
+}

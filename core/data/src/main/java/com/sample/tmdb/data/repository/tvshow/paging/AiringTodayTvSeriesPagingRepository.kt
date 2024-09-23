@@ -12,13 +12,11 @@ import javax.inject.Singleton
 
 @Singleton
 class AiringTodayTvSeriesPagingRepository
-    @Inject
-    constructor(
-        @ApplicationContext private val context: Context,
-        private val tvShowApi: TVShowService,
-    ) : BasePagingRepository<TVShow>() {
-        override fun pagingSource(
-            query: String?,
-            id: Int?,
-        ): BasePagingSource<TVShow> = AiringTodayTvSeriesPagingSource(context, tvShowApi)
-    }
+@Inject
+constructor(
+    @ApplicationContext private val context: Context,
+    private val tvShowApi: TVShowService,
+) : BasePagingRepository<TVShow>() {
+    override fun pagingSource(query: String?, id: Int?): BasePagingSource<TVShow> =
+        AiringTodayTvSeriesPagingSource(context, tvShowApi)
+}

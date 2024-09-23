@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TrendingTvSeriesViewModel
-    @Inject
-    constructor(
-        @Trending repository: BasePagingRepository<TVShow>,
-    ) : BaseMainPagingViewModel<TVShow>(repository)
+@Inject
+constructor(@Trending repository: BasePagingRepository<TVShow>) :
+    BaseMainPagingViewModel<TVShow>(repository)

@@ -19,8 +19,7 @@ class BookmarkMovieRepositoryTest : BaseBookmarkRepositoryTest<Movie>() {
         repository = BookmarkMovieRepository(dao, context, Dispatchers.Main)
     }
 
-    override fun mockApiResponse() =
-        runTest {
-            `when`(dao.getBookmarks()).thenReturn(emptyList())
-        }
+    override fun mockApiResponse() = runTest {
+        `when`(dao.getBookmarks()).thenReturn(emptyList())
+    }
 }

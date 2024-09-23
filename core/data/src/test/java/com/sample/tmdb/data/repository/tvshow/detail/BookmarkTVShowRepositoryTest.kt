@@ -19,8 +19,7 @@ class BookmarkTVShowRepositoryTest : BaseBookmarkRepositoryTest<TVShow>() {
         repository = BookmarkTVShowRepository(dao, context, Dispatchers.Main)
     }
 
-    override fun mockApiResponse() =
-        runTest {
-            `when`(dao.getBookmarks()).thenReturn(emptyList())
-        }
+    override fun mockApiResponse() = runTest {
+        `when`(dao.getBookmarks()).thenReturn(emptyList())
+    }
 }
