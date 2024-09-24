@@ -9,9 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class TVShowDetailViewModel
-@Inject
-constructor(
+class TVShowDetailViewModel @Inject constructor(
     bookmarkRepository: BookmarkDetailsRepository<TVShow>,
     repository: BaseDetailRepository<TvDetails>,
     savedStateHandle: SavedStateHandle,

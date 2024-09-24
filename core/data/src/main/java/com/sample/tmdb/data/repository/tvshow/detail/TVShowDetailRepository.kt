@@ -19,9 +19,7 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 
 @Singleton
-class TVShowDetailRepository
-@Inject
-constructor(
+class TVShowDetailRepository @Inject constructor(
     private val tvShowApi: TVShowService,
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,

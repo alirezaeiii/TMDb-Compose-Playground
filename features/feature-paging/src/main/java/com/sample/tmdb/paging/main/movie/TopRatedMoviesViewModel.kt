@@ -8,7 +8,5 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class TopRatedMoviesViewModel
-@Inject
-constructor(@TopRated repository: BasePagingRepository<Movie>) :
+class TopRatedMoviesViewModel @Inject constructor(@TopRated repository: BasePagingRepository<Movie>) :
     BaseMainPagingViewModel<Movie>(repository)

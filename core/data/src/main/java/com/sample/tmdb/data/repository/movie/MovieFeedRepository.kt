@@ -13,9 +13,7 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 
 @Singleton
-class MovieFeedRepository
-@Inject
-constructor(
+class MovieFeedRepository @Inject constructor(
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
     private val movieApi: MovieService,

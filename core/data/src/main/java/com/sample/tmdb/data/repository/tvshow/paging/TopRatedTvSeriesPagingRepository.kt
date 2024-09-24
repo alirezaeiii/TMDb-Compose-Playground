@@ -11,9 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TopRatedTvSeriesPagingRepository
-@Inject
-constructor(
+class TopRatedTvSeriesPagingRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val tvShowApi: TVShowService,
 ) : BasePagingRepository<TVShow>() {

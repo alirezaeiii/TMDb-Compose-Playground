@@ -12,9 +12,7 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 
 @Singleton
-class BookmarkTVShowRepository
-@Inject
-constructor(
+class BookmarkTVShowRepository @Inject constructor(
     private val tvShowDao: TVShowDao,
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,

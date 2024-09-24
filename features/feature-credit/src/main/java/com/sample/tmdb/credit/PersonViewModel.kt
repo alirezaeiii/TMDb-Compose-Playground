@@ -9,9 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class PersonViewModel
-@Inject
-constructor(repository: BaseRepository<Person>, savedStateHandle: SavedStateHandle) :
+class PersonViewModel @Inject constructor(repository: BaseRepository<Person>, savedStateHandle: SavedStateHandle) :
     TMDbViewModel<Person>(
         repository,
         savedStateHandle[MainDestinations.TMDB_PERSON_KEY],

@@ -12,9 +12,7 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 
 @Singleton
-class BookmarkMovieRepository
-@Inject
-constructor(
+class BookmarkMovieRepository @Inject constructor(
     private val movieDao: MovieDao,
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,

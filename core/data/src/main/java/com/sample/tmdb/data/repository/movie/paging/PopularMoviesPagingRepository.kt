@@ -11,9 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PopularMoviesPagingRepository
-@Inject
-constructor(
+class PopularMoviesPagingRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val movieApi: MovieService,
 ) : BasePagingRepository<Movie>() {

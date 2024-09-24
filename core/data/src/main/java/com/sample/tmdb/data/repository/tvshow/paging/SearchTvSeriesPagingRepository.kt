@@ -10,8 +10,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class
-SearchTvSeriesPagingRepository@Inject
-constructor(
+SearchTvSeriesPagingRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val tvShowApi: TVShowService,
 ) : BasePagingRepository<TVShow>() {

@@ -12,9 +12,7 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 
 @Singleton
-class PersonRepository
-@Inject
-constructor(
+class PersonRepository @Inject constructor(
     private val personApi: PersonService,
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,

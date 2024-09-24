@@ -7,7 +7,5 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class BookmarkMovieViewModel
-@Inject
-constructor(repository: @JvmSuppressWildcards BaseRepository<List<Movie>>) :
+class BookmarkMovieViewModel @Inject constructor(repository: @JvmSuppressWildcards BaseRepository<List<Movie>>) :
     BaseViewModel<List<Movie>>(repository)

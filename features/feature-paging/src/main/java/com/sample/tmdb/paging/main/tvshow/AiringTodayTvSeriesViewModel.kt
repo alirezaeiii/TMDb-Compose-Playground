@@ -8,7 +8,5 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AiringTodayTvSeriesViewModel
-@Inject
-constructor(@NowPlaying repository: BasePagingRepository<TVShow>) :
+class AiringTodayTvSeriesViewModel @Inject constructor(@NowPlaying repository: BasePagingRepository<TVShow>) :
     BaseMainPagingViewModel<TVShow>(repository)

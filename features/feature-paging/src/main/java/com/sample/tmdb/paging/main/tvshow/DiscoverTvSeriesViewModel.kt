@@ -8,7 +8,5 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DiscoverTvSeriesViewModel
-@Inject
-constructor(@Discover repository: BasePagingRepository<TVShow>) :
+class DiscoverTvSeriesViewModel @Inject constructor(@Discover repository: BasePagingRepository<TVShow>) :
     BaseMainPagingViewModel<TVShow>(repository)

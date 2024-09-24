@@ -8,9 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BookmarkMovieDetailsRepositoryImpl
-@Inject
-constructor(private val movieDao: MovieDao) :
+class BookmarkMovieDetailsRepositoryImpl @Inject constructor(private val movieDao: MovieDao) :
     BookmarkDetailsRepository<Movie> {
     override suspend fun addBookmark(item: Movie) {
         movieDao.addBookmark(item.asDatabaseModel())
