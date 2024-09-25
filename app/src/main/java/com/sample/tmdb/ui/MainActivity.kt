@@ -35,38 +35,18 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun ChangeSystemBarsTheme(lightTheme: Boolean) {
-        val statusBarColor =
-            MaterialTheme.colors.background
-                .copy(alpha = AlphaNearOpaque)
-                .toArgb()
-        val navigationBarColor =
-            MaterialTheme.colors.background
-                .copy(alpha = AlphaNavigationBar)
-                .toArgb()
+        val statusBarColor = MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque).toArgb()
+        val navigationBarColor = MaterialTheme.colors.background.copy(alpha = AlphaNavigationBar).toArgb()
         LaunchedEffect(lightTheme) {
             if (lightTheme) {
                 enableEdgeToEdge(
-                    statusBarStyle =
-                    SystemBarStyle.light(
-                        statusBarColor,
-                        statusBarColor,
-                    ),
-                    navigationBarStyle =
-                    SystemBarStyle.light(
-                        navigationBarColor,
-                        navigationBarColor,
-                    ),
+                    statusBarStyle = SystemBarStyle.light(statusBarColor, statusBarColor),
+                    navigationBarStyle = SystemBarStyle.light(navigationBarColor, navigationBarColor),
                 )
             } else {
                 enableEdgeToEdge(
-                    statusBarStyle =
-                    SystemBarStyle.dark(
-                        statusBarColor,
-                    ),
-                    navigationBarStyle =
-                    SystemBarStyle.dark(
-                        navigationBarColor,
-                    ),
+                    statusBarStyle = SystemBarStyle.dark(statusBarColor),
+                    navigationBarStyle = SystemBarStyle.dark(navigationBarColor),
                 )
             }
         }
