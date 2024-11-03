@@ -47,6 +47,6 @@ class TVShowDetailRepositoryTest : BaseDetailRepositoryTest<TvDetails>() {
         )
         `when`(api.tvCredit(anyInt())).thenReturn(NetworkCreditWrapper(emptyList(), emptyList()))
         `when`(api.fetchImages(anyInt())).thenReturn(ImagesResponse(emptyList(), ID, emptyList()))
-        `when`(api.fetchSimilarMovies(anyInt())).thenReturn(TMDbWrapper(emptyList()))
+        `when`(api.fetchSimilarTVSeries(anyInt())).thenReturn(TMDbWrapper(emptyList()))
     }
 }

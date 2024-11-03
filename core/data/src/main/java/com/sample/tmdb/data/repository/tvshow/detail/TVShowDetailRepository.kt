@@ -37,5 +37,5 @@ class TVShowDetailRepository @Inject constructor(
     override suspend fun getImages(id: Int): List<TMDbImage> = tvShowApi.fetchImages(id).asDomainModel()
 
     override suspend fun getSimilarItems(id: Int): List<TMDbItem> =
-        tvShowApi.fetchSimilarMovies(id).items.asTVShowDomainModel()
+        tvShowApi.fetchSimilarTVSeries(id).items.asTVShowDomainModel()
 }
