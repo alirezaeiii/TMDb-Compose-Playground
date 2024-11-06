@@ -6,8 +6,8 @@ import com.sample.tmdb.data.response.asTVShowDomainModel
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.paging.BasePagingSource
 
-class DiscoverTvSeriesPagingSource(context: Context, private val tvShowApi: TVShowService) :
+class PopularTVSeriesPagingSource(context: Context, private val tvShowApi: TVShowService) :
     BasePagingSource<TVShow>(context) {
     override suspend fun fetchItems(page: Int): List<TVShow> =
-        tvShowApi.discoverTVSeries(page).items.asTVShowDomainModel()
+        tvShowApi.popularTVSeries(page).items.asTVShowDomainModel()
 }

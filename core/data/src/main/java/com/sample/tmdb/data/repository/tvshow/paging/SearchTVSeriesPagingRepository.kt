@@ -2,7 +2,7 @@ package com.sample.tmdb.data.repository.tvshow.paging
 
 import android.content.Context
 import com.sample.tmdb.data.network.TVShowService
-import com.sample.tmdb.data.paging.tvshow.SearchTvSeriesPagingSource
+import com.sample.tmdb.data.paging.tvshow.SearchTVSeriesPagingSource
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.paging.BasePagingSource
 import com.sample.tmdb.domain.repository.BasePagingRepository
@@ -15,5 +15,5 @@ SearchTVSeriesPagingRepository @Inject constructor(
     private val tvShowApi: TVShowService,
 ) : BasePagingRepository<TVShow>() {
     override fun pagingSource(query: String?, id: Int?): BasePagingSource<TVShow> =
-        SearchTvSeriesPagingSource(context, tvShowApi, query!!)
+        SearchTVSeriesPagingSource(context, tvShowApi, query!!)
 }
