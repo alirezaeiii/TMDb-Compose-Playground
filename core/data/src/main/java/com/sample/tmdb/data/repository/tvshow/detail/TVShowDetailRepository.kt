@@ -24,10 +24,10 @@ class TVShowDetailRepository @Inject constructor(
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
 ) : BaseDetailRepository<TvDetails>(context, ioDispatcher) {
-    override suspend fun getDetails(id: Int): TvDetails = tvShowApi.fetchTvDetail(id).asDomainModel()
+    override suspend fun getDetails(id: Int): TvDetails = tvShowApi.fetchTVSeriesDetail(id).asDomainModel()
 
     override suspend fun getCredit(id: Int): Pair<List<Cast>, List<Crew>> {
-        val networkCreditWrapper = tvShowApi.tvCredit(id)
+        val networkCreditWrapper = tvShowApi.fetchTVSeriesCredit(id)
         return Pair(
             networkCreditWrapper.cast.asCastDomainModel(),
             networkCreditWrapper.crew.asCrewDomainModel(),

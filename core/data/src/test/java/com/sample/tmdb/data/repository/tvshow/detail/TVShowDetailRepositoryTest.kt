@@ -25,7 +25,7 @@ class TVShowDetailRepositoryTest : BaseDetailRepositoryTest<TvDetails>() {
     }
 
     override fun mockApiResponse() = runTest {
-        `when`(api.fetchTvDetail(anyInt())).thenReturn(
+        `when`(api.fetchTVSeriesDetail(anyInt())).thenReturn(
             TvDetailResponse(
                 BACKDROP_PATH,
                 emptyList(),
@@ -45,7 +45,7 @@ class TVShowDetailRepositoryTest : BaseDetailRepositoryTest<TvDetails>() {
                 VOTE_COUNT,
             ),
         )
-        `when`(api.tvCredit(anyInt())).thenReturn(NetworkCreditWrapper(emptyList(), emptyList()))
+        `when`(api.fetchTVSeriesCredit(anyInt())).thenReturn(NetworkCreditWrapper(emptyList(), emptyList()))
         `when`(api.fetchImages(anyInt())).thenReturn(ImagesResponse(emptyList(), ID, emptyList()))
         `when`(api.fetchSimilarTVSeries(anyInt())).thenReturn(TMDbWrapper(emptyList()))
     }

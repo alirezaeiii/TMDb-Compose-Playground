@@ -94,7 +94,7 @@ fun BookmarkScreen(navController: NavController, coroutineScope: CoroutineScope 
         ) { page ->
             when (page) {
                 MediaTab.Movies.ordinal -> MoviesTabContent(navController)
-                MediaTab.TvShows.ordinal -> TVShowsTabContent(navController)
+                MediaTab.TVShows.ordinal -> TVShowsTabContent(navController)
             }
         }
     }
@@ -218,5 +218,5 @@ private fun isEmptyImageVisible(): Boolean {
 
 enum class MediaTab(@StringRes val titleResourceId: Int) {
     Movies(titleResourceId = R.string.movie),
-    TvShows(titleResourceId = R.string.tv_show),
+    TVShows(titleResourceId = R.string.tv_show),
 }

@@ -18,14 +18,14 @@ import com.sample.tmdb.data.repository.tvshow.TVShowFeedRepository
 import com.sample.tmdb.data.repository.tvshow.detail.BookmarkTVShowDetailsRepositoryImpl
 import com.sample.tmdb.data.repository.tvshow.detail.BookmarkTVShowRepository
 import com.sample.tmdb.data.repository.tvshow.detail.TVShowDetailRepository
-import com.sample.tmdb.data.repository.tvshow.paging.AiringTodayTvSeriesPagingRepository
-import com.sample.tmdb.data.repository.tvshow.paging.DiscoverTvSeriesPagingRepository
-import com.sample.tmdb.data.repository.tvshow.paging.OnTheAirTvSeriesPagingRepository
-import com.sample.tmdb.data.repository.tvshow.paging.PopularTvSeriesPagingRepository
-import com.sample.tmdb.data.repository.tvshow.paging.SearchTvSeriesPagingRepository
-import com.sample.tmdb.data.repository.tvshow.paging.SimilarTvSeriesPagingRepository
-import com.sample.tmdb.data.repository.tvshow.paging.TopRatedTvSeriesPagingRepository
-import com.sample.tmdb.data.repository.tvshow.paging.TrendingTvSeriesPagingRepository
+import com.sample.tmdb.data.repository.tvshow.paging.AiringTodayTVSeriesPagingRepository
+import com.sample.tmdb.data.repository.tvshow.paging.DiscoverTVSeriesPagingRepository
+import com.sample.tmdb.data.repository.tvshow.paging.OnTheAirTVSeriesPagingRepository
+import com.sample.tmdb.data.repository.tvshow.paging.PopularTVSeriesPagingRepository
+import com.sample.tmdb.data.repository.tvshow.paging.SearchTVSeriesPagingRepository
+import com.sample.tmdb.data.repository.tvshow.paging.SimilarTVSeriesPagingRepository
+import com.sample.tmdb.data.repository.tvshow.paging.TopRatedTVSeriesPagingRepository
+import com.sample.tmdb.data.repository.tvshow.paging.TrendingTVSeriesPagingRepository
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.MovieDetails
 import com.sample.tmdb.domain.model.Person
@@ -134,56 +134,56 @@ abstract class RepositoryModule {
     @Trending
     @Binds
     internal abstract fun bindTrendingTVShowRepository(
-        trendingTvSeriesPagingRepository: TrendingTvSeriesPagingRepository,
+        trendingTvSeriesPagingRepository: TrendingTVSeriesPagingRepository,
     ): BasePagingRepository<TVShow>
 
     @Singleton
     @Popular
     @Binds
     internal abstract fun bindPopularTVShowRepository(
-        popularTvSeriesPagingRepository: PopularTvSeriesPagingRepository,
+        popularTvSeriesPagingRepository: PopularTVSeriesPagingRepository,
     ): BasePagingRepository<TVShow>
 
     @Singleton
     @NowPlaying
     @Binds
     internal abstract fun bindAiringTodayTVShowRepository(
-        airingTodayTvSeriesPagingRepository: AiringTodayTvSeriesPagingRepository,
+        airingTodayTvSeriesPagingRepository: AiringTodayTVSeriesPagingRepository,
     ): BasePagingRepository<TVShow>
 
     @Singleton
     @Latest
     @Binds
     internal abstract fun bindOnTheAirTVShowRepository(
-        onTheAirTvSeriesPagingRepository: OnTheAirTvSeriesPagingRepository,
+        onTheAirTvSeriesPagingRepository: OnTheAirTVSeriesPagingRepository,
     ): BasePagingRepository<TVShow>
 
     @Singleton
     @TopRated
     @Binds
     internal abstract fun bindTopRatedTVShowRepository(
-        topRatedTvSeriesPagingRepository: TopRatedTvSeriesPagingRepository,
+        topRatedTvSeriesPagingRepository: TopRatedTVSeriesPagingRepository,
     ): BasePagingRepository<TVShow>
 
     @Singleton
     @Discover
     @Binds
     internal abstract fun bindDiscoverTVShowRepository(
-        discoverTvSeriesPagingRepository: DiscoverTvSeriesPagingRepository,
+        discoverTvSeriesPagingRepository: DiscoverTVSeriesPagingRepository,
     ): BasePagingRepository<TVShow>
 
     @Singleton
     @Similar
     @Binds
     internal abstract fun bindSimilarTVShowRepository(
-        similarTvSeriesPagingRepository: SimilarTvSeriesPagingRepository,
+        similarTvSeriesPagingRepository: SimilarTVSeriesPagingRepository,
     ): BasePagingRepository<TVShow>
 
     @Singleton
     @Search
     @Binds
     internal abstract fun bindSearchTVShowRepository(
-        searchTvSeriesPagingRepository: SearchTvSeriesPagingRepository,
+        searchTvSeriesPagingRepository: SearchTVSeriesPagingRepository,
     ): BasePagingRepository<TVShow>
 
     @Singleton

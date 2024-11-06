@@ -47,10 +47,10 @@ interface TVShowService {
     suspend fun discoverTVSeries(@Query("page") page: Int): TMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/{tvId}/credits")
-    suspend fun tvCredit(@Path("tvId") tvId: Int): NetworkCreditWrapper
+    suspend fun fetchTVSeriesCredit(@Path("tvId") tvId: Int): NetworkCreditWrapper
 
     @GET("3/tv/{tvId}")
-    suspend fun fetchTvDetail(@Path("tvId") tvId: Int): TvDetailResponse
+    suspend fun fetchTVSeriesDetail(@Path("tvId") tvId: Int): TvDetailResponse
 
     @GET("3/search/tv")
     suspend fun searchTVSeries(@Query("page") page: Int, @Query("query") query: String): TMDbWrapper<NetworkTVShow>
@@ -61,6 +61,6 @@ interface TVShowService {
     @GET("3/tv/{tvId}/similar")
     suspend fun fetchSimilarTVSeries(@Path("tvId") tvId: Int): TMDbWrapper<NetworkTVShow>
 
-    @GET("3/tv/{TvId}/similar")
-    suspend fun fetchSimilarTVSeries(@Path("TvId") tvId: Int, @Query("page") page: Int): TMDbWrapper<NetworkTVShow>
+    @GET("3/tv/{tvId}/similar")
+    suspend fun fetchSimilarTVSeries(@Path("tvId") tvId: Int, @Query("page") page: Int): TMDbWrapper<NetworkTVShow>
 }
