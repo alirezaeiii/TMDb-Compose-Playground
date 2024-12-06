@@ -26,6 +26,9 @@ tmdb_api_key=YOUR_API_KEY
 | [Jetsnack](https://github.com/android/compose-samples/tree/main/Jetsnack) | [Jetflix](https://github.com/yasinkacmaz/jetflix) | [Cinemax](https://github.com/AfigAliyev/Cinemax)
 | :-: | :-: | :-: |
 
+## Testing
+Local unit testing is done for Repository and ViewModel layers. UI testing is done for screens using Compose UI Test.
+
 ## Libraries
 * [Android Jetpack](https://developer.android.com/jetpack)
    * [Compose](https://developer.android.com/jetpack/compose) Android’s modern toolkit for building native UI.
