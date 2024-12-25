@@ -138,9 +138,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
     )
 }
 
-fun LazyGridScope.gridItemWithSpan(
-    content: @Composable () -> Unit,
-) {
+fun LazyGridScope.gridItemWithSpan(content: @Composable () -> Unit) {
     item(span = { GridItemSpan(maxLineSpan) }) {
         content()
     }
