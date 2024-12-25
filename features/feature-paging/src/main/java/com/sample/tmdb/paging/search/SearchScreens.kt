@@ -66,7 +66,7 @@ fun SearchMoviesScreen(navController: NavController, viewModel: SearchMoviesView
 }
 
 @Composable
-fun SearchTVSeriesScreen(navController: NavController, viewModel: SearchTvSeriesViewModel = hiltViewModel()) {
+fun SearchTVSeriesScreen(navController: NavController, viewModel: SearchTVSeriesViewModel = hiltViewModel()) {
     Search(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
