@@ -90,7 +90,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
             Alignment.CenterHorizontally,
         ),
         content = {
-            gridItemWithSpan {
+            fullSpanGridItem {
                 Spacer(
                     Modifier.windowInsetsTopHeight(
                         WindowInsets.statusBars.add(WindowInsets(top = 56.dp)),
@@ -113,7 +113,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
 
             when (lazyTMDbItems.loadState.append) {
                 is LoadState.Loading -> {
-                    gridItemWithSpan {
+                    fullSpanGridItem {
                         LoadingRow(modifier = Modifier.padding(vertical = TMDb_8_dp))
                     }
                 }
@@ -123,7 +123,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
                         (lazyTMDbItems.loadState.append as? LoadState.Error)?.error?.message
                             ?: return@LazyVerticalGrid
 
-                    gridItemWithSpan {
+                    fullSpanGridItem {
                         ErrorScreen(
                             message = message,
                             modifier = Modifier.padding(vertical = TMDb_8_dp),
@@ -138,7 +138,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
     )
 }
 
-fun LazyGridScope.gridItemWithSpan(content: @Composable () -> Unit) {
+private fun LazyGridScope.fullSpanGridItem(content: @Composable () -> Unit) {
     item(span = { GridItemSpan(maxLineSpan) }) {
         content()
     }
