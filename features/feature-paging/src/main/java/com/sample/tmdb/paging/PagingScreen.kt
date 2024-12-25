@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -89,9 +90,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
             Alignment.CenterHorizontally,
         ),
         content = {
-            item(span = {
-                GridItemSpan(maxLineSpan)
-            }) {
+            gridItemWithSpan {
                 Spacer(
                     Modifier.windowInsetsTopHeight(
                         WindowInsets.statusBars.add(WindowInsets(top = 56.dp)),
@@ -114,9 +113,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
 
             when (lazyTMDbItems.loadState.append) {
                 is LoadState.Loading -> {
-                    item(span = {
-                        GridItemSpan(maxLineSpan)
-                    }) {
+                    gridItemWithSpan {
                         LoadingRow(modifier = Modifier.padding(vertical = TMDb_8_dp))
                     }
                 }
@@ -126,9 +123,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
                         (lazyTMDbItems.loadState.append as? LoadState.Error)?.error?.message
                             ?: return@LazyVerticalGrid
 
-                    item(span = {
-                        GridItemSpan(maxLineSpan)
-                    }) {
+                    gridItemWithSpan {
                         ErrorScreen(
                             message = message,
                             modifier = Modifier.padding(vertical = TMDb_8_dp),
@@ -141,6 +136,14 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
             }
         },
     )
+}
+
+fun LazyGridScope.gridItemWithSpan(
+    content: @Composable () -> Unit,
+) {
+    item(span = { GridItemSpan(maxLineSpan) }) {
+        content()
+    }
 }
 
 @Composable
