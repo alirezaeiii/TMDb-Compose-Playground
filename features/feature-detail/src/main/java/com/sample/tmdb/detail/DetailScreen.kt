@@ -714,18 +714,20 @@ private fun <T : Any> TMDbDetailItemSection(
     modifier: Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        SectionHeader(headerResId, items, onSeeAllClicked, showSize)
-        LazyRow(
-            modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
-            contentPadding = PaddingValues(TMDb_16_dp),
-        ) {
-            items(
-                count = items.size,
-                itemContent = { index ->
-                    itemContent(items[index], index)
-                    Spacer(modifier = Modifier.width(TMDb_16_dp))
-                },
-            )
+        if(items.isNotEmpty()) {
+            SectionHeader(headerResId, items, onSeeAllClicked, showSize)
+            LazyRow(
+                modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
+                contentPadding = PaddingValues(TMDb_16_dp),
+            ) {
+                items(
+                    count = items.size,
+                    itemContent = { index ->
+                        itemContent(items[index], index)
+                        Spacer(modifier = Modifier.width(TMDb_16_dp))
+                    },
+                )
+            }
         }
     }
 }
