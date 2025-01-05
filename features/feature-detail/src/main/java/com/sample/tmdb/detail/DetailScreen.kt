@@ -714,7 +714,7 @@ private fun <T : Any> TMDbDetailItemSection(
     modifier: Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        if(items.isNotEmpty()) {
+        if (items.isNotEmpty()) {
             SectionHeader(headerResId, items, onSeeAllClicked, showSize)
             LazyRow(
                 modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
