@@ -52,7 +52,7 @@ import com.sample.tmdb.common.ui.theme.rateColors
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun <T : TMDbItem> TMDbContent(tmdbItem: T, modifier: Modifier = Modifier, onClick: (TMDbItem) -> Unit) {
+fun TMDbContent(tmdbItem: TMDbItem, modifier: Modifier = Modifier, onClick: (TMDbItem) -> Unit) {
     Box(modifier = modifier) {
         TMDbItemRate(
             tmdbItem.voteAverage,
@@ -136,7 +136,7 @@ fun BoxScope.TMDbItemPoster(posterUrl: String?, tmdbItemName: String) {
 }
 
 @Composable
-fun <T : TMDbItem> TMDbItemInfo(tmdbItem: T, modifier: Modifier = Modifier) {
+fun TMDbItemInfo(tmdbItem: TMDbItem, modifier: Modifier = Modifier) {
     Column(
         verticalArrangement = Arrangement.spacedBy(TMDb_4_dp),
         modifier =
