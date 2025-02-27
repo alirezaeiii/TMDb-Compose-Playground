@@ -103,10 +103,10 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
                 tmdbItem?.let {
                     TMDbContent(
                         it,
+                        onClick,
                         Modifier
                             .height(320.dp)
                             .padding(vertical = TMDb_8_dp),
-                        onClick,
                     )
                 }
             }

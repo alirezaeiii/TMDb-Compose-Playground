@@ -31,8 +31,8 @@ class TMDbContentTest {
                         1.1,
                         1,
                     ),
-                ) {
-                }
+                    {},
+                )
             }
             onNodeWithText("name").assertIsDisplayed()
             onNodeWithText("releaseDate").assertIsDisplayed()

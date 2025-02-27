@@ -52,7 +52,7 @@ import com.sample.tmdb.common.ui.theme.rateColors
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TMDbContent(tmdbItem: TMDbItem, modifier: Modifier = Modifier, onClick: (TMDbItem) -> Unit) {
+fun TMDbContent(tmdbItem: TMDbItem, onClick: (TMDbItem) -> Unit, modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         TMDbItemRate(
             tmdbItem.voteAverage,
@@ -118,6 +118,7 @@ fun BoxScope.TMDbItemPoster(posterUrl: String?, tmdbItemName: String) {
                 ColorFilter.tint(
                     MaterialTheme.colors.imageTint,
                 )
+
             else -> null
         }
     val scale =

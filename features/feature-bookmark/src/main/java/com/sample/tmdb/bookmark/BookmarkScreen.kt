@@ -158,10 +158,10 @@ fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Unit) {
             items(items.size) { index ->
                 TMDbContent(
                     items[index],
+                    onClick,
                     Modifier
                         .height(320.dp)
                         .padding(vertical = TMDb_8_dp),
-                    onClick,
                 )
             }
         },
