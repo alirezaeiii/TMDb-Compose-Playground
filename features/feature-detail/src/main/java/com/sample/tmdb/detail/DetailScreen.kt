@@ -488,7 +488,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         itemContent = { item, _ ->
                             TMDbCard(item, onTMDbItemSelected)
                         },
-                        showSize = false,
+                        headerText = stringResource(R.string.see_all_items),
                         modifier =
                         Modifier.constrainAs(similarSection) {
                             top.linkTo(imagesSection.bottom, 16.dp)
@@ -710,12 +710,12 @@ private fun <T : Any> TMDbDetailItemSection(
     @StringRes headerResId: Int,
     onSeeAllClicked: (List<T>) -> Unit,
     itemContent: @Composable (T, Int) -> Unit,
-    showSize: Boolean = true,
+    headerText: String = stringResource(R.string.see_all, items.size),
     modifier: Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         if (items.isNotEmpty()) {
-            SectionHeader(headerResId, items, onSeeAllClicked, showSize)
+            SectionHeader(headerResId, items, onSeeAllClicked, headerText)
             LazyRow(
                 modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
                 contentPadding = PaddingValues(TMDb_16_dp),
@@ -737,7 +737,7 @@ private fun <T : Any> SectionHeader(
     @StringRes headerResId: Int,
     items: List<T>,
     onAllSelected: (List<T>) -> Unit,
-    showSize: Boolean,
+    headerText: String
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -762,14 +762,14 @@ private fun <T : Any> SectionHeader(
                 },
         ) {
             Text(
-                text = getHeaderText(showSize, items),
+                text = headerText,
                 color = localVibrantColor.current.value,
                 style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(end = TMDb_4_dp),
             )
             Icon(
                 Icons.AutoMirrored.Filled.ArrowForward,
-                contentDescription = getHeaderText(showSize, items),
+                contentDescription = headerText,
                 tint = localVibrantColor.current.value,
             )
         }
@@ -869,16 +869,6 @@ class BottomArcShape(private val arcHeight: Float) : Shape {
             }
         return Outline.Generic(path)
     }
-}
-
-@Composable
-private fun <T : Any> getHeaderText(showSize: Boolean, items: List<T>) = if (showSize) {
-    stringResource(
-        R.string.see_all,
-        items.size,
-    )
-} else {
-    stringResource(R.string.see_all_items)
 }
 
 private val gson = Gson()
