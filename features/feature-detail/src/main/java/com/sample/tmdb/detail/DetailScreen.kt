@@ -737,7 +737,7 @@ private fun <T : Any> SectionHeader(
     @StringRes headerResId: Int,
     items: List<T>,
     onAllSelected: (List<T>) -> Unit,
-    headerText: String
+    headerText: String,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
