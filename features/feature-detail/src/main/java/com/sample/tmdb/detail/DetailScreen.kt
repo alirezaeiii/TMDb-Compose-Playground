@@ -710,7 +710,7 @@ private fun <T : Any> TMDbDetailItemSection(
     @StringRes headerResId: Int,
     onSeeAllClicked: (List<T>) -> Unit,
     itemContent: @Composable (T, Int) -> Unit,
-    headerText: String = stringResource(R.string.see_all, items.size),
+    headerText: String? = null,
     modifier: Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
@@ -737,7 +737,7 @@ private fun <T : Any> SectionHeader(
     @StringRes headerResId: Int,
     items: List<T>,
     onAllSelected: (List<T>) -> Unit,
-    headerText: String,
+    headerText: String?,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -762,7 +762,7 @@ private fun <T : Any> SectionHeader(
                 },
         ) {
             Text(
-                text = headerText,
+                text = headerText ?: stringResource(R.string.see_all, items.size),
                 color = localVibrantColor.current.value,
                 style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(end = TMDb_4_dp),
