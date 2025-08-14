@@ -21,8 +21,6 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +30,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import com.sample.tmdb.common.R as R1
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -40,7 +40,6 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.domain.model.TMDbImage
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ImagesScreen(images: List<TMDbImage>, initialPage: Int) {
     if (images.isEmpty() || initialPage !in images.indices) return
@@ -51,7 +50,7 @@ fun ImagesScreen(images: List<TMDbImage>, initialPage: Int) {
             initialPageOffsetFraction = 0f,
         ) { images.size }
     Box {
-        HorizontalPager(state = pagerState, key = { images[it].url + it }, beyondBoundsPageCount = 4) {
+        HorizontalPager(state = pagerState, key = { images[it].url + it }, beyondViewportPageCount = 4) {
             Poster(images[it])
         }
         Index(position = pagerState.currentPage + 1, imageCount = pagerState.pageCount)

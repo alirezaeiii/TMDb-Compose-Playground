@@ -1,11 +1,11 @@
 object Versions {
-    const val compose = "1.6.4"
+    const val compose = "1.9.0"
     const val compose_paging = "3.2.1"
     const val constraint_layout = "1.0.1"
     const val compose_activity = "1.8.2"
     const val nav_version = "2.7.7"
     const val appCompat = "1.6.1"
-    const val material = "1.11.0"
+    const val material = "1.13.0-rc01"
     const val lifecycle = "2.7.0"
     const val hilt = "2.51.1"
     const val hiltCompose = "1.2.0"
@@ -17,9 +17,9 @@ object Versions {
     const val coil = "2.6.0"
     const val gson = "2.10.1"
     const val palette = "1.0.0"
-    const val icon_extended = "1.6.4"
+    const val icon_extended = "1.7.8"
     const val browser = "1.8.0"
-    const val room_version = "2.6.1"
+    const val room_version = "2.7.2"
     const val annotation = "1.7.1"
     const val lottie_compose = "4.0.0"
     const val mockito = "5.4.0"
@@ -31,8 +31,8 @@ object Versions {
 
 object AppMetaData {
     const val id = "com.sample.tmdb"
-    const val targetSdkVersion = 34
-    const val compileSdkVersion = 34
+    const val targetSdkVersion = 35
+    const val compileSdkVersion = 35
     const val minSdkVersion = 21
 }
 

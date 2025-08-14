@@ -178,7 +178,7 @@ fun EmptyView(@StringRes textResourceId: Int) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (isEmptyImageVisible()) {
+        if (shouldShowEmptyImage()) {
             Image(
                 modifier = Modifier.padding(bottom = TMDb_16_dp),
                 painter = painterResource(id = R.drawable.ic_empty),
@@ -198,22 +198,11 @@ fun EmptyView(@StringRes textResourceId: Int) {
 }
 
 @Composable
-private fun isEmptyImageVisible(): Boolean {
+private fun shouldShowEmptyImage(): Boolean {
     val configuration = LocalConfiguration.current
-    val isPortrait =
-        when (configuration.orientation) {
-            Configuration.ORIENTATION_PORTRAIT -> true
-            else -> false
-        }
-    if (isPortrait) {
-        return true
-    } else {
-        val isTablet = booleanResource(id = R.bool.is_tablet)
-        if (isTablet) {
-            return true
-        }
-    }
-    return false
+    val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+    val isTablet = booleanResource(id = R.bool.is_tablet)
+    return isPortrait || isTablet
 }
 
 enum class MediaTab(@StringRes val titleResourceId: Int) {
