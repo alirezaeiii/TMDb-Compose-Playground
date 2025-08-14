@@ -26,7 +26,7 @@ object Versions {
     const val junit = "4.13.2"
     const val mockk = "1.13.12"
     const val turbine = "1.1.0"
-    const val spotless = "7.0.0.BETA2"
+    const val spotless = "7.2.1"
 }
 
 object AppMetaData {
