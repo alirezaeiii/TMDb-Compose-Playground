@@ -7,7 +7,7 @@ object Versions {
     const val appCompat = "1.6.1"
     const val material = "1.13.0-rc01"
     const val lifecycle = "2.7.0"
-    const val hilt = "2.51.1"
+    const val hilt = "2.57"
     const val hiltCompose = "1.2.0"
     const val retrofit = "2.11.0"
     const val okhttp = "4.12.0"
