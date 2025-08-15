@@ -2,7 +2,6 @@ package com.sample.tmdb.bookmark
 
 import android.content.res.Configuration
 import androidx.annotation.StringRes
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.R as R1
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
@@ -49,11 +47,11 @@ import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.utils.toDp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import com.sample.tmdb.common.R as R1
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BookmarkScreen(navController: NavController, coroutineScope: CoroutineScope = rememberCoroutineScope()) {
-    val tabs = remember { MediaTab.values() }
+    val tabs = remember { MediaTab.entries.toTypedArray() }
     val pagerState =
         rememberPagerState(pageCount = {
             tabs.size
