@@ -3,7 +3,7 @@ object Versions {
     const val compose_paging = "3.2.1"
     const val constraint_layout = "1.0.1"
     const val compose_activity = "1.8.2"
-    const val nav_version = "2.7.7"
+    const val nav_version = "2.9.3"
     const val appCompat = "1.6.1"
     const val material = "1.13.0-rc01"
     const val lifecycle = "2.7.0"

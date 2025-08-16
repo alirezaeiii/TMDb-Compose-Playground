@@ -12,6 +12,7 @@ android {
 
     defaultConfig {
         minSdk = AppMetaData.minSdkVersion
+        testOptions.targetSdk = AppMetaData.targetSdkVersion
         buildConfigField("String", "VERSION_NAME", "\"$appVersion\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
