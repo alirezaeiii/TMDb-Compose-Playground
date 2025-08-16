@@ -33,7 +33,7 @@ class PersonCardTest {
                         1,
                     ),
                     navController = rememberNavController(),
-                    testPainter = rememberVectorPainter(Icons.Rounded.Man)
+                    testPainter = rememberVectorPainter(Icons.Rounded.Man),
                 )
             }
             onNodeWithContentDescription(

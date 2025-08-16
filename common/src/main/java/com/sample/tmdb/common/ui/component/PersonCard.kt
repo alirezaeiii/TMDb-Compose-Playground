@@ -73,7 +73,7 @@ fun PersonCard(
                 when (painter.state) {
                     is AsyncImagePainter.State.Error,
                     is AsyncImagePainter.State.Loading,
-                        -> ColorFilter.tint(MaterialTheme.colors.imageTint)
+                    -> ColorFilter.tint(MaterialTheme.colors.imageTint)
 
                     else -> null
                 }
