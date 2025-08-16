@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace = "com.sample.tmdb.image"
-    compileSdk = 34
+    compileSdk = AppMetaData.compileSdkVersion
 
     defaultConfig {
-        minSdk = 21
+        minSdk = AppMetaData.minSdkVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
