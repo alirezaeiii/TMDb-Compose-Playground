@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -36,7 +37,12 @@ import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.utils.CircleTopCropTransformation
 
 @Composable
-fun PersonCard(person: Credit, navController: NavController, modifier: Modifier = Modifier) {
+fun PersonCard(
+    person: Credit,
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    testPainter: Painter? = null,
+) {
     Column(
         modifier
             .padding(TMDb_4_dp)
@@ -58,21 +64,23 @@ fun PersonCard(person: Credit, navController: NavController, modifier: Modifier 
                     .transformations(CircleTopCropTransformation())
                     .build()
             val placeholderPainter = rememberVectorPainter(person.gender.placeholderIcon)
-            val painter =
-                rememberAsyncImagePainter(
-                    model = request,
-                    error = placeholderPainter,
-                    placeholder = placeholderPainter,
-                )
-            val colorFilter =
+            val painter = testPainter ?: rememberAsyncImagePainter(
+                model = request,
+                error = placeholderPainter,
+                placeholder = placeholderPainter,
+            )
+            val colorFilter: ColorFilter? = if (painter is AsyncImagePainter) {
                 when (painter.state) {
-                    is AsyncImagePainter.State.Error, is AsyncImagePainter.State.Loading ->
-                        ColorFilter.tint(
-                            MaterialTheme.colors.imageTint,
-                        )
+                    is AsyncImagePainter.State.Error,
+                    is AsyncImagePainter.State.Loading,
+                        -> ColorFilter.tint(MaterialTheme.colors.imageTint)
 
                     else -> null
                 }
+            } else {
+                // For testPainter or any stable Painter
+                ColorFilter.tint(MaterialTheme.colors.imageTint)
+            }
             Image(
                 painter = painter,
                 colorFilter = colorFilter,

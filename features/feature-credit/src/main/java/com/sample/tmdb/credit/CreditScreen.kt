@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -26,7 +27,12 @@ import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.utils.toDp
 
 @Composable
-fun <T : Credit> CreditScreen(@StringRes resourceId: Int, navController: NavController, items: List<T>) {
+fun <T : Credit> CreditScreen(
+    @StringRes resourceId: Int,
+    navController: NavController,
+    items: List<T>,
+    testPainter: Painter? = null,
+) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(TMDb_120_dp),
         contentPadding =
@@ -44,9 +50,11 @@ fun <T : Credit> CreditScreen(@StringRes resourceId: Int, navController: NavCont
                 ),
         ),
         content = {
-            item(span = {
-                GridItemSpan(maxLineSpan)
-            }) {
+            item(
+                span = {
+                    GridItemSpan(maxLineSpan)
+                },
+            ) {
                 Spacer(
                     Modifier.windowInsetsTopHeight(
                         WindowInsets.statusBars.add(WindowInsets(top = 56.dp)),
@@ -55,7 +63,11 @@ fun <T : Credit> CreditScreen(@StringRes resourceId: Int, navController: NavCont
             }
 
             items(items.size) { index ->
-                PersonCard(person = items[index], navController = navController)
+                PersonCard(
+                    person = items[index],
+                    navController = navController,
+                    testPainter = testPainter,
+                )
             }
         },
     )
