@@ -7,12 +7,12 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.Gender
 import com.sample.tmdb.common.model.placeholderIcon
 import com.sample.tmdb.domain.model.Cast
 import org.junit.Rule
 import org.junit.Test
-import com.sample.tmdb.common.R as commonR
 
 class CreditScreenTest {
     @get:Rule
