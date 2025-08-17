@@ -1,19 +1,18 @@
 package com.sample.tmdb.credit
 
 import androidx.activity.ComponentActivity
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Man
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.Gender
+import com.sample.tmdb.common.model.placeholderIcon
 import com.sample.tmdb.domain.model.Cast
 import org.junit.Rule
 import org.junit.Test
+import com.sample.tmdb.common.R as commonR
 
 class CreditScreenTest {
     @get:Rule
@@ -22,12 +21,13 @@ class CreditScreenTest {
     @Test
     fun creditScreenTest() {
         with(composeTestRule) {
+            val person = Cast("role", "name", null, Gender.MALE, 1)
             setContent {
                 CreditScreen(
                     R.string.biography,
                     rememberNavController(),
-                    listOf(Cast("role", "name", null, Gender.MALE, 1)),
-                    rememberVectorPainter(Icons.Rounded.Man),
+                    listOf(person),
+                    rememberVectorPainter(person.gender.placeholderIcon),
                 )
             }
             onNodeWithText(activity.getString(R.string.biography)).assertIsDisplayed()
