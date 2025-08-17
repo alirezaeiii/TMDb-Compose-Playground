@@ -1,8 +1,6 @@
 package com.sample.tmdb.common.ui.component
 
 import androidx.activity.ComponentActivity
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Man
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
