@@ -11,6 +11,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
 import com.sample.tmdb.common.R
 import com.sample.tmdb.common.model.Gender
+import com.sample.tmdb.common.model.placeholderIcon
 import com.sample.tmdb.domain.model.Cast
 import org.junit.Rule
 import org.junit.Test
@@ -22,18 +23,12 @@ class PersonCardTest {
     @Test
     fun personCardTest() {
         with(composeTestRule) {
+            val person = Cast("role", "name", null, Gender.MALE, 1)
             setContent {
                 PersonCard(
-                    person =
-                    Cast(
-                        "role",
-                        "name",
-                        null,
-                        Gender.MALE,
-                        1,
-                    ),
+                    person = person,
                     navController = rememberNavController(),
-                    testPainter = rememberVectorPainter(Icons.Rounded.Man),
+                    testPainter = rememberVectorPainter(person.gender.placeholderIcon),
                 )
             }
             onNodeWithContentDescription(
