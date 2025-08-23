@@ -37,35 +37,35 @@ data class NetworkCrew(
     val id: String,
 )
 
-fun List<NetworkCast>.asCastDomainModel(): List<Cast> = map {
-    Cast(
-        it.role,
-        it.name,
-        it.profilePath?.let { profilePath ->
-            String.format(
-                BASE_WIDTH_342_PATH,
-                profilePath,
-            )
-        },
-        it.gender.toGender(),
-        it.id,
-    )
-}
+fun List<NetworkCast>.asCastDomainModel() = map(NetworkCast::asCastDomainModel)
 
-fun List<NetworkCrew>.asCrewDomainModel(): List<Crew> = map {
-    Crew(
-        it.role,
-        it.name,
-        it.profilePath?.let { profilePath ->
-            String.format(
-                BASE_WIDTH_342_PATH,
-                profilePath,
-            )
-        },
-        it.gender.toGender(),
-        it.id,
-    )
-}
+fun List<NetworkCrew>.asCrewDomainModel() = map(NetworkCrew::asCrewDomainModel)
+
+private fun NetworkCast.asCastDomainModel(): Cast = Cast(
+    role,
+    name,
+    profilePath?.let { profilePath ->
+        String.format(
+            BASE_WIDTH_342_PATH,
+            profilePath,
+        )
+    },
+    gender.toGender(),
+    id,
+)
+
+private fun NetworkCrew.asCrewDomainModel(): Crew = Crew(
+    role,
+    name,
+    profilePath?.let { profilePath ->
+        String.format(
+            BASE_WIDTH_342_PATH,
+            profilePath,
+        )
+    },
+    gender.toGender(),
+    id,
+)
 
 private fun Int.toGender() = if (this == 1) Gender.FEMALE else Gender.MALE
 

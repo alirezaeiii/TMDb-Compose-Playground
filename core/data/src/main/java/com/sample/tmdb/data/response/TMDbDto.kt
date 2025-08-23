@@ -68,48 +68,48 @@ data class NetworkTVShow(
     override val voteCount: Int,
 ) : NetworkTMDbItem
 
-fun List<NetworkMovie>.asMovieDomainModel(): List<Movie> = map {
-    Movie(
-        it.id,
-        it.overview,
-        it.releaseDate,
-        it.posterPath?.let { posterPath ->
-            String.format(
-                BASE_WIDTH_342_PATH,
-                posterPath,
-            )
-        },
-        it.backdropPath?.let { backdropPath ->
-            String.format(
-                BASE_WIDTH_780_PATH,
-                backdropPath,
-            )
-        },
-        it.name,
-        it.voteAverage,
-        it.voteCount,
-    )
-}
+fun List<NetworkMovie>.asMovieDomainModel() = map(NetworkMovie::asMovieDomainModel)
 
-fun List<NetworkTVShow>.asTVShowDomainModel(): List<TVShow> = map {
-    TVShow(
-        it.id,
-        it.overview,
-        it.releaseDate,
-        it.posterPath?.let { posterPath ->
-            String.format(
-                BASE_WIDTH_342_PATH,
-                posterPath,
-            )
-        },
-        it.backdropPath?.let { backdropPath ->
-            String.format(
-                BASE_WIDTH_780_PATH,
-                backdropPath,
-            )
-        },
-        it.name,
-        it.voteAverage,
-        it.voteCount,
-    )
-}
+fun List<NetworkTVShow>.asTVShowDomainModel() = map(NetworkTVShow::asTVShowDomainModel)
+
+private fun NetworkMovie.asMovieDomainModel(): Movie = Movie(
+    id,
+    overview,
+    releaseDate,
+    posterPath?.let { posterPath ->
+        String.format(
+            BASE_WIDTH_342_PATH,
+            posterPath,
+        )
+    },
+    backdropPath?.let { backdropPath ->
+        String.format(
+            BASE_WIDTH_780_PATH,
+            backdropPath,
+        )
+    },
+    name,
+    voteAverage,
+    voteCount,
+)
+
+private fun NetworkTVShow.asTVShowDomainModel(): TVShow = TVShow(
+    id,
+    overview,
+    releaseDate,
+    posterPath?.let { posterPath ->
+        String.format(
+            BASE_WIDTH_342_PATH,
+            posterPath,
+        )
+    },
+    backdropPath?.let { backdropPath ->
+        String.format(
+            BASE_WIDTH_780_PATH,
+            backdropPath,
+        )
+    },
+    name,
+    voteAverage,
+    voteCount,
+)
