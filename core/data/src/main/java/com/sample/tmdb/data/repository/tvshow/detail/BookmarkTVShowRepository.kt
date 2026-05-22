@@ -1,7 +1,6 @@
 package com.sample.tmdb.data.repository.tvshow.detail
 
 import android.content.Context
-import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.response.asTVShowDomainModel
@@ -9,6 +8,7 @@ import com.sample.tmdb.data.source.entity.asDatabaseModel
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.local.TVShowDao
 import com.sample.tmdb.domain.model.TVShow
+import com.sample.tmdb.domain.repository.BaseBookmarkRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,9 +23,9 @@ class BookmarkTVShowRepository @Inject constructor(
     private val tvShowApi: TVShowService,
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
-) : BaseRepository<List<@JvmSuppressWildcards TVShow>>(context, ioDispatcher) {
+) : BaseBookmarkRepository<TVShow>(context, ioDispatcher) {
 
-    override suspend fun getSuccessResult(isRefreshing: Boolean): List<TVShow> {
+    override suspend fun getSuccessResult(isRefreshing: Boolean, id: Nothing?): List<TVShow> {
         if (isRefreshing) {
             coroutineScope {
                 val jobs = tvShowDao.getBookmarks().asDomainModel().map { tvShow ->

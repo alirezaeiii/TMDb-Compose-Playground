@@ -3,7 +3,7 @@ package com.sample.tmdb.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.base.BaseViewModelWithId
+import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbItemDetails
@@ -17,9 +17,9 @@ open class BaseDetailViewModel<T : TMDbItemDetails, R : TMDbItem>(
     private val bookmarkRepository: BookmarkDetailsRepository<R>,
     repository: BaseDetailRepository<T>,
     savedStateHandle: SavedStateHandle,
-) : BaseViewModelWithId<DetailWrapper, Int>(
+) : BaseViewModel<DetailWrapper, Int>(
     repository,
-    savedStateHandle[MainDestinations.TMDB_ID_KEY]!!,
+    id = savedStateHandle[MainDestinations.TMDB_ID_KEY],
 ) {
     private val _isBookmarked = MutableStateFlow(false)
     val isBookmarked: StateFlow<Boolean>

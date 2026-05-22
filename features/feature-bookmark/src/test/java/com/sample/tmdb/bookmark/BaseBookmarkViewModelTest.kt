@@ -1,11 +1,12 @@
 package com.sample.tmdb.bookmark
 
-import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.base.BaseViewModel
+import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
+import com.sample.tmdb.domain.repository.BaseBookmarkRepository
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -15,17 +16,17 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-abstract class BaseBookmarkViewModelTest<T> {
+abstract class BaseBookmarkViewModelTest<T : TMDbItem> {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    protected val repository = mockk<BaseRepository<List<T>>>()
+    protected val repository = mockk<BaseBookmarkRepository<T>>()
 
     protected val languageRepository = mockk<LanguageRepository>()
 
-    private lateinit var viewModel: BaseViewModel<List<T>>
+    private lateinit var viewModel: BaseViewModel<List<T>, Nothing>
 
-    protected abstract fun getViewModel(): BaseViewModel<List<T>>
+    protected abstract fun getViewModel(): BaseViewModel<List<T>, Nothing>
 
     @Before
     fun setup() {

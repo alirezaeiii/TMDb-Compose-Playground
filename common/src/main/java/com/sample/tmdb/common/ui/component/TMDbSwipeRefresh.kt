@@ -12,8 +12,8 @@ import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
 
 @Composable
-fun <T> TMDbSwipeRefresh(
-    viewModel: BaseViewModel<T>,
+fun <T, S> TMDbSwipeRefresh(
+    viewModel: BaseViewModel<T, S>,
     content:
     @Composable()
     () -> Unit,

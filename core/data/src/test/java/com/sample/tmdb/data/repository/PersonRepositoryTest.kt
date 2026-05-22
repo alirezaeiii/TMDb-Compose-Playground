@@ -1,7 +1,7 @@
 package com.sample.tmdb.data.repository
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.base.BaseRepositoryWithId
+import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.PersonDTO
@@ -23,7 +23,7 @@ class PersonRepositoryTest : BaseRepositoryTest() {
     @Mock
     private lateinit var api: PersonService
 
-    private lateinit var repository: BaseRepositoryWithId<Person, String>
+    private lateinit var repository: BaseRepository<Person, String>
 
     private val personDto =
         PersonDTO(

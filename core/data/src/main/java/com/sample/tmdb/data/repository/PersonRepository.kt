@@ -1,7 +1,7 @@
 package com.sample.tmdb.data.repository
 
 import android.content.Context
-import com.sample.tmdb.common.base.BaseRepositoryWithId
+import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.asDomainModel
@@ -16,6 +16,7 @@ class PersonRepository @Inject constructor(
     private val personApi: PersonService,
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
-) : BaseRepositoryWithId<Person, String>(context, ioDispatcher) {
-    override suspend fun getSuccessResult(id: String): Person = personApi.getPerson(id).asDomainModel()
+) : BaseRepository<Person, String>(context, ioDispatcher) {
+    override suspend fun getSuccessResult(isRefreshing: Boolean, id: String?): Person =
+        personApi.getPerson(id!!).asDomainModel()
 }

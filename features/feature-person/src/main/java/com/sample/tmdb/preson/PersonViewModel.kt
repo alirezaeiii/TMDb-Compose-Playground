@@ -2,17 +2,17 @@ package com.sample.tmdb.preson
 
 import androidx.lifecycle.SavedStateHandle
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.base.BaseRepositoryWithId
-import com.sample.tmdb.common.base.BaseViewModelWithId
+import com.sample.tmdb.common.base.BaseRepository
+import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.domain.model.Person
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class PersonViewModel @Inject constructor(
-    repository: BaseRepositoryWithId<Person, String>,
+    repository: BaseRepository<Person, String>,
     savedStateHandle: SavedStateHandle,
-) : BaseViewModelWithId<Person, String>(
+) : BaseViewModel<Person, String>(
     repository,
-    savedStateHandle[MainDestinations.TMDB_PERSON_KEY]!!,
+    id = savedStateHandle[MainDestinations.TMDB_PERSON_KEY],
 )

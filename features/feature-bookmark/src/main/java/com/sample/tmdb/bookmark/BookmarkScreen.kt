@@ -151,7 +151,7 @@ private fun TVShowsTabContent(
 
 @Composable
 private fun <T : TMDbItem> TabContent(
-    viewModel: BaseViewModel<List<T>>,
+    viewModel: BaseViewModel<List<T>, Nothing>,
     languageViewModel: LanguageViewModel,
     onClick: (TMDbItem) -> Unit,
     @StringRes textResourceId: Int,

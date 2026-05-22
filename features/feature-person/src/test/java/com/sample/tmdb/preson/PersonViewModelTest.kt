@@ -1,7 +1,7 @@
 package com.sample.tmdb.preson
 
 import androidx.lifecycle.SavedStateHandle
-import com.sample.tmdb.common.base.BaseRepositoryWithId
+import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
@@ -17,7 +17,7 @@ class PersonViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    private val repository = mockk<BaseRepositoryWithId<Person, String>>()
+    private val repository = mockk<BaseRepository<Person, String>>()
 
     private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true)
 
