@@ -17,6 +17,8 @@ abstract class BaseRepositoryTest {
 
     protected abstract fun mockApiResponse()
 
+    protected open fun mockFailApiResponse() {}
+
     @Before
     fun setup() {
         initRepository()

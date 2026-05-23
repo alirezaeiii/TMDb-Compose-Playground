@@ -1,7 +1,5 @@
 package com.sample.tmdb.data.repository.movie.detail
 
-import app.cash.turbine.test
-import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.repository.BaseDetailRepositoryTest
 import com.sample.tmdb.data.response.ImagesResponse
@@ -9,10 +7,8 @@ import com.sample.tmdb.data.response.MovieDetailResponse
 import com.sample.tmdb.data.response.NetworkCreditWrapper
 import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.domain.model.MovieDetails
-import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.anyInt
@@ -54,17 +50,7 @@ class MovieDetailRepositoryTest : BaseDetailRepositoryTest<MovieDetails>() {
         `when`(api.fetchSimilarMovies(anyInt())).thenReturn(NetworkTMDbWrapper(emptyList()))
     }
 
-    @Test
-    fun `load details failed`() {
-        val errorMsg = "error message"
-        `when`(context.getString(anyInt())).thenReturn(errorMsg)
-        runTest {
-            `when`(api.fetchMovieDetail(anyInt())).thenThrow(RuntimeException())
-            repository.getResult(id = anyInt()).test {
-                assertEquals(Async.Loading(), awaitItem())
-                assertEquals(Async.Error(errorMsg), awaitItem())
-                awaitComplete()
-            }
-        }
+    override fun mockFailApiResponse() = runTest {
+        `when`(api.fetchMovieDetail(anyInt())).thenThrow(RuntimeException())
     }
 }

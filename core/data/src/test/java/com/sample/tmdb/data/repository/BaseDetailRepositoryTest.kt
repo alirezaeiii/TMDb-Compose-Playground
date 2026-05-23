@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.repository
 
+import app.cash.turbine.test
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.domain.model.Cast
@@ -17,6 +18,7 @@ import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.Mockito.`when`
 
 abstract class BaseDetailRepositoryTest<T : TMDbItemDetails> : BaseRepositoryTest() {
     protected lateinit var repository: BaseDetailRepository<T>
@@ -47,6 +49,20 @@ abstract class BaseDetailRepositoryTest<T : TMDbItemDetails> : BaseRepositoryTes
             assertEquals(emptyList<Crew>(), result.crew)
             assertEquals(emptyList<TMDbImage>(), result.images)
             assertEquals(emptyList<TMDbItem>(), result.similarItems)
+        }
+    }
+
+    @Test
+    fun `load details failed`() {
+        val errorMsg = "error message"
+        `when`(context.getString(anyInt())).thenReturn(errorMsg)
+        mockFailApiResponse()
+        runTest {
+            repository.getResult(id = anyInt()).test {
+                assertEquals(Async.Loading(), awaitItem())
+                assertEquals(Async.Error(errorMsg), awaitItem())
+                awaitComplete()
+            }
         }
     }
 
