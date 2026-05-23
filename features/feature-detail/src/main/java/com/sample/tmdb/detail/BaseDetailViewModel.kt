@@ -19,7 +19,7 @@ open class BaseDetailViewModel<T : TMDbItemDetails, R : TMDbItem>(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<DetailWrapper, Int>(
     repository,
-    id = savedStateHandle[MainDestinations.TMDB_ID_KEY],
+    savedStateHandle[MainDestinations.TMDB_ID_KEY],
 ) {
     private val _isBookmarked = MutableStateFlow(false)
     val isBookmarked: StateFlow<Boolean>

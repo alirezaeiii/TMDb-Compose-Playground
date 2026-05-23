@@ -13,6 +13,6 @@ class BookmarkTVShowViewModel @Inject constructor(
     languageRepository: LanguageRepository,
 ) : BaseViewModel<List<TVShow>, Nothing>(
     repository,
-    languageRepository,
+    languageRepository = languageRepository,
     shouldRefreshInInit = false,
 )

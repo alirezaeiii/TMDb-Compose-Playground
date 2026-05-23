@@ -14,5 +14,5 @@ class PersonViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<Person, String>(
     repository,
-    id = savedStateHandle[MainDestinations.TMDB_PERSON_KEY],
+    savedStateHandle[MainDestinations.TMDB_PERSON_KEY],
 )

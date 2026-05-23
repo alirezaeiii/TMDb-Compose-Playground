@@ -13,6 +13,6 @@ class BookmarkMovieViewModel @Inject constructor(
     languageRepository: LanguageRepository,
 ) : BaseViewModel<List<Movie>, Nothing>(
     repository,
-    languageRepository,
+    languageRepository = languageRepository,
     shouldRefreshInInit = false,
 )

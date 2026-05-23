@@ -16,8 +16,8 @@ import kotlinx.coroutines.flow.update
 
 abstract class BaseViewModel<T, S>(
     private val repository: BaseRepository<T, S>,
-    languageRepository: LanguageRepository? = null,
     private val id: S? = null,
+    languageRepository: LanguageRepository? = null,
     shouldRefreshInInit: Boolean = true,
 ) : ViewModel() {
 
@@ -31,17 +31,14 @@ abstract class BaseViewModel<T, S>(
         data class ShowWarning(val message: String) : UiEvent()
     }
 
-    init {
-        if (shouldRefreshInInit) {
-            refresh()
-        }
-    }
-
     private var lastLanguage: String? = null
 
     private var hasCriticalError = false
 
     init {
+        if (shouldRefreshInInit) {
+            refresh()
+        }
         lastLanguage = languageRepository?.languageCode?.value
     }
 
