@@ -1,5 +1,6 @@
 package com.sample.tmdb.feed
 
+import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
@@ -24,7 +25,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
 
     protected val languageRepository = mockk<LanguageRepository>()
 
-    protected lateinit var viewModel: BaseFeedViewModel<T>
+    protected lateinit var viewModel: BaseViewModel<List<FeedWrapper>, Nothing>
 
     protected abstract fun initViewModel()
 

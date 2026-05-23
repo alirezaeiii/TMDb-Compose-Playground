@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R as commonR
+import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
@@ -108,8 +109,8 @@ fun TVShowFeedScreen(
 }
 
 @Composable
-private fun <T : TMDbItem> FeedScreen(
-    viewModel: BaseFeedViewModel<T>,
+private fun FeedScreen(
+    viewModel: BaseViewModel<List<FeedWrapper>, Nothing>,
     languageViewModel: LanguageViewModel,
     navigate: (String) -> Unit,
     onSearchClicked: () -> Unit,
