@@ -9,6 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.ui.component.ErrorScreen
 import com.sample.tmdb.common.ui.component.TMDbProgressBar
+import com.sample.tmdb.common.utils.ViewState
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -16,7 +17,7 @@ fun <T, S> Content(
     viewModel: BaseViewModel<T, S>,
     languageViewModel: LanguageViewModel? = null,
     scaffoldState: ScaffoldState? = null,
-    successScreen: @Composable (T) -> Unit,
+    successScreen: @Composable (ViewState<T>, T) -> Unit,
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
 
@@ -28,7 +29,7 @@ fun <T, S> Content(
 
     when {
         state.items != null -> {
-            successScreen(state.items)
+            successScreen(state, state.items)
         }
 
         state.isLoading -> {

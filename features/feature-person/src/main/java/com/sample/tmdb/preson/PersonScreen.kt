@@ -79,7 +79,7 @@ private val HzPadding = Modifier.padding(horizontal = 24.dp)
 @Composable
 fun PersonScreen(viewModel: PersonViewModel, upPress: () -> Unit) {
     val titleHeight = remember { mutableStateOf(0.dp) }
-    Content(viewModel = viewModel) { person ->
+    Content(viewModel = viewModel) { state, person ->
         Box(
             modifier = Modifier.fillMaxSize(),
         ) {

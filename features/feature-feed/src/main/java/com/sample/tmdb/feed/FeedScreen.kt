@@ -121,9 +121,9 @@ private fun <T : TMDbItem> FeedScreen(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
         scaffoldState = scaffoldState,
-    ) { feeds ->
+    ) { state, feeds ->
         Box {
-            TMDbSwipeRefresh(viewModel) {
+            TMDbSwipeRefresh(viewModel, state) {
                 FeedCollectionList(feeds, navigate, onClick)
             }
             DestinationBar(

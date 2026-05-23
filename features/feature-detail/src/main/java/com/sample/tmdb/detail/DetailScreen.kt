@@ -247,7 +247,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     val isFabVisible = rememberSaveable { mutableStateOf(true) }
     val defaultTextColor = MaterialTheme.colors.onBackground
     val vibrantColor = remember { Animatable(defaultTextColor) }
-    Content(viewModel = viewModel) {
+    Content(viewModel = viewModel) { _, it ->
         viewModel.isBookmarked(it.details.id)
         // Nested scroll for control FAB
         val nestedScrollConnection =
