@@ -18,7 +18,7 @@ abstract class BaseViewModel<T, S>(
     private val repository: BaseRepository<T, S>,
     private val id: S? = null,
     languageRepository: LanguageRepository? = null,
-    shouldRefreshInInit: Boolean = true,
+    loadDataOnInit: Boolean = true,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ViewState<T>(isLoading = true))
@@ -36,7 +36,7 @@ abstract class BaseViewModel<T, S>(
     private var hasCriticalError = false
 
     init {
-        if (shouldRefreshInInit) {
+        if (loadDataOnInit) {
             refresh()
         }
         lastLanguage = languageRepository?.languageCode?.value
