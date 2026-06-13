@@ -62,7 +62,7 @@ abstract class BaseViewModel<T, S>(
     private suspend fun reduce(resource: Async<T>, languageCode: String? = null) {
         when (resource) {
             is Async.Loading -> {
-                _state.update {
+                updateState {
                     it.copy(
                         isLoading = !resource.isRefreshing,
                         isRefreshing = resource.isRefreshing,
@@ -72,7 +72,9 @@ abstract class BaseViewModel<T, S>(
             }
 
             is Async.Success -> {
-                _state.value = ViewState(items = resource.data)
+                updateState {
+                    ViewState(items = resource.data)
+                }
                 languageCode?.let {
                     lastLanguage = it
                 }
@@ -80,7 +82,7 @@ abstract class BaseViewModel<T, S>(
             }
 
             is Async.Error -> {
-                _state.update {
+                updateState {
                     it.copy(
                         isLoading = false,
                         isRefreshing = false,
@@ -95,6 +97,10 @@ abstract class BaseViewModel<T, S>(
                 }
             }
         }
+    }
+
+    private fun updateState(reducer: (ViewState<T>) -> ViewState<T>) {
+        _state.update(reducer)
     }
 
     private suspend fun emitWarning(message: String) {
