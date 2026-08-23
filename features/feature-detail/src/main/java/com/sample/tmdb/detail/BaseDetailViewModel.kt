@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-open class BaseDetailViewModel<T : TMDbItemDetails, R : TMDbItem>(
-    private val bookmarkRepository: BookmarkDetailsRepository<R>,
-    repository: BaseDetailRepository<T>,
+open class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbItem>(
+    private val bookmarkRepository: BookmarkDetailsRepository<Item>,
+    repository: BaseDetailRepository<ItemDetails>,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<DetailWrapper, Int>(
     repository,
@@ -25,7 +25,7 @@ open class BaseDetailViewModel<T : TMDbItemDetails, R : TMDbItem>(
     val isBookmarked: StateFlow<Boolean>
         get() = _isBookmarked
 
-    fun addBookmark(item: R) = viewModelScope.launch {
+    fun addBookmark(item: Item) = viewModelScope.launch {
         bookmarkRepository.addBookmark(item)
         isBookmarked(item.id)
     }
