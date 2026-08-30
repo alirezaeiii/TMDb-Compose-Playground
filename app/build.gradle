@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
     id 'com.google.devtools.ksp'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
@@ -53,12 +52,10 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = '2.1.0'
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-        freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn"]
+    kotlin {
+        compilerOptions {
+            freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+        }
     }
     androidResources {
         generateLocaleConfig = true
