@@ -1,9 +1,9 @@
 plugins {
-    id 'com.android.application'
-    id 'com.google.devtools.ksp'
-    id 'dagger.hilt.android.plugin'
-    id 'kotlin-parcelize'
-    id 'org.jetbrains.kotlin.plugin.compose'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.compose)
 }
 
 def appVersion = (new File(project.rootDir, 'version.txt')).text.trim()
@@ -17,10 +17,10 @@ ext.generateVersionCode = { versionName ->
 
 android {
     defaultConfig {
-        applicationId AppMetaData.id
-        minSdk AppMetaData.minSdkVersion
-        targetSdk AppMetaData.targetSdkVersion
-        compileSdk AppMetaData.compileSdkVersion
+        applicationId "com.sample.tmdb"
+        minSdk libs.versions.android.minSdk.get().toInteger()
+        targetSdk libs.versions.android.targetSdk.get().toInteger()
+        compileSdk libs.versions.android.compileSdk.get().toInteger()
         versionCode generateVersionCode(appVersion)
         versionName appVersion
         vectorDrawables {
@@ -64,25 +64,25 @@ android {
 }
 
 dependencies {
-    implementation project(path: BuildModules.DATA)
-    implementation project(path: BuildModules.FEATURE_FEED)
-    implementation project(path: BuildModules.FEATURE_BOOKMARK)
-    implementation project(path: BuildModules.FEATURE_SETTING)
-    implementation project(path: BuildModules.FEATURE_PAGING)
-    implementation project(path: BuildModules.FEATURE_DETAIL)
-    implementation project(path: BuildModules.FEATURE_CREDIT)
-    implementation project(path: BuildModules.FEATURE_PERSON)
-    implementation project(path: BuildModules.FEATURE_GALLERY)
+    implementation project(':core:data')
+    implementation project(':features:feature-feed')
+    implementation project(':features:feature-bookmark')
+    implementation project(':features:feature-setting')
+    implementation project(':features:feature-paging')
+    implementation project(':features:feature-detail')
+    implementation project(':features:feature-credit')
+    implementation project(':features:feature-person')
+    implementation project(':features:feature-gallery')
 
-    implementation Deps.material
-    implementation Deps.composeMaterial
-    implementation Deps.composeFoundation
-    implementation Deps.iconExtended
-    implementation Deps.navigationCompose
-    implementation Deps.composeActivity
-    implementation Deps.composePaging
-    implementation Deps.hilt
-    implementation Deps.hilt_compose
-    ksp Deps.hilt_compiler
-    implementation Deps.gson
+    implementation libs.material
+    implementation libs.compose.material
+    implementation libs.compose.foundation
+    implementation libs.compose.icons.extended
+    implementation libs.compose.navigation
+    implementation libs.compose.activity
+    implementation libs.compose.paging
+    implementation libs.hilt.android
+    implementation libs.hilt.navigation.compose
+    ksp libs.hilt.compiler
+    implementation libs.gson
 }

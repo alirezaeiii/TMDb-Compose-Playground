@@ -1,17 +1,17 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.plugin.compose")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.compose)
 }
 
 val appVersion = (File(project.rootDir, "version.txt")).readText().trim()
 
 android {
     namespace = "com.sample.tmdb.setting"
-    compileSdk = AppMetaData.compileSdkVersion
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = AppMetaData.minSdkVersion
-        testOptions.targetSdk = AppMetaData.targetSdkVersion
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        testOptions.targetSdk = libs.versions.android.targetSdk.get().toInt()
         buildConfigField("String", "VERSION_NAME", "\"$appVersion\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -38,13 +38,13 @@ android {
 }
 
 dependencies {
-    implementation(project(mapOf("path" to BuildModules.COMMON)))
+    implementation(project(":common"))
 
-    implementation(Deps.composeUi)
-    implementation(Deps.composeFoundation)
-    implementation(Deps.composeMaterial)
-    implementation(Deps.lifecycleViewModel)
-    androidTestImplementation(Deps.composeUiTest)
-    androidTestImplementation(Deps.mockito)
-    debugImplementation(Deps.composeManifest)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.material)
+    implementation(libs.androidx.lifecycle.viewmodel)
+    androidTestImplementation(libs.compose.ui.test)
+    androidTestImplementation(libs.mockito.kotlin)
+    debugImplementation(libs.compose.ui.test.manifest)
 }

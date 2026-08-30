@@ -1,15 +1,15 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.plugin.compose")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "com.sample.tmdb.credit"
-    compileSdk = AppMetaData.compileSdkVersion
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = AppMetaData.minSdkVersion
-        testOptions.targetSdk = AppMetaData.targetSdkVersion
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        testOptions.targetSdk = libs.versions.android.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -34,11 +34,11 @@ android {
 }
 
 dependencies {
-    implementation(project(mapOf("path" to BuildModules.DOMAIN)))
+    implementation(project(":core:domain"))
 
-    implementation(Deps.composeUi)
-    implementation(Deps.composeFoundation)
-    androidTestImplementation(Deps.composeUiTest)
-    androidTestImplementation(Deps.mockito)
-    debugImplementation(Deps.composeManifest)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.foundation)
+    androidTestImplementation(libs.compose.ui.test)
+    androidTestImplementation(libs.mockito.kotlin)
+    debugImplementation(libs.compose.ui.test.manifest)
 }

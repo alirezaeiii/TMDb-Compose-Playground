@@ -1,13 +1,13 @@
 plugins {
-    id("com.android.library")
+    alias(libs.plugins.android.library)
 }
 
 android {
     namespace = "com.sample.tmdb.common.test"
-    compileSdk = AppMetaData.compileSdkVersion
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = AppMetaData.minSdkVersion
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -29,6 +29,6 @@ android {
 }
 
 dependencies {
-    implementation(Deps.junit4)
-    implementation(Deps.coroutineTest)
+    implementation(libs.junit)
+    implementation(libs.kotlinx.coroutines.test)
 }
