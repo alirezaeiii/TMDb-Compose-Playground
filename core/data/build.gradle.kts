@@ -1,14 +1,14 @@
 plugins {
-    id("com.android.library")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.sample.tmdb.data"
-    compileSdk = AppMetaData.compileSdkVersion
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = AppMetaData.minSdkVersion
+        minSdk = libs.versions.android.minSdk.get().toInt()
         buildConfigField("String", "TMDB_BASE_URL", "\"http://api.themoviedb.org/\"")
         buildConfigField("String", "TMDB_API_KEY", "\"${getProperty("local.properties", "tmdb_api_key") ?: System.getenv("TMDB_API_KEY")}\"")
 
@@ -36,25 +36,25 @@ android {
 }
 
 dependencies {
-    api(project(BuildModules.DOMAIN))
-    implementation(Deps.retrofit)
-    implementation(Deps.retrofitMoshi)
-    implementation(Deps.okhttpInterceptor)
-    implementation(Deps.moshi)
-    implementation(Deps.moshiKotlin)
-    ksp(Deps.moshiCodegen)
-    implementation(Deps.composePaging)
-    implementation(Deps.room)
-    implementation(Deps.roomKtx)
-    ksp(Deps.roomCompiler)
-    implementation(Deps.hilt)
-    ksp(Deps.hilt_compiler)
-    testImplementation(project(BuildModules.COMMON_TEST))
-    testImplementation(Deps.junit4)
-    testImplementation(Deps.mockito)
-    testImplementation(Deps.coroutineTest)
-    testImplementation(Deps.turbine)
-    testImplementation(Deps.kotlinTest)
+    api(project(":core:domain"))
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.moshi)
+    implementation(libs.okhttp.logging)
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.kotlin.codegen)
+    implementation(libs.compose.paging)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    testImplementation(project(":common-test"))
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 
 fun getProperty(filename: String, propName: String): String? {

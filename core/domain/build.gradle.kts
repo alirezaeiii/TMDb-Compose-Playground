@@ -1,12 +1,12 @@
 plugins {
-    id("com.android.library")
-    id("com.google.devtools.ksp")
-    id ("kotlin-parcelize")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
     namespace = "com.sample.tmdb.domain"
-    compileSdk = AppMetaData.compileSdkVersion
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = 21
@@ -31,12 +31,12 @@ android {
 }
 
 dependencies {
-    api(project(BuildModules.COMMON))
-    implementation(Deps.coroutinesCore)
-    implementation(Deps.coroutinesAndroid)
-    implementation(Deps.annotation)
-    implementation(Deps.composePaging)
-    implementation(Deps.retrofit)
-    implementation(Deps.hilt)
-    ksp(Deps.hilt_compiler)
+    api(project(":common"))
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.annotation)
+    implementation(libs.compose.paging)
+    implementation(libs.retrofit)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 }

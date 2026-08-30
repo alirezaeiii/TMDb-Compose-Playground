@@ -1,16 +1,16 @@
 plugins {
-    id("com.android.library")
-    id("com.google.devtools.ksp")
-    id("org.jetbrains.kotlin.plugin.compose")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "com.sample.tmdb.paging"
-    compileSdk = AppMetaData.compileSdkVersion
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = AppMetaData.minSdkVersion
-        testOptions.targetSdk = AppMetaData.targetSdkVersion
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        testOptions.targetSdk = libs.versions.android.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -35,18 +35,18 @@ android {
 }
 
 dependencies {
-    implementation(project(mapOf("path" to BuildModules.DOMAIN)))
+    implementation(project(":core:domain"))
 
-    implementation(Deps.lifecycleLiveData)
-    implementation(Deps.composeUi)
-    implementation(Deps.composeFoundation)
-    implementation(Deps.composeMaterial)
-    implementation(Deps.iconExtended)
-    implementation(Deps.composePaging)
-    implementation(Deps.hilt)
-    ksp(Deps.hilt_compiler)
-    implementation(Deps.lottieCompose)
-    androidTestImplementation(Deps.composeUiTest)
-    androidTestImplementation(Deps.mockito)
-    debugImplementation(Deps.composeManifest)
+    implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.material)
+    implementation(libs.compose.icons.extended)
+    implementation(libs.compose.paging)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.lottie.compose)
+    androidTestImplementation(libs.compose.ui.test)
+    androidTestImplementation(libs.mockito.kotlin)
+    debugImplementation(libs.compose.ui.test.manifest)
 }
