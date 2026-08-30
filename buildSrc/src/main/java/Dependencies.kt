@@ -8,7 +8,7 @@ object Versions {
     const val material = "1.13.0-rc01"
     const val core = "1.12.0"
     const val lifecycle = "2.7.0"
-    const val hilt = "2.57"
+    const val hilt = "2.60.1"
     const val hiltCompose = "1.2.0"
     const val retrofit = "2.11.0"
     const val okhttp = "4.12.0"
@@ -33,8 +33,8 @@ object Versions {
 
 object AppMetaData {
     const val id = "com.sample.tmdb"
-    const val targetSdkVersion = 35
-    const val compileSdkVersion = 35
+    const val targetSdkVersion = 37
+    const val compileSdkVersion = 37
     const val minSdkVersion = 21
 }
 
