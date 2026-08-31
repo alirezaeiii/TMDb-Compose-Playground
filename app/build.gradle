@@ -26,6 +26,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -85,4 +86,5 @@ dependencies {
     implementation libs.hilt.navigation.compose
     ksp libs.hilt.compiler
     implementation libs.gson
+    androidTestImplementation libs.androidx.runner
 }
