@@ -42,7 +42,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
@@ -320,23 +319,23 @@ private fun moreFeedOnClick(item: TMDbItem, sortType: SortType, navigate: (Strin
     when (item) {
         is Movie -> {
             when (sortType) {
-                SortType.TRENDING -> navigate(MainDestinations.TMDB_TRENDING_MOVIES_ROUTE)
-                SortType.MOST_POPULAR -> navigate(MainDestinations.TMDB_POPULAR_MOVIES_ROUTE)
-                SortType.NOW_PLAYING -> navigate(MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE)
-                SortType.UPCOMING -> navigate(MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE)
-                SortType.DISCOVER -> navigate(MainDestinations.TMDB_DISCOVER_MOVIES_ROUTE)
-                SortType.HIGHEST_RATED -> navigate(MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE)
+                SortType.TRENDING -> navigate("trending_movies")
+                SortType.MOST_POPULAR -> navigate("popular_movies")
+                SortType.NOW_PLAYING -> navigate("now_playing_movies")
+                SortType.UPCOMING -> navigate("upcoming_movies")
+                SortType.DISCOVER -> navigate("discover_movies")
+                SortType.HIGHEST_RATED -> navigate("top_rated_movies")
             }
         }
 
         is TVShow -> {
             when (sortType) {
-                SortType.TRENDING -> navigate(MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE)
-                SortType.MOST_POPULAR -> navigate(MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE)
-                SortType.NOW_PLAYING -> navigate(MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE)
-                SortType.UPCOMING -> navigate(MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE)
-                SortType.DISCOVER -> navigate(MainDestinations.TMDB_DISCOVER_TV_SHOW_ROUTE)
-                SortType.HIGHEST_RATED -> navigate(MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE)
+                SortType.TRENDING -> navigate("trending_tv_show")
+                SortType.MOST_POPULAR -> navigate("popular_tv_show")
+                SortType.NOW_PLAYING -> navigate("airing_today_tv_show")
+                SortType.UPCOMING -> navigate("on_the_air_tv_show")
+                SortType.DISCOVER -> navigate("discover_tv_show")
+                SortType.HIGHEST_RATED -> navigate("top_rated_tv_show")
             }
         }
     }

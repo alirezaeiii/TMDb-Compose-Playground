@@ -1,6 +1,5 @@
 package com.sample.tmdb.detail
 
-import androidx.lifecycle.SavedStateHandle
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
@@ -26,8 +25,6 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
     protected val bookmarkRepository = mockk<BookmarkDetailsRepository<R>>()
 
     protected val repository = mockk<BaseDetailRepository<T>>()
-
-    protected val savedStateHandle = mockk<SavedStateHandle>(relaxed = true)
 
     protected lateinit var viewModel: BaseDetailViewModel<T, R>
 

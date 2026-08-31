@@ -1,11 +1,10 @@
 package com.sample.tmdb.common.model
 
-import android.os.Parcelable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Man
 import androidx.compose.material.icons.rounded.Woman
 
-interface Credit : Parcelable {
+interface Credit {
     val id: Any
     val role: String
     val name: String

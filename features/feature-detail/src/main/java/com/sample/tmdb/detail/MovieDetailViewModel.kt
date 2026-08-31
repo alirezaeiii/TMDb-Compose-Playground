@@ -1,16 +1,23 @@
 package com.sample.tmdb.detail
 
-import androidx.lifecycle.SavedStateHandle
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.MovieDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class MovieDetailViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = MovieDetailViewModel.Factory::class)
+class MovieDetailViewModel @AssistedInject constructor(
     bookmarkRepository: BookmarkDetailsRepository<Movie>,
     repository: BaseDetailRepository<MovieDetails>,
-    savedStateHandle: SavedStateHandle,
-) : BaseDetailViewModel<MovieDetails, Movie>(bookmarkRepository, repository, savedStateHandle)
+    @Assisted tmdbId: Int,
+) : BaseDetailViewModel<MovieDetails, Movie>(bookmarkRepository, repository, tmdbId) {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(tmdbId: Int): MovieDetailViewModel
+    }
+}
