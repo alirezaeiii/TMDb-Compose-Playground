@@ -49,4 +49,5 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test)
     androidTestImplementation(libs.mockito.kotlin)
     debugImplementation(libs.compose.ui.test.manifest)
+    androidTestImplementation("androidx.test:runner:1.7.0")
 }

@@ -51,4 +51,5 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test)
     androidTestImplementation(project(":core:domain"))
     debugImplementation(libs.compose.ui.test.manifest)
+    androidTestImplementation("androidx.test:runner:1.7.0")
 }

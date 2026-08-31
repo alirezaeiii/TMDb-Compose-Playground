@@ -8,6 +8,7 @@ android-targetSdk = "37"
 agp = "9.3.2"
 kotlin = "2.3.10"
 ksp = "2.3.11"
+runner = "1.7.0"
 spotless = "7.2.1"
 hilt = "2.60.1"
 
@@ -42,6 +43,7 @@ accompanist = "0.36.0"
 
 [libraries]
 # Compose
+androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
 compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
 compose-material = { group = "androidx.compose.material", name = "material", version.ref = "compose" }
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
