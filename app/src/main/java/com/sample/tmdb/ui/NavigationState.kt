@@ -62,9 +62,7 @@ class NavigationState(
  * Convert NavigationState into NavEntries.
  */
 @Composable
-fun NavigationState.toEntries(
-    entryProvider: (TMDbNavKey) -> NavEntry<TMDbNavKey>,
-): List<NavEntry<TMDbNavKey>> {
+fun NavigationState.toEntries(entryProvider: (TMDbNavKey) -> NavEntry<TMDbNavKey>): List<NavEntry<TMDbNavKey>> {
     val entryCache = remember { mutableMapOf<TMDbNavKey, NavEntry<TMDbNavKey>>() }
 
     return stacksInUse.flatMap { key ->
