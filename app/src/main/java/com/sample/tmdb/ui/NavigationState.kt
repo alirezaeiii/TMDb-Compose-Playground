@@ -82,10 +82,10 @@ fun NavigationState.toEntries(entryProvider: (TMDbNavKey) -> NavEntry<TMDbNavKey
     return rememberDecoratedNavEntries(
         entries = entries,
         entryDecorators =
-            listOf(
-                rememberSaveableStateHolderNavEntryDecorator(),
-                rememberViewModelStoreNavEntryDecorator(),
-            ),
+        listOf(
+            rememberSaveableStateHolderNavEntryDecorator(),
+            rememberViewModelStoreNavEntryDecorator(),
+        ),
     )
 }
 
