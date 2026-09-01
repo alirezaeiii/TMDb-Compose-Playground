@@ -7,8 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSerializable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -66,21 +64,16 @@ class NavigationState(
 @Composable
 fun NavigationState.toEntries(
     entryProvider: (TMDbNavKey) -> NavEntry<TMDbNavKey>,
-): SnapshotStateList<NavEntry<TMDbNavKey>> {
+): List<NavEntry<TMDbNavKey>> {
     val entryCache = remember { mutableMapOf<TMDbNavKey, NavEntry<TMDbNavKey>>() }
 
-    val entries = stacksInUse
-        .flatMap { key ->
-            val stack = backStacks[key] ?: emptyList()
-            stack.map { navKey ->
-                entryCache.getOrPut(navKey) { entryProvider(navKey) }
+    return stacksInUse.flatMap { key ->
+        val stack = backStacks[key] ?: emptyList()
+
+        stack.map { navKey ->
+            entryCache.getOrPut(navKey) {
+                entryProvider(navKey)
             }
         }
-        .toMutableStateList()
-
-    // Clean up cache for keys no longer in use
-    val allActiveKeys = stacksInUse.flatMap { backStacks[it] ?: emptyList() }.toSet()
-    entryCache.keys.retainAll(allActiveKeys)
-
-    return entries
+    }
 }
