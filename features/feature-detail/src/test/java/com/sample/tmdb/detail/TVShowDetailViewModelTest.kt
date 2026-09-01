@@ -5,7 +5,7 @@ import com.sample.tmdb.domain.model.TVShowDetails
 
 class TVShowDetailViewModelTest : BaseDetailViewModelTest<TVShowDetails, TVShow>() {
     override fun initViewModel() {
-        super.viewModel = TVShowDetailViewModel(bookmarkRepository, repository, savedStateHandle)
+        super.viewModel = TVShowDetailViewModel(bookmarkRepository, repository, TMDB_ITEM_ID)
     }
 
     override val tmdbItem: TVShow

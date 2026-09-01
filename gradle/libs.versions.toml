@@ -1,13 +1,13 @@
 [versions]
 # SDK Versions
 android-compileSdk = "37"
-android-minSdk = "21"
+android-minSdk = "23"
 android-targetSdk = "37"
 
 # Plugins
 agp = "9.3.2"
-kotlin = "2.3.10"
-ksp = "2.3.11"
+kotlin = "2.0.21"
+ksp = "2.0.21-1.0.25"
 runner = "1.7.0"
 spotless = "7.2.1"
 hilt = "2.60.1"
@@ -18,6 +18,10 @@ compose-paging = "3.2.1"
 constraint-layout = "1.0.1"
 compose-activity = "1.8.2"
 nav-version = "2.9.3"
+nav3 = "1.1.7"
+lifecycleViewmodelNav3 = "2.11.0"
+savedstate = "1.5.0"
+serialization = "1.7.3"
 appCompat = "1.6.1"
 material = "1.13.0-rc01"
 core = "1.12.0"
@@ -54,6 +58,11 @@ compose-constraintLayout = { group = "androidx.constraintlayout", name = "constr
 compose-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "icon-extended" }
 compose-paging = { group = "androidx.paging", name = "paging-compose", version.ref = "compose-paging" }
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
+androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "nav3" }
+androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "nav3" }
+androidx-lifecycle-viewmodel-navigation3 = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
+androidx-savedstate-compose = { group = "androidx.savedstate", name = "savedstate-compose", version.ref = "savedstate" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 
 # AndroidX
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
@@ -113,6 +122,7 @@ compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-mani
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

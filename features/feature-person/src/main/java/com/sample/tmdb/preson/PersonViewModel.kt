@@ -1,18 +1,24 @@
 package com.sample.tmdb.preson
 
-import androidx.lifecycle.SavedStateHandle
-import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.domain.model.Person
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class PersonViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = PersonViewModel.Factory::class)
+class PersonViewModel @AssistedInject constructor(
     repository: BaseRepository<Person, String>,
-    savedStateHandle: SavedStateHandle,
+    @Assisted personId: Int,
 ) : BaseViewModel<Person, String>(
     repository,
-    savedStateHandle[MainDestinations.TMDB_PERSON_KEY],
-)
+    personId.toString(),
+) {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(personId: Int): PersonViewModel
+    }
+}

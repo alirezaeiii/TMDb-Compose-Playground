@@ -1,8 +1,6 @@
 package com.sample.tmdb.common.model
 
-import android.os.Parcelable
-
-interface TMDbItem : Parcelable {
+interface TMDbItem {
     val id: Int
     val overview: String
     val releaseDate: String?

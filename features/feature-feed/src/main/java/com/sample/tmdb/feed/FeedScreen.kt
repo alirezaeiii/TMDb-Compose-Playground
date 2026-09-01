@@ -42,7 +42,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
@@ -74,7 +73,7 @@ fun MovieFeedScreen(
     languageViewModel: LanguageViewModel,
     onSearchClicked: () -> Unit,
     onClick: (TMDbItem) -> Unit,
-    navigate: (String) -> Unit,
+    navigate: (FeedNavigationEvent) -> Unit,
     scaffoldState: ScaffoldState,
 ) {
     FeedScreen(
@@ -94,7 +93,7 @@ fun TVShowFeedScreen(
     languageViewModel: LanguageViewModel,
     onSearchClicked: () -> Unit,
     onClick: (TMDbItem) -> Unit,
-    navigate: (String) -> Unit,
+    navigate: (FeedNavigationEvent) -> Unit,
     scaffoldState: ScaffoldState,
 ) {
     FeedScreen(
@@ -112,7 +111,7 @@ fun TVShowFeedScreen(
 private fun FeedScreen(
     viewModel: BaseViewModel<List<FeedWrapper>, Nothing>,
     languageViewModel: LanguageViewModel,
-    navigate: (String) -> Unit,
+    navigate: (FeedNavigationEvent) -> Unit,
     onSearchClicked: () -> Unit,
     onClick: (TMDbItem) -> Unit,
     scaffoldState: ScaffoldState,
@@ -140,7 +139,11 @@ private fun FeedScreen(
 }
 
 @Composable
-fun FeedCollectionList(collection: List<FeedWrapper>, navigate: (String) -> Unit, onFeedClick: (TMDbItem) -> Unit) {
+fun FeedCollectionList(
+    collection: List<FeedWrapper>,
+    navigate: (FeedNavigationEvent) -> Unit,
+    onFeedClick: (TMDbItem) -> Unit,
+) {
     LazyColumn {
         item {
             TMDbSpacer()
@@ -169,7 +172,11 @@ fun FeedCollectionList(collection: List<FeedWrapper>, navigate: (String) -> Unit
 }
 
 @Composable
-fun PagerTMDbItemContainer(feedWrapper: FeedWrapper, navigate: (String) -> Unit, onFeedClick: (TMDbItem) -> Unit) {
+fun PagerTMDbItemContainer(
+    feedWrapper: FeedWrapper,
+    navigate: (FeedNavigationEvent) -> Unit,
+    onFeedClick: (TMDbItem) -> Unit,
+) {
     val pagerState = rememberPagerState(pageCount = { feedWrapper.feeds.size })
 
     Header(feedWrapper, navigate)
@@ -263,7 +270,7 @@ fun TrendingItem(
 }
 
 @Composable
-fun Header(feedWrapper: FeedWrapper, navigate: (String) -> Unit) {
+fun Header(feedWrapper: FeedWrapper, navigate: (FeedNavigationEvent) -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier =
@@ -316,30 +323,29 @@ fun Feeds(feeds: List<TMDbItem>, onFeedClick: (TMDbItem) -> Unit, index: Int, mo
     }
 }
 
-private fun moreFeedOnClick(item: TMDbItem, sortType: SortType, navigate: (String) -> Unit) {
-    when (item) {
-        is Movie -> {
-            when (sortType) {
-                SortType.TRENDING -> navigate(MainDestinations.TMDB_TRENDING_MOVIES_ROUTE)
-                SortType.MOST_POPULAR -> navigate(MainDestinations.TMDB_POPULAR_MOVIES_ROUTE)
-                SortType.NOW_PLAYING -> navigate(MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE)
-                SortType.UPCOMING -> navigate(MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE)
-                SortType.DISCOVER -> navigate(MainDestinations.TMDB_DISCOVER_MOVIES_ROUTE)
-                SortType.HIGHEST_RATED -> navigate(MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE)
-            }
-        }
-
-        is TVShow -> {
-            when (sortType) {
-                SortType.TRENDING -> navigate(MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE)
-                SortType.MOST_POPULAR -> navigate(MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE)
-                SortType.NOW_PLAYING -> navigate(MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE)
-                SortType.UPCOMING -> navigate(MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE)
-                SortType.DISCOVER -> navigate(MainDestinations.TMDB_DISCOVER_TV_SHOW_ROUTE)
-                SortType.HIGHEST_RATED -> navigate(MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE)
-            }
-        }
+private fun moreFeedOnClick(item: TMDbItem, sortType: SortType, navigate: (FeedNavigationEvent) -> Unit) {
+    val contentType = when (item) {
+        is Movie -> ContentType.MOVIE
+        is TVShow -> ContentType.TV_SHOW
+        else -> throw RuntimeException("Invalid content type: $item")
     }
+
+    navigate(
+        FeedNavigationEvent.More(
+            contentType = contentType,
+            sortType = sortType,
+        ),
+    )
+}
+
+sealed interface FeedNavigationEvent {
+
+    data class More(val contentType: ContentType, val sortType: SortType) : FeedNavigationEvent
+}
+
+enum class ContentType {
+    MOVIE,
+    TV_SHOW,
 }
 
 @Preview("default")

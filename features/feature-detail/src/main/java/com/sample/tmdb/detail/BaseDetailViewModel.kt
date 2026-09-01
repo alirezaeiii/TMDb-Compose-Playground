@@ -1,8 +1,6 @@
 package com.sample.tmdb.detail
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.DetailWrapper
@@ -16,10 +14,10 @@ import kotlinx.coroutines.launch
 open class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbItem>(
     private val bookmarkRepository: BookmarkDetailsRepository<Item>,
     repository: BaseDetailRepository<ItemDetails>,
-    savedStateHandle: SavedStateHandle,
+    tmdbId: Int?,
 ) : BaseViewModel<DetailWrapper, Int>(
     repository,
-    savedStateHandle[MainDestinations.TMDB_ID_KEY],
+    tmdbId,
 ) {
     private val _isBookmarked = MutableStateFlow(false)
     val isBookmarked: StateFlow<Boolean>
