@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 class LanguageRepository @Inject constructor() {
 
     private val _languageCode = MutableStateFlow(
-        AppCompatDelegate.getApplicationLocales()[0]?.language ?: Locale.current.language
+        AppCompatDelegate.getApplicationLocales()[0]?.language ?: Locale.current.language,
     )
     val languageCode: StateFlow<String> = _languageCode.asStateFlow()
 
