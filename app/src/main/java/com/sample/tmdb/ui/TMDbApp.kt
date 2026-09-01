@@ -50,7 +50,10 @@ import com.sample.tmdb.detail.TVShowDetailScreen
 import com.sample.tmdb.detail.TVShowDetailViewModel
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
+import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TMDbImage
+import com.sample.tmdb.feed.ContentType
+import com.sample.tmdb.feed.FeedNavigationEvent
 import com.sample.tmdb.feed.MovieFeedScreen
 import com.sample.tmdb.feed.TVShowFeedScreen
 import com.sample.tmdb.gallery.ImagesScreen
@@ -90,17 +93,14 @@ fun TMDbApp() {
                     languageViewModel,
                     { appState.navigator.navigate(TMDbNavKey.SearchMovies) },
                     { appState.navigator.navigate(TMDbNavKey.MovieDetail(it.id)) },
-                    { route ->
-                        val navKey = when (route) {
-                            "trending_movies" -> TMDbNavKey.TrendingMovies
-                            "popular_movies" -> TMDbNavKey.PopularMovies
-                            "now_playing_movies" -> TMDbNavKey.NowPlayingMovies
-                            "upcoming_movies" -> TMDbNavKey.UpcomingMovies
-                            "top_rated_movies" -> TMDbNavKey.TopRatedMovies
-                            "discover_movies" -> TMDbNavKey.DiscoverMovies
-                            else -> TMDbNavKey.Movie
+                    { event ->
+                        when (event) {
+                            is FeedNavigationEvent.More -> {
+                                appState.navigator.navigate(
+                                    event.toNavKey(),
+                                )
+                            }
                         }
-                        appState.navigator.navigate(navKey)
                     },
                     scaffoldState,
                 )
@@ -111,17 +111,14 @@ fun TMDbApp() {
                     languageViewModel,
                     { appState.navigator.navigate(TMDbNavKey.SearchTvShows) },
                     { appState.navigator.navigate(TMDbNavKey.TvShowDetail(it.id)) },
-                    { route ->
-                        val navKey = when (route) {
-                            "trending_tv_show" -> TMDbNavKey.TrendingTvShows
-                            "popular_tv_show" -> TMDbNavKey.PopularTvShows
-                            "airing_today_tv_show" -> TMDbNavKey.AiringTodayTvShows
-                            "on_the_air_tv_show" -> TMDbNavKey.OnTheAirTvShows
-                            "top_rated_tv_show" -> TMDbNavKey.TopRatedTvShows
-                            "discover_tv_show" -> TMDbNavKey.DiscoverTvShows
-                            else -> TMDbNavKey.TvShow
+                    { event ->
+                        when (event) {
+                            is FeedNavigationEvent.More -> {
+                                appState.navigator.navigate(
+                                    event.toNavKey(),
+                                )
+                            }
                         }
-                        appState.navigator.navigate(navKey)
                     },
                     scaffoldState,
                 )
@@ -420,6 +417,52 @@ enum class HomeSections(
     TV_SHOW_SECTION(TMDbNavKey.TvShow, R.string.tv_show, Icons.Outlined.Tv, Icons.Filled.Tv),
     BOOKMARK_SECTION(TMDbNavKey.Bookmark, R.string.favorite, Icons.Outlined.Favorite, Icons.Filled.Favorite),
     SETTING_SECTION(TMDbNavKey.Setting, R.string.setting, Icons.Outlined.Settings, Icons.Filled.Settings),
+}
+
+fun FeedNavigationEvent.More.toNavKey(): TMDbNavKey = when (contentType) {
+    ContentType.MOVIE -> {
+        when (sortType) {
+            SortType.TRENDING ->
+                TMDbNavKey.TrendingMovies
+
+            SortType.MOST_POPULAR ->
+                TMDbNavKey.PopularMovies
+
+            SortType.NOW_PLAYING ->
+                TMDbNavKey.NowPlayingMovies
+
+            SortType.UPCOMING ->
+                TMDbNavKey.UpcomingMovies
+
+            SortType.DISCOVER ->
+                TMDbNavKey.DiscoverMovies
+
+            SortType.HIGHEST_RATED ->
+                TMDbNavKey.TopRatedMovies
+        }
+    }
+
+    ContentType.TV_SHOW -> {
+        when (sortType) {
+            SortType.TRENDING ->
+                TMDbNavKey.TrendingTvShows
+
+            SortType.MOST_POPULAR ->
+                TMDbNavKey.PopularTvShows
+
+            SortType.NOW_PLAYING ->
+                TMDbNavKey.AiringTodayTvShows
+
+            SortType.UPCOMING ->
+                TMDbNavKey.OnTheAirTvShows
+
+            SortType.DISCOVER ->
+                TMDbNavKey.DiscoverTvShows
+
+            SortType.HIGHEST_RATED ->
+                TMDbNavKey.TopRatedTvShows
+        }
+    }
 }
 
 private val gson = Gson()
