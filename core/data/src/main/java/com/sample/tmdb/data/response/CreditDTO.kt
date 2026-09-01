@@ -34,7 +34,7 @@ data class CrewResponse(
     @Json(name = GENDER)
     val gender: Int,
     @Json(name = ID)
-    val id: String,
+    val id: Int,
 )
 
 fun List<CastResponse>.asCastDomainModel() = map(CastResponse::asCastDomainModel)

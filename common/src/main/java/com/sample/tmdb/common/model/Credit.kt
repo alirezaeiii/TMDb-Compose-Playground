@@ -5,7 +5,7 @@ import androidx.compose.material.icons.rounded.Man
 import androidx.compose.material.icons.rounded.Woman
 
 interface Credit {
-    val id: Any
+    val id: Int
     val role: String
     val name: String
     val profileUrl: String?

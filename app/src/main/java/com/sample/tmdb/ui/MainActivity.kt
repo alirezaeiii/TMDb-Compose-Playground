@@ -1,23 +1,25 @@
 package com.sample.tmdb.ui
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
+import androidx.navigationevent.compose.LocalNavigationEventDispatcherOwner
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +29,11 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            TmdbPagingComposeTheme {
-                ChangeSystemBarsTheme(!isSystemInDarkTheme())
-                TMDbApp()
+            CompositionLocalProvider(LocalNavigationEventDispatcherOwner provides this) {
+                TmdbPagingComposeTheme {
+                    ChangeSystemBarsTheme(!isSystemInDarkTheme())
+                    TMDbApp()
+                }
             }
         }
     }
