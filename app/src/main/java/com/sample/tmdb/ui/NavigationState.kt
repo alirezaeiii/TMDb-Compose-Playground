@@ -7,9 +7,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSerializable
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.rememberDecoratedNavEntries
 import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.runtime.serialization.NavKeySerializer
 import androidx.savedstate.compose.serialization.serializers.MutableStateSerializer
 
@@ -65,7 +68,7 @@ class NavigationState(
 fun NavigationState.toEntries(entryProvider: (TMDbNavKey) -> NavEntry<TMDbNavKey>): List<NavEntry<TMDbNavKey>> {
     val entryCache = remember { mutableMapOf<TMDbNavKey, NavEntry<TMDbNavKey>>() }
 
-    return stacksInUse.flatMap { key ->
+    val entries = stacksInUse.flatMap { key ->
         val stack = backStacks[key] ?: emptyList()
 
         stack.map { navKey ->
@@ -74,4 +77,13 @@ fun NavigationState.toEntries(entryProvider: (TMDbNavKey) -> NavEntry<TMDbNavKey
             }
         }
     }
+
+    return rememberDecoratedNavEntries(
+        entries = entries,
+        entryDecorators =
+        listOf(
+            rememberSaveableStateHolderNavEntryDecorator(),
+            rememberViewModelStoreNavEntryDecorator(),
+        ),
+    )
 }
