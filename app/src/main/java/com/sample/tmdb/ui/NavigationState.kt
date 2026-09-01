@@ -55,11 +55,7 @@ class NavigationState(
 ) {
     var topLevelRoute: TMDbNavKey by topLevelRoute
     val stacksInUse: List<TMDbNavKey>
-        get() = if (topLevelRoute == startRoute) {
-            listOf(startRoute)
-        } else {
-            listOf(startRoute, topLevelRoute)
-        }
+        get() = (backStacks.keys.filter { it != topLevelRoute } + topLevelRoute).toList()
 }
 
 /**

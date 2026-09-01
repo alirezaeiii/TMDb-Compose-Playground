@@ -144,7 +144,7 @@ fun TMDbApp() {
                     ),
                     { appState.navigator.navigate(TMDbNavKey.MovieDetail(it.id)) },
                     { appState.navigator.navigate(TMDbNavKey.SimilarMovies(it)) },
-                    { person -> appState.navigator.navigate(TMDbNavKey.Person(person.id as Int)) },
+                    { person -> appState.navigator.navigate(TMDbNavKey.Person(person.id)) },
                     { images, index ->
                         appState.navigator.navigate(
                             TMDbNavKey.Images(
@@ -174,7 +174,7 @@ fun TMDbApp() {
                     ),
                     { appState.navigator.navigate(TMDbNavKey.TvShowDetail(it.id)) },
                     { appState.navigator.navigate(TMDbNavKey.SimilarTvShows(it)) },
-                    { person -> appState.navigator.navigate(TMDbNavKey.Person(person.id as Int)) },
+                    { person -> appState.navigator.navigate(TMDbNavKey.Person(person.id)) },
                     { images, index ->
                         appState.navigator.navigate(
                             TMDbNavKey.Images(
@@ -305,7 +305,7 @@ fun TMDbApp() {
                 )
             }
             val navigateToPerson: (person: Credit) -> Unit =
-                { person -> appState.navigator.navigate(TMDbNavKey.Person(person.id as Int)) }
+                { person -> appState.navigator.navigate(TMDbNavKey.Person(person.id)) }
             entry<TMDbNavKey.Cast> { key ->
                 CreditScreen(
                     R.string.cast,
