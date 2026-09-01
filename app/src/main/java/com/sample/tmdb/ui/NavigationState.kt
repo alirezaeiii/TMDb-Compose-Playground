@@ -10,9 +10,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberDecoratedNavEntries
-import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.runtime.serialization.NavBackStackSerializer
 import androidx.navigation3.runtime.serialization.NavKeySerializer
 import androidx.savedstate.compose.serialization.serializers.MutableStateSerializer
 
@@ -29,7 +30,7 @@ fun rememberNavigationState(startRoute: TMDbNavKey, topLevelRoutes: Set<TMDbNavK
         mutableStateOf(startRoute)
     }
 
-    val backStacks = topLevelRoutes.associateWith { key -> rememberNavBackStack(key) as NavBackStack<TMDbNavKey> }
+    val backStacks = topLevelRoutes.associateWith { key -> rememberNavBackStack(key) }
 
     return remember(startRoute, topLevelRoutes) {
         NavigationState(
@@ -81,9 +82,16 @@ fun NavigationState.toEntries(entryProvider: (TMDbNavKey) -> NavEntry<TMDbNavKey
     return rememberDecoratedNavEntries(
         entries = entries,
         entryDecorators =
-        listOf(
-            rememberSaveableStateHolderNavEntryDecorator(),
-            rememberViewModelStoreNavEntryDecorator(),
-        ),
+            listOf(
+                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberViewModelStoreNavEntryDecorator(),
+            ),
     )
+}
+
+@Composable
+private fun <T : NavKey> rememberNavBackStack(vararg elements: T): NavBackStack<T> = rememberSerializable(
+    serializer = NavBackStackSerializer(NavKeySerializer()),
+) {
+    NavBackStack(*elements)
 }
