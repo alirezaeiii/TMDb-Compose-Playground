@@ -25,7 +25,6 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -85,267 +84,265 @@ fun TMDbApp() {
     val scaffoldState = rememberScaffoldState()
     val languageViewModel: LanguageViewModel = hiltViewModel()
 
-    val entryProvider = remember {
-        entryProvider<TMDbNavKey> {
-            entry<TMDbNavKey.Movie> {
-                MovieFeedScreen(
-                    hiltViewModel(),
-                    languageViewModel,
-                    { appState.navigator.navigate(TMDbNavKey.SearchMovies) },
-                    { appState.navigator.navigate(TMDbNavKey.MovieDetail(it.id)) },
-                    { event ->
-                        when (event) {
-                            is FeedNavigationEvent.More -> {
-                                appState.navigator.navigate(
-                                    event.toNavKey(),
-                                )
-                            }
+    val entryProvider = entryProvider {
+        entry<TMDbNavKey.Movie> {
+            MovieFeedScreen(
+                hiltViewModel(),
+                languageViewModel,
+                { appState.navigator.navigate(TMDbNavKey.SearchMovies) },
+                { appState.navigator.navigate(TMDbNavKey.MovieDetail(it.id)) },
+                { event ->
+                    when (event) {
+                        is FeedNavigationEvent.More -> {
+                            appState.navigator.navigate(
+                                event.toNavKey(),
+                            )
                         }
-                    },
-                    scaffoldState,
-                )
-            }
-            entry<TMDbNavKey.TvShow> {
-                TVShowFeedScreen(
-                    hiltViewModel(),
-                    languageViewModel,
-                    { appState.navigator.navigate(TMDbNavKey.SearchTvShows) },
-                    { appState.navigator.navigate(TMDbNavKey.TvShowDetail(it.id)) },
-                    { event ->
-                        when (event) {
-                            is FeedNavigationEvent.More -> {
-                                appState.navigator.navigate(
-                                    event.toNavKey(),
-                                )
-                            }
+                    }
+                },
+                scaffoldState,
+            )
+        }
+        entry<TMDbNavKey.TvShow> {
+            TVShowFeedScreen(
+                hiltViewModel(),
+                languageViewModel,
+                { appState.navigator.navigate(TMDbNavKey.SearchTvShows) },
+                { appState.navigator.navigate(TMDbNavKey.TvShowDetail(it.id)) },
+                { event ->
+                    when (event) {
+                        is FeedNavigationEvent.More -> {
+                            appState.navigator.navigate(
+                                event.toNavKey(),
+                            )
                         }
-                    },
-                    scaffoldState,
-                )
-            }
-            entry<TMDbNavKey.Bookmark> {
-                BookmarkScreen(
-                    hiltViewModel(),
-                    hiltViewModel(),
-                    languageViewModel,
-                    { appState.navigator.navigate(TMDbNavKey.MovieDetail(it.id)) },
-                    { appState.navigator.navigate(TMDbNavKey.TvShowDetail(it.id)) },
-                    scaffoldState,
-                )
-            }
-            entry<TMDbNavKey.Setting> {
-                SettingsScreen(languageViewModel)
-            }
-            entry<TMDbNavKey.MovieDetail> { key ->
-                MovieDetailScreen(
-                    hiltViewModel<MovieDetailViewModel, MovieDetailViewModel.Factory>(
-                        key = "MovieDetail_${key.id}",
-                        creationCallback = { factory -> factory.create(key.id) },
-                    ),
-                    { appState.navigator.navigate(TMDbNavKey.MovieDetail(it.id)) },
-                    { appState.navigator.navigate(TMDbNavKey.SimilarMovies(it)) },
-                    { person -> appState.navigator.navigate(TMDbNavKey.Person(person.id)) },
-                    { images, index ->
-                        appState.navigator.navigate(
-                            TMDbNavKey.Images(
-                                gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type),
-                                index,
-                            ),
-                        )
-                    },
-                    { cast ->
-                        appState.navigator.navigate(
-                            TMDbNavKey.Cast(gson.toJson(cast, object : TypeToken<List<Cast>>() {}.type)),
-                        )
-                    },
-                    { crew ->
-                        appState.navigator.navigate(
-                            TMDbNavKey.Crew(gson.toJson(crew, object : TypeToken<List<Crew>>() {}.type)),
-                        )
-                    },
-                    appState.navigator::goBack,
-                )
-            }
-            entry<TMDbNavKey.TvShowDetail> { key ->
-                TVShowDetailScreen(
-                    hiltViewModel<TVShowDetailViewModel, TVShowDetailViewModel.Factory>(
-                        key = "TvShowDetail_${key.id}",
-                        creationCallback = { factory -> factory.create(key.id) },
-                    ),
-                    { appState.navigator.navigate(TMDbNavKey.TvShowDetail(it.id)) },
-                    { appState.navigator.navigate(TMDbNavKey.SimilarTvShows(it)) },
-                    { person -> appState.navigator.navigate(TMDbNavKey.Person(person.id)) },
-                    { images, index ->
-                        appState.navigator.navigate(
-                            TMDbNavKey.Images(
-                                gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type),
-                                index,
-                            ),
-                        )
-                    },
-                    { cast ->
-                        appState.navigator.navigate(
-                            TMDbNavKey.Cast(gson.toJson(cast, object : TypeToken<List<Cast>>() {}.type)),
-                        )
-                    },
-                    { crew ->
-                        appState.navigator.navigate(
-                            TMDbNavKey.Crew(gson.toJson(crew, object : TypeToken<List<Crew>>() {}.type)),
-                        )
-                    },
-                    appState.navigator::goBack,
-                )
-            }
-            val onClickedMovie: (TMDbItem) -> Unit =
-                { appState.navigator.navigate(TMDbNavKey.MovieDetail(it.id)) }
-            val onSearchedClickedMovie: () -> Unit = { appState.navigator.navigate(TMDbNavKey.SearchMovies) }
-            entry<TMDbNavKey.TrendingMovies> {
-                TrendingMovieScreen(hiltViewModel(), onClickedMovie, onSearchedClickedMovie, appState.navigator::goBack)
-            }
-            entry<TMDbNavKey.PopularMovies> {
-                PopularMovieScreen(hiltViewModel(), onClickedMovie, onSearchedClickedMovie, appState.navigator::goBack)
-            }
-            entry<TMDbNavKey.NowPlayingMovies> {
-                NowPlayingMovieScreen(
-                    hiltViewModel(),
-                    onClickedMovie,
-                    onSearchedClickedMovie,
-                    appState.navigator::goBack,
-                )
-            }
-            entry<TMDbNavKey.UpcomingMovies> {
-                UpcomingMovieScreen(hiltViewModel(), onClickedMovie, onSearchedClickedMovie, appState.navigator::goBack)
-            }
-            entry<TMDbNavKey.TopRatedMovies> {
-                TopRatedMovieScreen(hiltViewModel(), onClickedMovie, onSearchedClickedMovie, appState.navigator::goBack)
-            }
-            entry<TMDbNavKey.DiscoverMovies> {
-                DiscoverMovieScreen(hiltViewModel(), onClickedMovie, onSearchedClickedMovie, appState.navigator::goBack)
-            }
-            entry<TMDbNavKey.SimilarMovies> { key ->
-                SimilarMovieScreen(
-                    hiltViewModel<SimilarMoviesViewModel, SimilarMoviesViewModel.Factory>(
-                        key = "SimilarMovies_${key.id}",
-                        creationCallback = { factory -> factory.create(key.id) },
-                    ),
-                    onClickedMovie,
-                    onSearchedClickedMovie,
-                    appState.navigator::goBack,
-                )
-            }
-            val onClickedTvShow: (TMDbItem) -> Unit =
-                { appState.navigator.navigate(TMDbNavKey.TvShowDetail(it.id)) }
-            val onSearchClickedTvShow: () -> Unit = { appState.navigator.navigate(TMDbNavKey.SearchTvShows) }
-            entry<TMDbNavKey.TrendingTvShows> {
-                TrendingTVShowScreen(
-                    hiltViewModel(),
-                    onClickedTvShow,
-                    onSearchClickedTvShow,
-                    appState.navigator::goBack,
-                )
-            }
-            entry<TMDbNavKey.PopularTvShows> {
-                PopularTVShowScreen(hiltViewModel(), onClickedTvShow, onSearchClickedTvShow, appState.navigator::goBack)
-            }
-            entry<TMDbNavKey.AiringTodayTvShows> {
-                AiringTodayTVShowScreen(
-                    hiltViewModel(),
-                    onClickedTvShow,
-                    onSearchClickedTvShow,
-                    appState.navigator::goBack,
-                )
-            }
-            entry<TMDbNavKey.OnTheAirTvShows> {
-                OnTheAirTVShowScreen(
-                    hiltViewModel(),
-                    onClickedTvShow,
-                    onSearchClickedTvShow,
-                    appState.navigator::goBack,
-                )
-            }
-            entry<TMDbNavKey.TopRatedTvShows> {
-                TopRatedTVShowScreen(
-                    hiltViewModel(),
-                    onClickedTvShow,
-                    onSearchClickedTvShow,
-                    appState.navigator::goBack,
-                )
-            }
-            entry<TMDbNavKey.DiscoverTvShows> {
-                DiscoverTVShowScreen(
-                    hiltViewModel(),
-                    onClickedTvShow,
-                    onSearchClickedTvShow,
-                    appState.navigator::goBack,
-                )
-            }
-            entry<TMDbNavKey.SimilarTvShows> { key ->
-                SimilarTVShowScreen(
-                    hiltViewModel<SimilarTvSeriesViewModel, SimilarTvSeriesViewModel.Factory>(
-                        key = "SimilarTvShows_${key.id}",
-                        creationCallback = { factory -> factory.create(key.id) },
-                    ),
-                    onClickedTvShow,
-                    onSearchClickedTvShow,
-                    appState.navigator::goBack,
-                )
-            }
-            entry<TMDbNavKey.SearchMovies> {
-                SearchMoviesScreen(
-                    hiltViewModel(),
-                    { appState.navigator.navigate(TMDbNavKey.MovieDetail(it.id)) },
-                    appState.navigator::goBack,
-                )
-            }
-            entry<TMDbNavKey.SearchTvShows> {
-                SearchTVSeriesScreen(
-                    hiltViewModel(),
-                    { appState.navigator.navigate(TMDbNavKey.TvShowDetail(it.id)) },
-                    appState.navigator::goBack,
-                )
-            }
-            val navigateToPerson: (person: Credit) -> Unit =
-                { person -> appState.navigator.navigate(TMDbNavKey.Person(person.id)) }
-            entry<TMDbNavKey.Cast> { key ->
-                CreditScreen(
-                    R.string.cast,
-                    appState.navigator::goBack,
-                    navigateToPerson,
-                    gson.fromJson<List<Cast>>(
-                        key.creditsJson,
-                        object : TypeToken<List<Cast>>() {}.type,
-                    ),
-                )
-            }
-            entry<TMDbNavKey.Crew> { key ->
-                CreditScreen(
-                    R.string.crew,
-                    appState.navigator::goBack,
-                    navigateToPerson,
-                    gson.fromJson<List<Crew>>(
-                        key.creditsJson,
-                        object : TypeToken<List<Crew>>() {}.type,
-                    ),
-                )
-            }
-            entry<TMDbNavKey.Person> { key ->
-                PersonScreen(
-                    hiltViewModel<PersonViewModel, PersonViewModel.Factory>(
-                        key = "Person_${key.id}",
-                        creationCallback = { factory -> factory.create(key.id) },
-                    ),
-                    appState.navigator::goBack,
-                )
-            }
-            entry<TMDbNavKey.Images> { key ->
-                ImagesScreen(
-                    images = gson.fromJson(
-                        key.imagesJson,
-                        object : TypeToken<List<TMDbImage>>() {}.type,
-                    ),
-                    initialPage = key.initialPage,
-                )
-            }
+                    }
+                },
+                scaffoldState,
+            )
+        }
+        entry<TMDbNavKey.Bookmark> {
+            BookmarkScreen(
+                hiltViewModel(),
+                hiltViewModel(),
+                languageViewModel,
+                { appState.navigator.navigate(TMDbNavKey.MovieDetail(it.id)) },
+                { appState.navigator.navigate(TMDbNavKey.TvShowDetail(it.id)) },
+                scaffoldState,
+            )
+        }
+        entry<TMDbNavKey.Setting> {
+            SettingsScreen(languageViewModel)
+        }
+        entry<TMDbNavKey.MovieDetail> { key ->
+            MovieDetailScreen(
+                hiltViewModel<MovieDetailViewModel, MovieDetailViewModel.Factory>(
+                    key = "MovieDetail_${key.id}",
+                    creationCallback = { factory -> factory.create(key.id) },
+                ),
+                { appState.navigator.navigate(TMDbNavKey.MovieDetail(it.id)) },
+                { appState.navigator.navigate(TMDbNavKey.SimilarMovies(it)) },
+                { person -> appState.navigator.navigate(TMDbNavKey.Person(person.id)) },
+                { images, index ->
+                    appState.navigator.navigate(
+                        TMDbNavKey.Images(
+                            gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type),
+                            index,
+                        ),
+                    )
+                },
+                { cast ->
+                    appState.navigator.navigate(
+                        TMDbNavKey.Cast(gson.toJson(cast, object : TypeToken<List<Cast>>() {}.type)),
+                    )
+                },
+                { crew ->
+                    appState.navigator.navigate(
+                        TMDbNavKey.Crew(gson.toJson(crew, object : TypeToken<List<Crew>>() {}.type)),
+                    )
+                },
+                appState.navigator::goBack,
+            )
+        }
+        entry<TMDbNavKey.TvShowDetail> { key ->
+            TVShowDetailScreen(
+                hiltViewModel<TVShowDetailViewModel, TVShowDetailViewModel.Factory>(
+                    key = "TvShowDetail_${key.id}",
+                    creationCallback = { factory -> factory.create(key.id) },
+                ),
+                { appState.navigator.navigate(TMDbNavKey.TvShowDetail(it.id)) },
+                { appState.navigator.navigate(TMDbNavKey.SimilarTvShows(it)) },
+                { person -> appState.navigator.navigate(TMDbNavKey.Person(person.id)) },
+                { images, index ->
+                    appState.navigator.navigate(
+                        TMDbNavKey.Images(
+                            gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type),
+                            index,
+                        ),
+                    )
+                },
+                { cast ->
+                    appState.navigator.navigate(
+                        TMDbNavKey.Cast(gson.toJson(cast, object : TypeToken<List<Cast>>() {}.type)),
+                    )
+                },
+                { crew ->
+                    appState.navigator.navigate(
+                        TMDbNavKey.Crew(gson.toJson(crew, object : TypeToken<List<Crew>>() {}.type)),
+                    )
+                },
+                appState.navigator::goBack,
+            )
+        }
+        val onClickedMovie: (TMDbItem) -> Unit =
+            { appState.navigator.navigate(TMDbNavKey.MovieDetail(it.id)) }
+        val onSearchedClickedMovie: () -> Unit = { appState.navigator.navigate(TMDbNavKey.SearchMovies) }
+        entry<TMDbNavKey.TrendingMovies> {
+            TrendingMovieScreen(hiltViewModel(), onClickedMovie, onSearchedClickedMovie, appState.navigator::goBack)
+        }
+        entry<TMDbNavKey.PopularMovies> {
+            PopularMovieScreen(hiltViewModel(), onClickedMovie, onSearchedClickedMovie, appState.navigator::goBack)
+        }
+        entry<TMDbNavKey.NowPlayingMovies> {
+            NowPlayingMovieScreen(
+                hiltViewModel(),
+                onClickedMovie,
+                onSearchedClickedMovie,
+                appState.navigator::goBack,
+            )
+        }
+        entry<TMDbNavKey.UpcomingMovies> {
+            UpcomingMovieScreen(hiltViewModel(), onClickedMovie, onSearchedClickedMovie, appState.navigator::goBack)
+        }
+        entry<TMDbNavKey.TopRatedMovies> {
+            TopRatedMovieScreen(hiltViewModel(), onClickedMovie, onSearchedClickedMovie, appState.navigator::goBack)
+        }
+        entry<TMDbNavKey.DiscoverMovies> {
+            DiscoverMovieScreen(hiltViewModel(), onClickedMovie, onSearchedClickedMovie, appState.navigator::goBack)
+        }
+        entry<TMDbNavKey.SimilarMovies> { key ->
+            SimilarMovieScreen(
+                hiltViewModel<SimilarMoviesViewModel, SimilarMoviesViewModel.Factory>(
+                    key = "SimilarMovies_${key.id}",
+                    creationCallback = { factory -> factory.create(key.id) },
+                ),
+                onClickedMovie,
+                onSearchedClickedMovie,
+                appState.navigator::goBack,
+            )
+        }
+        val onClickedTvShow: (TMDbItem) -> Unit =
+            { appState.navigator.navigate(TMDbNavKey.TvShowDetail(it.id)) }
+        val onSearchClickedTvShow: () -> Unit = { appState.navigator.navigate(TMDbNavKey.SearchTvShows) }
+        entry<TMDbNavKey.TrendingTvShows> {
+            TrendingTVShowScreen(
+                hiltViewModel(),
+                onClickedTvShow,
+                onSearchClickedTvShow,
+                appState.navigator::goBack,
+            )
+        }
+        entry<TMDbNavKey.PopularTvShows> {
+            PopularTVShowScreen(hiltViewModel(), onClickedTvShow, onSearchClickedTvShow, appState.navigator::goBack)
+        }
+        entry<TMDbNavKey.AiringTodayTvShows> {
+            AiringTodayTVShowScreen(
+                hiltViewModel(),
+                onClickedTvShow,
+                onSearchClickedTvShow,
+                appState.navigator::goBack,
+            )
+        }
+        entry<TMDbNavKey.OnTheAirTvShows> {
+            OnTheAirTVShowScreen(
+                hiltViewModel(),
+                onClickedTvShow,
+                onSearchClickedTvShow,
+                appState.navigator::goBack,
+            )
+        }
+        entry<TMDbNavKey.TopRatedTvShows> {
+            TopRatedTVShowScreen(
+                hiltViewModel(),
+                onClickedTvShow,
+                onSearchClickedTvShow,
+                appState.navigator::goBack,
+            )
+        }
+        entry<TMDbNavKey.DiscoverTvShows> {
+            DiscoverTVShowScreen(
+                hiltViewModel(),
+                onClickedTvShow,
+                onSearchClickedTvShow,
+                appState.navigator::goBack,
+            )
+        }
+        entry<TMDbNavKey.SimilarTvShows> { key ->
+            SimilarTVShowScreen(
+                hiltViewModel<SimilarTvSeriesViewModel, SimilarTvSeriesViewModel.Factory>(
+                    key = "SimilarTvShows_${key.id}",
+                    creationCallback = { factory -> factory.create(key.id) },
+                ),
+                onClickedTvShow,
+                onSearchClickedTvShow,
+                appState.navigator::goBack,
+            )
+        }
+        entry<TMDbNavKey.SearchMovies> {
+            SearchMoviesScreen(
+                hiltViewModel(),
+                { appState.navigator.navigate(TMDbNavKey.MovieDetail(it.id)) },
+                appState.navigator::goBack,
+            )
+        }
+        entry<TMDbNavKey.SearchTvShows> {
+            SearchTVSeriesScreen(
+                hiltViewModel(),
+                { appState.navigator.navigate(TMDbNavKey.TvShowDetail(it.id)) },
+                appState.navigator::goBack,
+            )
+        }
+        val navigateToPerson: (person: Credit) -> Unit =
+            { person -> appState.navigator.navigate(TMDbNavKey.Person(person.id)) }
+        entry<TMDbNavKey.Cast> { key ->
+            CreditScreen(
+                R.string.cast,
+                appState.navigator::goBack,
+                navigateToPerson,
+                gson.fromJson<List<Cast>>(
+                    key.creditsJson,
+                    object : TypeToken<List<Cast>>() {}.type,
+                ),
+            )
+        }
+        entry<TMDbNavKey.Crew> { key ->
+            CreditScreen(
+                R.string.crew,
+                appState.navigator::goBack,
+                navigateToPerson,
+                gson.fromJson<List<Crew>>(
+                    key.creditsJson,
+                    object : TypeToken<List<Crew>>() {}.type,
+                ),
+            )
+        }
+        entry<TMDbNavKey.Person> { key ->
+            PersonScreen(
+                hiltViewModel<PersonViewModel, PersonViewModel.Factory>(
+                    key = "Person_${key.id}",
+                    creationCallback = { factory -> factory.create(key.id) },
+                ),
+                appState.navigator::goBack,
+            )
+        }
+        entry<TMDbNavKey.Images> { key ->
+            ImagesScreen(
+                images = gson.fromJson(
+                    key.imagesJson,
+                    object : TypeToken<List<TMDbImage>>() {}.type,
+                ),
+                initialPage = key.initialPage,
+            )
         }
     }
 
