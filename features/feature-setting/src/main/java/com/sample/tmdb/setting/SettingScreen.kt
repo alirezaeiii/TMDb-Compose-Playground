@@ -39,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.ThemeMode
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -51,7 +52,6 @@ import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.SimpleExposedDropDownMenu
 import com.sample.tmdb.common.ui.theme.Teal200
 import com.sample.tmdb.common.utils.navigationBarPadding
-import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun SettingsScreen(viewModel: LanguageViewModel, themeViewModel: ThemeViewModel, modifier: Modifier = Modifier) {
@@ -108,9 +108,9 @@ fun SettingsScreen(viewModel: LanguageViewModel, themeViewModel: ThemeViewModel,
         )
     Box(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .statusBarsPadding(),
+        Modifier
+            .fillMaxSize()
+            .statusBarsPadding(),
     ) {
         Column(
             modifier = Modifier
@@ -120,13 +120,13 @@ fun SettingsScreen(viewModel: LanguageViewModel, themeViewModel: ThemeViewModel,
             SettingsGroupItem(
                 settings = settings,
                 modifier =
-                    modifier
-                        .padding(
-                            top = TMDb_56_dp + TMDb_16_dp,
-                            start = TMDb_12_dp,
-                            end = TMDb_12_dp,
-                            bottom = TMDb_16_dp,
-                        ),
+                modifier
+                    .padding(
+                        top = TMDb_56_dp + TMDb_16_dp,
+                        start = TMDb_12_dp,
+                        end = TMDb_12_dp,
+                        bottom = TMDb_16_dp,
+                    ),
             )
             Spacer(modifier = Modifier.height(navigationBarPadding() + TMDb_56_dp))
         }
@@ -201,12 +201,12 @@ private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, cont
 private fun IconBox(@DrawableRes iconResourceId: Int, contentDescription: String?, modifier: Modifier = Modifier) {
     Box(
         modifier =
-            modifier
-                .size(TMDb_32_dp)
-                .background(color = MaterialTheme.colors.background, shape = CircleShape),
+        modifier
+            .size(TMDb_32_dp)
+            .background(color = MaterialTheme.colors.background, shape = CircleShape),
         contentAlignment = Alignment.Center,
 
-        ) {
+    ) {
         Icon(
             painter = painterResource(id = iconResourceId),
             contentDescription = contentDescription,
