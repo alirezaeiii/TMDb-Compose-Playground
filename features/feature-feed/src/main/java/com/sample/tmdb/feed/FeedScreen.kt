@@ -61,6 +61,7 @@ import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.ui.theme.Teal200
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
 import com.sample.tmdb.common.utils.TMDbSpacer
+import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
@@ -162,11 +163,7 @@ fun FeedCollectionList(
             }
         }
         item {
-            Spacer(
-                Modifier
-                    .navigationBarsPadding()
-                    .windowInsetsTopHeight(WindowInsets(top = TMDb_56_dp)),
-            )
+            Spacer(Modifier.height(navigationBarPadding() + TMDb_56_dp))
         }
     }
 }
