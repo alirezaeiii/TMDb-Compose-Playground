@@ -132,7 +132,7 @@ fun TMDbApp() {
             )
         }
         entry<TMDbNavKey.Setting> {
-            SettingsScreen(languageViewModel)
+            SettingsScreen(languageViewModel, hiltViewModel())
         }
         entry<TMDbNavKey.MovieDetail> { key ->
             MovieDetailScreen(

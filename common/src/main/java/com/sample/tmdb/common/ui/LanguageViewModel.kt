@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.StateFlow
 class LanguageViewModel @Inject constructor(private val languageRepository: LanguageRepository) : ViewModel() {
     val languageCode: StateFlow<String> = languageRepository.languageCode
 
+    val supportedLanguages = listOf("es", "en")
+
     fun setLanguage(code: String) {
         languageRepository.setLanguage(code)
         AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(code))

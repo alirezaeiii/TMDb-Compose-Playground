@@ -4,15 +4,20 @@ import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
 import androidx.navigationevent.compose.LocalNavigationEventDispatcherOwner
+import com.sample.tmdb.common.model.ThemeMode
+import com.sample.tmdb.common.ui.ThemeViewModel
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
@@ -20,6 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val themeViewModel: ThemeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +36,16 @@ class MainActivity : AppCompatActivity() {
 
         enableEdgeToEdge()
         setContent {
+            val themeMode by themeViewModel.themeMode.collectAsState()
+            val darkTheme =
+                when (themeMode) {
+                    ThemeMode.LIGHT -> false
+                    ThemeMode.DARK -> true
+                    ThemeMode.SYSTEM -> isSystemInDarkTheme()
+                }
             CompositionLocalProvider(LocalNavigationEventDispatcherOwner provides this) {
-                TmdbPagingComposeTheme {
-                    ChangeSystemBarsTheme(!isSystemInDarkTheme())
+                TmdbPagingComposeTheme(darkTheme = darkTheme) {
+                    ChangeSystemBarsTheme(!darkTheme)
                     TMDbApp()
                 }
             }

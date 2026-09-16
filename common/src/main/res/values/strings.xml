@@ -8,4 +8,7 @@
     <string name="back">Back</string>
     <string name="person_content_description">Photo of %1$s the %2$s</string>
     <string name="poster_content_description">Poster</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System Default</string>
 </resources>

@@ -9,4 +9,7 @@
     <string name="back">Volver</string>
     <string name="person_content_description">Foto %1$s de %2$s</string>
     <string name="poster_content_description">Póster</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Oscuro</string>
+    <string name="theme_system">Predeterminado del sistema</string>
 </resources>

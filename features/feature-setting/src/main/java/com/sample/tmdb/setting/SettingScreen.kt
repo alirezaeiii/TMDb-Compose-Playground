@@ -26,6 +26,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,52 +35,84 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.sample.tmdb.common.R as commonR
+import com.sample.tmdb.common.model.ThemeMode
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
+import com.sample.tmdb.common.ui.ThemeViewModel
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.SimpleExposedDropDownMenu
 import com.sample.tmdb.common.ui.theme.Teal200
 
 @Composable
-fun SettingsScreen(viewModel: LanguageViewModel, modifier: Modifier = Modifier) {
-    val settings = listOf(
-        Settings.SelectBox(
-            iconResourceId = R.drawable.ic_language,
-            titleResourceId = R.string.language,
-            options = listOf("es", "en"),
-        ),
-        Settings.IntentAction(
-            iconResourceId = R.drawable.ic_github,
-            titleResourceId = R.string.source_code_github,
-            intent = Intent(Intent.ACTION_VIEW, Uri.parse(TMDB_REPO_URL)),
-        ),
-        Settings.IntentAction(
-            iconResourceId = R.drawable.ic_shield,
-            titleResourceId = R.string.privacy_policy,
-            intent = Intent(Intent.ACTION_VIEW, Uri.parse(TMDB_POLICY_URL)),
-        ),
-        Settings.Info(
-            iconResourceId = R.drawable.ic_info,
-            titleResourceId = R.string.version,
-            value = BuildConfig.VERSION_NAME,
-        ),
-    )
+fun SettingsScreen(viewModel: LanguageViewModel, themeViewModel: ThemeViewModel, modifier: Modifier = Modifier) {
+    val themeMode by themeViewModel.themeMode.collectAsState()
+    val languageCode by viewModel.languageCode.collectAsState()
+    val supportedLanguages = viewModel.supportedLanguages
+    val supportedThemes = themeViewModel.supportedThemes
+
+    val languageOptions = supportedLanguages.map { Settings.Option(it) }
+    val themeOptions =
+        supportedThemes.map { theme ->
+            Settings.Option(
+                stringResource(
+                    when (theme) {
+                        ThemeMode.LIGHT -> commonR.string.theme_light
+                        ThemeMode.DARK -> commonR.string.theme_dark
+                        ThemeMode.SYSTEM -> commonR.string.theme_system
+                    },
+                ),
+            )
+        }
+
+    val settings =
+        listOf(
+            Settings.SelectBox(
+                iconResourceId = R.drawable.ic_language,
+                titleResourceId = R.string.language,
+                options = languageOptions,
+                selectedIndex = supportedLanguages.indexOf(languageCode).coerceAtLeast(0),
+                onOptionSelected = { viewModel.setLanguage(supportedLanguages[it]) },
+            ),
+            Settings.SelectBox(
+                iconResourceId = R.drawable.ic_dark_mode,
+                titleResourceId = R.string.theme,
+                options = themeOptions,
+                selectedIndex = themeMode.ordinal,
+                onOptionSelected = { themeViewModel.setThemeMode(supportedThemes[it]) },
+            ),
+            Settings.IntentAction(
+                iconResourceId = R.drawable.ic_github,
+                titleResourceId = R.string.source_code_github,
+                intent = Intent(Intent.ACTION_VIEW, Uri.parse(TMDB_REPO_URL)),
+            ),
+            Settings.IntentAction(
+                iconResourceId = R.drawable.ic_shield,
+                titleResourceId = R.string.privacy_policy,
+                intent = Intent(Intent.ACTION_VIEW, Uri.parse(TMDB_POLICY_URL)),
+            ),
+            Settings.Info(
+                iconResourceId = R.drawable.ic_info,
+                titleResourceId = R.string.version,
+                value = BuildConfig.VERSION_NAME,
+            ),
+        )
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .statusBarsPadding(),
     ) {
         SettingsGroupItem(
-            viewModel = viewModel,
             settings = settings,
-            modifier = modifier
+            modifier =
+            modifier
                 .padding(
                     top = TMDb_56_dp + TMDb_16_dp,
                     start = TMDb_12_dp,
@@ -90,7 +124,7 @@ fun SettingsScreen(viewModel: LanguageViewModel, modifier: Modifier = Modifier) 
 }
 
 @Composable
-fun SettingsGroupItem(viewModel: LanguageViewModel, settings: List<Settings>, modifier: Modifier = Modifier) {
+fun SettingsGroupItem(settings: List<Settings>, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
@@ -101,7 +135,7 @@ fun SettingsGroupItem(viewModel: LanguageViewModel, settings: List<Settings>, mo
     ) {
         Column {
             settings.forEachIndexed { index, settingsItem ->
-                SettingsItem(viewModel = viewModel, settings = settingsItem)
+                SettingsItem(settings = settingsItem)
 
                 if (index < settings.lastIndex) {
                     Divider()
@@ -114,12 +148,7 @@ fun SettingsGroupItem(viewModel: LanguageViewModel, settings: List<Settings>, mo
 }
 
 @Composable
-private fun SettingsItem(
-    viewModel: LanguageViewModel,
-    settings: Settings,
-    modifier: Modifier = Modifier,
-    context: Context = LocalContext.current,
-) {
+private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
     Row(
         modifier = modifier
             .then(
@@ -147,13 +176,11 @@ private fun SettingsItem(
             is Settings.Info -> TitleText(title = settings.value)
             is Settings.Action, is Settings.IntentAction -> ForwardButton()
             is Settings.SelectBox -> SimpleExposedDropDownMenu(
-                values = settings.options,
+                values = settings.options.map { it.label },
                 label = { Text("") },
-                selectedIndex = settings.options.indexOf(Locale.current.language),
+                selectedIndex = settings.selectedIndex,
                 backgroundColor = Color.Transparent,
-                onChange = {
-                    viewModel.setLanguage(settings.options[it])
-                },
+                onChange = settings.onOptionSelected,
             )
         }
     }
@@ -223,6 +250,8 @@ private fun ForwardButton(modifier: Modifier = Modifier, color: Color = Teal200)
 }
 
 sealed interface Settings {
+    data class Option(val label: String)
+
     @get:DrawableRes
     val iconResourceId: Int
 
@@ -250,7 +279,9 @@ sealed interface Settings {
     data class SelectBox(
         @DrawableRes override val iconResourceId: Int,
         @StringRes override val titleResourceId: Int,
-        val options: List<String>,
+        val options: List<Option>,
+        val selectedIndex: Int,
+        val onOptionSelected: (Int) -> Unit,
     ) : Settings
 }
 
