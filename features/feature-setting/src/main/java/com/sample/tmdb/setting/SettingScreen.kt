@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -51,6 +50,7 @@ import com.sample.tmdb.common.ui.ThemeViewModel
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.SimpleExposedDropDownMenu
 import com.sample.tmdb.common.ui.theme.Teal200
+import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.navigationBarPadding
 
 @Composable
@@ -109,20 +109,20 @@ fun SettingsScreen(viewModel: LanguageViewModel, themeViewModel: ThemeViewModel,
     Box(
         modifier =
         Modifier
-            .fillMaxSize()
-            .statusBarsPadding(),
+            .fillMaxSize(),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
         ) {
+            TMDbSpacer()
             SettingsGroupItem(
                 settings = settings,
                 modifier =
                 modifier
                     .padding(
-                        top = TMDb_56_dp + TMDb_16_dp,
+                        top = TMDb_16_dp,
                         start = TMDb_12_dp,
                         end = TMDb_12_dp,
                         bottom = TMDb_16_dp,
