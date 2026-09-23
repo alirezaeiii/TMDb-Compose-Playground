@@ -1,5 +1,6 @@
 package com.sample.tmdb.preson
 
+import app.cash.turbine.test
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
@@ -9,6 +10,7 @@ import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 
@@ -41,6 +43,18 @@ class PersonViewModelTest {
         every { repository.getResult(id = any()) } returns flowOf(Async.Error("error"))
         viewModel = PersonViewModel(repository, PERSON_ID)
         assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
+    }
+
+    @Test
+    fun `onNavigateUp emits NavigateUp`() = runTest {
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        viewModel = PersonViewModel(repository, PERSON_ID)
+
+        viewModel.uiEvent.test {
+            viewModel.onNavigateUp()
+            assertEquals(PersonUiEvent.NavigateUp, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     companion object {

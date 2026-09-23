@@ -9,11 +9,12 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
+import com.sample.tmdb.common.utils.UiEvent
 import com.sample.tmdb.common.utils.ViewState
 
 @Composable
-fun <T, S> TMDbSwipeRefresh(
-    viewModel: BaseViewModel<T, S>,
+fun <T, S, E : UiEvent> TMDbSwipeRefresh(
+    viewModel: BaseViewModel<T, S, E>,
     state: ViewState<T>,
     isRefreshing: Boolean = state.isRefreshing,
     onRefresh: () -> Unit = { viewModel.refresh(true) },

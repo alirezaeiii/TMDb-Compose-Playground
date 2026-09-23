@@ -1,5 +1,6 @@
 package com.sample.tmdb.feed
 
+import app.cash.turbine.test
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.repository.LanguageRepository
@@ -13,6 +14,7 @@ import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,7 +27,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
 
     protected val languageRepository = mockk<LanguageRepository>()
 
-    protected lateinit var viewModel: BaseViewModel<List<FeedWrapper>, Nothing>
+    protected lateinit var viewModel: BaseViewModel<List<FeedWrapper>, Nothing, FeedUiEvent>
 
     protected abstract fun initViewModel()
 
@@ -53,5 +55,22 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
         every { repository.getResult() } returns flowOf(Async.Error("error"))
         initViewModel()
         assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
+    }
+
+    @Test
+    fun `load feeds warning emits showWarningUiEvent`() = runTest {
+        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(Async.Success(emptyList()))
+        initViewModel()
+        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(
+            Async.Error(
+                "warning message",
+                isWarning = true,
+            ),
+        )
+        viewModel.uiEvent.test {
+            viewModel.refresh()
+            assertEquals(FeedUiEvent.ShowWarning("warning message"), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 }

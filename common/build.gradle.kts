@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.compose.icons.extended)
     implementation(libs.androidx.appcompat)
+    api(libs.androidx.navigation3.runtime)
     androidTestImplementation(libs.compose.ui.test)
     androidTestImplementation(project(":core:domain"))
     debugImplementation(libs.compose.ui.test.manifest)

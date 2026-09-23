@@ -30,6 +30,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -47,29 +48,36 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_24_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
+import com.sample.tmdb.common.ui.TMDbNavKey
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
+import com.sample.tmdb.common.utils.UiEvent
 import com.sample.tmdb.paging.PagingScreen
 import com.sample.tmdb.paging.R
 import com.sample.tmdb.paging.search.component.AnimatedSearch
 import com.sample.tmdb.paging.search.component.InfinitelyFlowingCircles
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun SearchMoviesScreen(viewModel: SearchMoviesViewModel, onClick: (TMDbItem) -> Unit, navigateUp: () -> Unit) {
+fun SearchMoviesScreen(viewModel: SearchMoviesViewModel, onNavigate: (TMDbNavKey) -> Unit, onNavigateUp: () -> Unit) {
     Search(
         viewModel = viewModel,
-        onClick = onClick,
-        navigateUp = navigateUp,
+        onNavigate = onNavigate,
+        onNavigateUp = onNavigateUp,
         resourceId = commonR.string.movies,
     )
 }
 
 @Composable
-fun SearchTVSeriesScreen(viewModel: SearchTVSeriesViewModel, onClick: (TMDbItem) -> Unit, navigateUp: () -> Unit) {
+fun SearchTVSeriesScreen(
+    viewModel: SearchTVSeriesViewModel,
+    onNavigate: (TMDbNavKey) -> Unit,
+    onNavigateUp: () -> Unit,
+) {
     Search(
         viewModel = viewModel,
-        onClick = onClick,
-        navigateUp = navigateUp,
+        onNavigate = onNavigate,
+        onNavigateUp = onNavigateUp,
         resourceId = commonR.string.tv_series,
     )
 }
@@ -77,11 +85,21 @@ fun SearchTVSeriesScreen(viewModel: SearchTVSeriesViewModel, onClick: (TMDbItem)
 @Composable
 fun <T : TMDbItem> Search(
     viewModel: BaseSearchPagingViewModel<T>,
-    onClick: (TMDbItem) -> Unit,
-    navigateUp: () -> Unit,
+    onNavigate: (TMDbNavKey) -> Unit,
+    onNavigateUp: () -> Unit,
     @StringRes resourceId: Int,
     modifier: Modifier = Modifier,
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collectLatest { event ->
+            when (event) {
+                is UiEvent.Navigation -> onNavigate(event.route)
+                is UiEvent.NavigateUp -> onNavigateUp()
+                else -> {}
+            }
+        }
+    }
+
     var query by rememberSaveable { mutableStateOf("") }
     var focused by rememberSaveable { mutableStateOf(false) }
     Box(modifier = modifier.fillMaxSize()) {
@@ -100,7 +118,6 @@ fun <T : TMDbItem> Search(
             viewModel.showResult(query)
             PagingScreen(
                 viewModel = viewModel,
-                onClick = onClick,
             )
         }
         Column(
@@ -133,7 +150,7 @@ fun <T : TMDbItem> Search(
                             shape = CircleShape,
                         )
                 IconButton(
-                    onClick = navigateUp,
+                    onClick = viewModel::onNavigateUp,
                     modifier =
                     Modifier
                         .padding(start = TMDb_12_dp)

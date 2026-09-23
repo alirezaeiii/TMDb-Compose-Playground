@@ -37,6 +37,7 @@ android {
 dependencies {
     implementation(project(":core:domain"))
 
+    implementation(libs.gson)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.savedstate)
     implementation(libs.kotlinx.coroutines.core)
@@ -54,6 +55,8 @@ dependencies {
     testImplementation(project(":common-test"))
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
     androidTestImplementation(libs.compose.ui.test)
     androidTestImplementation(libs.mockito.kotlin)
     debugImplementation(libs.compose.ui.test.manifest)

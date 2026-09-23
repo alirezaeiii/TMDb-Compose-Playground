@@ -16,6 +16,10 @@ class MovieDetailViewModel @AssistedInject constructor(
     @Assisted tmdbId: Int,
 ) : BaseDetailViewModel<MovieDetails, Movie>(bookmarkRepository, repository, tmdbId) {
 
+    override fun onAllSimilarClick(id: Int) {
+        emitEvent(DetailUiEvent.Navigate(SimilarMovies(id)))
+    }
+
     @AssistedFactory
     interface Factory {
         fun create(tmdbId: Int): MovieDetailViewModel

@@ -77,9 +77,12 @@ private val CollapsedImageSize = 150.dp
 private val HzPadding = Modifier.padding(horizontal = 24.dp)
 
 @Composable
-fun PersonScreen(viewModel: PersonViewModel, upPress: () -> Unit) {
+fun PersonScreen(viewModel: PersonViewModel, onNavigateUp: () -> Unit) {
     val titleHeight = remember { mutableStateOf(0.dp) }
-    Content(viewModel = viewModel) { state, person ->
+    Content(
+        viewModel = viewModel,
+        onNavigateUp = onNavigateUp,
+    ) { state, person ->
         Box(
             modifier = Modifier.fillMaxSize(),
         ) {
@@ -96,7 +99,7 @@ fun PersonScreen(viewModel: PersonViewModel, upPress: () -> Unit) {
             person.profilePath?.let {
                 PersonImage(it) { scroll.value }
             }
-            Up(upPress)
+            Up(viewModel::onNavigateUp)
         }
     }
 }

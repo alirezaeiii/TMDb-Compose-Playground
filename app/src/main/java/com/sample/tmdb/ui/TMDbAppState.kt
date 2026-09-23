@@ -3,6 +3,7 @@ package com.sample.tmdb.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import com.sample.tmdb.common.ui.TMDbNavKey
 
 /**
  * Remembers and creates an instance of [TMDbAppState]
@@ -10,8 +11,8 @@ import androidx.compose.runtime.remember
 @Composable
 fun rememberTMDbAppState(
     navigationState: NavigationState = rememberNavigationState(
-        startRoute = TMDbNavKey.Movie,
-        topLevelRoutes = setOf(TMDbNavKey.Movie, TMDbNavKey.TvShow, TMDbNavKey.Bookmark, TMDbNavKey.Setting),
+        startRoute = Movie,
+        topLevelRoutes = setOf(Movie, TvShow, Bookmark, Setting),
     ),
 ) = remember(navigationState) {
     TMDbAppState(navigationState)

@@ -114,6 +114,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_24_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
+import com.sample.tmdb.common.ui.TMDbNavKey
 import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.theme.imageTint
@@ -128,25 +129,11 @@ import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TVShow
 
 @Composable
-fun MovieDetailScreen(
-    viewModel: MovieDetailViewModel,
-    onTMDbItemSelected: (TMDbItem) -> Unit,
-    onAllSimilarSelected: (Int) -> Unit,
-    navigateToPerson: (Credit) -> Unit,
-    onImageSelected: (List<TMDbImage>, Int) -> Unit,
-    onSeeAllCastClicked: (List<Credit>) -> Unit,
-    onSeeAllCrewClicked: (List<Credit>) -> Unit,
-    navigateUp: () -> Unit,
-) {
+fun MovieDetailScreen(viewModel: MovieDetailViewModel, onNavigate: (TMDbNavKey) -> Unit, onNavigateUp: () -> Unit) {
     DetailScreen(
         viewModel = viewModel,
-        onTMDbItemSelected = onTMDbItemSelected,
-        onAllSimilarSelected = onAllSimilarSelected,
-        navigateToPerson = navigateToPerson,
-        onImageSelected = onImageSelected,
-        onSeeAllCastClicked = onSeeAllCastClicked,
-        onSeeAllCrewClicked = onSeeAllCrewClicked,
-        navigateUp = navigateUp,
+        onNavigate = onNavigate,
+        onNavigateUp = onNavigateUp,
     ) { details ->
         Movie(
             id = details.id,
@@ -162,25 +149,11 @@ fun MovieDetailScreen(
 }
 
 @Composable
-fun TVShowDetailScreen(
-    viewModel: TVShowDetailViewModel,
-    onTMDbItemSelected: (TMDbItem) -> Unit,
-    onAllSimilarSelected: (Int) -> Unit,
-    navigateToPerson: (Credit) -> Unit,
-    onImageSelected: (List<TMDbImage>, Int) -> Unit,
-    onSeeAllCastClicked: (List<Credit>) -> Unit,
-    onSeeAllCrewClicked: (List<Credit>) -> Unit,
-    navigateUp: () -> Unit,
-) {
+fun TVShowDetailScreen(viewModel: TVShowDetailViewModel, onNavigate: (TMDbNavKey) -> Unit, onNavigateUp: () -> Unit) {
     DetailScreen(
         viewModel = viewModel,
-        onTMDbItemSelected = onTMDbItemSelected,
-        onAllSimilarSelected = onAllSimilarSelected,
-        navigateToPerson = navigateToPerson,
-        onImageSelected = onImageSelected,
-        onSeeAllCastClicked = onSeeAllCastClicked,
-        onSeeAllCrewClicked = onSeeAllCrewClicked,
-        navigateUp = navigateUp,
+        onNavigate = onNavigate,
+        onNavigateUp = onNavigateUp,
     ) { details ->
         TVShow(
             id = details.id,
@@ -198,24 +171,21 @@ fun TVShowDetailScreen(
 @Composable
 private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     viewModel: BaseDetailViewModel<T, E>,
-    onTMDbItemSelected: (TMDbItem) -> Unit,
-    onAllSimilarSelected: (Int) -> Unit,
-    onImageSelected: (List<TMDbImage>, Int) -> Unit,
-    navigateToPerson: (Credit) -> Unit,
-    onSeeAllCastClicked: (List<Credit>) -> Unit,
-    onSeeAllCrewClicked: (List<Credit>) -> Unit,
-    navigateUp: () -> Unit,
+    onNavigate: (TMDbNavKey) -> Unit,
+    onNavigateUp: () -> Unit,
     getBookmarkedItem: (TMDbItemDetails) -> E,
 ) {
     DetailScreen(
         viewModel = viewModel,
-        onTMDbItemSelected = onTMDbItemSelected,
-        onAllSimilarSelected = onAllSimilarSelected,
-        onImagesSelected = onImageSelected,
-        navigateToPerson = navigateToPerson,
-        onSeeAllCastClicked = onSeeAllCastClicked,
-        onSeeAllCrewClicked = onSeeAllCrewClicked,
-        navigateUp = navigateUp,
+        onNavigate = onNavigate,
+        onNavigateUp = onNavigateUp,
+        onTMDbItemSelected = viewModel::onTMDbItemClick,
+        onAllSimilarSelected = viewModel::onAllSimilarClick,
+        onImagesSelected = viewModel::onImageSelected,
+        navigateToPerson = viewModel::onPersonClick,
+        onSeeAllCastClicked = viewModel::onSeeAllCastClicked,
+        onSeeAllCrewClicked = viewModel::onSeeAllCrewClicked,
+        navigateUp = viewModel::onNavigateUp,
         fab = { isFabVisible, isBookmark, details ->
             ToggleBookmarkFab(isBookmark = isBookmark, isVisible = isFabVisible) {
                 if (isBookmark) {
@@ -234,6 +204,8 @@ private val localVibrantColor =
 @Composable
 fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     viewModel: BaseDetailViewModel<T, E>,
+    onNavigate: (TMDbNavKey) -> Unit,
+    onNavigateUp: () -> Unit,
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     onTMDbItemSelected: (TMDbItem) -> Unit,
     onAllSimilarSelected: (Int) -> Unit,
@@ -247,7 +219,11 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     val isFabVisible = rememberSaveable { mutableStateOf(true) }
     val defaultTextColor = MaterialTheme.colors.onBackground
     val vibrantColor = remember { Animatable(defaultTextColor) }
-    Content(viewModel = viewModel) { _, it ->
+    Content(
+        viewModel = viewModel,
+        onNavigate = onNavigate,
+        onNavigateUp = onNavigateUp,
+    ) { _, it ->
         viewModel.isBookmarked(it.details.id)
         // Nested scroll for control FAB
         val nestedScrollConnection =
