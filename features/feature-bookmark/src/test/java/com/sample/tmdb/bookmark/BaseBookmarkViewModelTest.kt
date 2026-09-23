@@ -1,5 +1,6 @@
 package com.sample.tmdb.bookmark
 
+import app.cash.turbine.test
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.repository.LanguageRepository
@@ -12,6 +13,7 @@ import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -53,5 +55,22 @@ abstract class BaseBookmarkViewModelTest<T : TMDbItem> {
         every { repository.getResult() } returns flowOf(Async.Error("error"))
         viewModel.refresh()
         assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
+    }
+
+    @Test
+    fun `load feeds warning emits showWarningUiEvent`() = runTest {
+        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(Async.Success(emptyList()))
+        viewModel.refresh()
+        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(
+            Async.Error(
+                "warning message",
+                isWarning = true,
+            ),
+        )
+        viewModel.uiEvent.test {
+            viewModel.refresh()
+            assertEquals(BookmarkUiEvent.ShowWarning("warning message"), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 }
