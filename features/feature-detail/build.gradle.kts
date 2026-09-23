@@ -37,6 +37,7 @@ android {
 dependencies {
     implementation(project(":core:domain"))
 
+    implementation(libs.gson)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.savedstate)
     implementation(libs.kotlinx.coroutines.core)

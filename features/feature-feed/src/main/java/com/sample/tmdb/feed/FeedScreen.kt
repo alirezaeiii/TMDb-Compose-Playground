@@ -52,6 +52,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
+import com.sample.tmdb.common.ui.TMDbNavKey
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
@@ -69,17 +70,16 @@ import com.sample.tmdb.feed.utils.pagerTransition
 fun MovieFeedScreen(
     viewModel: MovieFeedViewModel,
     languageViewModel: LanguageViewModel,
-    onSearchClicked: () -> Unit,
-    onClick: (TMDbItem) -> Unit,
-    navigate: (FeedNavigationEvent) -> Unit,
+    onNavigate: (TMDbNavKey) -> Unit,
     scaffoldState: ScaffoldState,
 ) {
     FeedScreen(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
-        navigate = navigate,
-        onSearchClicked = onSearchClicked,
-        onClick = onClick,
+        onNavigate = onNavigate,
+        navigateMore = viewModel::onMoreClick,
+        onSearchClicked = viewModel::onSearchClick,
+        onClick = viewModel::onMovieClick,
         scaffoldState = scaffoldState,
         commonR.string.movies,
     )
@@ -89,17 +89,16 @@ fun MovieFeedScreen(
 fun TVShowFeedScreen(
     viewModel: TVShowFeedViewModel,
     languageViewModel: LanguageViewModel,
-    onSearchClicked: () -> Unit,
-    onClick: (TMDbItem) -> Unit,
-    navigate: (FeedNavigationEvent) -> Unit,
+    onNavigate: (TMDbNavKey) -> Unit,
     scaffoldState: ScaffoldState,
 ) {
     FeedScreen(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
-        navigate = navigate,
-        onSearchClicked = onSearchClicked,
-        onClick = onClick,
+        onNavigate = onNavigate,
+        navigateMore = viewModel::onMoreClick,
+        onSearchClicked = viewModel::onSearchClick,
+        onClick = viewModel::onTVShowClick,
         scaffoldState = scaffoldState,
         commonR.string.tv_series,
     )
@@ -107,9 +106,10 @@ fun TVShowFeedScreen(
 
 @Composable
 private fun FeedScreen(
-    viewModel: BaseViewModel<List<FeedWrapper>, Nothing>,
+    viewModel: BaseViewModel<List<FeedWrapper>, Nothing, FeedUiEvent>,
     languageViewModel: LanguageViewModel,
-    navigate: (FeedNavigationEvent) -> Unit,
+    onNavigate: (TMDbNavKey) -> Unit,
+    navigateMore: (FeedNavigationEvent) -> Unit,
     onSearchClicked: () -> Unit,
     onClick: (TMDbItem) -> Unit,
     scaffoldState: ScaffoldState,
@@ -118,11 +118,12 @@ private fun FeedScreen(
     Content(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
+        onNavigate = onNavigate,
         scaffoldState = scaffoldState,
     ) { state, feeds ->
         Box {
             TMDbSwipeRefresh(viewModel, state) {
-                FeedCollectionList(feeds, navigate, onClick)
+                FeedCollectionList(feeds, navigateMore, onClick)
             }
             DestinationBar(
                 title =

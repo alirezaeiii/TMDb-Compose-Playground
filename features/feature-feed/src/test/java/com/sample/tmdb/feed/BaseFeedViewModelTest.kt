@@ -25,7 +25,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
 
     protected val languageRepository = mockk<LanguageRepository>()
 
-    protected lateinit var viewModel: BaseViewModel<List<FeedWrapper>, Nothing>
+    protected lateinit var viewModel: BaseViewModel<List<FeedWrapper>, Nothing, FeedUiEvent>
 
     protected abstract fun initViewModel()
 

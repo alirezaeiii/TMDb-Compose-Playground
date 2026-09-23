@@ -40,6 +40,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
+import com.sample.tmdb.common.ui.TMDbNavKey
 import com.sample.tmdb.common.ui.component.TMDbContent
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
@@ -53,8 +54,7 @@ fun BookmarkScreen(
     movieViewModel: BookmarkMovieViewModel,
     tvShowViewModel: BookmarkTVShowViewModel,
     languageViewModel: LanguageViewModel,
-    onMovieClicked: (TMDbItem) -> Unit,
-    onTVShowClicked: (TMDbItem) -> Unit,
+    onNavigate: (TMDbNavKey) -> Unit,
     scaffoldState: ScaffoldState,
 ) {
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
@@ -80,14 +80,14 @@ fun BookmarkScreen(
                 MediaTab.Movies.ordinal -> MoviesTabContent(
                     movieViewModel,
                     languageViewModel,
-                    onMovieClicked,
+                    onNavigate,
                     scaffoldState,
                 )
 
                 MediaTab.TVShows.ordinal -> TVShowsTabContent(
                     tvShowViewModel,
                     languageViewModel,
-                    onTVShowClicked,
+                    onNavigate,
                     scaffoldState,
                 )
             }
@@ -121,13 +121,14 @@ fun BookmarkScreen(
 private fun MoviesTabContent(
     viewModel: BookmarkMovieViewModel,
     languageViewModel: LanguageViewModel,
-    onClick: (TMDbItem) -> Unit,
+    onNavigate: (TMDbNavKey) -> Unit,
     scaffoldState: ScaffoldState,
 ) {
     TabContent(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
-        onClick = onClick,
+        onNavigate = onNavigate,
+        onClick = viewModel::onMovieClick,
         textResourceId = commonR.string.movies,
         scaffoldState = scaffoldState,
     )
@@ -137,13 +138,14 @@ private fun MoviesTabContent(
 private fun TVShowsTabContent(
     viewModel: BookmarkTVShowViewModel,
     languageViewModel: LanguageViewModel,
-    onClick: (TMDbItem) -> Unit,
+    onNavigate: (TMDbNavKey) -> Unit,
     scaffoldState: ScaffoldState,
 ) {
     TabContent(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
-        onClick = onClick,
+        onNavigate = onNavigate,
+        onClick = viewModel::onTVShowClick,
         textResourceId = commonR.string.tv_series,
         scaffoldState = scaffoldState,
     )
@@ -151,8 +153,9 @@ private fun TVShowsTabContent(
 
 @Composable
 private fun <T : TMDbItem> TabContent(
-    viewModel: BaseViewModel<List<T>, Nothing>,
+    viewModel: BaseViewModel<List<T>, Nothing, BookmarkUiEvent>,
     languageViewModel: LanguageViewModel,
+    onNavigate: (TMDbNavKey) -> Unit,
     onClick: (TMDbItem) -> Unit,
     @StringRes textResourceId: Int,
     scaffoldState: ScaffoldState,
@@ -161,6 +164,7 @@ private fun <T : TMDbItem> TabContent(
     Content(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
+        onNavigate = onNavigate,
         scaffoldState = scaffoldState,
     ) { state, items ->
         TMDbSwipeRefresh(viewModel, state) {

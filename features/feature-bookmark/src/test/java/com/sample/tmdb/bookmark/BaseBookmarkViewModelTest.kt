@@ -24,9 +24,9 @@ abstract class BaseBookmarkViewModelTest<T : TMDbItem> {
 
     protected val languageRepository = mockk<LanguageRepository>()
 
-    private lateinit var viewModel: BaseViewModel<List<T>, Nothing>
+    private lateinit var viewModel: BaseViewModel<List<T>, Nothing, BookmarkUiEvent>
 
-    protected abstract fun getViewModel(): BaseViewModel<List<T>, Nothing>
+    protected abstract fun getViewModel(): BaseViewModel<List<T>, Nothing, BookmarkUiEvent>
 
     @Before
     fun setup() {

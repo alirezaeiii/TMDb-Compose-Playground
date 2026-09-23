@@ -16,6 +16,10 @@ class TVShowDetailViewModel @AssistedInject constructor(
     @Assisted tmdbId: Int,
 ) : BaseDetailViewModel<TVShowDetails, TVShow>(bookmarkRepository, repository, tmdbId) {
 
+    override fun onAllSimilarClick(id: Int) {
+        emitEvent(DetailUiEvent.Navigate(SimilarTvShows(id)))
+    }
+
     @AssistedFactory
     interface Factory {
         fun create(tmdbId: Int): TVShowDetailViewModel

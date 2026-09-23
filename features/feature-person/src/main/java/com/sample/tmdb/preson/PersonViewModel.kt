@@ -12,10 +12,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 class PersonViewModel @AssistedInject constructor(
     repository: BaseRepository<Person, String>,
     @Assisted personId: Int,
-) : BaseViewModel<Person, String>(
+) : BaseViewModel<Person, String, PersonUiEvent>(
     repository,
     personId.toString(),
+    createWarningEvent = PersonUiEvent::ShowWarning,
 ) {
+    fun onNavigateUp() {
+        emitEvent(PersonUiEvent.NavigateUp)
+    }
 
     @AssistedFactory
     interface Factory {

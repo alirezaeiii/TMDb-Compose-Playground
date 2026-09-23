@@ -23,6 +23,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -31,6 +32,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -38,6 +41,15 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.domain.model.TMDbImage
+
+@Composable
+fun ImagesScreen(imagesJson: String, initialPage: Int) {
+    val images = remember<List<TMDbImage>>(imagesJson) {
+        val type = object : TypeToken<List<TMDbImage>>() {}.type
+        Gson().fromJson<List<TMDbImage>>(imagesJson, type) ?: emptyList()
+    }
+    ImagesScreen(images = images, initialPage = initialPage)
+}
 
 @Composable
 fun ImagesScreen(images: List<TMDbImage>, initialPage: Int) {

@@ -5,8 +5,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.stringResource
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
@@ -16,6 +19,33 @@ import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.navigationBarPadding
+import com.sample.tmdb.domain.model.Cast
+import com.sample.tmdb.domain.model.Crew
+
+@Composable
+fun CreditScreen(
+    @StringRes resourceId: Int,
+    upPress: () -> Unit,
+    onPersonClicked: (person: Credit) -> Unit,
+    creditsJson: String,
+    testPainter: Painter? = null,
+) {
+    val items = remember<List<Credit>>(creditsJson) {
+        val gson = Gson()
+        try {
+            gson.fromJson<List<Cast>>(creditsJson, object : TypeToken<List<Cast>>() {}.type) ?: emptyList()
+        } catch (_: Exception) {
+            gson.fromJson<List<Crew>>(creditsJson, object : TypeToken<List<Crew>>() {}.type) ?: emptyList()
+        }
+    }
+    CreditScreen(
+        resourceId = resourceId,
+        upPress = upPress,
+        onPersonClicked = onPersonClicked,
+        items = items,
+        testPainter = testPainter,
+    )
+}
 
 @Composable
 fun CreditScreen(
