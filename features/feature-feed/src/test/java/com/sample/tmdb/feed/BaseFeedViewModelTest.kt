@@ -1,13 +1,15 @@
 package com.sample.tmdb.feed
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
+import com.sample.tmdb.common.ui.MovieDetail
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.FeedWrapper
+import com.sample.tmdb.domain.model.Movie
+import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import io.mockk.every
 import io.mockk.mockk
@@ -27,7 +29,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
 
     protected val languageRepository = mockk<LanguageRepository>()
 
-    protected lateinit var viewModel: BaseViewModel<List<FeedWrapper>, Nothing, FeedUiEvent>
+    protected lateinit var viewModel: BaseFeedViewModel<T>
 
     protected abstract fun initViewModel()
 
@@ -70,6 +72,32 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
         viewModel.uiEvent.test {
             viewModel.refresh()
             assertEquals(FeedUiEvent.ShowWarning("warning message"), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onTMDbItemClick emits Navigate to Detail`() = runTest {
+        every { repository.getResult() } returns flowOf()
+        initViewModel()
+        val movie = mockk<Movie>(relaxed = true)
+        every { movie.id } returns 10
+
+        viewModel.uiEvent.test {
+            viewModel.onTMDbItemClick(movie)
+            assertEquals(FeedUiEvent.Navigate(MovieDetail(10)), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onMoreClick emits Navigate to Trending`() = runTest {
+        every { repository.getResult() } returns flowOf()
+        initViewModel()
+
+        viewModel.uiEvent.test {
+            viewModel.onMoreClick(FeedNavigationEvent.More(ContentType.MOVIE, SortType.TRENDING))
+            assertEquals(FeedUiEvent.Navigate(TrendingMovies), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

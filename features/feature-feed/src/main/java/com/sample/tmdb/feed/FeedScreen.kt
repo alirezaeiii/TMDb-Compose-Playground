@@ -79,7 +79,7 @@ fun MovieFeedScreen(
         onNavigate = onNavigate,
         navigateMore = viewModel::onMoreClick,
         onSearchClicked = viewModel::onSearchClick,
-        onClick = viewModel::onMovieClick,
+        onClick = viewModel::onTMDbItemClick,
         scaffoldState = scaffoldState,
         commonR.string.movies,
     )
@@ -98,7 +98,7 @@ fun TVShowFeedScreen(
         onNavigate = onNavigate,
         navigateMore = viewModel::onMoreClick,
         onSearchClicked = viewModel::onSearchClick,
-        onClick = viewModel::onTVShowClick,
+        onClick = viewModel::onTMDbItemClick,
         scaffoldState = scaffoldState,
         commonR.string.tv_series,
     )
