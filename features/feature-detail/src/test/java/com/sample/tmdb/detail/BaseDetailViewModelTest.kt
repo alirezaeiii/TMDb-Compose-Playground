@@ -5,12 +5,10 @@ import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.Gender
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.ui.MovieDetail
 import com.sample.tmdb.common.ui.Person
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.DetailWrapper
-import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
@@ -102,19 +100,6 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
         initViewModel()
         viewModel.isBookmarked(TMDB_ITEM_ID)
         assertEquals(false, viewModel.isBookmarked.value)
-    }
-
-    @Test
-    fun `onTMDbItemClick emits Navigate`() = runTest {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
-        initViewModel()
-        val movie = Movie(10, "overview", null, null, null, "name", 1.0, 1)
-
-        viewModel.uiEvent.test {
-            viewModel.onTMDbItemClick(movie)
-            assertEquals(DetailUiEvent.Navigate(MovieDetail(10)), awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
     }
 
     @Test

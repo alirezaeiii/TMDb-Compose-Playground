@@ -1,6 +1,8 @@
 package com.sample.tmdb.detail
 
 import app.cash.turbine.test
+import com.sample.tmdb.common.ui.TvShowDetail
+import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TVShowDetails
 import io.mockk.every
@@ -26,6 +28,18 @@ class TVShowDetailViewModelTest : BaseDetailViewModelTest<TVShowDetails, TVShow>
                 1.0,
                 1,
             )
+
+    @Test
+    fun `onTMDbItemClick emits Navigate`() = runTest {
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        initViewModel()
+
+        viewModel.uiEvent.test {
+            viewModel.onTMDbItemClick(tmdbItem)
+            assertEquals(DetailUiEvent.Navigate(TvShowDetail(TMDB_ITEM_ID)), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 
     @Test
     fun `onAllSimilarClick emits Navigate to SimilarTvShows`() = runTest {
