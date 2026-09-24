@@ -34,9 +34,6 @@ abstract class BasePagingViewModel<T : TMDbItem> : ViewModel() {
         emitEvent(PagingUiEvent.Navigate(route))
     }
 
-    open fun onSearchClick() {
-    }
-
     fun onNavigateUp() {
         emitEvent(PagingUiEvent.NavigateUp)
     }

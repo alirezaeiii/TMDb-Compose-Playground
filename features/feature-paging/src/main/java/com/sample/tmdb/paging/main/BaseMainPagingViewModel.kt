@@ -13,10 +13,12 @@ import com.sample.tmdb.paging.BasePagingViewModel
 import com.sample.tmdb.paging.PagingUiEvent
 import kotlinx.coroutines.flow.Flow
 
-open class BaseMainPagingViewModel<T : TMDbItem>(repository: BasePagingRepository<T>, id: Int? = null) :
+abstract class BaseMainPagingViewModel<T : TMDbItem>(repository: BasePagingRepository<T>, id: Int? = null) :
     BasePagingViewModel<T>() {
     override val pagingDataFlow: Flow<PagingData<T>> =
         repository.fetchResultStream(id = id).cachedIn(viewModelScope)
+
+    abstract fun onSearchClick()
 }
 
 open class BaseMoviePagingViewModel(repository: BasePagingRepository<Movie>, id: Int? = null) :

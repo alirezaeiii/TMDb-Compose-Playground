@@ -6,7 +6,6 @@ import androidx.compose.ui.res.stringResource
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.TMDbNavKey
 import com.sample.tmdb.common.ui.component.DestinationBar
-import com.sample.tmdb.paging.BasePagingViewModel
 import com.sample.tmdb.paging.PagingScreen
 import com.sample.tmdb.paging.R
 import com.sample.tmdb.paging.main.movie.DiscoverMoviesViewModel
@@ -270,7 +269,7 @@ fun SimilarTVShowScreen(
 
 @Composable
 private fun <T : TMDbItem> PagingScreen(
-    viewModel: BasePagingViewModel<T>,
+    viewModel: BaseMainPagingViewModel<T>,
     onNavigate: (TMDbNavKey) -> Unit,
     onNavigateUp: () -> Unit,
     title: String,
