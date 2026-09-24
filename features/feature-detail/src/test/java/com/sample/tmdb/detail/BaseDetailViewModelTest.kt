@@ -152,12 +152,11 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
                 name = "",
                 profileUrl = null,
                 gender = Gender.MALE,
-                id = 1
+                id = 1,
 
-            )
+            ),
         )
         initViewModel()
-
 
         viewModel.uiEvent.test {
             viewModel.onSeeAllCastClicked(cast)
@@ -176,12 +175,11 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
                 name = "",
                 profileUrl = null,
                 gender = Gender.MALE,
-                id = 1
+                id = 1,
 
-            )
+            ),
         )
         initViewModel()
-
 
         viewModel.uiEvent.test {
             viewModel.onSeeAllCrewClicked(crew)
@@ -197,11 +195,10 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
         val images = listOf(
             TMDbImage(
                 url = "",
-                voteCount = 1
-            )
+                voteCount = 1,
+            ),
         )
         initViewModel()
-
 
         viewModel.uiEvent.test {
             viewModel.onImageSelected(images, 0)
