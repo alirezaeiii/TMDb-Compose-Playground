@@ -31,8 +31,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.sample.tmdb.common.R as commonR
-import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
@@ -48,6 +46,7 @@ import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.utils.navigationBarPadding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun BookmarkScreen(
@@ -128,7 +127,6 @@ private fun MoviesTabContent(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
         onNavigate = onNavigate,
-        onClick = viewModel::onMovieClick,
         textResourceId = commonR.string.movies,
         scaffoldState = scaffoldState,
     )
@@ -145,7 +143,6 @@ private fun TVShowsTabContent(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
         onNavigate = onNavigate,
-        onClick = viewModel::onTVShowClick,
         textResourceId = commonR.string.tv_series,
         scaffoldState = scaffoldState,
     )
@@ -153,10 +150,9 @@ private fun TVShowsTabContent(
 
 @Composable
 private fun <T : TMDbItem> TabContent(
-    viewModel: BaseViewModel<List<T>, Nothing, BookmarkUiEvent>,
+    viewModel: BaseBookmarkViewModel<T>,
     languageViewModel: LanguageViewModel,
     onNavigate: (TMDbNavKey) -> Unit,
-    onClick: (TMDbItem) -> Unit,
     @StringRes textResourceId: Int,
     scaffoldState: ScaffoldState,
 ) {
@@ -171,7 +167,7 @@ private fun <T : TMDbItem> TabContent(
             if (items.isEmpty()) {
                 EmptyView(textResourceId = textResourceId)
             } else {
-                TabContent(items = items, onClick = onClick)
+                TabContent(items = items, onClick = viewModel::onTMDbItemClick)
             }
         }
     }

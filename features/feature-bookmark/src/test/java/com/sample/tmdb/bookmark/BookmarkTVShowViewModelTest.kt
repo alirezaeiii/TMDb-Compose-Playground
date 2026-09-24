@@ -24,7 +24,7 @@ class BookmarkTVShowViewModelTest : BaseBookmarkViewModelTest<TVShow>() {
         every { tvShow.id } returns 25
 
         bookmarkTVShowViewModel.uiEvent.test {
-            bookmarkTVShowViewModel.onTVShowClick(tvShow)
+            bookmarkTVShowViewModel.onTMDbItemClick(tvShow)
             assertEquals(BookmarkUiEvent.Navigate(TvShowDetail(25)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }

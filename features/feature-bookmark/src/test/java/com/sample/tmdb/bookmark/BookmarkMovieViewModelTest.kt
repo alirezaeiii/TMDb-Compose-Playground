@@ -1,6 +1,7 @@
 package com.sample.tmdb.bookmark
 
 import app.cash.turbine.test
+import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.MovieDetail
 import com.sample.tmdb.domain.model.Movie
 import io.mockk.every
@@ -24,7 +25,7 @@ class BookmarkMovieViewModelTest : BaseBookmarkViewModelTest<Movie>() {
         every { movie.id } returns 15
 
         bookmarkMovieViewModel.uiEvent.test {
-            bookmarkMovieViewModel.onMovieClick(movie)
+            bookmarkMovieViewModel.onTMDbItemClick(movie)
             assertEquals(BookmarkUiEvent.Navigate(MovieDetail(15)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }

@@ -1,7 +1,6 @@
 package com.sample.tmdb.bookmark
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
@@ -26,9 +25,9 @@ abstract class BaseBookmarkViewModelTest<T : TMDbItem> {
 
     protected val languageRepository = mockk<LanguageRepository>()
 
-    private lateinit var viewModel: BaseViewModel<List<T>, Nothing, BookmarkUiEvent>
+    private lateinit var viewModel: BaseBookmarkViewModel<T>
 
-    protected abstract fun getViewModel(): BaseViewModel<List<T>, Nothing, BookmarkUiEvent>
+    protected abstract fun getViewModel(): BaseBookmarkViewModel<T>
 
     @Before
     fun setup() {
