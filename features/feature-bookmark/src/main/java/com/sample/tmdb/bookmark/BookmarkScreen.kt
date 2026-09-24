@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
@@ -46,7 +47,6 @@ import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.utils.navigationBarPadding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun BookmarkScreen(

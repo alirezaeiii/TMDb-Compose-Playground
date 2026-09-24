@@ -1,7 +1,6 @@
 package com.sample.tmdb.bookmark
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.MovieDetail
 import com.sample.tmdb.domain.model.Movie
 import io.mockk.every

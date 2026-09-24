@@ -9,7 +9,7 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BaseBookmarkRepository
 
-open class BaseBookmarkViewModel<T: TMDbItem>(
+open class BaseBookmarkViewModel<T : TMDbItem>(
     repository: BaseBookmarkRepository<T>,
     languageRepository: LanguageRepository,
 ) : BaseViewModel<List<T>, Nothing, BookmarkUiEvent>(
