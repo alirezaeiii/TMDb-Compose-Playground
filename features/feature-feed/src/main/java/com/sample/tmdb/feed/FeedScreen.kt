@@ -76,8 +76,6 @@ fun MovieFeedScreen(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
         onNavigate = onNavigate,
-        navigateMore = viewModel::onMoreClick,
-        onSearchClicked = viewModel::onSearchClick,
         scaffoldState = scaffoldState,
         commonR.string.movies,
     )
@@ -94,8 +92,6 @@ fun TVShowFeedScreen(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
         onNavigate = onNavigate,
-        navigateMore = viewModel::onMoreClick,
-        onSearchClicked = viewModel::onSearchClick,
         scaffoldState = scaffoldState,
         commonR.string.tv_series,
     )
@@ -106,8 +102,6 @@ private fun <T : TMDbItem> FeedScreen(
     viewModel: BaseFeedViewModel<T>,
     languageViewModel: LanguageViewModel,
     onNavigate: (TMDbNavKey) -> Unit,
-    navigateMore: (FeedNavigationEvent) -> Unit,
-    onSearchClicked: () -> Unit,
     scaffoldState: ScaffoldState,
     @StringRes resourceId: Int,
 ) {
@@ -119,7 +113,11 @@ private fun <T : TMDbItem> FeedScreen(
     ) { state, feeds ->
         Box {
             TMDbSwipeRefresh(viewModel, state) {
-                FeedCollectionList(feeds, navigateMore, viewModel::onTMDbItemClick)
+                FeedCollectionList(
+                    feeds,
+                    viewModel::onMoreClick,
+                    viewModel::onTMDbItemClick,
+                )
             }
             DestinationBar(
                 title =
@@ -127,7 +125,7 @@ private fun <T : TMDbItem> FeedScreen(
                     R.string.app_title,
                     stringResource(resourceId),
                 ),
-                onSearchClicked = onSearchClicked,
+                onSearchClicked = viewModel::onSearchClick,
             )
         }
     }
