@@ -25,14 +25,14 @@ abstract class BaseBookmarkViewModelTest<T : TMDbItem> {
 
     protected val languageRepository = mockk<LanguageRepository>()
 
-    private lateinit var viewModel: BaseBookmarkViewModel<T>
+    protected lateinit var viewModel: BaseBookmarkViewModel<T>
 
-    protected abstract fun getViewModel(): BaseBookmarkViewModel<T>
+    protected abstract fun initViewModel()
 
     @Before
     fun setup() {
         every { languageRepository.languageCode } returns MutableStateFlow("en")
-        viewModel = getViewModel()
+        initViewModel()
     }
 
     @Test

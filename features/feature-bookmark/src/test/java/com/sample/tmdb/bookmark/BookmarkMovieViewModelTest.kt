@@ -11,11 +11,8 @@ import org.junit.Test
 
 class BookmarkMovieViewModelTest : BaseBookmarkViewModelTest<Movie>() {
 
-    private lateinit var bookmarkMovieViewModel: BookmarkMovieViewModel
-
-    override fun getViewModel(): BookmarkMovieViewModel {
-        bookmarkMovieViewModel = BookmarkMovieViewModel(repository, languageRepository)
-        return bookmarkMovieViewModel
+    override fun initViewModel() {
+        viewModel = BookmarkMovieViewModel(repository, languageRepository)
     }
 
     @Test
@@ -23,8 +20,8 @@ class BookmarkMovieViewModelTest : BaseBookmarkViewModelTest<Movie>() {
         val movie = mockk<Movie>(relaxed = true)
         every { movie.id } returns 15
 
-        bookmarkMovieViewModel.uiEvent.test {
-            bookmarkMovieViewModel.onTMDbItemClick(movie)
+        viewModel.uiEvent.test {
+            viewModel.onTMDbItemClick(movie)
             assertEquals(BookmarkUiEvent.Navigate(MovieDetail(15)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }

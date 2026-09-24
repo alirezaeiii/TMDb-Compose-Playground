@@ -11,11 +11,8 @@ import org.junit.Test
 
 class BookmarkTVShowViewModelTest : BaseBookmarkViewModelTest<TVShow>() {
 
-    private lateinit var bookmarkTVShowViewModel: BookmarkTVShowViewModel
-
-    override fun getViewModel(): BookmarkTVShowViewModel {
-        bookmarkTVShowViewModel = BookmarkTVShowViewModel(repository, languageRepository)
-        return bookmarkTVShowViewModel
+    override fun initViewModel() {
+        viewModel = BookmarkTVShowViewModel(repository, languageRepository)
     }
 
     @Test
@@ -23,8 +20,8 @@ class BookmarkTVShowViewModelTest : BaseBookmarkViewModelTest<TVShow>() {
         val tvShow = mockk<TVShow>(relaxed = true)
         every { tvShow.id } returns 25
 
-        bookmarkTVShowViewModel.uiEvent.test {
-            bookmarkTVShowViewModel.onTMDbItemClick(tvShow)
+        viewModel.uiEvent.test {
+            viewModel.onTMDbItemClick(tvShow)
             assertEquals(BookmarkUiEvent.Navigate(TvShowDetail(25)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
