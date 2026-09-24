@@ -20,7 +20,6 @@ import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.domain.model.Cast
-import com.sample.tmdb.domain.model.Crew
 
 @Composable
 fun CreditScreen(
@@ -32,11 +31,7 @@ fun CreditScreen(
 ) {
     val items = remember<List<Credit>>(creditsJson) {
         val gson = Gson()
-        try {
-            gson.fromJson<List<Cast>>(creditsJson, object : TypeToken<List<Cast>>() {}.type) ?: emptyList()
-        } catch (_: Exception) {
-            gson.fromJson<List<Crew>>(creditsJson, object : TypeToken<List<Crew>>() {}.type) ?: emptyList()
-        }
+        gson.fromJson<List<Cast>>(creditsJson, object : TypeToken<List<Cast>>() {}.type) ?: emptyList()
     }
     CreditScreen(
         resourceId = resourceId,
