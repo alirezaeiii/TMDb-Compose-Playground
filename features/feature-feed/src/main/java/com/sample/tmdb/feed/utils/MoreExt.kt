@@ -1,64 +1,52 @@
 package com.sample.tmdb.feed.utils
 
-import com.sample.tmdb.common.ui.TMDbNavKey
 import com.sample.tmdb.domain.model.SortType
-import com.sample.tmdb.feed.AiringTodayTvShows
 import com.sample.tmdb.feed.ContentType
-import com.sample.tmdb.feed.DiscoverMovies
-import com.sample.tmdb.feed.DiscoverTvShows
 import com.sample.tmdb.feed.FeedNavigationEvent
-import com.sample.tmdb.feed.NowPlayingMovies
-import com.sample.tmdb.feed.OnTheAirTvShows
-import com.sample.tmdb.feed.PopularMovies
-import com.sample.tmdb.feed.PopularTvShows
-import com.sample.tmdb.feed.TopRatedMovies
-import com.sample.tmdb.feed.TopRatedTvShows
-import com.sample.tmdb.feed.TrendingMovies
-import com.sample.tmdb.feed.TrendingTvShows
-import com.sample.tmdb.feed.UpcomingMovies
+import com.sample.tmdb.navigation.TMDbNavKey
 
 fun FeedNavigationEvent.More.toNavKey(): TMDbNavKey = when (contentType) {
     ContentType.MOVIE -> {
         when (sortType) {
             SortType.TRENDING ->
-                TrendingMovies
+                TMDbNavKey.TrendingMovies
 
             SortType.MOST_POPULAR ->
-                PopularMovies
+                TMDbNavKey.PopularMovies
 
             SortType.NOW_PLAYING ->
-                NowPlayingMovies
+                TMDbNavKey.NowPlayingMovies
 
             SortType.UPCOMING ->
-                UpcomingMovies
+                TMDbNavKey.UpcomingMovies
 
             SortType.DISCOVER ->
-                DiscoverMovies
+                TMDbNavKey.DiscoverMovies
 
             SortType.HIGHEST_RATED ->
-                TopRatedMovies
+                TMDbNavKey.TopRatedMovies
         }
     }
 
     ContentType.TV_SHOW -> {
         when (sortType) {
             SortType.TRENDING ->
-                TrendingTvShows
+                TMDbNavKey.TrendingTvShows
 
             SortType.MOST_POPULAR ->
-                PopularTvShows
+                TMDbNavKey.PopularTvShows
 
             SortType.NOW_PLAYING ->
-                AiringTodayTvShows
+                TMDbNavKey.AiringTodayTvShows
 
             SortType.UPCOMING ->
-                OnTheAirTvShows
+                TMDbNavKey.OnTheAirTvShows
 
             SortType.DISCOVER ->
-                DiscoverTvShows
+                TMDbNavKey.DiscoverTvShows
 
             SortType.HIGHEST_RATED ->
-                TopRatedTvShows
+                TMDbNavKey.TopRatedTvShows
         }
     }
 }

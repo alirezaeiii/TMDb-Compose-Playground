@@ -35,6 +35,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":navigation"))
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.core)
@@ -48,7 +49,6 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.compose.icons.extended)
     implementation(libs.androidx.appcompat)
-    api(libs.androidx.navigation3.runtime)
     androidTestImplementation(libs.compose.ui.test)
     androidTestImplementation(project(":core:domain"))
     debugImplementation(libs.compose.ui.test.manifest)

@@ -26,15 +26,15 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
-import com.sample.tmdb.common.ui.TMDbNavKey
 import com.sample.tmdb.common.ui.component.ErrorScreen
 import com.sample.tmdb.common.ui.component.LoadingRow
 import com.sample.tmdb.common.ui.component.TMDbContent
 import com.sample.tmdb.common.ui.component.TMDbProgressBar
 import com.sample.tmdb.common.utils.TMDbSpacer
-import com.sample.tmdb.common.utils.UiEvent
 import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.navigationBarPadding
+import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.UiEvent
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

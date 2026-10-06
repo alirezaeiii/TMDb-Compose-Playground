@@ -6,9 +6,6 @@ import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.common.ui.MovieDetail
-import com.sample.tmdb.common.ui.Person
-import com.sample.tmdb.common.ui.TvShowDetail
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.DetailWrapper
@@ -18,6 +15,7 @@ import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
+import com.sample.tmdb.navigation.TMDbNavKey
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -53,8 +51,8 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
 
     fun onTMDbItemClick(item: TMDbItem) {
         val route = when (item) {
-            is Movie -> MovieDetail(item.id)
-            is TVShow -> TvShowDetail(item.id)
+            is Movie -> TMDbNavKey.MovieDetail(item.id)
+            is TVShow -> TMDbNavKey.TvShowDetail(item.id)
             else -> throw RuntimeException("Invalid TMDb item type")
         }
         emitEvent(DetailUiEvent.Navigate(route))
@@ -63,22 +61,22 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
     abstract fun onAllSimilarClick(id: Int)
 
     fun onPersonClick(person: Credit) {
-        emitEvent(DetailUiEvent.Navigate(Person(person.id)))
+        emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Person(person.id)))
     }
 
     fun onImageSelected(images: List<TMDbImage>, index: Int) {
         val json = gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type)
-        emitEvent(DetailUiEvent.Navigate(Images(json, index)))
+        emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Images(json, index)))
     }
 
     fun onSeeAllCastClicked(cast: List<Credit>) {
         val json = gson.toJson(cast, object : TypeToken<List<Cast>>() {}.type)
-        emitEvent(DetailUiEvent.Navigate(Cast(json)))
+        emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Cast(json)))
     }
 
     fun onSeeAllCrewClicked(crew: List<Credit>) {
         val json = gson.toJson(crew, object : TypeToken<List<Crew>>() {}.type)
-        emitEvent(DetailUiEvent.Navigate(Crew(json)))
+        emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Crew(json)))
     }
 
     fun onNavigateUp() {

@@ -9,8 +9,8 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
-import com.sample.tmdb.common.utils.UiEvent
 import com.sample.tmdb.common.utils.ViewState
+import com.sample.tmdb.navigation.UiEvent
 
 @Composable
 fun <T, S, E : UiEvent> TMDbSwipeRefresh(

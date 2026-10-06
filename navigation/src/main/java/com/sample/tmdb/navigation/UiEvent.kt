@@ -1,6 +1,4 @@
-package com.sample.tmdb.common.utils
-
-import com.sample.tmdb.common.ui.TMDbNavKey
+package com.sample.tmdb.navigation
 
 interface UiEvent {
     interface Warning : UiEvent {

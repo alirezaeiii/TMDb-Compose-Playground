@@ -1,7 +1,7 @@
 package com.sample.tmdb.detail
 
-import com.sample.tmdb.common.ui.TMDbNavKey
-import com.sample.tmdb.common.utils.UiEvent
+import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.UiEvent
 
 sealed interface DetailUiEvent : UiEvent {
     data class ShowWarning(override val message: String) :

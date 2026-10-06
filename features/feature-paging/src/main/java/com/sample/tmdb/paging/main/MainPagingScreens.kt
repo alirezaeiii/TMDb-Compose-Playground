@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.common.ui.TMDbNavKey
 import com.sample.tmdb.common.ui.component.DestinationBar
+import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.paging.PagingScreen
 import com.sample.tmdb.paging.R
 import com.sample.tmdb.paging.main.movie.DiscoverMoviesViewModel

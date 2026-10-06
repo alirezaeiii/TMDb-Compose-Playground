@@ -114,7 +114,6 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_24_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
-import com.sample.tmdb.common.ui.TMDbNavKey
 import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.theme.imageTint
@@ -127,6 +126,7 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TVShow
+import com.sample.tmdb.navigation.TMDbNavKey
 
 @Composable
 fun MovieDetailScreen(viewModel: MovieDetailViewModel, onNavigate: (TMDbNavKey) -> Unit, onNavigateUp: () -> Unit) {

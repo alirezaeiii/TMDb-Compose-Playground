@@ -51,7 +51,6 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
-import com.sample.tmdb.common.ui.TMDbNavKey
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
@@ -64,6 +63,7 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feed.utils.pagerTransition
+import com.sample.tmdb.navigation.TMDbNavKey
 
 @Composable
 fun MovieFeedScreen(

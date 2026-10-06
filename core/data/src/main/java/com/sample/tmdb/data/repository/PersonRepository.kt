@@ -16,7 +16,7 @@ class PersonRepository @Inject constructor(
     private val personApi: PersonService,
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
-) : BaseRepository<Person, String>(context, ioDispatcher) {
-    override suspend fun getSuccessResult(isRefreshing: Boolean, id: String?): Person =
+) : BaseRepository<Person, Int>(context, ioDispatcher) {
+    override suspend fun getSuccessResult(isRefreshing: Boolean, id: Int?): Person =
         personApi.getPerson(id!!).asDomainModel()
 }

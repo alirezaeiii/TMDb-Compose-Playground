@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.common.utils.Async
-import com.sample.tmdb.common.utils.UiEvent
 import com.sample.tmdb.common.utils.ViewState
+import com.sample.tmdb.navigation.UiEvent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

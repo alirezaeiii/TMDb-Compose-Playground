@@ -37,38 +37,16 @@ import com.sample.tmdb.R
 import com.sample.tmdb.bookmark.BookmarkScreen
 import com.sample.tmdb.common.ui.Dimens.TMDb_0_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
-import com.sample.tmdb.common.ui.MovieDetail
-import com.sample.tmdb.common.ui.Person
-import com.sample.tmdb.common.ui.SearchMovies
-import com.sample.tmdb.common.ui.SearchTvShows
-import com.sample.tmdb.common.ui.TMDbNavKey
-import com.sample.tmdb.common.ui.TvShowDetail
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.credit.CreditScreen
-import com.sample.tmdb.detail.Cast
-import com.sample.tmdb.detail.Crew
-import com.sample.tmdb.detail.Images
 import com.sample.tmdb.detail.MovieDetailScreen
 import com.sample.tmdb.detail.MovieDetailViewModel
-import com.sample.tmdb.detail.SimilarMovies
-import com.sample.tmdb.detail.SimilarTvShows
 import com.sample.tmdb.detail.TVShowDetailScreen
 import com.sample.tmdb.detail.TVShowDetailViewModel
-import com.sample.tmdb.feed.AiringTodayTvShows
-import com.sample.tmdb.feed.DiscoverMovies
-import com.sample.tmdb.feed.DiscoverTvShows
 import com.sample.tmdb.feed.MovieFeedScreen
-import com.sample.tmdb.feed.NowPlayingMovies
-import com.sample.tmdb.feed.OnTheAirTvShows
-import com.sample.tmdb.feed.PopularMovies
-import com.sample.tmdb.feed.PopularTvShows
 import com.sample.tmdb.feed.TVShowFeedScreen
-import com.sample.tmdb.feed.TopRatedMovies
-import com.sample.tmdb.feed.TopRatedTvShows
-import com.sample.tmdb.feed.TrendingMovies
-import com.sample.tmdb.feed.TrendingTvShows
-import com.sample.tmdb.feed.UpcomingMovies
 import com.sample.tmdb.gallery.ImagesScreen
+import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.paging.main.AiringTodayTVShowScreen
 import com.sample.tmdb.paging.main.DiscoverMovieScreen
 import com.sample.tmdb.paging.main.DiscoverTVShowScreen
@@ -101,7 +79,7 @@ fun TMDbApp() {
     val onNavigateUp: () -> Unit = appState.navigator::goBack
 
     val entryProvider = entryProvider {
-        entry<Movie> {
+        entry<TMDbNavKey.MovieNav> {
             MovieFeedScreen(
                 hiltViewModel(),
                 languageViewModel,
@@ -109,7 +87,7 @@ fun TMDbApp() {
                 scaffoldState,
             )
         }
-        entry<TvShow> {
+        entry<TMDbNavKey.TvShowNav> {
             TVShowFeedScreen(
                 hiltViewModel(),
                 languageViewModel,
@@ -117,7 +95,7 @@ fun TMDbApp() {
                 scaffoldState,
             )
         }
-        entry<Bookmark> {
+        entry<TMDbNavKey.Bookmark> {
             BookmarkScreen(
                 hiltViewModel(),
                 hiltViewModel(),
@@ -126,10 +104,10 @@ fun TMDbApp() {
                 scaffoldState,
             )
         }
-        entry<Setting> {
+        entry<TMDbNavKey.Setting> {
             SettingsScreen(languageViewModel, hiltViewModel())
         }
-        entry<MovieDetail> { key ->
+        entry<TMDbNavKey.MovieDetail> { key ->
             MovieDetailScreen(
                 hiltViewModel<MovieDetailViewModel, MovieDetailViewModel.Factory>(
                     key = "MovieDetail_${key.id}",
@@ -139,7 +117,7 @@ fun TMDbApp() {
                 onNavigateUp,
             )
         }
-        entry<TvShowDetail> { key ->
+        entry<TMDbNavKey.TvShowDetail> { key ->
             TVShowDetailScreen(
                 hiltViewModel<TVShowDetailViewModel, TVShowDetailViewModel.Factory>(
                     key = "TvShowDetail_${key.id}",
@@ -149,25 +127,25 @@ fun TMDbApp() {
                 onNavigateUp,
             )
         }
-        entry<TrendingMovies> {
+        entry<TMDbNavKey.TrendingMovies> {
             TrendingMovieScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<PopularMovies> {
+        entry<TMDbNavKey.PopularMovies> {
             PopularMovieScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<NowPlayingMovies> {
+        entry<TMDbNavKey.NowPlayingMovies> {
             NowPlayingMovieScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<UpcomingMovies> {
+        entry<TMDbNavKey.UpcomingMovies> {
             UpcomingMovieScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<TopRatedMovies> {
+        entry<TMDbNavKey.TopRatedMovies> {
             TopRatedMovieScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<DiscoverMovies> {
+        entry<TMDbNavKey.DiscoverMovies> {
             DiscoverMovieScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<SimilarMovies> { key ->
+        entry<TMDbNavKey.SimilarMovies> { key ->
             SimilarMovieScreen(
                 hiltViewModel<SimilarMoviesViewModel, SimilarMoviesViewModel.Factory>(
                     key = "SimilarMovies_${key.id}",
@@ -177,25 +155,25 @@ fun TMDbApp() {
                 onNavigateUp,
             )
         }
-        entry<TrendingTvShows> {
+        entry<TMDbNavKey.TrendingTvShows> {
             TrendingTVShowScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<PopularTvShows> {
+        entry<TMDbNavKey.PopularTvShows> {
             PopularTVShowScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<AiringTodayTvShows> {
+        entry<TMDbNavKey.AiringTodayTvShows> {
             AiringTodayTVShowScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<OnTheAirTvShows> {
+        entry<TMDbNavKey.OnTheAirTvShows> {
             OnTheAirTVShowScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<TopRatedTvShows> {
+        entry<TMDbNavKey.TopRatedTvShows> {
             TopRatedTVShowScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<DiscoverTvShows> {
+        entry<TMDbNavKey.DiscoverTvShows> {
             DiscoverTVShowScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<SimilarTvShows> { key ->
+        entry<TMDbNavKey.SimilarTvShows> { key ->
             SimilarTVShowScreen(
                 hiltViewModel<SimilarTvSeriesViewModel, SimilarTvSeriesViewModel.Factory>(
                     key = "SimilarTvShows_${key.id}",
@@ -205,29 +183,29 @@ fun TMDbApp() {
                 onNavigateUp,
             )
         }
-        entry<SearchMovies> {
+        entry<TMDbNavKey.SearchMovies> {
             SearchMoviesScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<SearchTvShows> {
+        entry<TMDbNavKey.SearchTvShows> {
             SearchTVSeriesScreen(hiltViewModel(), onNavigate, onNavigateUp)
         }
-        entry<Cast> { key ->
+        entry<TMDbNavKey.Cast> { key ->
             CreditScreen(
                 resourceId = R.string.cast,
                 upPress = onNavigateUp,
-                onPersonClicked = { person -> onNavigate(Person(person.id)) },
+                onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.id)) },
                 creditsJson = key.creditsJson,
             )
         }
-        entry<Crew> { key ->
+        entry<TMDbNavKey.Crew> { key ->
             CreditScreen(
                 resourceId = R.string.crew,
                 upPress = onNavigateUp,
-                onPersonClicked = { person -> onNavigate(Person(person.id)) },
+                onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.id)) },
                 creditsJson = key.creditsJson,
             )
         }
-        entry<Person> { key ->
+        entry<TMDbNavKey.Person> { key ->
             PersonScreen(
                 hiltViewModel<PersonViewModel, PersonViewModel.Factory>(
                     key = "Person_${key.id}",
@@ -236,7 +214,7 @@ fun TMDbApp() {
                 onNavigateUp,
             )
         }
-        entry<Images> { key ->
+        entry<TMDbNavKey.Images> { key ->
             ImagesScreen(
                 imagesJson = key.imagesJson,
                 initialPage = key.initialPage,
@@ -308,8 +286,8 @@ enum class HomeSections(
     val unselectedIcon: ImageVector,
     val selectedIcon: ImageVector,
 ) {
-    MOVIE_SECTION(Movie, R.string.movie, Icons.Outlined.Movie, Icons.Filled.Movie),
-    TV_SHOW_SECTION(TvShow, R.string.tv_show, Icons.Outlined.Tv, Icons.Filled.Tv),
-    BOOKMARK_SECTION(Bookmark, R.string.favorite, Icons.Outlined.Favorite, Icons.Filled.Favorite),
-    SETTING_SECTION(Setting, R.string.setting, Icons.Outlined.Settings, Icons.Filled.Settings),
+    MOVIE_SECTION(TMDbNavKey.MovieNav, R.string.movie, Icons.Outlined.Movie, Icons.Filled.Movie),
+    TV_SHOW_SECTION(TMDbNavKey.TvShowNav, R.string.tv_show, Icons.Outlined.Tv, Icons.Filled.Tv),
+    BOOKMARK_SECTION(TMDbNavKey.Bookmark, R.string.favorite, Icons.Outlined.Favorite, Icons.Filled.Favorite),
+    SETTING_SECTION(TMDbNavKey.Setting, R.string.setting, Icons.Outlined.Settings, Icons.Filled.Settings),
 }

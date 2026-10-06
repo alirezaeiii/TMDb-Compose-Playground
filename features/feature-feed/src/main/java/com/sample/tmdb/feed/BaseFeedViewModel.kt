@@ -3,13 +3,12 @@ package com.sample.tmdb.feed
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.repository.LanguageRepository
-import com.sample.tmdb.common.ui.MovieDetail
-import com.sample.tmdb.common.ui.TvShowDetail
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.feed.utils.toNavKey
+import com.sample.tmdb.navigation.TMDbNavKey
 
 abstract class BaseFeedViewModel<T : TMDbItem>(
     repository: BaseFeedRepository<T>,
@@ -23,8 +22,8 @@ abstract class BaseFeedViewModel<T : TMDbItem>(
 
     fun onTMDbItemClick(item: TMDbItem) {
         val route = when (item) {
-            is Movie -> MovieDetail(item.id)
-            is TVShow -> TvShowDetail(item.id)
+            is Movie -> TMDbNavKey.MovieDetail(item.id)
+            is TVShow -> TMDbNavKey.TvShowDetail(item.id)
             else -> throw RuntimeException("Invalid TMDb item type")
         }
         emitEvent(FeedUiEvent.Navigate(route))

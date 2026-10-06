@@ -1,9 +1,9 @@
 package com.sample.tmdb.feed
 
 import com.sample.tmdb.common.repository.LanguageRepository
-import com.sample.tmdb.common.ui.SearchTvShows
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BaseFeedRepository
+import com.sample.tmdb.navigation.TMDbNavKey
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -13,6 +13,6 @@ class TVShowFeedViewModel @Inject constructor(
     languageRepository: LanguageRepository,
 ) : BaseFeedViewModel<TVShow>(repository, languageRepository) {
     override fun onSearchClick() {
-        emitEvent(FeedUiEvent.Navigate(SearchTvShows))
+        emitEvent(FeedUiEvent.Navigate(TMDbNavKey.SearchTvShows))
     }
 }

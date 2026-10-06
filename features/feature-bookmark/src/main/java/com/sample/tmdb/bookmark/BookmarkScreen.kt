@@ -39,12 +39,12 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
-import com.sample.tmdb.common.ui.TMDbNavKey
 import com.sample.tmdb.common.ui.component.TMDbContent
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.utils.navigationBarPadding
+import com.sample.tmdb.navigation.TMDbNavKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

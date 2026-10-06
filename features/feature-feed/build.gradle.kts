@@ -37,6 +37,7 @@ android {
 dependencies {
 
     implementation(project(":core:domain"))
+    implementation(project(":navigation"))
 
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.hilt.android)

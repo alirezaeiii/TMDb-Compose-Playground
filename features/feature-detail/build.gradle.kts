@@ -36,6 +36,7 @@ android {
 
 dependencies {
     implementation(project(":core:domain"))
+    implementation(project(":navigation"))
 
     implementation(libs.gson)
     implementation(libs.androidx.lifecycle.viewmodel)

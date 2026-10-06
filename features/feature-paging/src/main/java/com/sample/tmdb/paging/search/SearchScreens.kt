@@ -48,10 +48,10 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_24_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
-import com.sample.tmdb.common.ui.TMDbNavKey
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
-import com.sample.tmdb.common.utils.UiEvent
+import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.UiEvent
 import com.sample.tmdb.paging.PagingScreen
 import com.sample.tmdb.paging.R
 import com.sample.tmdb.paging.search.component.AnimatedSearch

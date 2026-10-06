@@ -1,6 +1,6 @@
 package com.sample.tmdb.ui
 
-import com.sample.tmdb.common.ui.TMDbNavKey
+import com.sample.tmdb.navigation.TMDbNavKey
 
 /**
  * Handles navigation events (forward and back) by updating the navigation state.
