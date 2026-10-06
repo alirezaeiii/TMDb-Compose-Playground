@@ -18,7 +18,7 @@ class PersonViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    private val repository = mockk<BaseRepository<Person, String>>()
+    private val repository = mockk<BaseRepository<Person, Int>>()
 
     private val person = mockk<Person>()
 

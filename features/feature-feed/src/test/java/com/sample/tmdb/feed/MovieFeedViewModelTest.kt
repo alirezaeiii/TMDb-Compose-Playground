@@ -1,10 +1,9 @@
 package com.sample.tmdb.feed
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.ui.MovieDetail
-import com.sample.tmdb.common.ui.SearchMovies
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
+import com.sample.tmdb.navigation.TMDbNavKey
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -24,7 +23,7 @@ class MovieFeedViewModelTest : BaseFeedViewModelTest<Movie>() {
 
         viewModel.uiEvent.test {
             viewModel.onSearchClick()
-            assertEquals(FeedUiEvent.Navigate(SearchMovies), awaitItem())
+            assertEquals(FeedUiEvent.Navigate(TMDbNavKey.SearchMovies), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -38,7 +37,7 @@ class MovieFeedViewModelTest : BaseFeedViewModelTest<Movie>() {
 
         viewModel.uiEvent.test {
             viewModel.onTMDbItemClick(movie)
-            assertEquals(FeedUiEvent.Navigate(MovieDetail(10)), awaitItem())
+            assertEquals(FeedUiEvent.Navigate(TMDbNavKey.MovieDetail(10)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -50,7 +49,7 @@ class MovieFeedViewModelTest : BaseFeedViewModelTest<Movie>() {
 
         viewModel.uiEvent.test {
             viewModel.onMoreClick(FeedNavigationEvent.More(ContentType.MOVIE, SortType.TRENDING))
-            assertEquals(FeedUiEvent.Navigate(TrendingMovies), awaitItem())
+            assertEquals(FeedUiEvent.Navigate(TMDbNavKey.TrendingMovies), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

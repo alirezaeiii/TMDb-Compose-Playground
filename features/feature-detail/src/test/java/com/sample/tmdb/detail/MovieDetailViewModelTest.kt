@@ -1,10 +1,10 @@
 package com.sample.tmdb.detail
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.ui.MovieDetail
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.MovieDetails
+import com.sample.tmdb.navigation.TMDbNavKey
 import io.mockk.every
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.flowOf
@@ -36,7 +36,7 @@ class MovieDetailViewModelTest : BaseDetailViewModelTest<MovieDetails, Movie>() 
 
         viewModel.uiEvent.test {
             viewModel.onTMDbItemClick(tmdbItem)
-            assertEquals(DetailUiEvent.Navigate(MovieDetail(TMDB_ITEM_ID)), awaitItem())
+            assertEquals(DetailUiEvent.Navigate(TMDbNavKey.MovieDetail(TMDB_ITEM_ID)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -48,7 +48,7 @@ class MovieDetailViewModelTest : BaseDetailViewModelTest<MovieDetails, Movie>() 
 
         viewModel.uiEvent.test {
             viewModel.onAllSimilarClick(TMDB_ITEM_ID)
-            assertEquals(DetailUiEvent.Navigate(SimilarMovies(TMDB_ITEM_ID)), awaitItem())
+            assertEquals(DetailUiEvent.Navigate(TMDbNavKey.SimilarMovies(TMDB_ITEM_ID)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

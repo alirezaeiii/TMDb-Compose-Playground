@@ -5,7 +5,6 @@ import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.Gender
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.ui.Person
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.DetailWrapper
@@ -13,6 +12,7 @@ import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
+import com.sample.tmdb.navigation.TMDbNavKey
 import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.coVerify
@@ -111,7 +111,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
 
         viewModel.uiEvent.test {
             viewModel.onPersonClick(credit)
-            assertEquals(DetailUiEvent.Navigate(Person(5)), awaitItem())
+            assertEquals(DetailUiEvent.Navigate(TMDbNavKey.Person(5)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

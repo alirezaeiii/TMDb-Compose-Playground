@@ -13,7 +13,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
-import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
@@ -23,7 +22,7 @@ class PersonRepositoryTest : BaseRepositoryTest() {
     @Mock
     private lateinit var api: PersonService
 
-    private lateinit var repository: BaseRepository<Person, String>
+    private lateinit var repository: BaseRepository<Person, Int>
 
     private val personDto =
         PersonDTO(
@@ -41,14 +40,14 @@ class PersonRepositoryTest : BaseRepositoryTest() {
     }
 
     override fun mockApiResponse() = runTest {
-        `when`(api.getPerson(anyString())).thenReturn(personDto)
+        `when`(api.getPerson(anyInt())).thenReturn(personDto)
     }
 
     @Test
     fun `load person success`() {
         mockApiResponse()
         runTest {
-            repository.getResult(id = anyString()).test {
+            repository.getResult(id = anyInt()).test {
                 assertEquals(Async.Loading(), awaitItem())
                 awaitItem()
                 val person = Async.Success(personDto.asDomainModel()).data
@@ -69,8 +68,8 @@ class PersonRepositoryTest : BaseRepositoryTest() {
         val errorMsg = "error message"
         `when`(context.getString(anyInt())).thenReturn(errorMsg)
         runTest {
-            `when`(api.getPerson(anyString())).thenThrow(RuntimeException())
-            repository.getResult(id = anyString()).test {
+            `when`(api.getPerson(anyInt())).thenThrow(RuntimeException())
+            repository.getResult(id = anyInt()).test {
                 assertEquals(Async.Loading(), awaitItem())
                 assertEquals(Async.Error(errorMsg), awaitItem())
                 awaitComplete()

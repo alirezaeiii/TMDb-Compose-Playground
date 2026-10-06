@@ -3,13 +3,10 @@ package com.sample.tmdb.paging
 import androidx.paging.PagingData
 import app.cash.turbine.test
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.ui.MovieDetail
-import com.sample.tmdb.common.ui.SearchMovies
-import com.sample.tmdb.common.ui.SearchTvShows
-import com.sample.tmdb.common.ui.TvShowDetail
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BasePagingRepository
+import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.paging.main.BaseMoviePagingViewModel
 import com.sample.tmdb.paging.main.BaseTvShowPagingViewModel
 import io.mockk.every
@@ -37,7 +34,7 @@ class BasePagingViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onItemClick(movie)
-            assertEquals(PagingUiEvent.Navigate(MovieDetail(100)), awaitItem())
+            assertEquals(PagingUiEvent.Navigate(TMDbNavKey.MovieDetail(100)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -52,7 +49,7 @@ class BasePagingViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onItemClick(tvShow)
-            assertEquals(PagingUiEvent.Navigate(TvShowDetail(200)), awaitItem())
+            assertEquals(PagingUiEvent.Navigate(TMDbNavKey.TvShowDetail(200)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -64,7 +61,7 @@ class BasePagingViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onSearchClick()
-            assertEquals(PagingUiEvent.Navigate(SearchMovies), awaitItem())
+            assertEquals(PagingUiEvent.Navigate(TMDbNavKey.SearchMovies), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -76,7 +73,7 @@ class BasePagingViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onSearchClick()
-            assertEquals(PagingUiEvent.Navigate(SearchTvShows), awaitItem())
+            assertEquals(PagingUiEvent.Navigate(TMDbNavKey.SearchTvShows), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
