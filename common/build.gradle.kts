@@ -35,7 +35,7 @@ android {
 }
 
 dependencies {
-    api(project(":navigation"))
+    implementation(project(":navigation"))
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.core)

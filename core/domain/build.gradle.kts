@@ -32,6 +32,7 @@ android {
 
 dependencies {
     api(project(":common"))
+    implementation(project(":navigation"))
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.annotation)
