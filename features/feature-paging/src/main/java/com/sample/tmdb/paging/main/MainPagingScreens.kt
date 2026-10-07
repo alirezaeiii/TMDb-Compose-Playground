@@ -52,12 +52,7 @@ fun TVShowPagingScreen(
 }
 
 @Composable
-private fun pagingTitle(
-    sortType: SortType,
-    itemType: Int,
-    upcomingRes: Int,
-    nowPlayingRes: Int,
-): String {
+private fun pagingTitle(sortType: SortType, itemType: Int, upcomingRes: Int, nowPlayingRes: Int): String {
     val titleRes = when (sortType) {
         SortType.TRENDING -> R.string.trending
         SortType.DISCOVER -> R.string.discover
