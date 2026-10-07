@@ -22,18 +22,11 @@ fun MoviePagingScreen(
         viewModel = viewModel,
         onNavigate = onNavigate,
         onNavigateUp = onNavigateUp,
-        title =
-        stringResource(
-            when (sortType) {
-                SortType.TRENDING -> R.string.trending
-                SortType.DISCOVER -> R.string.discover
-                SortType.UPCOMING -> R.string.upcoming
-                SortType.NOW_PLAYING -> R.string.now_playing
-                SortType.MOST_POPULAR -> R.string.popular
-                SortType.HIGHEST_RATED -> R.string.highest_rate
-                SortType.SIMILAR -> R.string.similar_items
-            },
-            stringResource(commonR.string.movies),
+        title = pagingTitle(
+            sortType,
+            commonR.string.movies,
+            R.string.upcoming,
+            R.string.now_playing,
         ),
     )
 }
@@ -49,20 +42,32 @@ fun TVShowPagingScreen(
         viewModel = viewModel,
         onNavigate = onNavigate,
         onNavigateUp = onNavigateUp,
-        title =
-        stringResource(
-            when (sortType) {
-                SortType.TRENDING -> R.string.trending
-                SortType.DISCOVER -> R.string.discover
-                SortType.UPCOMING -> R.string.on_the_air
-                SortType.NOW_PLAYING -> R.string.airing_today
-                SortType.MOST_POPULAR -> R.string.popular
-                SortType.HIGHEST_RATED -> R.string.highest_rate
-                SortType.SIMILAR -> R.string.similar_items
-            },
-            stringResource(commonR.string.tv_series),
+        title = pagingTitle(
+            sortType,
+            commonR.string.tv_series,
+            R.string.on_the_air,
+            R.string.airing_today,
         ),
     )
+}
+
+@Composable
+private fun pagingTitle(
+    sortType: SortType,
+    itemType: Int,
+    upcomingRes: Int,
+    nowPlayingRes: Int,
+): String {
+    val titleRes = when (sortType) {
+        SortType.TRENDING -> R.string.trending
+        SortType.DISCOVER -> R.string.discover
+        SortType.UPCOMING -> upcomingRes
+        SortType.NOW_PLAYING -> nowPlayingRes
+        SortType.MOST_POPULAR -> R.string.popular
+        SortType.HIGHEST_RATED -> R.string.highest_rate
+        SortType.SIMILAR -> R.string.similar_items
+    }
+    return stringResource(titleRes, stringResource(itemType))
 }
 
 @Composable
