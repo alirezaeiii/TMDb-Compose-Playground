@@ -9,20 +9,11 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
-import com.sample.tmdb.common.utils.ViewState
-import com.sample.tmdb.navigation.UiEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T, S, E : UiEvent> TMDbSwipeRefresh(
-    viewModel: BaseViewModel<T, S, E>,
-    state: ViewState<T>,
-    isRefreshing: Boolean = state.isRefreshing,
-    onRefresh: () -> Unit = { viewModel.refresh(true) },
-    mainContent: @Composable () -> Unit,
-) {
+fun TMDbSwipeRefresh(isRefreshing: Boolean, onRefresh: () -> Unit, mainContent: @Composable () -> Unit) {
     val pullToRefreshState = rememberPullToRefreshState()
 
     PullToRefreshBox(

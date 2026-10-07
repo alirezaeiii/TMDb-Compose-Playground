@@ -112,7 +112,7 @@ private fun <T : TMDbItem> FeedScreen(
         scaffoldState = scaffoldState,
     ) { state, feeds ->
         Box {
-            TMDbSwipeRefresh(viewModel, state) {
+            TMDbSwipeRefresh(state.isRefreshing, { viewModel.refresh(true) }) {
                 FeedCollectionList(
                     feeds,
                     viewModel::onMoreClick,

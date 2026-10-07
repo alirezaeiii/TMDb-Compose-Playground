@@ -163,7 +163,7 @@ private fun <T : TMDbItem> TabContent(
         onNavigate = onNavigate,
         scaffoldState = scaffoldState,
     ) { state, items ->
-        TMDbSwipeRefresh(viewModel, state) {
+        TMDbSwipeRefresh(state.isRefreshing, { viewModel.refresh(true) }) {
             if (items.isEmpty()) {
                 EmptyView(textResourceId = textResourceId)
             } else {
