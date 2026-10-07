@@ -42,13 +42,13 @@ fun HorizontalDottedProgressBar() {
             initialValue = 0f,
             targetValue = 6f,
             animationSpec =
-            infiniteRepeatable(
-                animation =
-                tween(
-                    durationMillis = 700,
-                    easing = LinearEasing,
+                infiniteRepeatable(
+                    animation =
+                        tween(
+                            durationMillis = 700,
+                            easing = LinearEasing,
+                        ),
                 ),
-            ),
             label = "",
         )
 
@@ -59,9 +59,9 @@ fun HorizontalDottedProgressBar() {
 fun DrawCanvas(state: Float, radius: Dp, color: Color) {
     Canvas(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .height(55.dp),
+            Modifier
+                .fillMaxWidth()
+                .height(55.dp),
     ) {
         val radiusValue = radius.value
         val padding = (radiusValue + (radiusValue * 0.5f))

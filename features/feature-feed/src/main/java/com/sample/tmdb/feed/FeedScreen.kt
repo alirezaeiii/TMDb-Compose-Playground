@@ -121,10 +121,10 @@ private fun <T : TMDbItem> FeedScreen(
             }
             DestinationBar(
                 title =
-                stringResource(
-                    R.string.app_title,
-                    stringResource(resourceId),
-                ),
+                    stringResource(
+                        R.string.app_title,
+                        stringResource(resourceId),
+                    ),
                 onSearchClicked = viewModel::onSearchClick,
             )
         }
@@ -176,10 +176,10 @@ fun PagerTMDbItemContainer(
         with(feedWrapper.feeds[page]) {
             TrendingItem(
                 modifier =
-                Modifier.pagerTransition(
-                    pagerState = pagerState,
-                    page = page,
-                ),
+                    Modifier.pagerTransition(
+                        pagerState = pagerState,
+                        page = page,
+                    ),
                 title = name,
                 imageUrl = backdropUrl,
                 releaseDate = releaseDate,
@@ -198,11 +198,11 @@ fun PagerTMDbItemContainer(
                 if (pagerState.currentPage == iteration) MaterialTheme.colors.primary else Teal200
             Box(
                 modifier =
-                Modifier
-                    .padding(Dimens.TMDb_4_dp)
-                    .clip(CircleShape)
-                    .background(color)
-                    .size(TMDb_6_dp),
+                    Modifier
+                        .padding(Dimens.TMDb_4_dp)
+                        .clip(CircleShape)
+                        .background(color)
+                        .size(TMDb_6_dp),
             )
         }
     }
@@ -218,11 +218,11 @@ fun TrendingItem(
 ) {
     Card(
         modifier =
-        modifier
-            .fillMaxWidth()
-            .height(180.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .then(Modifier.clickable(onClick = onClick)),
+            modifier
+                .fillMaxWidth()
+                .height(180.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .then(Modifier.clickable(onClick = onClick)),
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
@@ -234,12 +234,12 @@ fun TrendingItem(
 
             Column(
                 modifier =
-                Modifier
-                    .padding(
-                        start = TMDb_12_dp,
-                        bottom = TMDb_6_dp,
-                    )
-                    .align(Alignment.BottomStart),
+                    Modifier
+                        .padding(
+                            start = TMDb_12_dp,
+                            bottom = TMDb_6_dp,
+                        )
+                        .align(Alignment.BottomStart),
             ) {
                 Text(
                     text = title,
@@ -263,35 +263,35 @@ fun Header(feedWrapper: FeedWrapper, navigate: (FeedNavigationEvent) -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier =
-        Modifier
-            .heightIn(min = 36.dp)
-            .padding(start = TMDb_12_dp),
+            Modifier
+                .heightIn(min = 36.dp)
+                .padding(start = TMDb_12_dp),
     ) {
         Text(
             text = stringResource(id = feedWrapper.sortTypeResourceId),
             maxLines = 1,
             color = MaterialTheme.colors.onSurface,
             modifier =
-            Modifier
-                .weight(1f)
-                .wrapContentWidth(Alignment.Start),
+                Modifier
+                    .weight(1f)
+                    .wrapContentWidth(Alignment.Start),
         )
         Text(
             text = stringResource(R.string.more_item),
             color = MaterialTheme.colors.onSurface,
             modifier =
-            Modifier
-                .align(Alignment.CenterVertically)
-                .padding(TMDb_12_dp)
-                .clickable(
-                    onClick = {
-                        moreFeedOnClick(
-                            feedWrapper.feeds.first(),
-                            feedWrapper.sortType,
-                            navigate,
-                        )
-                    },
-                ),
+                Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(TMDb_12_dp)
+                    .clickable(
+                        onClick = {
+                            moreFeedOnClick(
+                                feedWrapper.feeds.first(),
+                                feedWrapper.sortType,
+                                navigate,
+                            )
+                        },
+                    ),
         )
     }
 }

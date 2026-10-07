@@ -55,22 +55,22 @@ fun InfinitelyFlowingCircles() {
 private fun DrawCircleOnCanvas(scale: Float, color: Color, radiusRatio: Float) {
     Canvas(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .graphicsLayer {
-                scaleX = scale
-                scaleY = scale
-            },
+            Modifier
+                .fillMaxSize()
+                .graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                },
     ) {
         val canvasWidth = size.width
         val canvasHeight = size.height
         drawCircle(
             color = color,
             center =
-            Offset(
-                x = canvasWidth / 2,
-                y = canvasHeight / 2,
-            ),
+                Offset(
+                    x = canvasWidth / 2,
+                    y = canvasHeight / 2,
+                ),
             radius = size.minDimension / radiusRatio,
         )
     }
@@ -90,10 +90,10 @@ private fun scaleInfiniteTransition(initialValue: Float = 0f, targetValue: Float
         initialValue = initialValue,
         targetValue = targetValue,
         animationSpec =
-        infiniteRepeatable(
-            animation = tween(durationMillis, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse,
-        ),
+            infiniteRepeatable(
+                animation = tween(durationMillis, easing = LinearEasing),
+                repeatMode = RepeatMode.Reverse,
+            ),
         label = "",
     )
     return scale

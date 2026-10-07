@@ -108,8 +108,8 @@ fun SettingsScreen(viewModel: LanguageViewModel, themeViewModel: ThemeViewModel,
         )
     Box(
         modifier =
-        Modifier
-            .fillMaxSize(),
+            Modifier
+                .fillMaxSize(),
     ) {
         Column(
             modifier = Modifier
@@ -120,13 +120,13 @@ fun SettingsScreen(viewModel: LanguageViewModel, themeViewModel: ThemeViewModel,
             SettingsGroupItem(
                 settings = settings,
                 modifier =
-                modifier
-                    .padding(
-                        top = TMDb_16_dp,
-                        start = TMDb_12_dp,
-                        end = TMDb_12_dp,
-                        bottom = TMDb_16_dp,
-                    ),
+                    modifier
+                        .padding(
+                            top = TMDb_16_dp,
+                            start = TMDb_12_dp,
+                            end = TMDb_12_dp,
+                            bottom = TMDb_16_dp,
+                        ),
             )
             Spacer(modifier = Modifier.height(navigationBarPadding() + TMDb_56_dp))
         }
@@ -185,7 +185,9 @@ private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, cont
         )
         when (settings) {
             is Settings.Info -> TitleText(title = settings.value)
+
             is Settings.Action, is Settings.IntentAction -> ForwardButton()
+
             is Settings.SelectBox -> SimpleExposedDropDownMenu(
                 values = settings.options.map { it.label },
                 label = { Text("") },
@@ -201,9 +203,9 @@ private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, cont
 private fun IconBox(@DrawableRes iconResourceId: Int, contentDescription: String?, modifier: Modifier = Modifier) {
     Box(
         modifier =
-        modifier
-            .size(TMDb_32_dp)
-            .background(color = MaterialTheme.colors.background, shape = CircleShape),
+            modifier
+                .size(TMDb_32_dp)
+                .background(color = MaterialTheme.colors.background, shape = CircleShape),
         contentAlignment = Alignment.Center,
 
     ) {

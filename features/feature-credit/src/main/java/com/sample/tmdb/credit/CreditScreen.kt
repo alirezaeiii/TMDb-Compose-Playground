@@ -53,12 +53,12 @@ fun CreditScreen(
     LazyVerticalGrid(
         columns = GridCells.Adaptive(TMDb_120_dp),
         contentPadding =
-        PaddingValues(
-            start = TMDb_6_dp,
-            end = TMDb_6_dp,
-            top = TMDb_6_dp,
-            bottom = navigationBarPadding().plus(TMDb_8_dp),
-        ),
+            PaddingValues(
+                start = TMDb_6_dp,
+                end = TMDb_6_dp,
+                top = TMDb_6_dp,
+                bottom = navigationBarPadding().plus(TMDb_8_dp),
+            ),
         content = {
             fullSpanGridItem {
                 TMDbSpacer()

@@ -26,8 +26,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
         compose = true
@@ -61,5 +61,5 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test)
     androidTestImplementation(libs.mockito.kotlin)
     debugImplementation(libs.compose.ui.test.manifest)
-    androidTestImplementation("androidx.test:runner:1.7.0")
+    androidTestImplementation(libs.androidx.runner)
 }

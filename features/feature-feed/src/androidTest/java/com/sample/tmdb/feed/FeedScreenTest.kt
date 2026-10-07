@@ -27,42 +27,42 @@ class FeedScreenTest {
             setContent {
                 FeedCollectionList(
                     collection =
-                    listOf(
-                        FeedWrapper(
-                            feeds =
-                            listOf(
-                                Movie(
-                                    anyInt(),
-                                    anyString(),
-                                    anyString(),
-                                    anyString(),
-                                    anyString(),
-                                    "title",
-                                    anyDouble(),
-                                    anyInt(),
-                                ),
+                        listOf(
+                            FeedWrapper(
+                                feeds =
+                                    listOf(
+                                        Movie(
+                                            anyInt(),
+                                            anyString(),
+                                            anyString(),
+                                            anyString(),
+                                            anyString(),
+                                            "title",
+                                            anyDouble(),
+                                            anyInt(),
+                                        ),
+                                    ),
+                                domainR.string.text_trending,
+                                SortType.TRENDING,
                             ),
-                            domainR.string.text_trending,
-                            SortType.TRENDING,
-                        ),
-                        FeedWrapper(
-                            feeds =
-                            listOf(
-                                Movie(
-                                    anyInt(),
-                                    anyString(),
-                                    anyString(),
-                                    anyString(),
-                                    anyString(),
-                                    "name",
-                                    anyDouble(),
-                                    anyInt(),
-                                ),
+                            FeedWrapper(
+                                feeds =
+                                    listOf(
+                                        Movie(
+                                            anyInt(),
+                                            anyString(),
+                                            anyString(),
+                                            anyString(),
+                                            anyString(),
+                                            "name",
+                                            anyDouble(),
+                                            anyInt(),
+                                        ),
+                                    ),
+                                domainR.string.text_popular,
+                                SortType.MOST_POPULAR,
                             ),
-                            domainR.string.text_popular,
-                            SortType.MOST_POPULAR,
                         ),
-                    ),
                     {},
                 ) {}
             }
@@ -80,23 +80,23 @@ class FeedScreenTest {
             setContent {
                 PagerTMDbItemContainer(
                     feedWrapper =
-                    FeedWrapper(
-                        feeds =
-                        listOf(
-                            Movie(
-                                anyInt(),
-                                anyString(),
-                                anyString(),
-                                anyString(),
-                                anyString(),
-                                "title",
-                                anyDouble(),
-                                anyInt(),
-                            ),
+                        FeedWrapper(
+                            feeds =
+                                listOf(
+                                    Movie(
+                                        anyInt(),
+                                        anyString(),
+                                        anyString(),
+                                        anyString(),
+                                        anyString(),
+                                        "title",
+                                        anyDouble(),
+                                        anyInt(),
+                                    ),
+                                ),
+                            domainR.string.text_popular,
+                            SortType.MOST_POPULAR,
                         ),
-                        domainR.string.text_popular,
-                        SortType.MOST_POPULAR,
-                    ),
                     {},
                 ) {}
             }
@@ -156,18 +156,18 @@ class FeedScreenTest {
             setContent {
                 Feeds(
                     feeds =
-                    listOf(
-                        Movie(
-                            anyInt(),
-                            anyString(),
-                            anyString(),
-                            anyString(),
-                            anyString(),
-                            "title",
-                            anyDouble(),
-                            anyInt(),
+                        listOf(
+                            Movie(
+                                anyInt(),
+                                anyString(),
+                                anyString(),
+                                anyString(),
+                                anyString(),
+                                "title",
+                                anyDouble(),
+                                anyInt(),
+                            ),
                         ),
-                    ),
                     onFeedClick = {},
                     index = 0,
                 )

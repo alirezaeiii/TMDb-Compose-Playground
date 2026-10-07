@@ -27,12 +27,12 @@ fun ErrorScreen(message: String, modifier: Modifier = Modifier, refresh: () -> U
         Text(
             text = message,
             style =
-            MaterialTheme.typography.subtitle1.copy(
-                color = MaterialTheme.colors.onSurface,
-                letterSpacing = 1.5.sp,
-                fontFamily = FontFamily.SansSerif,
-                fontWeight = FontWeight.W400,
-            ),
+                MaterialTheme.typography.subtitle1.copy(
+                    color = MaterialTheme.colors.onSurface,
+                    letterSpacing = 1.5.sp,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.W400,
+                ),
         )
         Spacer(Modifier.height(TMDb_16_dp))
         Button(onClick = refresh) {

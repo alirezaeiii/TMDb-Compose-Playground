@@ -89,10 +89,10 @@ fun PersonScreen(viewModel: PersonViewModel, onNavigateUp: () -> Unit) {
             val scroll = rememberScrollState(0)
             Spacer(
                 modifier =
-                Modifier
-                    .height(280.dp)
-                    .fillMaxWidth()
-                    .background(Brush.horizontalGradient(Tornado)),
+                    Modifier
+                        .height(280.dp)
+                        .fillMaxWidth()
+                        .background(Brush.horizontalGradient(Tornado)),
             )
             Body(person.biography, titleHeight, scroll)
             Title(person, titleHeight) { scroll.value }
@@ -109,14 +109,14 @@ fun Up(upPress: () -> Unit) {
     IconButton(
         onClick = upPress,
         modifier =
-        Modifier
-            .statusBarsPadding()
-            .padding(horizontal = TMDb_16_dp, vertical = 10.dp)
-            .size(36.dp)
-            .background(
-                color = Neutral8.copy(alpha = 0.32f),
-                shape = CircleShape,
-            ),
+            Modifier
+                .statusBarsPadding()
+                .padding(horizontal = TMDb_16_dp, vertical = 10.dp)
+                .size(36.dp)
+                .background(
+                    color = Neutral8.copy(alpha = 0.32f),
+                    shape = CircleShape,
+                ),
     ) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -131,10 +131,10 @@ fun Body(biography: String, titleHeight: MutableState<Dp>, scroll: ScrollState) 
     Column {
         Spacer(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .statusBarsPadding()
-                .height(MinTitleOffset),
+                Modifier
+                    .fillMaxWidth()
+                    .statusBarsPadding()
+                    .height(MinTitleOffset),
         )
         Column(
             modifier = Modifier.verticalScroll(scroll),
@@ -156,11 +156,11 @@ fun Body(biography: String, titleHeight: MutableState<Dp>, scroll: ScrollState) 
                         Text(
                             text = biography,
                             style =
-                            MaterialTheme.typography.body2.copy(
-                                letterSpacing = 2.sp,
-                                lineHeight = 30.sp,
-                                fontFamily = FontFamily.SansSerif,
-                            ),
+                                MaterialTheme.typography.body2.copy(
+                                    letterSpacing = 2.sp,
+                                    lineHeight = 30.sp,
+                                    fontFamily = FontFamily.SansSerif,
+                                ),
                             color = MaterialTheme.colors.onSurface,
                             overflow = TextOverflow.Ellipsis,
                             modifier = HzPadding,
@@ -168,10 +168,10 @@ fun Body(biography: String, titleHeight: MutableState<Dp>, scroll: ScrollState) 
                     }
                     Spacer(
                         modifier =
-                        Modifier
-                            .padding(bottom = BottomBarHeight)
-                            .navigationBarsPadding()
-                            .height(TMDb_8_dp),
+                            Modifier
+                                .padding(bottom = BottomBarHeight)
+                                .navigationBarsPadding()
+                                .height(TMDb_8_dp),
                     )
                 }
             }
@@ -190,16 +190,16 @@ fun Title(person: Person, titleHeight: MutableState<Dp>, scrollProvider: () -> I
     Column(
         verticalArrangement = Arrangement.Bottom,
         modifier =
-        Modifier
-            .onGloballyPositioned { coordinates ->
-                with(localDestiny) { titleHeight.value = coordinates.size.height.toDp() }
-            }.heightIn(min = titleHeight.value)
-            .statusBarsPadding()
-            .offset {
-                val scroll = scrollProvider()
-                val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
-                IntOffset(x = 0, y = offset.toInt())
-            }.background(color = MaterialTheme.colors.surface),
+            Modifier
+                .onGloballyPositioned { coordinates ->
+                    with(localDestiny) { titleHeight.value = coordinates.size.height.toDp() }
+                }.heightIn(min = titleHeight.value)
+                .statusBarsPadding()
+                .offset {
+                    val scroll = scrollProvider()
+                    val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
+                    IntOffset(x = 0, y = offset.toInt())
+                }.background(color = MaterialTheme.colors.surface),
     ) {
         Spacer(Modifier.height(TMDb_16_dp))
         Text(

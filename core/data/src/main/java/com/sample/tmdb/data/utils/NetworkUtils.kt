@@ -1,9 +1,9 @@
 package com.sample.tmdb.data.utils
 
-import androidx.compose.ui.text.intl.Locale
 import com.sample.tmdb.data.BuildConfig
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,7 +25,7 @@ private fun httpClient(): OkHttpClient {
 
         val url = originalHttpUrl.newBuilder()
             .addQueryParameter("api_key", BuildConfig.TMDB_API_KEY)
-            .addQueryParameter("language", Locale.current.toLanguageTag())
+            .addQueryParameter("language", Locale.getDefault().toLanguageTag())
             .build()
 
         val request = original.newBuilder().url(url).build()

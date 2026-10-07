@@ -86,16 +86,16 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 140.dp),
         contentPadding =
-        PaddingValues(
-            start = TMDb_8_dp,
-            end = TMDb_8_dp,
-            bottom = navigationBarPadding().plus(TMDb_8_dp),
-        ),
+            PaddingValues(
+                start = TMDb_8_dp,
+                end = TMDb_8_dp,
+                bottom = navigationBarPadding().plus(TMDb_8_dp),
+            ),
         horizontalArrangement =
-        Arrangement.spacedBy(
-            TMDb_8_dp,
-            Alignment.CenterHorizontally,
-        ),
+            Arrangement.spacedBy(
+                TMDb_8_dp,
+                Alignment.CenterHorizontally,
+            ),
         content = {
             fullSpanGridItem {
                 TMDbSpacer()
