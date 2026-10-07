@@ -18,5 +18,5 @@ class TVSeriesPagingRepository @Inject constructor(
 ) : BasePagingRepository<TVShow>() {
 
     override fun pagingSource(query: String?, id: Int?, type: SortType?): BasePagingSource<TVShow> =
-        TVSeriesPagingSource(context, tvShowApi, type!!)
+        TVSeriesPagingSource(context, tvShowApi, type!!, id)
 }

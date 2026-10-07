@@ -18,5 +18,5 @@ class MoviesPagingRepository @Inject constructor(
 ) : BasePagingRepository<Movie>() {
 
     override fun pagingSource(query: String?, id: Int?, type: SortType?): BasePagingSource<Movie> =
-        MoviePagingSource(context, movieApi, type!!)
+        MoviePagingSource(context, movieApi, type!!, id)
 }
