@@ -37,6 +37,7 @@ android {
 
 dependencies {
     api(project(":core:domain"))
+    implementation(project(":navigation"))
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
     implementation(libs.okhttp.logging)

@@ -1,4 +1,4 @@
-package com.sample.tmdb.domain.model
+package com.sample.tmdb.navigation
 
 enum class SortType {
     TRENDING,
@@ -7,4 +7,5 @@ enum class SortType {
     UPCOMING,
     HIGHEST_RATED,
     DISCOVER,
+    SIMILAR,
 }

@@ -10,7 +10,7 @@ import androidx.compose.ui.test.onNodeWithText
 import com.sample.tmdb.domain.R as domainR
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
-import com.sample.tmdb.domain.model.SortType
+import com.sample.tmdb.navigation.SortType
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyDouble

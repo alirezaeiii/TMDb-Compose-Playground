@@ -7,7 +7,6 @@ import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BaseFeedRepository
-import com.sample.tmdb.feed.utils.toNavKey
 import com.sample.tmdb.navigation.TMDbNavKey
 
 abstract class BaseFeedViewModel<T : TMDbItem>(
@@ -32,7 +31,10 @@ abstract class BaseFeedViewModel<T : TMDbItem>(
     fun onMoreClick(event: FeedNavigationEvent) {
         when (event) {
             is FeedNavigationEvent.More -> {
-                emitEvent(FeedUiEvent.Navigate(event.toNavKey()))
+                when (event.contentType) {
+                    ContentType.MOVIE -> emitEvent(FeedUiEvent.Navigate(TMDbNavKey.PagingMovies(event.sortType)))
+                    ContentType.TV_SHOW -> emitEvent(FeedUiEvent.Navigate(TMDbNavKey.PagingTvShows(event.sortType)))
+                }
             }
         }
     }

@@ -5,6 +5,7 @@ import com.sample.tmdb.data.response.MovieResponse
 import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.paging.BasePagingSource
+import com.sample.tmdb.navigation.SortType
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -13,5 +14,5 @@ class SimilarMoviesPagingSourceTest : BaseMoviePagingSourceTest() {
 
     override suspend fun getApiCall(): NetworkTMDbWrapper<MovieResponse> = api.fetchSimilarMovies(1, 1)
 
-    override fun getPagingDataSource(): BasePagingSource<Movie> = SimilarMoviesPagingSource(context, api, 1)
+    override fun getPagingDataSource(): BasePagingSource<Movie> = MoviePagingSource(context, api, SortType.SIMILAR, 1)
 }

@@ -6,14 +6,14 @@ import com.sample.tmdb.data.paging.tvshow.SearchTVSeriesPagingSource
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.paging.BasePagingSource
 import com.sample.tmdb.domain.repository.BasePagingRepository
+import com.sample.tmdb.navigation.SortType
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class
-SearchTVSeriesPagingRepository @Inject constructor(
+class SearchTVSeriesPagingRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val tvShowApi: TVShowService,
 ) : BasePagingRepository<TVShow>() {
-    override fun pagingSource(query: String?, id: Int?): BasePagingSource<TVShow> =
+    override fun pagingSource(query: String?, id: Int?, type: SortType?): BasePagingSource<TVShow> =
         SearchTVSeriesPagingSource(context, tvShowApi, query!!)
 }

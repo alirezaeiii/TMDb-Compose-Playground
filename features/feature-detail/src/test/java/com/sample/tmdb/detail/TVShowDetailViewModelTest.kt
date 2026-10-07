@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TVShowDetails
+import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
 import io.mockk.every
 import junit.framework.TestCase.assertEquals
@@ -48,7 +49,7 @@ class TVShowDetailViewModelTest : BaseDetailViewModelTest<TVShowDetails, TVShow>
 
         viewModel.uiEvent.test {
             viewModel.onAllSimilarClick(TMDB_ITEM_ID)
-            assertEquals(DetailUiEvent.Navigate(TMDbNavKey.SimilarTvShows(TMDB_ITEM_ID)), awaitItem())
+            assertEquals(DetailUiEvent.Navigate(TMDbNavKey.PagingTvShows(SortType.SIMILAR, TMDB_ITEM_ID)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

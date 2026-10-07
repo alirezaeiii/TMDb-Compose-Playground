@@ -1,8 +1,8 @@
 package com.sample.tmdb.feed
 
 import app.cash.turbine.test
-import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
+import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
 import io.mockk.every
 import io.mockk.mockk
@@ -35,7 +35,7 @@ class TVShowFeedViewModelTest : BaseFeedViewModelTest<TVShow>() {
 
         viewModel.uiEvent.test {
             viewModel.onMoreClick(FeedNavigationEvent.More(ContentType.TV_SHOW, SortType.TRENDING))
-            assertEquals(FeedUiEvent.Navigate(TMDbNavKey.TrendingTvShows), awaitItem())
+            assertEquals(FeedUiEvent.Navigate(TMDbNavKey.PagingTvShows(SortType.TRENDING)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

@@ -46,23 +46,12 @@ import com.sample.tmdb.detail.TVShowDetailViewModel
 import com.sample.tmdb.feed.MovieFeedScreen
 import com.sample.tmdb.feed.TVShowFeedScreen
 import com.sample.tmdb.gallery.ImagesScreen
+import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.paging.main.AiringTodayTVShowScreen
-import com.sample.tmdb.paging.main.DiscoverMovieScreen
-import com.sample.tmdb.paging.main.DiscoverTVShowScreen
-import com.sample.tmdb.paging.main.NowPlayingMovieScreen
-import com.sample.tmdb.paging.main.OnTheAirTVShowScreen
-import com.sample.tmdb.paging.main.PopularMovieScreen
-import com.sample.tmdb.paging.main.PopularTVShowScreen
-import com.sample.tmdb.paging.main.SimilarMovieScreen
-import com.sample.tmdb.paging.main.SimilarTVShowScreen
-import com.sample.tmdb.paging.main.TopRatedMovieScreen
-import com.sample.tmdb.paging.main.TopRatedTVShowScreen
-import com.sample.tmdb.paging.main.TrendingMovieScreen
-import com.sample.tmdb.paging.main.TrendingTVShowScreen
-import com.sample.tmdb.paging.main.UpcomingMovieScreen
-import com.sample.tmdb.paging.main.movie.SimilarMoviesViewModel
-import com.sample.tmdb.paging.main.tvshow.SimilarTvSeriesViewModel
+import com.sample.tmdb.paging.main.MoviePagingScreen
+import com.sample.tmdb.paging.main.MoviePagingViewModel
+import com.sample.tmdb.paging.main.TVShowPagingScreen
+import com.sample.tmdb.paging.main.TvShowPagingViewModel
 import com.sample.tmdb.paging.search.SearchMoviesScreen
 import com.sample.tmdb.paging.search.SearchTVSeriesScreen
 import com.sample.tmdb.preson.PersonScreen
@@ -127,60 +116,38 @@ fun TMDbApp() {
                 onNavigateUp,
             )
         }
-        entry<TMDbNavKey.TrendingMovies> {
-            TrendingMovieScreen(hiltViewModel(), onNavigate, onNavigateUp)
-        }
-        entry<TMDbNavKey.PopularMovies> {
-            PopularMovieScreen(hiltViewModel(), onNavigate, onNavigateUp)
-        }
-        entry<TMDbNavKey.NowPlayingMovies> {
-            NowPlayingMovieScreen(hiltViewModel(), onNavigate, onNavigateUp)
-        }
-        entry<TMDbNavKey.UpcomingMovies> {
-            UpcomingMovieScreen(hiltViewModel(), onNavigate, onNavigateUp)
-        }
-        entry<TMDbNavKey.TopRatedMovies> {
-            TopRatedMovieScreen(hiltViewModel(), onNavigate, onNavigateUp)
-        }
-        entry<TMDbNavKey.DiscoverMovies> {
-            DiscoverMovieScreen(hiltViewModel(), onNavigate, onNavigateUp)
-        }
-        entry<TMDbNavKey.SimilarMovies> { key ->
-            SimilarMovieScreen(
-                hiltViewModel<SimilarMoviesViewModel, SimilarMoviesViewModel.Factory>(
-                    key = "SimilarMovies_${key.id}",
-                    creationCallback = { factory -> factory.create(key.id) },
+
+        entry<TMDbNavKey.PagingMovies> { key ->
+            MoviePagingScreen(
+                hiltViewModel<MoviePagingViewModel, MoviePagingViewModel.Factory>(
+                    key = "PagingMovies_${key.id}",
+                    creationCallback = { factory ->
+                        factory.create(
+                            if (key.sortType == SortType.SIMILAR) key.id else null,
+                            key.sortType,
+                        )
+                    },
                 ),
                 onNavigate,
                 onNavigateUp,
+                key.sortType,
             )
         }
-        entry<TMDbNavKey.TrendingTvShows> {
-            TrendingTVShowScreen(hiltViewModel(), onNavigate, onNavigateUp)
-        }
-        entry<TMDbNavKey.PopularTvShows> {
-            PopularTVShowScreen(hiltViewModel(), onNavigate, onNavigateUp)
-        }
-        entry<TMDbNavKey.AiringTodayTvShows> {
-            AiringTodayTVShowScreen(hiltViewModel(), onNavigate, onNavigateUp)
-        }
-        entry<TMDbNavKey.OnTheAirTvShows> {
-            OnTheAirTVShowScreen(hiltViewModel(), onNavigate, onNavigateUp)
-        }
-        entry<TMDbNavKey.TopRatedTvShows> {
-            TopRatedTVShowScreen(hiltViewModel(), onNavigate, onNavigateUp)
-        }
-        entry<TMDbNavKey.DiscoverTvShows> {
-            DiscoverTVShowScreen(hiltViewModel(), onNavigate, onNavigateUp)
-        }
-        entry<TMDbNavKey.SimilarTvShows> { key ->
-            SimilarTVShowScreen(
-                hiltViewModel<SimilarTvSeriesViewModel, SimilarTvSeriesViewModel.Factory>(
-                    key = "SimilarTvShows_${key.id}",
-                    creationCallback = { factory -> factory.create(key.id) },
+
+        entry<TMDbNavKey.PagingTvShows> { key ->
+            TVShowPagingScreen(
+                hiltViewModel<TvShowPagingViewModel, TvShowPagingViewModel.Factory>(
+                    key = "PagingTVShows_${key.id}",
+                    creationCallback = { factory ->
+                        factory.create(
+                            if (key.sortType == SortType.SIMILAR) key.id else null,
+                            key.sortType,
+                        )
+                    },
                 ),
                 onNavigate,
                 onNavigateUp,
+                key.sortType,
             )
         }
         entry<TMDbNavKey.SearchMovies> {

@@ -6,9 +6,10 @@ import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BasePagingRepository
+import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.paging.main.BaseMoviePagingViewModel
-import com.sample.tmdb.paging.main.BaseTvShowPagingViewModel
+import com.sample.tmdb.paging.main.MoviePagingViewModel
+import com.sample.tmdb.paging.main.TvShowPagingViewModel
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -26,8 +27,8 @@ class BasePagingViewModelTest {
 
     @Test
     fun `onItemClick movie emits Navigate to MovieDetail`() = runTest {
-        every { movieRepository.fetchResultStream(any()) } returns flowOf(PagingData.empty())
-        val viewModel = object : BaseMoviePagingViewModel(movieRepository) {}
+        every { movieRepository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
+        val viewModel = object : MoviePagingViewModel(movieRepository, type = SortType.TRENDING) {}
 
         val movie = mockk<Movie>(relaxed = true)
         every { movie.id } returns 100
@@ -41,8 +42,8 @@ class BasePagingViewModelTest {
 
     @Test
     fun `onItemClick tvShow emits Navigate to TvShowDetail`() = runTest {
-        every { tvShowRepository.fetchResultStream(any()) } returns flowOf(PagingData.empty())
-        val viewModel = object : BaseTvShowPagingViewModel(tvShowRepository) {}
+        every { tvShowRepository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
+        val viewModel = object : TvShowPagingViewModel(tvShowRepository, type = SortType.TRENDING) {}
 
         val tvShow = mockk<TVShow>(relaxed = true)
         every { tvShow.id } returns 200
@@ -56,8 +57,8 @@ class BasePagingViewModelTest {
 
     @Test
     fun `onSearchClick movie emits Navigate to SearchMovies`() = runTest {
-        every { movieRepository.fetchResultStream(any()) } returns flowOf(PagingData.empty())
-        val viewModel = object : BaseMoviePagingViewModel(movieRepository) {}
+        every { movieRepository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
+        val viewModel = object : MoviePagingViewModel(movieRepository, type = SortType.TRENDING) {}
 
         viewModel.uiEvent.test {
             viewModel.onSearchClick()
@@ -68,8 +69,8 @@ class BasePagingViewModelTest {
 
     @Test
     fun `onSearchClick tvShow emits Navigate to SearchTvShows`() = runTest {
-        every { tvShowRepository.fetchResultStream(any()) } returns flowOf(PagingData.empty())
-        val viewModel = object : BaseTvShowPagingViewModel(tvShowRepository) {}
+        every { tvShowRepository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
+        val viewModel = object : TvShowPagingViewModel(tvShowRepository, type = SortType.TRENDING) {}
 
         viewModel.uiEvent.test {
             viewModel.onSearchClick()
@@ -80,8 +81,8 @@ class BasePagingViewModelTest {
 
     @Test
     fun `onNavigateUp emits NavigateUp`() = runTest {
-        every { movieRepository.fetchResultStream(any()) } returns flowOf(PagingData.empty())
-        val viewModel = object : BaseMoviePagingViewModel(movieRepository) {}
+        every { movieRepository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
+        val viewModel = object : MoviePagingViewModel(movieRepository, type = SortType.TRENDING) {}
 
         viewModel.uiEvent.test {
             viewModel.onNavigateUp()

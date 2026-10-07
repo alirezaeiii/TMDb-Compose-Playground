@@ -6,6 +6,7 @@ import com.sample.tmdb.data.paging.movie.SearchMoviesPagingSource
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.paging.BasePagingSource
 import com.sample.tmdb.domain.repository.BasePagingRepository
+import com.sample.tmdb.navigation.SortType
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,6 +16,6 @@ class SearchMoviesPagingRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val movieApi: MovieService,
 ) : BasePagingRepository<Movie>() {
-    override fun pagingSource(query: String?, id: Int?): BasePagingSource<Movie> =
+    override fun pagingSource(query: String?, id: Int?, type: SortType?): BasePagingSource<Movie> =
         SearchMoviesPagingSource(context, movieApi, query!!)
 }

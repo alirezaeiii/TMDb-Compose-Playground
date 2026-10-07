@@ -60,9 +60,9 @@ import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
-import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feed.utils.pagerTransition
+import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
 
 @Composable
