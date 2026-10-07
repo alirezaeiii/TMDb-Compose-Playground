@@ -65,7 +65,6 @@ android {
 
 dependencies {
     implementation project(':core:data')
-    implementation project(':navigation')
     implementation project(':features:feature-feed')
     implementation project(':features:feature-bookmark')
     implementation project(':features:feature-setting')
