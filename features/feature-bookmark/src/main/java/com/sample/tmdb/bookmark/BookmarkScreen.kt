@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -31,22 +33,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
-import com.sample.tmdb.common.ui.Dimens.TMDb_86_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_96_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.component.TMDbContent
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
+import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.navigation.TMDbNavKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun BookmarkScreen(
@@ -182,7 +185,6 @@ fun TabContent(items: List<TMDbItem>, onClick: (TMDbItem) -> Unit) {
                 top = TMDb_104_dp,
                 start = TMDb_8_dp,
                 end = TMDb_8_dp,
-                bottom = navigationBarPadding().plus(TMDb_86_dp),
             ),
         horizontalArrangement =
             Arrangement.spacedBy(
@@ -192,6 +194,9 @@ fun TabContent(items: List<TMDbItem>, onClick: (TMDbItem) -> Unit) {
         content = {
             items(items.size) { index ->
                 TMDbContent(items[index], onClick)
+            }
+            fullSpanGridItem {
+                Spacer(Modifier.height(navigationBarPadding() + TMDb_96_dp))
             }
         },
     )
