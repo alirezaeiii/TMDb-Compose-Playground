@@ -87,6 +87,7 @@ dependencies {
     implementation libs.compose.paging
     implementation libs.hilt.android
     implementation libs.hilt.navigation.compose
+    implementation libs.hilt.viewmodel.compose
     ksp libs.hilt.compiler
     androidTestImplementation libs.androidx.runner
 }
