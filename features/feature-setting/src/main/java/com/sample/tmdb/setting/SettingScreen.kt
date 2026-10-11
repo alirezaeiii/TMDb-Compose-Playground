@@ -38,12 +38,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.ThemeMode
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
-import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_72_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.ThemeViewModel
@@ -52,6 +51,7 @@ import com.sample.tmdb.common.ui.component.SimpleExposedDropDownMenu
 import com.sample.tmdb.common.ui.theme.Teal200
 import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.navigationBarPadding
+import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun SettingsScreen(viewModel: LanguageViewModel, themeViewModel: ThemeViewModel, modifier: Modifier = Modifier) {
@@ -128,7 +128,7 @@ fun SettingsScreen(viewModel: LanguageViewModel, themeViewModel: ThemeViewModel,
                             bottom = TMDb_16_dp,
                         ),
             )
-            Spacer(modifier = Modifier.height(navigationBarPadding() + TMDb_56_dp))
+            Spacer(modifier = Modifier.height(navigationBarPadding() + TMDb_72_dp))
         }
         DestinationBar(title = stringResource(R.string.settings))
     }

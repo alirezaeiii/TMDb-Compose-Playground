@@ -1,18 +1,31 @@
 package com.sample.tmdb.ui
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -25,7 +38,12 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
@@ -35,7 +53,6 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.sample.tmdb.R
 import com.sample.tmdb.bookmark.BookmarkScreen
-import com.sample.tmdb.common.ui.Dimens.TMDb_0_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.credit.CreditScreen
@@ -216,36 +233,149 @@ fun TMDbApp() {
     }
 }
 
+
 @Composable
-private fun TMDbBottomBar(tabs: Array<HomeSections>, currentRoute: TMDbNavKey, navigateToRoute: (TMDbNavKey) -> Unit) {
+private fun TMDbBottomBar(
+    tabs: Array<HomeSections>,
+    currentRoute: TMDbNavKey,
+    navigateToRoute: (TMDbNavKey) -> Unit,
+) {
     Box(
-        Modifier.navigationBarsPadding(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .navigationBarsPadding()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
-        BottomNavigation(
-            backgroundColor = MaterialTheme.colors.background.copy(alpha = AlphaNavigationBar),
-            elevation = TMDb_0_dp,
-        ) {
-            tabs.forEach { section ->
-                val selected = section.navKey == currentRoute
-                BottomNavigationItem(
-                    label = {
-                        Text(text = stringResource(id = section.title))
-                    },
-                    icon = {
-                        Icon(
-                            imageVector = if (selected) section.selectedIcon else section.unselectedIcon,
-                            contentDescription = stringResource(id = section.title),
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .padding(top = 4.dp)
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Black.copy(alpha = 0.24f),
+                            Color.Black.copy(alpha = 0.12f),
+                            Color.Black.copy(alpha = 0.03f),
+                            Color.Transparent,
+                        ),
+                    ),
+                    shape = RoundedCornerShape(28.dp),
+                ),
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(28.dp))
+                .background(
+                    MaterialTheme.colors.background.copy(
+                        alpha = AlphaNavigationBar,
+                    ),
+                ),
+
+            ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                    .padding(horizontal = 4.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                tabs.forEach { section ->
+                    val selected = section.navKey == currentRoute
+
+                    val weight by animateFloatAsState(
+                        targetValue = if (selected) 2f else 1f,
+                        animationSpec = tween(durationMillis = 500),
+                        label = "tabWeight",
+                    )
+
+                    Box(
+                        modifier = Modifier.weight(weight),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        TMDbBottomBarItem(
+                            section = section,
+                            selected = selected,
+                            onClick = { navigateToRoute(section.navKey) },
                         )
-                    },
-                    selected = selected,
-                    unselectedContentColor = MaterialTheme.colors.onBackground.copy(alpha = ContentAlpha.disabled),
-                    selectedContentColor = MaterialTheme.colors.onBackground,
-                    onClick = { navigateToRoute(section.navKey) },
-                )
+                    }
+                }
             }
         }
     }
 }
+
+@Composable
+private fun TMDbBottomBarItem(
+    section: HomeSections,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    val contentColor = if (selected) {
+        MaterialTheme.colors.onBackground
+    } else {
+        MaterialTheme.colors.onBackground.copy(
+            alpha = ContentAlpha.disabled,
+        )
+    }
+
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 2.dp)
+            .height(48.dp)
+            .clip(RoundedCornerShape(50))
+            .then(
+                if (selected) {
+                    Modifier.border(
+                        width = 1.dp,
+                        color = MaterialTheme.colors.primary,
+                        shape = RoundedCornerShape(50),
+                    )
+                } else {
+                    Modifier
+                },
+            )
+            .clickable(onClick = onClick),
+        shape = RoundedCornerShape(50),
+        color = if (selected) {
+            MaterialTheme.colors.primary.copy(alpha = 0.06f)
+        } else {
+            Color.Transparent
+        },
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                imageVector = if (selected) {
+                    section.selectedIcon
+                } else {
+                    section.unselectedIcon
+                },
+                contentDescription = stringResource(section.title),
+                tint = contentColor,
+                modifier = Modifier.size(24.dp),
+            )
+
+            AnimatedVisibility(visible = selected) {
+                Row {
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(section.title),
+                        color = contentColor,
+                        style = MaterialTheme.typography.caption,
+                        maxLines = 1,
+                    )
+                }
+            }
+        }
+    }
+}
+
 
 enum class HomeSections(
     val navKey: TMDbNavKey,

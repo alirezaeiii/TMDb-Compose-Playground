@@ -39,7 +39,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
@@ -48,8 +47,8 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_220_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
-import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_72_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.TMDbCard
@@ -64,6 +63,7 @@ import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feed.utils.pagerTransition
 import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun MovieFeedScreen(
@@ -155,7 +155,7 @@ fun FeedCollectionList(
             }
         }
         item {
-            Spacer(Modifier.height(navigationBarPadding() + TMDb_56_dp))
+            Spacer(Modifier.height(navigationBarPadding() + TMDb_72_dp))
         }
     }
 }
