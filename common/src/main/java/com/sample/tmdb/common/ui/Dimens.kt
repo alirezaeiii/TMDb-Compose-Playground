@@ -34,7 +34,9 @@ object Dimens {
     val TMDb_32_dp: Dp
         @Composable get() = dimensionResource(R.dimen.TMDb_32_dp)
 
+    val TMDb_48_dp = 48.dp
     val TMDb_56_dp = 56.dp
+    val TMDb_64_dp = 64.dp
     val TMDb_72_dp = 72.dp
     val TMDb_86_dp = 86.dp
     val TMDb_104_dp = 104.dp

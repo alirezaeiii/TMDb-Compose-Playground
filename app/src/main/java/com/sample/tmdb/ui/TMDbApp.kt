@@ -53,6 +53,8 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.sample.tmdb.R
 import com.sample.tmdb.bookmark.BookmarkScreen
+import com.sample.tmdb.common.ui.Dimens.TMDb_48_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_64_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.credit.CreditScreen
@@ -271,7 +273,7 @@ private fun TMDbBottomBar(tabs: Array<HomeSections>, currentRoute: TMDbNavKey, n
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(64.dp)
+                    .height(TMDb_64_dp)
                     .padding(horizontal = 4.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically,
@@ -315,7 +317,7 @@ private fun TMDbBottomBarItem(section: HomeSections, selected: Boolean, onClick:
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 2.dp)
-            .height(48.dp)
+            .height(TMDb_48_dp)
             .clip(RoundedCornerShape(50))
             .then(
                 if (selected) {
