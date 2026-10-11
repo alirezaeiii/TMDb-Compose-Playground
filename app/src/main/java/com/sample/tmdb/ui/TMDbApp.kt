@@ -233,13 +233,8 @@ fun TMDbApp() {
     }
 }
 
-
 @Composable
-private fun TMDbBottomBar(
-    tabs: Array<HomeSections>,
-    currentRoute: TMDbNavKey,
-    navigateToRoute: (TMDbNavKey) -> Unit,
-) {
+private fun TMDbBottomBar(tabs: Array<HomeSections>, currentRoute: TMDbNavKey, navigateToRoute: (TMDbNavKey) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -272,7 +267,7 @@ private fun TMDbBottomBar(
                     ),
                 ),
 
-            ) {
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -307,11 +302,7 @@ private fun TMDbBottomBar(
 }
 
 @Composable
-private fun TMDbBottomBarItem(
-    section: HomeSections,
-    selected: Boolean,
-    onClick: () -> Unit,
-) {
+private fun TMDbBottomBarItem(section: HomeSections, selected: Boolean, onClick: () -> Unit) {
     val contentColor = if (selected) {
         MaterialTheme.colors.onBackground
     } else {
@@ -375,7 +366,6 @@ private fun TMDbBottomBarItem(
         }
     }
 }
-
 
 enum class HomeSections(
     val navKey: TMDbNavKey,
