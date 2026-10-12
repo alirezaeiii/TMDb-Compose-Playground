@@ -18,7 +18,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 
-class BasePagingViewModelTest {
+class PagingViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
@@ -28,7 +28,7 @@ class BasePagingViewModelTest {
     @Test
     fun `onItemClick movie emits Navigate to MovieDetail`() = runTest {
         every { movieRepository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
-        val viewModel = object : MoviePagingViewModel(movieRepository, type = SortType.TRENDING) {}
+        val viewModel = MoviePagingViewModel(movieRepository, type = SortType.TRENDING)
 
         val movie = Movie(100, "", null, null, null, "", 0.0, 0)
 
@@ -42,7 +42,7 @@ class BasePagingViewModelTest {
     @Test
     fun `onItemClick tvShow emits Navigate to TvShowDetail`() = runTest {
         every { tvShowRepository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
-        val viewModel = object : TvShowPagingViewModel(tvShowRepository, type = SortType.TRENDING) {}
+        val viewModel = TvShowPagingViewModel(tvShowRepository, type = SortType.TRENDING)
 
         val tvShow = TVShow(200, "", null, null, null, "", 0.0, 0)
 
@@ -56,7 +56,7 @@ class BasePagingViewModelTest {
     @Test
     fun `onSearchClick movie emits Navigate to SearchMovies`() = runTest {
         every { movieRepository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
-        val viewModel = object : MoviePagingViewModel(movieRepository, type = SortType.TRENDING) {}
+        val viewModel = MoviePagingViewModel(movieRepository, type = SortType.TRENDING)
 
         viewModel.uiEvent.test {
             viewModel.onSearchClick()
@@ -68,7 +68,7 @@ class BasePagingViewModelTest {
     @Test
     fun `onSearchClick tvShow emits Navigate to SearchTvShows`() = runTest {
         every { tvShowRepository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
-        val viewModel = object : TvShowPagingViewModel(tvShowRepository, type = SortType.TRENDING) {}
+        val viewModel = TvShowPagingViewModel(tvShowRepository, type = SortType.TRENDING)
 
         viewModel.uiEvent.test {
             viewModel.onSearchClick()
@@ -80,7 +80,7 @@ class BasePagingViewModelTest {
     @Test
     fun `onNavigateUp emits NavigateUp`() = runTest {
         every { movieRepository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
-        val viewModel = object : MoviePagingViewModel(movieRepository, type = SortType.TRENDING) {}
+        val viewModel = MoviePagingViewModel(movieRepository, type = SortType.TRENDING)
 
         viewModel.uiEvent.test {
             viewModel.onNavigateUp()

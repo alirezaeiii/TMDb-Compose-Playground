@@ -7,6 +7,8 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
+import com.sample.tmdb.domain.model.Cast
+import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
@@ -132,7 +134,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
     fun `onSeeAllCastClicked emits Navigate Cast event`() = runTest {
         every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         val cast = listOf(
-            com.sample.tmdb.domain.model.Cast(
+            Cast(
                 role = "",
                 name = "",
                 profileUrl = null,
@@ -155,7 +157,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
     fun `onSeeAllCrewClicked emits Navigate Crew event`() = runTest {
         every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         val crew = listOf(
-            com.sample.tmdb.domain.model.Crew(
+            Crew(
                 role = "",
                 name = "",
                 profileUrl = null,
