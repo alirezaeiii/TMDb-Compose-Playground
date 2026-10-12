@@ -44,7 +44,7 @@ import com.sample.tmdb.domain.model.TMDbImage
 
 @Composable
 fun ImagesScreen(imagesJson: String, initialPage: Int) {
-    val images = remember<List<TMDbImage>>(imagesJson) {
+    val images = remember(imagesJson) {
         val type = object : TypeToken<List<TMDbImage>>() {}.type
         Gson().fromJson<List<TMDbImage>>(imagesJson, type) ?: emptyList()
     }
