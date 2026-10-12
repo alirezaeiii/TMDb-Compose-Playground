@@ -1,5 +1,7 @@
 package com.sample.tmdb.common.model
 
+import com.sample.tmdb.navigation.TMDbNavKey
+
 interface TMDbItem {
     val id: Int
     val overview: String
@@ -9,4 +11,5 @@ interface TMDbItem {
     val name: String
     val voteAverage: Double
     val voteCount: Int
+    val detailNavKey: TMDbNavKey
 }

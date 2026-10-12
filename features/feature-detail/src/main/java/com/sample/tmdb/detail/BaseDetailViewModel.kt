@@ -9,10 +9,8 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.DetailWrapper
-import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
-import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.navigation.TMDbNavKey
@@ -50,12 +48,7 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
     }
 
     fun onTMDbItemClick(item: TMDbItem) {
-        val route = when (item) {
-            is Movie -> TMDbNavKey.MovieDetail(item.id)
-            is TVShow -> TMDbNavKey.TvShowDetail(item.id)
-            else -> throw RuntimeException("Invalid TMDb item type")
-        }
-        emitEvent(DetailUiEvent.Navigate(route))
+        emitEvent(DetailUiEvent.Navigate(item.detailNavKey))
     }
 
     abstract fun onAllSimilarClick(id: Int)

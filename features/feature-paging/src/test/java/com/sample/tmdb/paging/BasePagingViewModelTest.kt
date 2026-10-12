@@ -30,8 +30,7 @@ class BasePagingViewModelTest {
         every { movieRepository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
         val viewModel = object : MoviePagingViewModel(movieRepository, type = SortType.TRENDING) {}
 
-        val movie = mockk<Movie>(relaxed = true)
-        every { movie.id } returns 100
+        val movie = Movie(100, "", null, null, null, "", 0.0, 0)
 
         viewModel.uiEvent.test {
             viewModel.onItemClick(movie)
@@ -45,8 +44,7 @@ class BasePagingViewModelTest {
         every { tvShowRepository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
         val viewModel = object : TvShowPagingViewModel(tvShowRepository, type = SortType.TRENDING) {}
 
-        val tvShow = mockk<TVShow>(relaxed = true)
-        every { tvShow.id } returns 200
+        val tvShow = TVShow(200, "", null, null, null, "", 0.0, 0)
 
         viewModel.uiEvent.test {
             viewModel.onItemClick(tvShow)

@@ -5,7 +5,6 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
 import io.mockk.every
-import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -32,8 +31,7 @@ class MovieFeedViewModelTest : BaseFeedViewModelTest<Movie>() {
     fun `onTMDbItemClick emits Navigate to MovieDetail`() = runTest {
         every { repository.getResult() } returns flowOf()
         initViewModel()
-        val movie = mockk<Movie>(relaxed = true)
-        every { movie.id } returns 10
+        val movie = Movie(10, "", null, null, null, "", 0.0, 0)
 
         viewModel.uiEvent.test {
             viewModel.onTMDbItemClick(movie)
