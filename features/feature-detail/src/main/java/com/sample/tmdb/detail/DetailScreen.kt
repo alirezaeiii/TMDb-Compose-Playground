@@ -719,18 +719,17 @@ private fun GenreChips(genres: List<Genre>, modifier: Modifier) {
 @Composable
 fun TMDbItemFields(tmdbItemDetails: TMDbItemDetails, modifier: Modifier = Modifier) {
     Row(horizontalArrangement = Arrangement.spacedBy(20.dp), modifier = modifier) {
-        val context = LocalContext.current
         tmdbItemDetails.releaseDate?.let {
             TMDbItemField(
-                context.getString(R.string.release_date),
+                stringResource(R.string.release_date),
                 it,
             )
         }
         TMDbItemField(
-            context.getString(R.string.vote_average),
+            stringResource(R.string.vote_average),
             tmdbItemDetails.voteAverage.toString(),
         )
-        TMDbItemField(context.getString(R.string.votes), tmdbItemDetails.voteCount.toString())
+        TMDbItemField(stringResource(R.string.votes), tmdbItemDetails.voteCount.toString())
     }
 }
 
@@ -796,7 +795,7 @@ private fun <T : Any> TMDbDetailItemSection(
         if (items.isNotEmpty()) {
             SectionHeader(headerResId, items, onSeeAllClicked, headerText)
             LazyRow(
-                modifier = Modifier.testTag(LocalContext.current.getString(headerResId)),
+                modifier = Modifier.testTag(stringResource(headerResId)),
                 contentPadding = PaddingValues(TMDb_16_dp),
             ) {
                 items(
