@@ -1,31 +1,18 @@
 package com.sample.tmdb.paging
 
-import androidx.paging.PagingData
-import app.cash.turbine.test
+import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.paging.main.MoviePagingViewModel
-import io.mockk.every
-import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runTest
-import org.junit.Test
 
-class MoviePagingViewModelTest : BasePagingMovieViewModelTest<MoviePagingViewModel>() {
+class MoviePagingViewModelTest :
+    BaseMainPagingViewModelTest<Movie>(),
+    MovieFixtures {
 
-    override fun initViewModel() {
-        super.viewModel = MoviePagingViewModel(repository, type = SortType.TRENDING)
+    override fun initViewModel(sortType: SortType) {
+        super.viewModel = MoviePagingViewModel(repository, type = sortType)
     }
 
-    @Test
-    fun `onSearchClick movie emits Navigate to SearchMovies`() = runTest {
-        every { repository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
-        initViewModel()
-
-        viewModel.uiEvent.test {
-            viewModel.onSearchClick()
-            assertEquals(PagingUiEvent.Navigate(TMDbNavKey.SearchMovies), awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
+    override val searchNavKey: TMDbNavKey
+        get() = TMDbNavKey.SearchMovies
 }
