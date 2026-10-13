@@ -1,54 +1,27 @@
 package com.sample.tmdb.feed
 
-import app.cash.turbine.test
+import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
-import io.mockk.every
-import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runTest
-import org.junit.Test
 
 class TVShowFeedViewModelTest : BaseFeedViewModelTest<TVShow>() {
     override fun initViewModel() {
         super.viewModel = TVShowFeedViewModel(repository, languageRepository)
     }
 
-    @Test
-    fun `onSearchClick emits Navigate to SearchTvShows`() = runTest {
-        every { repository.getResult() } returns flowOf()
-        initViewModel()
+    override val searchNavKey: TMDbNavKey
+        get() = TMDbNavKey.SearchTvShows
 
-        viewModel.uiEvent.test {
-            viewModel.onSearchClick()
-            assertEquals(FeedUiEvent.Navigate(TMDbNavKey.SearchTvShows), awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
+    override val item: TMDbItem
+        get() = TVShow(10, "", null, null, null, "", 0.0, 0)
 
-    @Test
-    fun `onMoreClick emits Navigate to TVShowTrending`() = runTest {
-        every { repository.getResult() } returns flowOf()
-        initViewModel()
+    override val detailNavKey: TMDbNavKey
+        get() = TMDbNavKey.TvShowDetail(10)
 
-        viewModel.uiEvent.test {
-            viewModel.onMoreClick(FeedNavigationEvent.More(ContentType.TV_SHOW, SortType.TRENDING))
-            assertEquals(FeedUiEvent.Navigate(TMDbNavKey.PagingTvShows(SortType.TRENDING)), awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
+    override val contentType: ContentType
+        get() = ContentType.TV_SHOW
 
-    @Test
-    fun `onTMDbItemClick emits Navigate to TVShowDetail`() = runTest {
-        every { repository.getResult() } returns flowOf()
-        initViewModel()
-        val tvShow = TVShow(10, "", null, null, null, "", 0.0, 0)
-
-        viewModel.uiEvent.test {
-            viewModel.onTMDbItemClick(tvShow)
-            assertEquals(FeedUiEvent.Navigate(TMDbNavKey.TvShowDetail(10)), awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
+    override val onMoreNavKey: TMDbNavKey
+        get() = TMDbNavKey.PagingTvShows(SortType.TRENDING)
 }

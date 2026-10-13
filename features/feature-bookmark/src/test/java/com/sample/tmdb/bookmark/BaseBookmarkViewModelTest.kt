@@ -7,6 +7,7 @@ import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.repository.BaseBookmarkRepository
+import com.sample.tmdb.navigation.TMDbNavKey
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -28,6 +29,10 @@ abstract class BaseBookmarkViewModelTest<T : TMDbItem> {
     protected lateinit var viewModel: BaseBookmarkViewModel<T>
 
     protected abstract fun initViewModel()
+
+    protected abstract val item: TMDbItem
+
+    protected abstract val navKey: TMDbNavKey
 
     @Before
     fun setup() {
@@ -69,6 +74,15 @@ abstract class BaseBookmarkViewModelTest<T : TMDbItem> {
         viewModel.uiEvent.test {
             viewModel.refresh()
             assertEquals(BookmarkUiEvent.ShowWarning("warning message"), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onItemClick emits Navigate to Detail`() = runTest {
+        viewModel.uiEvent.test {
+            viewModel.onTMDbItemClick(item)
+            assertEquals(BookmarkUiEvent.Navigate(navKey), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

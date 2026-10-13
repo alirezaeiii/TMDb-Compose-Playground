@@ -1,16 +1,9 @@
 package com.sample.tmdb.detail
 
-import app.cash.turbine.test
-import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TVShowDetails
 import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
-import io.mockk.every
-import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runTest
-import org.junit.Test
 
 class TVShowDetailViewModelTest : BaseDetailViewModelTest<TVShowDetails, TVShow>() {
     override fun initViewModel() {
@@ -30,27 +23,9 @@ class TVShowDetailViewModelTest : BaseDetailViewModelTest<TVShowDetails, TVShow>
                 1,
             )
 
-    @Test
-    fun `onTMDbItemClick emits Navigate`() = runTest {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
-        initViewModel()
+    override val itemNavKey: TMDbNavKey
+        get() = TMDbNavKey.TvShowDetail(TMDB_ITEM_ID)
 
-        viewModel.uiEvent.test {
-            viewModel.onTMDbItemClick(tmdbItem)
-            assertEquals(DetailUiEvent.Navigate(TMDbNavKey.TvShowDetail(TMDB_ITEM_ID)), awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
-    fun `onAllSimilarClick emits Navigate to SimilarTvShows`() = runTest {
-        every { repository.getResult(id = any()) } returns flowOf()
-        initViewModel()
-
-        viewModel.uiEvent.test {
-            viewModel.onAllSimilarClick(TMDB_ITEM_ID)
-            assertEquals(DetailUiEvent.Navigate(TMDbNavKey.PagingTvShows(SortType.SIMILAR, TMDB_ITEM_ID)), awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
+    override val similarNavKey: TMDbNavKey
+        get() = TMDbNavKey.PagingTvShows(SortType.SIMILAR, TMDB_ITEM_ID)
 }

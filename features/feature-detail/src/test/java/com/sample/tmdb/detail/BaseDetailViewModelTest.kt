@@ -43,6 +43,10 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
 
     protected abstract val tmdbItem: R
 
+    protected abstract val itemNavKey: TMDbNavKey
+
+    protected abstract val similarNavKey: TMDbNavKey
+
     @Test
     fun `load details`() {
         every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
@@ -191,6 +195,30 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
             viewModel.onImageSelected(images, 0)
             val event = awaitItem()
             assertTrue(event is DetailUiEvent.Navigate)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onTMDbItemClick emits Navigate to ItemDetails`() = runTest {
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        initViewModel()
+
+        viewModel.uiEvent.test {
+            viewModel.onTMDbItemClick(tmdbItem)
+            assertEquals(DetailUiEvent.Navigate(itemNavKey), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onAllSimilarClick emits Navigate to SimilarItems`() = runTest {
+        every { repository.getResult(id = any()) } returns flowOf()
+        initViewModel()
+
+        viewModel.uiEvent.test {
+            viewModel.onAllSimilarClick(TMDB_ITEM_ID)
+            assertEquals(DetailUiEvent.Navigate(similarNavKey), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

@@ -1,54 +1,27 @@
 package com.sample.tmdb.feed
 
-import app.cash.turbine.test
+import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
-import io.mockk.every
-import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runTest
-import org.junit.Test
 
 class MovieFeedViewModelTest : BaseFeedViewModelTest<Movie>() {
     override fun initViewModel() {
         super.viewModel = MovieFeedViewModel(repository, languageRepository)
     }
 
-    @Test
-    fun `onSearchClick emits Navigate to SearchMovies`() = runTest {
-        every { repository.getResult() } returns flowOf()
-        initViewModel()
+    override val searchNavKey: TMDbNavKey
+        get() = TMDbNavKey.SearchMovies
 
-        viewModel.uiEvent.test {
-            viewModel.onSearchClick()
-            assertEquals(FeedUiEvent.Navigate(TMDbNavKey.SearchMovies), awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
+    override val item: TMDbItem
+        get() = Movie(10, "", null, null, null, "", 0.0, 0)
 
-    @Test
-    fun `onTMDbItemClick emits Navigate to MovieDetail`() = runTest {
-        every { repository.getResult() } returns flowOf()
-        initViewModel()
-        val movie = Movie(10, "", null, null, null, "", 0.0, 0)
+    override val detailNavKey: TMDbNavKey
+        get() = TMDbNavKey.MovieDetail(10)
 
-        viewModel.uiEvent.test {
-            viewModel.onTMDbItemClick(movie)
-            assertEquals(FeedUiEvent.Navigate(TMDbNavKey.MovieDetail(10)), awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
+    override val contentType: ContentType
+        get() = ContentType.MOVIE
 
-    @Test
-    fun `onMoreClick emits Navigate to MovieTrending`() = runTest {
-        every { repository.getResult() } returns flowOf()
-        initViewModel()
-
-        viewModel.uiEvent.test {
-            viewModel.onMoreClick(FeedNavigationEvent.More(ContentType.MOVIE, SortType.TRENDING))
-            assertEquals(FeedUiEvent.Navigate(TMDbNavKey.PagingMovies(SortType.TRENDING)), awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
+    override val onMoreNavKey: TMDbNavKey
+        get() = TMDbNavKey.PagingMovies(SortType.TRENDING)
 }

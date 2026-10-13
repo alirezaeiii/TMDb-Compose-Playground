@@ -8,6 +8,8 @@ import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.repository.BaseFeedRepository
+import com.sample.tmdb.navigation.SortType
+import com.sample.tmdb.navigation.TMDbNavKey
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -29,6 +31,16 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
     protected lateinit var viewModel: BaseFeedViewModel<T>
 
     protected abstract fun initViewModel()
+
+    protected abstract val searchNavKey: TMDbNavKey
+
+    protected abstract val item: TMDbItem
+
+    protected abstract val detailNavKey: TMDbNavKey
+
+    protected abstract val contentType: ContentType
+
+    protected abstract val onMoreNavKey: TMDbNavKey
 
     @Before
     fun setup() {
@@ -69,6 +81,30 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
         viewModel.uiEvent.test {
             viewModel.refresh()
             assertEquals(FeedUiEvent.ShowWarning("warning message"), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onSearchClick emits Navigate to SearchItems`() = runTest {
+        every { repository.getResult() } returns flowOf()
+        initViewModel()
+
+        viewModel.uiEvent.test {
+            viewModel.onSearchClick()
+            assertEquals(FeedUiEvent.Navigate(searchNavKey), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onMoreClick emits Navigate to TrendingItems`() = runTest {
+        every { repository.getResult() } returns flowOf()
+        initViewModel()
+
+        viewModel.uiEvent.test {
+            viewModel.onMoreClick(FeedNavigationEvent.More(contentType, SortType.TRENDING))
+            assertEquals(FeedUiEvent.Navigate(onMoreNavKey), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
