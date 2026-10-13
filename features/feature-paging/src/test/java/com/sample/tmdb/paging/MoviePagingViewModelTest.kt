@@ -2,6 +2,7 @@ package com.sample.tmdb.paging
 
 import androidx.paging.PagingData
 import app.cash.turbine.test
+import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
@@ -17,6 +18,13 @@ class MoviePagingViewModelTest : BasePagingViewModelTest<Movie, MoviePagingViewM
     override fun initViewModel() {
         super.viewModel = MoviePagingViewModel(repository, type = SortType.TRENDING)
     }
+
+    override val item: TMDbItem
+        get() = Movie(100, "", null, null, null, "", 0.0, 0)
+
+    override val navKey: TMDbNavKey
+        get() = TMDbNavKey.MovieDetail(100)
+
 
     @Test
     fun `onSearchClick movie emits Navigate to SearchMovies`() = runTest {
