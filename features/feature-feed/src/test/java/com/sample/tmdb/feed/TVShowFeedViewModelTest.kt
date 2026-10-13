@@ -22,6 +22,5 @@ class TVShowFeedViewModelTest : BaseFeedViewModelTest<TVShow>() {
     override val contentType: ContentType
         get() = ContentType.TV_SHOW
 
-    override val onMoreNavKey: TMDbNavKey
-        get() = TMDbNavKey.PagingTvShows(SortType.TRENDING)
+    override fun expectedNavKey(sortType: SortType): TMDbNavKey = TMDbNavKey.PagingTvShows(sortType)
 }

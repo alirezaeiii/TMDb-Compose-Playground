@@ -40,7 +40,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
 
     protected abstract val contentType: ContentType
 
-    protected abstract val onMoreNavKey: TMDbNavKey
+    protected abstract fun expectedNavKey(sortType: SortType): TMDbNavKey
 
     @Before
     fun setup() {
@@ -98,14 +98,19 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
     }
 
     @Test
-    fun `onMoreClick emits Navigate to TrendingItems`() = runTest {
-        every { repository.getResult() } returns flowOf()
-        initViewModel()
+    fun `onMoreClick emits Navigate to Paging with correct sortType`() = runTest {
+        SortType.entries.forEach { sortType ->
+            every { repository.getResult() } returns flowOf()
+            initViewModel()
 
-        viewModel.uiEvent.test {
-            viewModel.onMoreClick(FeedNavigationEvent.More(contentType, SortType.TRENDING))
-            assertEquals(FeedUiEvent.Navigate(onMoreNavKey), awaitItem())
-            cancelAndIgnoreRemainingEvents()
+            viewModel.uiEvent.test {
+                viewModel.onMoreClick(FeedNavigationEvent.More(contentType, sortType))
+                assertEquals(
+                    FeedUiEvent.Navigate(expectedNavKey(sortType)),
+                    awaitItem(),
+                )
+                cancelAndIgnoreRemainingEvents()
+            }
         }
     }
 }

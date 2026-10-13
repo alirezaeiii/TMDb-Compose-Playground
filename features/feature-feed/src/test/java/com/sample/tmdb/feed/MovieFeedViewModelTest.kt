@@ -22,6 +22,5 @@ class MovieFeedViewModelTest : BaseFeedViewModelTest<Movie>() {
     override val contentType: ContentType
         get() = ContentType.MOVIE
 
-    override val onMoreNavKey: TMDbNavKey
-        get() = TMDbNavKey.PagingMovies(SortType.TRENDING)
+    override fun expectedNavKey(sortType: SortType): TMDbNavKey = TMDbNavKey.PagingMovies(sortType)
 }
