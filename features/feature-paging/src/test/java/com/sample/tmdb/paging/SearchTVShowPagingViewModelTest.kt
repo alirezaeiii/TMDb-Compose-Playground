@@ -5,7 +5,7 @@ import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.paging.search.SearchTVSeriesViewModel
 
-class SearchTVShowPagingViewModel : BasePagingViewModelTest<TVShow, SearchTVSeriesViewModel>() {
+class SearchTVShowPagingViewModelTest : BasePagingViewModelTest<TVShow, SearchTVSeriesViewModel>() {
 
     override fun initViewModel() {
         super.viewModel = SearchTVSeriesViewModel(repository, savedStateHandle)
