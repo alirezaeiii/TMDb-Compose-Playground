@@ -14,7 +14,6 @@ class SearchTVShowPagingViewModel : BasePagingViewModelTest<TVShow, SearchTVSeri
     override val item: TMDbItem
         get() = TVShow(200, "", null, null, null, "", 0.0, 0)
 
-
     override val navKey: TMDbNavKey
         get() = TMDbNavKey.TvShowDetail(200)
 }

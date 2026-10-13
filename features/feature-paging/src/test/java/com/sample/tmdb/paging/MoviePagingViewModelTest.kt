@@ -25,7 +25,6 @@ class MoviePagingViewModelTest : BasePagingViewModelTest<Movie, MoviePagingViewM
     override val navKey: TMDbNavKey
         get() = TMDbNavKey.MovieDetail(100)
 
-
     @Test
     fun `onSearchClick movie emits Navigate to SearchMovies`() = runTest {
         every { repository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
