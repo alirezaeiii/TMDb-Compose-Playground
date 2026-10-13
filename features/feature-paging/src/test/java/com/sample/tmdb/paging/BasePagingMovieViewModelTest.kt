@@ -4,7 +4,7 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.navigation.TMDbNavKey
 
-abstract class BasePagingMovieViewModelTest<VM: BasePagingViewModel<Movie>> : BasePagingViewModelTest<Movie, VM>() {
+abstract class BasePagingMovieViewModelTest<VM : BasePagingViewModel<Movie>> : BasePagingViewModelTest<Movie, VM>() {
 
     override val item: TMDbItem
         get() = Movie(100, "", null, null, null, "", 0.0, 0)
