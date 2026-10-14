@@ -8,6 +8,7 @@ import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.repository.BaseFeedRepository
+import com.sample.tmdb.feature.test.TMDbItemFixtures
 import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
 import io.mockk.every
@@ -20,7 +21,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-abstract class BaseFeedViewModelTest<T : TMDbItem> {
+abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
@@ -33,10 +34,6 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
     protected abstract fun initViewModel()
 
     protected abstract val searchNavKey: TMDbNavKey
-
-    protected abstract val item: TMDbItem
-
-    protected abstract val detailNavKey: TMDbNavKey
 
     protected abstract val contentType: ContentType
 
@@ -111,6 +108,18 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
                 )
                 cancelAndIgnoreRemainingEvents()
             }
+        }
+    }
+
+    @Test
+    fun `onItemClick emits Navigate to Detail`() = runTest {
+        every { repository.getResult() } returns flowOf()
+        initViewModel()
+
+        viewModel.uiEvent.test {
+            viewModel.onTMDbItemClick(item)
+            assertEquals(FeedUiEvent.Navigate(navKey), awaitItem())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 }

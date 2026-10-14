@@ -17,7 +17,8 @@ dependencyResolutionManagement {
 rootProject.name = "Tmdb-Compose"
 include ':app'
 include ':common'
-include ':common-test'
+include ':test:common-test'
+include ':test:feature-test'
 include ':core:data'
 include ':core:domain'
 include ':features:feature-feed'

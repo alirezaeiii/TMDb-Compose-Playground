@@ -45,7 +45,7 @@ dependencies {
     implementation(libs.compose.material)
     implementation(libs.compose.icons.extended)
     implementation(libs.coil.compose)
-    testImplementation(project(":common-test"))
+    testImplementation(project(":test:common-test"))
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)

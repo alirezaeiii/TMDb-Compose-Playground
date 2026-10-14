@@ -7,7 +7,7 @@ import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.repository.BaseBookmarkRepository
-import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.feature.test.TMDbItemFixtures
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -18,7 +18,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-abstract class BaseBookmarkViewModelTest<T : TMDbItem> {
+abstract class BaseBookmarkViewModelTest<T : TMDbItem> : TMDbItemFixtures {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
@@ -29,10 +29,6 @@ abstract class BaseBookmarkViewModelTest<T : TMDbItem> {
     protected lateinit var viewModel: BaseBookmarkViewModel<T>
 
     protected abstract fun initViewModel()
-
-    protected abstract val item: TMDbItem
-
-    protected abstract val navKey: TMDbNavKey
 
     @Before
     fun setup() {

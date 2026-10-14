@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.paging.PagingData
 import app.cash.turbine.test
 import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.feature.test.TMDbItemFixtures
 import com.sample.tmdb.paging.search.BaseSearchPagingViewModel
 import io.mockk.every
 import io.mockk.mockk

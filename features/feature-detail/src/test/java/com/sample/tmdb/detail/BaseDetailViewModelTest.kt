@@ -14,6 +14,7 @@ import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
+import com.sample.tmdb.feature.test.TMDbItemFixtures
 import com.sample.tmdb.navigation.TMDbNavKey
 import io.mockk.coEvery
 import io.mockk.coJustRun
@@ -27,7 +28,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
-abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
+abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDbItemFixtures {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
@@ -42,8 +43,6 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
     private val detailWrapper = mockk<DetailWrapper>()
 
     protected abstract val tmdbItem: R
-
-    protected abstract val itemNavKey: TMDbNavKey
 
     protected abstract val similarNavKey: TMDbNavKey
 
@@ -205,8 +204,8 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
         initViewModel()
 
         viewModel.uiEvent.test {
-            viewModel.onTMDbItemClick(tmdbItem)
-            assertEquals(DetailUiEvent.Navigate(itemNavKey), awaitItem())
+            viewModel.onTMDbItemClick(item)
+            assertEquals(DetailUiEvent.Navigate(navKey), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

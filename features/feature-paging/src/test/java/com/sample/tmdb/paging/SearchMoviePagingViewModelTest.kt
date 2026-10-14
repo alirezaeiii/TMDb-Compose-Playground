@@ -1,6 +1,7 @@
 package com.sample.tmdb.paging
 
 import com.sample.tmdb.domain.model.Movie
+import com.sample.tmdb.feature.test.MovieFixtures
 import com.sample.tmdb.paging.search.SearchMoviesViewModel
 
 class SearchMoviePagingViewModelTest :
