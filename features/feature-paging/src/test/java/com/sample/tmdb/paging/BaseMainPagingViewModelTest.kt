@@ -51,7 +51,7 @@ abstract class BaseMainPagingViewModelTest<T : TMDbItem> :
     }
 
     @Test
-    fun `onSearchClick tvShow emits Navigate to SearchTvShows`() = runTest {
+    fun `onSearchClick emits Navigate to SearchItems`() = runTest {
         SortType.entries.forEach { sortType ->
             every { repository.fetchResultStream(any(), any(), any()) } returns flowOf(PagingData.empty())
             initViewModel(sortType)
