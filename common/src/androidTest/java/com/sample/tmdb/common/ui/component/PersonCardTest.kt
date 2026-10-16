@@ -32,10 +32,10 @@ class PersonCardTest {
                 activity.getString(
                     R.string.person_content_description,
                     "name",
-                    "role",
+                    "subtitle",
                 ),
             ).assertIsDisplayed()
-            onNodeWithText("role").assertIsDisplayed()
+            onNodeWithText("subtitle").assertIsDisplayed()
             onNodeWithText("name").assertIsDisplayed()
         }
     }

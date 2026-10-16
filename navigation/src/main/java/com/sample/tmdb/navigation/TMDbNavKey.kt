@@ -50,4 +50,7 @@ sealed interface TMDbNavKey : NavKey {
 
     @Serializable
     data class Images(val imagesJson: String, val initialPage: Int) : TMDbNavKey
+
+    @Serializable
+    data object PersonPaging : TMDbNavKey
 }

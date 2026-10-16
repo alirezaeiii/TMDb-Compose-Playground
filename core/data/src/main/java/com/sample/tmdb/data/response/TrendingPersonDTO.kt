@@ -24,6 +24,8 @@ class TrendingPersonDTO(
     val profilePath: String?,
 )
 
+fun List<TrendingPersonDTO>.asDomainModel() = map(TrendingPersonDTO::asDomainModel)
+
 fun TrendingPersonDTO.asDomainModel(): TrendingPerson = TrendingPerson(
     id = id,
     name = name,

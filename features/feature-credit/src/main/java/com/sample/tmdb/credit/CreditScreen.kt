@@ -60,6 +60,7 @@ fun CreditScreen(source: CreditSource, @StringRes resourceId: Int, testPainter: 
                     items = item.result,
                     onPersonClicked = source.viewModel::onPersonClick,
                     type = item.type,
+                    onMoreClick = source.viewModel::onMoreClick,
                     testPainter = testPainter,
                 )
             }
@@ -89,6 +90,7 @@ fun CreditScreen(
     onPersonClicked: (person: TrendingPerson) -> Unit,
     items: List<TrendingPerson>,
     type: TYPE,
+    onMoreClick: () -> Unit = {},
     testPainter: Painter? = null,
 ) {
     LazyVerticalGrid(
@@ -120,7 +122,7 @@ fun CreditScreen(
                             .padding(vertical = TMDb_8_dp),
                         contentAlignment = Alignment.Center,
                     ) {
-                        CircularLoadMoreButton { }
+                        CircularLoadMoreButton(onMoreClick)
                     }
                     Spacer(Modifier.height(navigationBarPadding() + TMDb_120_dp))
                 }
@@ -131,7 +133,7 @@ fun CreditScreen(
 }
 
 @Composable
-fun CircularLoadMoreButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun CircularLoadMoreButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     Button(
         onClick = { onClick() },
         modifier = modifier

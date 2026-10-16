@@ -17,4 +17,8 @@ class PeopleViewModel @Inject constructor(repository: BaseRepository<People, Not
     fun onPersonClick(people: TrendingPerson) {
         emitEvent(PeopleUIEvent.Navigate(TMDbNavKey.Person(people.id)))
     }
+
+    fun onMoreClick() {
+        emitEvent(PeopleUIEvent.Navigate(TMDbNavKey.PersonPaging))
+    }
 }
