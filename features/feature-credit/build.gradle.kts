@@ -41,6 +41,7 @@ dependencies {
 
     implementation(libs.compose.ui)
     implementation(libs.compose.foundation)
+    implementation(libs.compose.material3)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
