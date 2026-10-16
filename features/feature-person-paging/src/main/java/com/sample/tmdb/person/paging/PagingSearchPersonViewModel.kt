@@ -8,10 +8,10 @@ import androidx.paging.cachedIn
 import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.domain.repository.PersonPagingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import javax.inject.Inject
 
 @HiltViewModel
 class PagingSearchPersonViewModel @Inject constructor(
