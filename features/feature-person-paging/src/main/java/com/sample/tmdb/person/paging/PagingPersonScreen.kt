@@ -16,6 +16,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.sample.tmdb.common.R as commonR
+import com.sample.tmdb.common.base.BasePagingViewModel
 import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
@@ -27,6 +28,7 @@ import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.ui.component.TMDbProgressBar
 import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.fullSpanGridItem
+import com.sample.tmdb.common.utils.getPagingErrorMsg
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.UiEvent
@@ -41,7 +43,7 @@ fun PagingPersonScreen(
     onClick: (TrendingPerson) -> Unit = viewModel::onItemClick,
 ) {
     Box {
-        PagingPersonScreen(baseViewModel = viewModel, onNavigate, onNavigateUp, onClick)
+        PagingPersonScreen(viewModel, onNavigate, onNavigateUp, onClick)
         DestinationBar(
             title = stringResource(commonR.string.trending_people),
             onSearchClicked = onSearchClick,
@@ -52,13 +54,13 @@ fun PagingPersonScreen(
 
 @Composable
 fun PagingPersonScreen(
-    baseViewModel: BasePersonPagingViewModel,
+    viewModel: BasePagingViewModel<TrendingPerson>,
     onNavigate: (TMDbNavKey) -> Unit = {},
     onNavigateUp: () -> Unit = {},
-    onClick: (TrendingPerson) -> Unit = baseViewModel::onItemClick,
+    onClick: (TrendingPerson) -> Unit = viewModel::onItemClick,
 ) {
     LaunchedEffect(Unit) {
-        baseViewModel.uiEvent.collectLatest { event ->
+        viewModel.uiEvent.collectLatest { event ->
             when (event) {
                 is UiEvent.Navigation -> onNavigate(event.route)
                 is UiEvent.NavigateUp -> onNavigateUp()
@@ -66,7 +68,7 @@ fun PagingPersonScreen(
         }
     }
 
-    val lazyItems = baseViewModel.pagingDataFlow.collectAsLazyPagingItems()
+    val lazyItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
 
     when (lazyItems.loadState.refresh) {
         is LoadState.Loading -> {
@@ -75,7 +77,7 @@ fun PagingPersonScreen(
 
         is LoadState.Error -> {
             ErrorScreen(
-                message = getErrorMsg(lazyItems.loadState.refresh),
+                message = getPagingErrorMsg(lazyItems.loadState.refresh),
                 modifier = Modifier.fillMaxSize(),
                 refresh = { lazyItems.retry() },
             )
@@ -124,7 +126,7 @@ private fun LazyTMDbItemGrid(lazyItems: LazyPagingItems<TrendingPerson>, onClick
             if (lazyItems.loadState.append is LoadState.Error) {
                 fullSpanGridItem {
                     ErrorScreen(
-                        message = getErrorMsg(lazyItems.loadState.append),
+                        message = getPagingErrorMsg(lazyItems.loadState.append),
                         modifier = Modifier.padding(vertical = TMDb_8_dp),
                         refresh = { lazyItems.retry() },
                     )
@@ -133,7 +135,3 @@ private fun LazyTMDbItemGrid(lazyItems: LazyPagingItems<TrendingPerson>, onClick
         },
     )
 }
-
-@Composable
-private fun getErrorMsg(loadState: LoadState) =
-    (loadState as LoadState.Error).error.message ?: stringResource(commonR.string.failed_loading_msg)

@@ -18,7 +18,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-abstract class BaseBookmarkViewModelTest<T : TMDbItem> : TMDbItemFixtures {
+abstract class BaseBookmarkViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 

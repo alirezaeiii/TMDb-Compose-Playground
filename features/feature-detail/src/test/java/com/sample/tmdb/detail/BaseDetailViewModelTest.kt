@@ -26,7 +26,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
-abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDbItemFixtures {
+abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDbItemFixtures<R> {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
@@ -39,8 +39,6 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
     protected abstract fun initViewModel()
 
     private val detailWrapper = mockk<DetailWrapper>()
-
-    protected abstract val tmdbItem: R
 
     protected abstract val similarNavKey: TMDbNavKey
 
@@ -68,10 +66,10 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
     @Test
     fun `add bookmark`() {
         every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
-        coJustRun { bookmarkRepository.addBookmark(tmdbItem) }
+        coJustRun { bookmarkRepository.addBookmark(item) }
         coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns true
         initViewModel()
-        viewModel.addBookmark(tmdbItem)
+        viewModel.addBookmark(item)
         coVerify { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) }
         assertEquals(true, viewModel.isBookmarked.value)
     }
@@ -224,6 +222,6 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
     }
 
     companion object {
-        const val TMDB_ITEM_ID = 1
+        const val TMDB_ITEM_ID = 10
     }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.sample.tmdb.common.model.TrendingPerson
+import com.sample.tmdb.common.ui.PagingUiEvent
 import com.sample.tmdb.domain.repository.PersonPagingRepository
 import com.sample.tmdb.navigation.TMDbNavKey
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,6 @@ class PersonPagingViewModel @Inject constructor(repository: PersonPagingReposito
         repository.fetchResultStream().cachedIn(viewModelScope)
 
     fun onSearchClick() {
-        emitEvent(PagingPersonUiEvent.Navigate(TMDbNavKey.SearchPerson))
+        emitEvent(PagingUiEvent.Navigate(TMDbNavKey.SearchPerson))
     }
 }

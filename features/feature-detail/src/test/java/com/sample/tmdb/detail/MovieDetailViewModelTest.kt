@@ -13,19 +13,6 @@ class MovieDetailViewModelTest :
         super.viewModel = MovieDetailViewModel(bookmarkRepository, repository, TMDB_ITEM_ID)
     }
 
-    override val tmdbItem: Movie
-        get() =
-            Movie(
-                TMDB_ITEM_ID,
-                "overview",
-                null,
-                null,
-                null,
-                "name",
-                1.0,
-                1,
-            )
-
     override val similarNavKey: TMDbNavKey
         get() = TMDbNavKey.PagingMovies(SortType.SIMILAR, TMDB_ITEM_ID)
 }

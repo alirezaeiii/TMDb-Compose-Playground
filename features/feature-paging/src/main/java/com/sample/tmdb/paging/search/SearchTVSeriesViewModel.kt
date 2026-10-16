@@ -13,4 +13,4 @@ class SearchTVSeriesViewModel
 constructor(
     @Search repository: BasePagingRepository<TVShow>,
     savedStateHandle: SavedStateHandle,
-) : BaseSearchPagingViewModel<TVShow>(repository, savedStateHandle)
+) : BaseSearchTMDbPagingViewModel<TVShow>(repository, savedStateHandle)
