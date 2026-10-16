@@ -4,8 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.paging.PagingData
 import app.cash.turbine.test
 import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.common.ui.PagingUiEvent
 import com.sample.tmdb.feature.test.TMDbItemFixtures
-import com.sample.tmdb.paging.search.BaseSearchPagingViewModel
+import com.sample.tmdb.paging.search.BaseSearchTMDbPagingViewModel
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -19,7 +20,7 @@ abstract class BaseSearchPagingViewModelTest<T : TMDbItem> :
 
     protected val savedStateHandle = mockk<SavedStateHandle>(relaxed = true)
 
-    protected lateinit var viewModel: BaseSearchPagingViewModel<T>
+    protected lateinit var viewModel: BaseSearchTMDbPagingViewModel<T>
 
     protected abstract fun initViewModel()
 

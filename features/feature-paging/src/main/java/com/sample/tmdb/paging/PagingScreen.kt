@@ -13,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -23,7 +22,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.sample.tmdb.common.R as commonR
+import com.sample.tmdb.common.base.BasePagingViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.ErrorScreen
@@ -32,6 +31,7 @@ import com.sample.tmdb.common.ui.component.TMDbContent
 import com.sample.tmdb.common.ui.component.TMDbProgressBar
 import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.fullSpanGridItem
+import com.sample.tmdb.common.utils.getPagingErrorMsg
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.UiEvent
@@ -42,14 +42,13 @@ fun <T : TMDbItem> PagingScreen(
     viewModel: BasePagingViewModel<T>,
     onNavigate: (TMDbNavKey) -> Unit = {},
     onNavigateUp: () -> Unit = {},
-    onClick: (TMDbItem) -> Unit = viewModel::onItemClick,
+    onClick: (T) -> Unit = viewModel::onItemClick,
 ) {
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collectLatest { event ->
             when (event) {
                 is UiEvent.Navigation -> onNavigate(event.route)
                 is UiEvent.NavigateUp -> onNavigateUp()
-                else -> {}
             }
         }
     }
@@ -63,7 +62,7 @@ fun <T : TMDbItem> PagingScreen(
 
         is LoadState.Error -> {
             ErrorScreen(
-                message = getErrorMsg(lazyTMDbItems.loadState.refresh),
+                message = getPagingErrorMsg(lazyTMDbItems.loadState.refresh),
                 modifier = Modifier.fillMaxSize(),
                 refresh = { lazyTMDbItems.retry() },
             )
@@ -82,7 +81,7 @@ fun <T : TMDbItem> PagingScreen(
 }
 
 @Composable
-private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, onClick: (TMDbItem) -> Unit) {
+private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, onClick: (T) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 140.dp),
         contentPadding =
@@ -103,8 +102,8 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
 
             items(lazyTMDbItems.itemCount) { index ->
                 val tmdbItem = lazyTMDbItems[index]
-                tmdbItem?.let {
-                    TMDbContent(it, onClick)
+                tmdbItem?.let { item ->
+                    TMDbContent(item, onClick = { onClick(item) })
                 }
             }
 
@@ -117,7 +116,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
             if (lazyTMDbItems.loadState.append is LoadState.Error) {
                 fullSpanGridItem {
                     ErrorScreen(
-                        message = getErrorMsg(lazyTMDbItems.loadState.append),
+                        message = getPagingErrorMsg(lazyTMDbItems.loadState.append),
                         modifier = Modifier.padding(vertical = TMDb_8_dp),
                         refresh = { lazyTMDbItems.retry() },
                     )
@@ -145,7 +144,3 @@ private fun NoDataFoundAnimation(modifier: Modifier = Modifier) {
         modifier = modifier,
     )
 }
-
-@Composable
-private fun getErrorMsg(loadState: LoadState) =
-    (loadState as LoadState.Error).error.message ?: stringResource(commonR.string.failed_loading_msg)

@@ -13,4 +13,4 @@ class SearchMoviesViewModel
 constructor(
     @Search repository: BasePagingRepository<Movie>,
     savedStateHandle: SavedStateHandle,
-) : BaseSearchPagingViewModel<Movie>(repository, savedStateHandle)
+) : BaseSearchTMDbPagingViewModel<Movie>(repository, savedStateHandle)

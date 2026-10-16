@@ -6,7 +6,8 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import com.sample.tmdb.common.R
-import com.sample.tmdb.paging.R as pagingR
+import com.sample.tmdb.common.ui.component.SearchBar
+import com.sample.tmdb.common.ui.component.SearchHint
 import org.junit.Rule
 import org.junit.Test
 
@@ -46,7 +47,7 @@ class SearchBarTest {
             }
             onNodeWithText(
                 activity.getString(
-                    pagingR.string.search,
+                    R.string.search,
                     activity.getString(R.string.movies),
                 ),
             ).assertIsDisplayed()
@@ -62,7 +63,7 @@ class SearchBarTest {
             onNodeWithContentDescription(activity.getString(R.string.search_desc)).assertIsDisplayed()
             onNodeWithText(
                 activity.getString(
-                    pagingR.string.search,
+                    R.string.search,
                     activity.getString(R.string.movies),
                 ),
             ).assertIsDisplayed()
