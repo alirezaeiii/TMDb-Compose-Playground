@@ -86,7 +86,7 @@ fun CreditScreen(source: CreditSource, @StringRes resourceId: Int, testPainter: 
 @Composable
 fun CreditScreen(
     @StringRes resourceId: Int,
-    upPress: () -> Unit = {},
+    upPress: (() -> Unit)? = null,
     onPersonClicked: (person: TrendingPerson) -> Unit,
     items: List<TrendingPerson>,
     type: TYPE,
@@ -129,7 +129,7 @@ fun CreditScreen(
             }
         },
     )
-    DestinationBar(title = stringResource(resourceId), upPress = upPress::invoke)
+    DestinationBar(title = stringResource(resourceId), upPress = upPress)
 }
 
 @Composable
