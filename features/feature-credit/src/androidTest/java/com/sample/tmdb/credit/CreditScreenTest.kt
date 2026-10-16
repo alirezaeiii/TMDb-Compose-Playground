@@ -29,6 +29,7 @@ class CreditScreenTest {
                     {},
                     listOf(person),
                     TYPE.CREDIT,
+                    {},
                     rememberVectorPainter(person.gender.placeholderIcon),
                 )
             }
