@@ -3,6 +3,7 @@ package com.sample.tmdb.person.paging
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.sample.tmdb.common.base.BasePagingViewModel
 import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.PagingUiEvent
 import com.sample.tmdb.domain.repository.PersonPagingRepository
@@ -12,10 +13,15 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
 @HiltViewModel
-class PersonPagingViewModel @Inject constructor(repository: PersonPagingRepository) : BasePersonPagingViewModel() {
+class PersonPagingViewModel @Inject constructor(repository: PersonPagingRepository) :
+    BasePagingViewModel<TrendingPerson>() {
 
     override val pagingDataFlow: Flow<PagingData<TrendingPerson>> =
         repository.fetchResultStream().cachedIn(viewModelScope)
+
+    override fun onItemClick(item: TrendingPerson) {
+        emitEvent(PagingUiEvent.Navigate(TMDbNavKey.Person(item.id)))
+    }
 
     fun onSearchClick() {
         emitEvent(PagingUiEvent.Navigate(TMDbNavKey.SearchPerson))
