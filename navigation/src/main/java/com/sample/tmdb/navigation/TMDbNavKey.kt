@@ -16,6 +16,9 @@ sealed interface TMDbNavKey : NavKey {
     data object Bookmark : TMDbNavKey
 
     @Serializable
+    data object People : TMDbNavKey
+
+    @Serializable
     data object Setting : TMDbNavKey
 
     @Serializable

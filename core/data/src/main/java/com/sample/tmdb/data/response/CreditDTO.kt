@@ -1,9 +1,11 @@
 package com.sample.tmdb.data.response
 
-import com.sample.tmdb.common.model.Gender
 import com.sample.tmdb.common.utils.Constants.BASE_WIDTH_342_PATH
+import com.sample.tmdb.common.utils.Constants.GENDER
 import com.sample.tmdb.common.utils.Constants.ID
 import com.sample.tmdb.common.utils.Constants.NAME
+import com.sample.tmdb.common.utils.Constants.PROFILE_PATH
+import com.sample.tmdb.common.utils.toGender
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.squareup.moshi.Json
@@ -66,8 +68,3 @@ private fun CrewResponse.asCrewDomainModel(): Crew = Crew(
     gender.toGender(),
     id,
 )
-
-private fun Int.toGender() = if (this == 1) Gender.FEMALE else Gender.MALE
-
-private const val PROFILE_PATH = "profile_path"
-private const val GENDER = "gender"

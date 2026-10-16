@@ -30,10 +30,12 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Movie
+import androidx.compose.material.icons.outlined.People
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.material.rememberScaffoldState
@@ -58,6 +60,8 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_64_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.credit.CreditScreen
+import com.sample.tmdb.credit.CreditSource
+import com.sample.tmdb.credit.PeopleViewModel
 import com.sample.tmdb.detail.MovieDetailScreen
 import com.sample.tmdb.detail.MovieDetailViewModel
 import com.sample.tmdb.detail.TVShowDetailScreen
@@ -110,6 +114,12 @@ fun TMDbApp() {
                 languageViewModel,
                 onNavigate,
                 scaffoldState,
+            )
+        }
+        entry<TMDbNavKey.People> {
+            CreditScreen(
+                source = CreditSource.FromViewModel(hiltViewModel<PeopleViewModel>(), onNavigate),
+                resourceId = R.string.trending_people,
             )
         }
         entry<TMDbNavKey.Setting> {
@@ -177,18 +187,22 @@ fun TMDbApp() {
         }
         entry<TMDbNavKey.Cast> { key ->
             CreditScreen(
+                source = CreditSource.FromJson(
+                    key.creditsJson,
+                    onNavigateUp,
+                    onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.id)) },
+                ),
                 resourceId = R.string.cast,
-                upPress = onNavigateUp,
-                onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.id)) },
-                creditsJson = key.creditsJson,
             )
         }
         entry<TMDbNavKey.Crew> { key ->
             CreditScreen(
+                source = CreditSource.FromJson(
+                    key.creditsJson,
+                    onNavigateUp,
+                    onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.id)) },
+                ),
                 resourceId = R.string.crew,
-                upPress = onNavigateUp,
-                onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.id)) },
-                creditsJson = key.creditsJson,
             )
         }
         entry<TMDbNavKey.Person> { key ->
@@ -269,7 +283,7 @@ private fun TMDbBottomBar(tabs: Array<HomeSections>, currentRoute: TMDbNavKey, n
                     ),
                 ),
 
-        ) {
+            ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -378,5 +392,6 @@ enum class HomeSections(
     MOVIE_SECTION(TMDbNavKey.MovieNav, R.string.movie, Icons.Outlined.Movie, Icons.Filled.Movie),
     TV_SHOW_SECTION(TMDbNavKey.TvShowNav, R.string.tv_show, Icons.Outlined.Tv, Icons.Filled.Tv),
     BOOKMARK_SECTION(TMDbNavKey.Bookmark, R.string.favorite, Icons.Outlined.Favorite, Icons.Filled.Favorite),
+    PEOPLE_SECTION(TMDbNavKey.People, R.string.people, Icons.Outlined.People, Icons.Filled.People),
     SETTING_SECTION(TMDbNavKey.Setting, R.string.setting, Icons.Outlined.Settings, Icons.Filled.Settings),
 }

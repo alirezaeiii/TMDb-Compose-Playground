@@ -6,4 +6,6 @@
     <string name="movie">Movie</string>
     <string name="tv_show">TVShow</string>
     <string name="setting">Setting</string>
+    <string name="trending_people">Trending Weekly People</string>
+    <string name="people">People</string>
 </resources>

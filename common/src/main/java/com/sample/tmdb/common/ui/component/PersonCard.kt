@@ -25,19 +25,19 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sample.tmdb.common.R
-import com.sample.tmdb.common.model.Credit
-import com.sample.tmdb.common.model.placeholderIcon
+import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.utils.CircleTopCropTransformation
+import com.sample.tmdb.common.utils.placeholderIcon
 
 @Composable
 fun PersonCard(
-    person: Credit,
-    onPersonClicked: (person: Credit) -> Unit,
+    person: TrendingPerson,
+    onPersonClicked: (person: TrendingPerson) -> Unit,
     modifier: Modifier = Modifier,
     testPainter: Painter? = null,
 ) {
@@ -86,7 +86,7 @@ fun PersonCard(
                     stringResource(
                         id = R.string.person_content_description,
                         person.name,
-                        person.role,
+                        person.subtitle ?: "",
                     ),
                 contentScale = ContentScale.FillHeight,
             )
@@ -99,7 +99,7 @@ fun PersonCard(
             modifier = Modifier.padding(top = TMDb_4_dp),
         )
         Text(
-            text = person.role,
+            text = person.subtitle?: "Khar",
             style =
                 MaterialTheme.typography.subtitle2.copy(
                     fontWeight = FontWeight.Normal,

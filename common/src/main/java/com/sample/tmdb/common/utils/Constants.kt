@@ -14,4 +14,6 @@ object Constants {
     const val FIRST_AIR_DATE = "first_air_date"
     const val VOTE_AVERAGE = "vote_average"
     const val VOTE_COUNT = "vote_count"
+    const val PROFILE_PATH = "profile_path"
+    const val GENDER = "gender"
 }

@@ -7,9 +7,10 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import com.sample.tmdb.common.R
-import com.sample.tmdb.common.model.Gender
-import com.sample.tmdb.common.model.placeholderIcon
-import com.sample.tmdb.domain.model.Cast
+import com.sample.tmdb.common.model.TYPE
+import com.sample.tmdb.common.model.TrendingPerson
+import com.sample.tmdb.common.utils.Gender
+import com.sample.tmdb.common.utils.placeholderIcon
 import org.junit.Rule
 import org.junit.Test
 
@@ -20,13 +21,14 @@ class CreditScreenTest {
     @Test
     fun creditScreenTest() {
         with(composeTestRule) {
-            val person = Cast("role", "name", null, Gender.MALE, 1)
+            val person = TrendingPerson(1, "name","role", Gender.MALE, null)
             setContent {
                 CreditScreen(
                     R.string.movies,
                     {},
                     {},
                     listOf(person),
+                    TYPE.CREDIT,
                     rememberVectorPainter(person.gender.placeholderIcon),
                 )
             }

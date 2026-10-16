@@ -1,14 +1,12 @@
 package com.sample.tmdb.detail
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.model.Credit
-import com.sample.tmdb.common.model.Gender
 import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
+import com.sample.tmdb.common.utils.Gender
 import com.sample.tmdb.common.utils.ViewState
-import com.sample.tmdb.domain.model.Cast
-import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
@@ -111,11 +109,16 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
     fun `onPersonClick emits Navigate`() = runTest {
         every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         initViewModel()
-        val credit = mockk<Credit>(relaxed = true)
-        every { credit.id } returns 5
+        val person = TrendingPerson(
+            id = 5,
+            name = "",
+            subtitle = "",
+            gender = Gender.MALE,
+            profileUrl = null,
+        )
 
         viewModel.uiEvent.test {
-            viewModel.onPersonClick(credit)
+            viewModel.onPersonClick(person)
             assertEquals(DetailUiEvent.Navigate(TMDbNavKey.Person(5)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
@@ -137,13 +140,12 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
     fun `onSeeAllCastClicked emits Navigate Cast event`() = runTest {
         every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         val cast = listOf(
-            Cast(
-                role = "",
-                name = "",
-                profileUrl = null,
-                gender = Gender.MALE,
+            TrendingPerson(
                 id = 1,
-
+                name = "",
+                subtitle = "",
+                gender = Gender.MALE,
+                profileUrl = null,
             ),
         )
         initViewModel()
@@ -160,13 +162,12 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
     fun `onSeeAllCrewClicked emits Navigate Crew event`() = runTest {
         every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         val crew = listOf(
-            Crew(
-                role = "",
-                name = "",
-                profileUrl = null,
-                gender = Gender.MALE,
+            TrendingPerson(
                 id = 1,
-
+                name = "",
+                subtitle = "",
+                gender = Gender.MALE,
+                profileUrl = null,
             ),
         )
         initViewModel()

@@ -104,9 +104,9 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import com.sample.tmdb.common.R as commonR
-import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.common.model.TrendingPerson
+import com.sample.tmdb.common.model.asPersonModel
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -127,6 +127,7 @@ import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun MovieDetailScreen(viewModel: MovieDetailViewModel, onNavigate: (TMDbNavKey) -> Unit, onNavigateUp: () -> Unit) {
@@ -209,9 +210,9 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     onTMDbItemSelected: (TMDbItem) -> Unit,
     onAllSimilarSelected: (Int) -> Unit,
-    navigateToPerson: (person: Credit) -> Unit,
-    onSeeAllCastClicked: (List<Credit>) -> Unit,
-    onSeeAllCrewClicked: (List<Credit>) -> Unit,
+    navigateToPerson: (person: TrendingPerson) -> Unit,
+    onSeeAllCastClicked: (List<TrendingPerson>) -> Unit,
+    onSeeAllCrewClicked: (List<TrendingPerson>) -> Unit,
     navigateUp: () -> Unit,
     fab: @Composable (MutableState<Boolean>, Boolean, TMDbItemDetails) -> Unit,
 ) {
@@ -469,7 +470,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
 
                     if (it.cast.isNotEmpty()) {
                         TMDbDetailItemSection(
-                            items = it.cast,
+                            items = it.cast.asPersonModel().result,
                             headerResId = R.string.cast,
                             itemContent = { item, _ ->
                                 PersonCard(
@@ -497,7 +498,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
 
                     if (it.crew.isNotEmpty()) {
                         TMDbDetailItemSection(
-                            items = it.crew,
+                            items = it.crew.asPersonModel().result,
                             headerResId = R.string.crew,
                             itemContent = { item, _ ->
                                 PersonCard(

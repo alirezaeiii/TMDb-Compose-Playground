@@ -7,9 +7,9 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import com.sample.tmdb.common.R
-import com.sample.tmdb.common.model.Gender
-import com.sample.tmdb.common.model.placeholderIcon
-import com.sample.tmdb.domain.model.Cast
+import com.sample.tmdb.common.model.TrendingPerson
+import com.sample.tmdb.common.utils.Gender
+import com.sample.tmdb.common.utils.placeholderIcon
 import org.junit.Rule
 import org.junit.Test
 
@@ -20,7 +20,7 @@ class PersonCardTest {
     @Test
     fun personCardTest() {
         with(composeTestRule) {
-            val person = Cast("role", "name", null, Gender.MALE, 1)
+            val person = TrendingPerson(1,"name", "subtitle", Gender.MALE, null)
             setContent {
                 PersonCard(
                     person = person,
