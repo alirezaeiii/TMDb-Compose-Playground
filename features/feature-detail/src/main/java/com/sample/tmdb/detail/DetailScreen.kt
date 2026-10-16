@@ -104,6 +104,7 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.model.asPersonModel
@@ -127,7 +128,6 @@ import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun MovieDetailScreen(viewModel: MovieDetailViewModel, onNavigate: (TMDbNavKey) -> Unit, onNavigateUp: () -> Unit) {

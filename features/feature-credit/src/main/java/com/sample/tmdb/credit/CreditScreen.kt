@@ -28,10 +28,7 @@ import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.navigation.TMDbNavKey
 
 sealed interface CreditSource {
-    data class FromViewModel(
-        val viewModel: PeopleViewModel,
-        val onNavigate: (TMDbNavKey) -> Unit,
-    ) : CreditSource
+    data class FromViewModel(val viewModel: PeopleViewModel, val onNavigate: (TMDbNavKey) -> Unit) : CreditSource
 
     data class FromJson(
         val json: String,
@@ -41,11 +38,7 @@ sealed interface CreditSource {
 }
 
 @Composable
-fun CreditScreen(
-    source: CreditSource,
-    @StringRes resourceId: Int,
-    testPainter: Painter? = null,
-) {
+fun CreditScreen(source: CreditSource, @StringRes resourceId: Int, testPainter: Painter? = null) {
     when (source) {
         is CreditSource.FromViewModel -> {
             Content(

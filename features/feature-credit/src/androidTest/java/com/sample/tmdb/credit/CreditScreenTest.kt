@@ -21,7 +21,7 @@ class CreditScreenTest {
     @Test
     fun creditScreenTest() {
         with(composeTestRule) {
-            val person = TrendingPerson(1, "name","role", Gender.MALE, null)
+            val person = TrendingPerson(1, "name", "role", Gender.MALE, null)
             setContent {
                 CreditScreen(
                     R.string.movies,

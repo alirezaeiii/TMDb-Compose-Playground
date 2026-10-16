@@ -117,7 +117,5 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    internal abstract fun bindPeopleRepository(
-        peopleRepository: PeopleRepository,
-    ): BaseRepository<People, Nothing>
+    internal abstract fun bindPeopleRepository(peopleRepository: PeopleRepository): BaseRepository<People, Nothing>
 }

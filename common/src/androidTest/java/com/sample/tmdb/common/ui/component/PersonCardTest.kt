@@ -20,7 +20,7 @@ class PersonCardTest {
     @Test
     fun personCardTest() {
         with(composeTestRule) {
-            val person = TrendingPerson(1,"name", "subtitle", Gender.MALE, null)
+            val person = TrendingPerson(1, "name", "subtitle", Gender.MALE, null)
             setContent {
                 PersonCard(
                     person = person,

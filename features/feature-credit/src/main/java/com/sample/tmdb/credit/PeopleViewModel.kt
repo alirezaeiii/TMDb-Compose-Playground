@@ -9,12 +9,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class PeopleViewModel @Inject constructor(
-    repository: BaseRepository<People, Nothing>,
-) : BaseViewModel<People, Nothing, PeopleUIEvent>(
-    repository,
-    createWarningEvent = PeopleUIEvent::ShowWarning,
-) {
+class PeopleViewModel @Inject constructor(repository: BaseRepository<People, Nothing>) :
+    BaseViewModel<People, Nothing, PeopleUIEvent>(
+        repository,
+        createWarningEvent = PeopleUIEvent::ShowWarning,
+    ) {
     fun onPersonClick(people: TrendingPerson) {
         emitEvent(PeopleUIEvent.Navigate(TMDbNavKey.Person(people.id)))
     }

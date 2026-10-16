@@ -24,16 +24,15 @@ class TrendingPersonDTO(
     val profilePath: String?,
 )
 
-fun TrendingPersonDTO.asDomainModel(): TrendingPerson =
-    TrendingPerson(
-        id = id,
-        name = name,
-        subtitle = originalName,
-        gender = gender.toGender(),
-        profileUrl = profilePath?.let { profilePath ->
-            String.format(
-                BASE_WIDTH_342_PATH,
-                profilePath,
-            )
-        },
-    )
+fun TrendingPersonDTO.asDomainModel(): TrendingPerson = TrendingPerson(
+    id = id,
+    name = name,
+    subtitle = originalName,
+    gender = gender.toGender(),
+    profileUrl = profilePath?.let { profilePath ->
+        String.format(
+            BASE_WIDTH_342_PATH,
+            profilePath,
+        )
+    },
+)

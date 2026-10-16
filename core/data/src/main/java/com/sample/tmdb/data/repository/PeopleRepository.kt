@@ -7,9 +7,9 @@ import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.asDomainModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineDispatcher
 
 @Singleton
 class PeopleRepository @Inject constructor(

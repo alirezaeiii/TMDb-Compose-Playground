@@ -99,7 +99,7 @@ fun PersonCard(
             modifier = Modifier.padding(top = TMDb_4_dp),
         )
         Text(
-            text = person.subtitle?: "Khar",
+            text = person.subtitle ?: "Khar",
             style =
                 MaterialTheme.typography.subtitle2.copy(
                     fontWeight = FontWeight.Normal,

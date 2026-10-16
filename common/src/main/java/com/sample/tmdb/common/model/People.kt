@@ -2,10 +2,7 @@ package com.sample.tmdb.common.model
 
 import com.sample.tmdb.common.utils.Gender
 
-data class People(
-    val result: List<TrendingPerson>,
-    val type: TYPE = TYPE.TRENDING
-)
+data class People(val result: List<TrendingPerson>, val type: TYPE = TYPE.TRENDING)
 
 data class TrendingPerson(
     val id: Int,
@@ -17,11 +14,9 @@ data class TrendingPerson(
 
 enum class TYPE { TRENDING, CREDIT }
 
-fun List<Credit>.asPersonModel(
-    type: TYPE = TYPE.CREDIT
-): People = People(
+fun List<Credit>.asPersonModel(type: TYPE = TYPE.CREDIT): People = People(
     result = map(Credit::asPersonModel),
-    type = type
+    type = type,
 )
 
 private fun Credit.asPersonModel(): TrendingPerson = TrendingPerson(

@@ -7,8 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 class PeopleDTO(
     @Json(name = "results")
-    val results: List<TrendingPersonDTO>
+    val results: List<TrendingPersonDTO>,
 )
 
-fun PeopleDTO.asDomainModel(): People =
-    People(results.map(TrendingPersonDTO::asDomainModel))
+fun PeopleDTO.asDomainModel(): People = People(results.map(TrendingPersonDTO::asDomainModel))

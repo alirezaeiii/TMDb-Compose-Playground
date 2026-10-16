@@ -283,7 +283,7 @@ private fun TMDbBottomBar(tabs: Array<HomeSections>, currentRoute: TMDbNavKey, n
                     ),
                 ),
 
-            ) {
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
