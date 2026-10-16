@@ -12,7 +12,13 @@ import com.sample.tmdb.navigation.TMDbNavKey
 fun rememberTMDbAppState(
     navigationState: NavigationState = rememberNavigationState(
         startRoute = TMDbNavKey.MovieNav,
-        topLevelRoutes = setOf(TMDbNavKey.MovieNav, TMDbNavKey.TvShowNav, TMDbNavKey.Bookmark, TMDbNavKey.Setting),
+        topLevelRoutes = setOf(
+            TMDbNavKey.MovieNav,
+            TMDbNavKey.TvShowNav,
+            TMDbNavKey.Bookmark,
+            TMDbNavKey.People,
+            TMDbNavKey.Setting,
+        ),
     ),
 ) = remember(navigationState) {
     TMDbAppState(navigationState)

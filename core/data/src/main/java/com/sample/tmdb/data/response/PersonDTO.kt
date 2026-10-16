@@ -3,6 +3,7 @@ package com.sample.tmdb.data.response
 import com.sample.tmdb.common.utils.Constants
 import com.sample.tmdb.common.utils.Constants.ID
 import com.sample.tmdb.common.utils.Constants.NAME
+import com.sample.tmdb.common.utils.Constants.PROFILE_PATH
 import com.sample.tmdb.domain.model.Person
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -21,7 +22,7 @@ data class PersonDTO(
     val biography: String,
     @Json(name = "place_of_birth")
     val placeOfBirth: String?,
-    @Json(name = "profile_path")
+    @Json(name = PROFILE_PATH)
     val profilePath: String?,
 )
 

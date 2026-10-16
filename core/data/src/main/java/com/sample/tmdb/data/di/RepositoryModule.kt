@@ -1,12 +1,15 @@
 package com.sample.tmdb.data.di
 
 import com.sample.tmdb.common.base.BaseRepository
+import com.sample.tmdb.common.model.People
+import com.sample.tmdb.data.repository.PeopleRepository
 import com.sample.tmdb.data.repository.PersonRepository
 import com.sample.tmdb.data.repository.movie.MovieFeedRepository
 import com.sample.tmdb.data.repository.movie.detail.BookmarkMovieDetailsRepositoryImpl
 import com.sample.tmdb.data.repository.movie.detail.BookmarkMovieRepository
 import com.sample.tmdb.data.repository.movie.detail.MovieDetailRepository
 import com.sample.tmdb.data.repository.movie.paging.MoviesPagingRepository
+import com.sample.tmdb.data.repository.movie.paging.PersonPagingRepositoryImpl
 import com.sample.tmdb.data.repository.movie.paging.SearchMoviesPagingRepository
 import com.sample.tmdb.data.repository.tvshow.TVShowFeedRepository
 import com.sample.tmdb.data.repository.tvshow.detail.BookmarkTVShowDetailsRepositoryImpl
@@ -24,6 +27,7 @@ import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
+import com.sample.tmdb.domain.repository.PersonPagingRepository
 import com.sample.tmdb.domain.utils.Search
 import com.sample.tmdb.domain.utils.TMDb
 import dagger.Binds
@@ -112,4 +116,14 @@ abstract class RepositoryModule {
     internal abstract fun bindBookmarkTVShowRepository(
         bookmarkTVShowRepository: BookmarkTVShowRepository,
     ): BaseBookmarkRepository<TVShow>
+
+    @Singleton
+    @Binds
+    internal abstract fun bindPeopleRepository(peopleRepository: PeopleRepository): BaseRepository<People, Nothing>
+
+    @Singleton
+    @Binds
+    internal abstract fun bindPersonPagingRepository(
+        personPagingRepository: PersonPagingRepositoryImpl,
+    ): PersonPagingRepository
 }

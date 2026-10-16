@@ -16,6 +16,9 @@ sealed interface TMDbNavKey : NavKey {
     data object Bookmark : TMDbNavKey
 
     @Serializable
+    data object People : TMDbNavKey
+
+    @Serializable
     data object Setting : TMDbNavKey
 
     @Serializable
@@ -47,4 +50,7 @@ sealed interface TMDbNavKey : NavKey {
 
     @Serializable
     data class Images(val imagesJson: String, val initialPage: Int) : TMDbNavKey
+
+    @Serializable
+    data object PersonPaging : TMDbNavKey
 }

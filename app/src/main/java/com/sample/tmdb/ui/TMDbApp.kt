@@ -30,10 +30,12 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Movie
+import androidx.compose.material.icons.outlined.People
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Tv
 import androidx.compose.material.rememberScaffoldState
@@ -53,11 +55,14 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.sample.tmdb.R
 import com.sample.tmdb.bookmark.BookmarkScreen
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.ui.Dimens.TMDb_48_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_64_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.credit.CreditScreen
+import com.sample.tmdb.credit.CreditSource
+import com.sample.tmdb.credit.PeopleViewModel
 import com.sample.tmdb.detail.MovieDetailScreen
 import com.sample.tmdb.detail.MovieDetailViewModel
 import com.sample.tmdb.detail.TVShowDetailScreen
@@ -73,6 +78,7 @@ import com.sample.tmdb.paging.main.TVShowPagingScreen
 import com.sample.tmdb.paging.main.TvShowPagingViewModel
 import com.sample.tmdb.paging.search.SearchMoviesScreen
 import com.sample.tmdb.paging.search.SearchTVSeriesScreen
+import com.sample.tmdb.person.paging.PagingPersonScreen
 import com.sample.tmdb.preson.PersonScreen
 import com.sample.tmdb.preson.PersonViewModel
 import com.sample.tmdb.setting.SettingsScreen
@@ -110,6 +116,12 @@ fun TMDbApp() {
                 languageViewModel,
                 onNavigate,
                 scaffoldState,
+            )
+        }
+        entry<TMDbNavKey.People> {
+            CreditScreen(
+                source = CreditSource.FromViewModel(hiltViewModel<PeopleViewModel>(), onNavigate),
+                resourceId = commonR.string.trending_people,
             )
         }
         entry<TMDbNavKey.Setting> {
@@ -177,18 +189,22 @@ fun TMDbApp() {
         }
         entry<TMDbNavKey.Cast> { key ->
             CreditScreen(
+                source = CreditSource.FromJson(
+                    key.creditsJson,
+                    onNavigateUp,
+                    onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.id)) },
+                ),
                 resourceId = R.string.cast,
-                upPress = onNavigateUp,
-                onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.id)) },
-                creditsJson = key.creditsJson,
             )
         }
         entry<TMDbNavKey.Crew> { key ->
             CreditScreen(
+                source = CreditSource.FromJson(
+                    key.creditsJson,
+                    onNavigateUp,
+                    onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.id)) },
+                ),
                 resourceId = R.string.crew,
-                upPress = onNavigateUp,
-                onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.id)) },
-                creditsJson = key.creditsJson,
             )
         }
         entry<TMDbNavKey.Person> { key ->
@@ -204,6 +220,13 @@ fun TMDbApp() {
             ImagesScreen(
                 imagesJson = key.imagesJson,
                 initialPage = key.initialPage,
+            )
+        }
+        entry<TMDbNavKey.PersonPaging> {
+            PagingPersonScreen(
+                viewModel = hiltViewModel(),
+                onNavigate,
+                onNavigateUp,
             )
         }
     }
@@ -378,5 +401,6 @@ enum class HomeSections(
     MOVIE_SECTION(TMDbNavKey.MovieNav, R.string.movie, Icons.Outlined.Movie, Icons.Filled.Movie),
     TV_SHOW_SECTION(TMDbNavKey.TvShowNav, R.string.tv_show, Icons.Outlined.Tv, Icons.Filled.Tv),
     BOOKMARK_SECTION(TMDbNavKey.Bookmark, R.string.favorite, Icons.Outlined.Favorite, Icons.Filled.Favorite),
+    PEOPLE_SECTION(TMDbNavKey.People, R.string.people, Icons.Outlined.People, Icons.Filled.People),
     SETTING_SECTION(TMDbNavKey.Setting, R.string.setting, Icons.Outlined.Settings, Icons.Filled.Settings),
 }

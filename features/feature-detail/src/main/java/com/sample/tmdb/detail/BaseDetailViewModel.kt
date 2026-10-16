@@ -4,10 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.base.BaseViewModel
-import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.domain.model.Cast
-import com.sample.tmdb.domain.model.Crew
+import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
@@ -53,7 +51,7 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
 
     abstract fun onAllSimilarClick(id: Int)
 
-    fun onPersonClick(person: Credit) {
+    fun onPersonClick(person: TrendingPerson) {
         emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Person(person.id)))
     }
 
@@ -62,13 +60,13 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
         emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Images(json, index)))
     }
 
-    fun onSeeAllCastClicked(cast: List<Credit>) {
-        val json = gson.toJson(cast, object : TypeToken<List<Cast>>() {}.type)
+    fun onSeeAllCastClicked(cast: List<TrendingPerson>) {
+        val json = gson.toJson(cast, object : TypeToken<List<TrendingPerson>>() {}.type)
         emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Cast(json)))
     }
 
-    fun onSeeAllCrewClicked(crew: List<Credit>) {
-        val json = gson.toJson(crew, object : TypeToken<List<Crew>>() {}.type)
+    fun onSeeAllCrewClicked(crew: List<TrendingPerson>) {
+        val json = gson.toJson(crew, object : TypeToken<List<TrendingPerson>>() {}.type)
         emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Crew(json)))
     }
 

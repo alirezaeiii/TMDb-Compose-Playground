@@ -73,6 +73,7 @@ dependencies {
     implementation project(':features:feature-credit')
     implementation project(':features:feature-person')
     implementation project(':features:feature-gallery')
+    implementation project(':features:feature-person-paging')
 
     implementation libs.material
     implementation libs.compose.material

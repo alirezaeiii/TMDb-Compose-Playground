@@ -6,4 +6,6 @@
     <string name="movie">Película</string>
     <string name="tv_show">Serie</string>
     <string name="setting">Configuración</string>
+    <string name="trending_people">Personas populares de la semana</string>
+    <string name="people">Personas</string>
 </resources>
