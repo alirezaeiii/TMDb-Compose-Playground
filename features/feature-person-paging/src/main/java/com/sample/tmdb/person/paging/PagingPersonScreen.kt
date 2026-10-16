@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
@@ -30,7 +31,6 @@ import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.UiEvent
 import kotlinx.coroutines.flow.collectLatest
-import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun PagingPersonScreen(

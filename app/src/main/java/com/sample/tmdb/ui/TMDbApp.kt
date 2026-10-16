@@ -234,7 +234,7 @@ fun TMDbApp() {
             SearchPagingScreen(
                 hiltViewModel(),
                 onNavigate,
-                onNavigateUp
+                onNavigateUp,
             )
         }
     }

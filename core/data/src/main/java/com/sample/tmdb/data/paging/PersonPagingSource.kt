@@ -16,15 +16,16 @@ class PersonPagingSource(
     private val personApi: PersonService,
     private val context: Context,
     private val query: String? = null,
-) :
-    PagingSource<Int, TrendingPerson>() {
+) : PagingSource<Int, TrendingPerson>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TrendingPerson> {
         val page = params.key ?: STARTING_PAGE_INDEX
         return try {
-            val response = (query?.let {
-                personApi.getTrendingPeople(it, page)
-            } ?: personApi.getTrendingPeople(page)).results.asDomainModel()
+            val response = (
+                query?.let {
+                    personApi.getTrendingPeople(it, page)
+                } ?: personApi.getTrendingPeople(page)
+                ).results.asDomainModel()
 
             LoadResult.Page(
                 data = response,
