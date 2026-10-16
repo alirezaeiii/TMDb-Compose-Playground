@@ -13,8 +13,7 @@ open class BaseSearchTMDbPagingViewModel<T : TMDbItem>(
     savedStateHandle: SavedStateHandle,
 ) : BaseSearchPagingViewModel<T>(savedStateHandle) {
 
-    override fun fetchResultStream(query: String): Flow<PagingData<T>> =
-        repository.fetchResultStream(query)
+    override fun fetchResultStream(query: String): Flow<PagingData<T>> = repository.fetchResultStream(query)
 
     open fun onItemClick(item: TMDbItem) {
         emitEvent(PagingUiEvent.Navigate(item.detailNavKey))

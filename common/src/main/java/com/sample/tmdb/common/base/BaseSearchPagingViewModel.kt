@@ -9,9 +9,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
-abstract class BaseSearchPagingViewModel<T : Any>(
-    private val savedStateHandle: SavedStateHandle,
-) : BasePagingViewModel<T>() {
+abstract class BaseSearchPagingViewModel<T : Any>(private val savedStateHandle: SavedStateHandle) :
+    BasePagingViewModel<T>() {
 
     protected abstract fun fetchResultStream(query: String): Flow<PagingData<T>>
 
