@@ -131,10 +131,7 @@ fun CreditScreen(
 }
 
 @Composable
-fun CircularLoadMoreButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-) {
+fun CircularLoadMoreButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     Button(
         onClick = { onClick() },
         modifier = modifier
