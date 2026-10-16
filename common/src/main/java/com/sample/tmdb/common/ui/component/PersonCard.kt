@@ -86,7 +86,7 @@ fun PersonCard(
                     stringResource(
                         id = R.string.person_content_description,
                         person.name,
-                        person.subtitle ?: "",
+                        person.subtitle,
                     ),
                 contentScale = ContentScale.FillHeight,
             )
@@ -99,7 +99,7 @@ fun PersonCard(
             modifier = Modifier.padding(top = TMDb_4_dp),
         )
         Text(
-            text = person.subtitle ?: "Khar",
+            text = person.subtitle,
             style =
                 MaterialTheme.typography.subtitle2.copy(
                     fontWeight = FontWeight.Normal,
