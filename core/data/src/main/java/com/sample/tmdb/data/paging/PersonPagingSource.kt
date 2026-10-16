@@ -12,13 +12,19 @@ import java.io.IOException
 
 private const val STARTING_PAGE_INDEX = 1
 
-class PersonPagingSource(private val personApi: PersonService, private val context: Context) :
+class PersonPagingSource(
+    private val personApi: PersonService,
+    private val context: Context,
+    private val query: String? = null,
+) :
     PagingSource<Int, TrendingPerson>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TrendingPerson> {
         val page = params.key ?: STARTING_PAGE_INDEX
         return try {
-            val response = personApi.getTrendingPeople(page).results.asDomainModel()
+            val response = (query?.let {
+                personApi.getTrendingPeople(it, page)
+            } ?: personApi.getTrendingPeople(page)).results.asDomainModel()
 
             LoadResult.Page(
                 data = response,

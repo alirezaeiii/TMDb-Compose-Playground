@@ -27,6 +27,7 @@ class CreditScreenTest {
                     R.string.movies,
                     {},
                     {},
+                    {},
                     listOf(person),
                     TYPE.CREDIT,
                     {},

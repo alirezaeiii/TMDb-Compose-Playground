@@ -1,4 +1,4 @@
-package com.sample.tmdb.paging.search.component
+package com.sample.tmdb.common.ui.component
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode

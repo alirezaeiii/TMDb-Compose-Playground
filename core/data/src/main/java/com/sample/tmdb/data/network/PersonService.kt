@@ -15,4 +15,7 @@ interface PersonService {
 
     @GET("3/trending/person/week")
     suspend fun getTrendingPeople(@Query("page") page: Int): PeopleDTO
+
+    @GET("3/search/person")
+    suspend fun getTrendingPeople(@Query("query") query: String, @Query("page") page: Int): PeopleDTO
 }

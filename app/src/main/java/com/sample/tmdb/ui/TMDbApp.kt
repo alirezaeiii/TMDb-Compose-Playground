@@ -79,6 +79,7 @@ import com.sample.tmdb.paging.main.TvShowPagingViewModel
 import com.sample.tmdb.paging.search.SearchMoviesScreen
 import com.sample.tmdb.paging.search.SearchTVSeriesScreen
 import com.sample.tmdb.person.paging.PagingPersonScreen
+import com.sample.tmdb.person.paging.SearchPagingScreen
 import com.sample.tmdb.preson.PersonScreen
 import com.sample.tmdb.preson.PersonViewModel
 import com.sample.tmdb.setting.SettingsScreen
@@ -227,6 +228,13 @@ fun TMDbApp() {
                 viewModel = hiltViewModel(),
                 onNavigate,
                 onNavigateUp,
+            )
+        }
+        entry<TMDbNavKey.SearchPerson> {
+            SearchPagingScreen(
+                hiltViewModel(),
+                onNavigate,
+                onNavigateUp
             )
         }
     }

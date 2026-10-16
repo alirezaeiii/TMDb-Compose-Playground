@@ -41,22 +41,21 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_24_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
+import com.sample.tmdb.common.ui.component.AnimatedSearch
+import com.sample.tmdb.common.ui.component.InfinitelyFlowingCircles
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.UiEvent
 import com.sample.tmdb.paging.PagingScreen
-import com.sample.tmdb.paging.R
-import com.sample.tmdb.paging.search.component.AnimatedSearch
-import com.sample.tmdb.paging.search.component.InfinitelyFlowingCircles
 import kotlinx.coroutines.flow.collectLatest
+import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun SearchMoviesScreen(viewModel: SearchMoviesViewModel, onNavigate: (TMDbNavKey) -> Unit, onNavigateUp: () -> Unit) {
@@ -95,7 +94,6 @@ fun <T : TMDbItem> Search(
             when (event) {
                 is UiEvent.Navigation -> onNavigate(event.route)
                 is UiEvent.NavigateUp -> onNavigateUp()
-                else -> {}
             }
         }
     }
@@ -229,7 +227,7 @@ fun SearchBar(
                         Icon(
                             imageVector = Icons.Default.Clear,
                             tint = MaterialTheme.colors.primary,
-                            contentDescription = stringResource(id = R.string.clear),
+                            contentDescription = stringResource(id = commonR.string.clear),
                         )
                     }
                 }
@@ -254,7 +252,7 @@ fun SearchHint(@StringRes resourceId: Int) {
         )
         Spacer(Modifier.width(TMDb_8_dp))
         Text(
-            text = stringResource(R.string.search, stringResource(resourceId)),
+            text = stringResource(commonR.string.search, stringResource(resourceId)),
             color = MaterialTheme.colors.primary,
         )
     }

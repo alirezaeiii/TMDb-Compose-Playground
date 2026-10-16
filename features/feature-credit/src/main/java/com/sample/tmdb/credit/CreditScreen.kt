@@ -58,6 +58,7 @@ fun CreditScreen(source: CreditSource, @StringRes resourceId: Int, testPainter: 
                 CreditScreen(
                     resourceId = resourceId,
                     items = item.result,
+                    onSearchClick = source.viewModel::onSearchClick,
                     onPersonClicked = source.viewModel::onPersonClick,
                     type = item.type,
                     onMoreClick = source.viewModel::onMoreClick,
@@ -87,6 +88,7 @@ fun CreditScreen(source: CreditSource, @StringRes resourceId: Int, testPainter: 
 fun CreditScreen(
     @StringRes resourceId: Int,
     upPress: (() -> Unit)? = null,
+    onSearchClick: (() -> Unit)? = null,
     onPersonClicked: (person: TrendingPerson) -> Unit,
     items: List<TrendingPerson>,
     type: TYPE,
@@ -129,7 +131,7 @@ fun CreditScreen(
             }
         },
     )
-    DestinationBar(title = stringResource(resourceId), upPress = upPress)
+    DestinationBar(title = stringResource(resourceId), onSearchClicked = onSearchClick, upPress = upPress)
 }
 
 @Composable

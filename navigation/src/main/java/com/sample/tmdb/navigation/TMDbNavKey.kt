@@ -53,4 +53,7 @@ sealed interface TMDbNavKey : NavKey {
 
     @Serializable
     data object PersonPaging : TMDbNavKey
+
+    @Serializable
+    data object SearchPerson : TMDbNavKey
 }

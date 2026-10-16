@@ -21,7 +21,7 @@ class PersonPagingRepositoryImpl @Inject constructor(
 
     override fun fetchResultStream(query: String?): Flow<PagingData<TrendingPerson>> = Pager(
         config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
-        pagingSourceFactory = { PersonPagingSource(personApi, context) },
+        pagingSourceFactory = { PersonPagingSource(personApi, context, query) },
     ).flow
 
     companion object {

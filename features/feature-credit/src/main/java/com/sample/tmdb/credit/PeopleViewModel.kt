@@ -21,4 +21,8 @@ class PeopleViewModel @Inject constructor(repository: BaseRepository<People, Not
     fun onMoreClick() {
         emitEvent(PeopleUIEvent.Navigate(TMDbNavKey.PersonPaging))
     }
+
+    fun onSearchClick() {
+        emitEvent(PeopleUIEvent.Navigate(TMDbNavKey.SearchPerson))
+    }
 }

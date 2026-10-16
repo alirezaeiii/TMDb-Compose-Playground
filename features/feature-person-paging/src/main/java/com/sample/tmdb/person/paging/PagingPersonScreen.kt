@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
@@ -31,18 +30,21 @@ import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.UiEvent
 import kotlinx.coroutines.flow.collectLatest
+import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun PagingPersonScreen(
     viewModel: PersonPagingViewModel,
     onNavigate: (TMDbNavKey) -> Unit = {},
     onNavigateUp: () -> Unit = {},
+    onSearchClick: () -> Unit = viewModel::onSearchClick,
     onClick: (TrendingPerson) -> Unit = viewModel::onItemClick,
 ) {
     Box {
         PagingPersonScreen(baseViewModel = viewModel, onNavigate, onNavigateUp, onClick)
         DestinationBar(
             title = stringResource(commonR.string.trending_people),
+            onSearchClicked = onSearchClick,
             upPress = viewModel::onNavigateUp,
         )
     }
@@ -86,7 +88,7 @@ fun PagingPersonScreen(
 }
 
 @Composable
-private fun LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<TrendingPerson>, onClick: (TrendingPerson) -> Unit) {
+private fun LazyTMDbItemGrid(lazyItems: LazyPagingItems<TrendingPerson>, onClick: (TrendingPerson) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(TMDb_120_dp),
         contentPadding =
@@ -106,25 +108,25 @@ private fun LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<TrendingPerson>, onC
                 TMDbSpacer()
             }
 
-            items(lazyTMDbItems.itemCount) { index ->
-                val item = lazyTMDbItems[index]
+            items(lazyItems.itemCount) { index ->
+                val item = lazyItems[index]
                 item?.let {
                     PersonCard(it, onClick)
                 }
             }
 
-            if (lazyTMDbItems.loadState.append is LoadState.Loading) {
+            if (lazyItems.loadState.append is LoadState.Loading) {
                 fullSpanGridItem {
                     LoadingRow(modifier = Modifier.padding(vertical = TMDb_8_dp))
                 }
             }
 
-            if (lazyTMDbItems.loadState.append is LoadState.Error) {
+            if (lazyItems.loadState.append is LoadState.Error) {
                 fullSpanGridItem {
                     ErrorScreen(
-                        message = getErrorMsg(lazyTMDbItems.loadState.append),
+                        message = getErrorMsg(lazyItems.loadState.append),
                         modifier = Modifier.padding(vertical = TMDb_8_dp),
-                        refresh = { lazyTMDbItems.retry() },
+                        refresh = { lazyItems.retry() },
                     )
                 }
             }
