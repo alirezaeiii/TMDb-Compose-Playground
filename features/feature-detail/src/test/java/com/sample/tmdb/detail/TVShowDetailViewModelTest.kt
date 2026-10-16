@@ -13,19 +13,6 @@ class TVShowDetailViewModelTest :
         super.viewModel = TVShowDetailViewModel(bookmarkRepository, repository, TMDB_ITEM_ID)
     }
 
-    override val tmdbItem: TVShow
-        get() =
-            TVShow(
-                TMDB_ITEM_ID,
-                "overview",
-                null,
-                null,
-                null,
-                "name",
-                1.0,
-                1,
-            )
-
     override val similarNavKey: TMDbNavKey
         get() = TMDbNavKey.PagingTvShows(SortType.SIMILAR, TMDB_ITEM_ID)
 }

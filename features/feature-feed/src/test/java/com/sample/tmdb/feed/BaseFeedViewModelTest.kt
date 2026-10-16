@@ -21,7 +21,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures {
+abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 

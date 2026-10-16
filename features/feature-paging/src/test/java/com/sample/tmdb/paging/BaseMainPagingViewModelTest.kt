@@ -16,7 +16,7 @@ import org.junit.Test
 
 abstract class BaseMainPagingViewModelTest<T : TMDbItem> :
     BasePagingViewModelTest<T>(),
-    TMDbItemFixtures {
+    TMDbItemFixtures<T> {
     protected lateinit var viewModel: BaseMainPagingViewModel<T>
 
     protected abstract fun initViewModel(sortType: SortType)

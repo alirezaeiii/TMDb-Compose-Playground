@@ -16,7 +16,7 @@ import org.junit.Test
 
 abstract class BaseSearchPagingViewModelTest<T : TMDbItem> :
     BasePagingViewModelTest<T>(),
-    TMDbItemFixtures {
+    TMDbItemFixtures<T> {
 
     protected val savedStateHandle = mockk<SavedStateHandle>(relaxed = true)
 

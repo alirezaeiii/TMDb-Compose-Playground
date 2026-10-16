@@ -21,7 +21,7 @@ abstract class BasePagingViewModel<T : Any> : ViewModel() {
         }
     }
 
-    open fun onItemClick(item: T) {}
+    abstract fun onItemClick(item: T)
 
     fun onNavigateUp() {
         emitEvent(PagingUiEvent.NavigateUp)
