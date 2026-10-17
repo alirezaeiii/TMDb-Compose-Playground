@@ -11,5 +11,5 @@ open class BasePagingViewModelTest<T : TMDbItem> {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    protected val repository = mockk<BasePagingRepository<Int, T>>()
+    protected val repository = mockk<BasePagingRepository<T>>()
 }

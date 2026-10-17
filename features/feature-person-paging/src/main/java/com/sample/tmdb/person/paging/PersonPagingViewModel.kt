@@ -13,7 +13,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
 @HiltViewModel
-class PersonPagingViewModel @Inject constructor(repository: BasePagingRepository<Int, TrendingPerson>) :
+class PersonPagingViewModel @Inject constructor(repository: BasePagingRepository<TrendingPerson>) :
     BasePagingViewModel<TrendingPerson>() {
 
     override val pagingDataFlow: Flow<PagingData<TrendingPerson>> =

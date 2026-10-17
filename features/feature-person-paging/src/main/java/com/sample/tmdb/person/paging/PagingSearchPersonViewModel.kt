@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 
 @HiltViewModel
 class PagingSearchPersonViewModel @Inject constructor(
-    private val repository: BasePagingRepository<Int, TrendingPerson>,
+    private val repository: BasePagingRepository<TrendingPerson>,
     savedStateHandle: SavedStateHandle,
 ) : BaseSearchPagingViewModel<TrendingPerson>(savedStateHandle) {
 

@@ -7,13 +7,13 @@ import androidx.paging.PagingSource
 import com.sample.tmdb.navigation.SortType
 import kotlinx.coroutines.flow.Flow
 
-abstract class BasePagingRepository<Key : Any, T : Any> {
+abstract class BasePagingRepository<T : Any> {
 
     protected abstract fun createPagingSource(
         query: String? = null,
         id: Int? = null,
         type: SortType? = null,
-    ): PagingSource<Key, T>
+    ): PagingSource<Int, T>
 
     fun fetchResultStream(query: String? = null, id: Int? = null, type: SortType? = null): Flow<PagingData<T>> = Pager(
         config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),

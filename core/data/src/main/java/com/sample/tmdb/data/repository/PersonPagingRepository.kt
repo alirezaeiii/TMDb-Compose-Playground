@@ -12,10 +12,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PersonPagingRepositoryImpl @Inject constructor(
+class PersonPagingRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val personApi: PersonService,
-) : BasePagingRepository<Int, TrendingPerson>() {
+) : BasePagingRepository<TrendingPerson>() {
 
     override fun createPagingSource(query: String?, id: Int?, type: SortType?): PagingSource<Int, TrendingPerson> =
         PersonPagingSource(personApi, context, query)

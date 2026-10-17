@@ -13,7 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel(assistedFactory = TvShowPagingViewModel.Factory::class)
 open class TvShowPagingViewModel @AssistedInject constructor(
-    @TMDb repository: BasePagingRepository<Int, TVShow>,
+    @TMDb repository: BasePagingRepository<TVShow>,
     @Assisted id: Int? = null,
     @Assisted type: SortType,
 ) : BaseMainPagingViewModel<TVShow>(repository, id, type) {

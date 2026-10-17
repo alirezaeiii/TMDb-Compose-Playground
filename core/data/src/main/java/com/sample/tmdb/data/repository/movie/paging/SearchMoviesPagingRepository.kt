@@ -15,7 +15,7 @@ import javax.inject.Singleton
 class SearchMoviesPagingRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val movieApi: MovieService,
-) : BasePagingRepository<Int, Movie>() {
+) : BasePagingRepository<Movie>() {
 
     override fun createPagingSource(query: String?, id: Int?, type: SortType?): PagingSource<Int, Movie> =
         SearchMoviesPagingSource(context, movieApi, query!!)

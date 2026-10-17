@@ -9,6 +9,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchMoviesViewModel @Inject constructor(
-    @Search repository: BasePagingRepository<Int, Movie>,
+    @Search repository: BasePagingRepository<Movie>,
     savedStateHandle: SavedStateHandle,
 ) : BaseSearchTMDbPagingViewModel<Movie>(repository, savedStateHandle)

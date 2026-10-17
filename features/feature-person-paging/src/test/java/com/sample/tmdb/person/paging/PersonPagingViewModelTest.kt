@@ -21,7 +21,7 @@ class PersonPagingViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    private val repository = mockk<BasePagingRepository<Int, TrendingPerson>>()
+    private val repository = mockk<BasePagingRepository<TrendingPerson>>()
     private val person = TrendingPerson(10, "name", "subtitle", Gender.MALE, null)
 
     @Test
