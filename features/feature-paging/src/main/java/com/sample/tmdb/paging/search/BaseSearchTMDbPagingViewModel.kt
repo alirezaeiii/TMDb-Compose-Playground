@@ -9,7 +9,7 @@ import com.sample.tmdb.domain.repository.BasePagingRepository
 import kotlinx.coroutines.flow.Flow
 
 open class BaseSearchTMDbPagingViewModel<T : TMDbItem>(
-    private val repository: BasePagingRepository<T>,
+    private val repository: BasePagingRepository<Int, T>,
     savedStateHandle: SavedStateHandle,
 ) : BaseSearchPagingViewModel<T>(savedStateHandle) {
 

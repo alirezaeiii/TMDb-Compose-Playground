@@ -11,7 +11,7 @@ import com.sample.tmdb.navigation.SortType
 import kotlinx.coroutines.flow.Flow
 
 abstract class BaseMainPagingViewModel<T : TMDbItem>(
-    repository: BasePagingRepository<T>,
+    repository: BasePagingRepository<Int, T>,
     id: Int? = null,
     type: SortType,
 ) : BasePagingViewModel<T>() {

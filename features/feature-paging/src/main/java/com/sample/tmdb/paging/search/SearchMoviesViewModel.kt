@@ -8,9 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchMoviesViewModel
-@Inject
-constructor(
-    @Search repository: BasePagingRepository<Movie>,
+class SearchMoviesViewModel @Inject constructor(
+    @Search repository: BasePagingRepository<Int, Movie>,
     savedStateHandle: SavedStateHandle,
 ) : BaseSearchTMDbPagingViewModel<Movie>(repository, savedStateHandle)
