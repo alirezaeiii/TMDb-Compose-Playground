@@ -49,6 +49,23 @@ class TVSeriesPagingSourceTest : BasePagingSourceTest<TVShow, TVShowResponse>() 
         `when`(getApiCall(sortType)).thenReturn(NetworkTMDbWrapper(listOf(tvShow1, tvShow2)))
     }
 
+    override suspend fun getApiCall(sortType: SortType): NetworkTMDbWrapper<TVShowResponse> = when (sortType) {
+        SortType.TRENDING -> api.trendingTVSeries(1)
+        SortType.DISCOVER -> api.discoverTVSeries(1)
+        SortType.MOST_POPULAR -> api.popularTVSeries(1)
+        SortType.NOW_PLAYING -> api.airingTodayTVSeries(1)
+        SortType.UPCOMING -> api.onTheAirTVSeries(1)
+        SortType.HIGHEST_RATED -> api.topRatedTVSeries(1)
+        SortType.SIMILAR -> api.fetchSimilarTVSeries(1, 1)
+    }
+
+    override fun getPagingDataSource(sortType: SortType): BasePagingSource<TVShow> = TVSeriesPagingSource(
+        context,
+        api,
+        sortType,
+        tvShowId = if (sortType == SortType.SIMILAR) 1 else null,
+    )
+
     @Test
     fun pageKeyedShowPagingSource() = runTest {
         SortType.entries.forEach { sortType ->
@@ -69,21 +86,4 @@ class TVSeriesPagingSourceTest : BasePagingSourceTest<TVShow, TVShowResponse>() 
             )
         }
     }
-
-    override suspend fun getApiCall(sortType: SortType): NetworkTMDbWrapper<TVShowResponse> = when (sortType) {
-        SortType.TRENDING -> api.trendingTVSeries(1)
-        SortType.DISCOVER -> api.discoverTVSeries(1)
-        SortType.MOST_POPULAR -> api.popularTVSeries(1)
-        SortType.NOW_PLAYING -> api.airingTodayTVSeries(1)
-        SortType.UPCOMING -> api.onTheAirTVSeries(1)
-        SortType.HIGHEST_RATED -> api.topRatedTVSeries(1)
-        SortType.SIMILAR -> api.fetchSimilarTVSeries(1, 1)
-    }
-
-    override fun getPagingDataSource(sortType: SortType): BasePagingSource<TVShow> = TVSeriesPagingSource(
-        context,
-        api,
-        sortType,
-        tvShowId = if (sortType == SortType.SIMILAR) 1 else null,
-    )
 }

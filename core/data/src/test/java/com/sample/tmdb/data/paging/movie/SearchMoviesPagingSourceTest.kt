@@ -48,6 +48,10 @@ class SearchMoviesPagingSourceTest : BaseSearchPagingSourceTest<Movie, MovieResp
         `when`(getApiCall()).thenReturn(NetworkTMDbWrapper(listOf(movie1, movie2)))
     }
 
+    override suspend fun getApiCall(): NetworkTMDbWrapper<MovieResponse> = api.searchMovies(1, "")
+
+    override fun getPagingDataSource(): BasePagingSource<Movie> = SearchMoviesPagingSource(context, api, "")
+
     @Test
     fun pageKeyedShowPagingSource() = runTest {
         mockApiResponse()
@@ -66,8 +70,4 @@ class SearchMoviesPagingSourceTest : BaseSearchPagingSourceTest<Movie, MovieResp
             ),
         )
     }
-
-    override suspend fun getApiCall(): NetworkTMDbWrapper<MovieResponse> = api.searchMovies(1, "")
-
-    override fun getPagingDataSource(): BasePagingSource<Movie> = SearchMoviesPagingSource(context, api, "")
 }
