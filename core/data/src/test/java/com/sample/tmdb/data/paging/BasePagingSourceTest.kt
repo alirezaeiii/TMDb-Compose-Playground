@@ -5,7 +5,7 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.data.response.TMDbItemResponse
 import com.sample.tmdb.domain.paging.BasePagingSource
-import org.junit.Before
+import com.sample.tmdb.navigation.SortType
 import org.mockito.Mock
 
 abstract class BasePagingSourceTest<T : TMDbItem, R : TMDbItemResponse> {
@@ -13,17 +13,9 @@ abstract class BasePagingSourceTest<T : TMDbItem, R : TMDbItemResponse> {
     @Mock
     protected lateinit var context: Context
 
-    protected lateinit var pagingSource: BasePagingSource<T>
+    protected abstract fun getPagingDataSource(sortType: SortType): BasePagingSource<T>
 
-    protected abstract fun getPagingDataSource(): BasePagingSource<T>
+    protected abstract fun mockApiResponse(sortType: SortType)
 
-    protected abstract fun mockApiResponse()
-
-    protected abstract suspend fun getApiCall(): NetworkTMDbWrapper<R>
-
-    @Before
-    fun setup() {
-        pagingSource = getPagingDataSource()
-        mockApiResponse()
-    }
+    protected abstract suspend fun getApiCall(sortType: SortType): NetworkTMDbWrapper<R>
 }

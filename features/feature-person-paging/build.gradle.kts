@@ -37,7 +37,12 @@ dependencies {
     implementation(libs.compose.paging)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    testImplementation(project(":test:common-test"))
+    testImplementation(project(":test:feature-test"))
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
 }
