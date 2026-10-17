@@ -84,13 +84,13 @@ fun PagingPersonScreen(
         }
 
         else -> {
-            LazyTMDbItemGrid(lazyItems, onClick)
+            LazyItemGrid(lazyItems, onClick)
         }
     }
 }
 
 @Composable
-private fun LazyTMDbItemGrid(lazyItems: LazyPagingItems<TrendingPerson>, onClick: (TrendingPerson) -> Unit) {
+private fun LazyItemGrid(lazyItems: LazyPagingItems<TrendingPerson>, onClick: (TrendingPerson) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(TMDb_120_dp),
         contentPadding =
