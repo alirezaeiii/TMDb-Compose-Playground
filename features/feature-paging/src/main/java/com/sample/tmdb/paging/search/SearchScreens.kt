@@ -2,15 +2,13 @@ package com.sample.tmdb.paging.search
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.common.ui.HandleUiEvents
 import com.sample.tmdb.common.ui.component.SearchScreenContent
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.UiEvent
 import com.sample.tmdb.paging.PagingScreen
-import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun SearchMoviesScreen(viewModel: SearchMoviesViewModel, onNavigate: (TMDbNavKey) -> Unit, onNavigateUp: () -> Unit) {
@@ -44,14 +42,11 @@ fun <T : TMDbItem> Search(
     @StringRes resourceId: Int,
     modifier: Modifier = Modifier,
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.uiEvent.collectLatest { event ->
-            when (event) {
-                is UiEvent.Navigation -> onNavigate(event.route)
-                is UiEvent.NavigateUp -> onNavigateUp()
-            }
-        }
-    }
+    HandleUiEvents(
+        uiEvent = viewModel.uiEvent,
+        onNavigate = onNavigate,
+        onNavigateUp = onNavigateUp,
+    )
 
     SearchScreenContent(
         resourceId = resourceId,

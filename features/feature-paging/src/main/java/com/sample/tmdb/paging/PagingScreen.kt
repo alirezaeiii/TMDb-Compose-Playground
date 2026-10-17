@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +24,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sample.tmdb.common.base.BasePagingViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
+import com.sample.tmdb.common.ui.HandleUiEvents
 import com.sample.tmdb.common.ui.component.ErrorScreen
 import com.sample.tmdb.common.ui.component.LoadingRow
 import com.sample.tmdb.common.ui.component.TMDbContent
@@ -34,8 +34,6 @@ import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.getPagingErrorMsg
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.UiEvent
-import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun <T : TMDbItem> PagingScreen(
@@ -44,14 +42,11 @@ fun <T : TMDbItem> PagingScreen(
     onNavigateUp: () -> Unit = {},
     onClick: (T) -> Unit = viewModel::onItemClick,
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.uiEvent.collectLatest { event ->
-            when (event) {
-                is UiEvent.Navigation -> onNavigate(event.route)
-                is UiEvent.NavigateUp -> onNavigateUp()
-            }
-        }
-    }
+    HandleUiEvents(
+        uiEvent = viewModel.uiEvent,
+        onNavigate = onNavigate,
+        onNavigateUp = onNavigateUp,
+    )
 
     val lazyTMDbItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
 

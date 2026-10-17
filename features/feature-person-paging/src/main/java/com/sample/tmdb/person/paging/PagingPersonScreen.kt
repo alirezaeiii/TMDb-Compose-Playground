@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,6 +20,7 @@ import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
+import com.sample.tmdb.common.ui.HandleUiEvents
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.ErrorScreen
 import com.sample.tmdb.common.ui.component.LoadingRow
@@ -31,8 +31,6 @@ import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.getPagingErrorMsg
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.UiEvent
-import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun PagingPersonScreen(
@@ -59,14 +57,11 @@ fun PagingPersonScreen(
     onNavigateUp: () -> Unit = {},
     onClick: (TrendingPerson) -> Unit = viewModel::onItemClick,
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.uiEvent.collectLatest { event ->
-            when (event) {
-                is UiEvent.Navigation -> onNavigate(event.route)
-                is UiEvent.NavigateUp -> onNavigateUp()
-            }
-        }
-    }
+    HandleUiEvents(
+        uiEvent = viewModel.uiEvent,
+        onNavigate = onNavigate,
+        onNavigateUp = onNavigateUp,
+    )
 
     val lazyItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
 
