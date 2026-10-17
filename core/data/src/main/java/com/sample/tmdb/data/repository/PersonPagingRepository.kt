@@ -1,10 +1,10 @@
 package com.sample.tmdb.data.repository
 
 import android.content.Context
-import androidx.paging.PagingSource
 import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.paging.PersonPagingSource
+import com.sample.tmdb.domain.paging.BasePagingSource
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.navigation.SortType
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -17,6 +17,6 @@ class PersonPagingRepository @Inject constructor(
     private val personApi: PersonService,
 ) : BasePagingRepository<TrendingPerson>() {
 
-    override fun createPagingSource(query: String?, id: Int?, type: SortType?): PagingSource<Int, TrendingPerson> =
+    override fun createPagingSource(query: String?, id: Int?, type: SortType?): BasePagingSource<TrendingPerson> =
         PersonPagingSource(personApi, context, query)
 }

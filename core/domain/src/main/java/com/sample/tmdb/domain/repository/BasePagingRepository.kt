@@ -3,7 +3,7 @@ package com.sample.tmdb.domain.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
+import com.sample.tmdb.domain.paging.BasePagingSource
 import com.sample.tmdb.navigation.SortType
 import kotlinx.coroutines.flow.Flow
 
@@ -13,7 +13,7 @@ abstract class BasePagingRepository<T : Any> {
         query: String? = null,
         id: Int? = null,
         type: SortType? = null,
-    ): PagingSource<Int, T>
+    ): BasePagingSource<T>
 
     fun fetchResultStream(query: String? = null, id: Int? = null, type: SortType? = null): Flow<PagingData<T>> = Pager(
         config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),

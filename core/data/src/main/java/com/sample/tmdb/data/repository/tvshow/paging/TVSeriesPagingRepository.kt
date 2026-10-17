@@ -1,10 +1,10 @@
 package com.sample.tmdb.data.repository.tvshow.paging
 
 import android.content.Context
-import androidx.paging.PagingSource
 import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.paging.tvshow.TVSeriesPagingSource
 import com.sample.tmdb.domain.model.TVShow
+import com.sample.tmdb.domain.paging.BasePagingSource
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.navigation.SortType
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -17,6 +17,6 @@ class TVSeriesPagingRepository @Inject constructor(
     private val tvShowApi: TVShowService,
 ) : BasePagingRepository<TVShow>() {
 
-    override fun createPagingSource(query: String?, id: Int?, type: SortType?): PagingSource<Int, TVShow> =
+    override fun createPagingSource(query: String?, id: Int?, type: SortType?): BasePagingSource<TVShow> =
         TVSeriesPagingSource(context, tvShowApi, type!!, id)
 }
