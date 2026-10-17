@@ -28,6 +28,7 @@ import com.sample.tmdb.common.model.TYPE
 import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_146_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.DestinationBar
@@ -102,7 +103,6 @@ fun CreditScreen(
                 start = TMDb_6_dp,
                 end = TMDb_6_dp,
                 top = TMDb_6_dp,
-                bottom = navigationBarPadding().plus(TMDb_8_dp),
             ),
         content = {
             fullSpanGridItem {
@@ -126,7 +126,7 @@ fun CreditScreen(
                     ) {
                         CircularLoadMoreButton(onMoreClick)
                     }
-                    Spacer(Modifier.height(navigationBarPadding() + TMDb_120_dp))
+                    Spacer(Modifier.height(navigationBarPadding() + TMDb_146_dp))
                 }
             }
         },

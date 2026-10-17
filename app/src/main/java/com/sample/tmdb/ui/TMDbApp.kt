@@ -62,7 +62,6 @@ import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.credit.CreditScreen
 import com.sample.tmdb.credit.CreditSource
-import com.sample.tmdb.credit.PeopleViewModel
 import com.sample.tmdb.detail.MovieDetailScreen
 import com.sample.tmdb.detail.MovieDetailViewModel
 import com.sample.tmdb.detail.TVShowDetailScreen
@@ -121,7 +120,7 @@ fun TMDbApp() {
         }
         entry<TMDbNavKey.People> {
             CreditScreen(
-                source = CreditSource.FromViewModel(hiltViewModel<PeopleViewModel>(), onNavigate),
+                source = CreditSource.FromViewModel(hiltViewModel(), onNavigate),
                 resourceId = commonR.string.trending_people,
             )
         }
