@@ -83,13 +83,6 @@ fun PagingPersonScreen(
 @Composable
 private fun LazyItemGrid(lazyItems: LazyPagingItems<TrendingPerson>, onClick: (TrendingPerson) -> Unit) {
     PersonGrid(
-        contentPadding =
-            PaddingValues(
-                start = TMDb_6_dp,
-                end = TMDb_6_dp,
-                top = TMDb_6_dp,
-                bottom = navigationBarPadding() + TMDb_8_dp,
-            ),
         content = {
             fullSpanGridItem {
                 TMDbSpacer()

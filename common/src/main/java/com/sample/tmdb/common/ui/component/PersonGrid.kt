@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
+import com.sample.tmdb.common.utils.navigationBarPadding
 
 @Composable
 fun PersonGrid(
@@ -20,6 +21,7 @@ fun PersonGrid(
             start = TMDb_6_dp,
             end = TMDb_6_dp,
             top = TMDb_6_dp,
+            bottom = navigationBarPadding() + TMDb_8_dp,
         ),
     content: LazyGridScope.() -> Unit,
 ) {

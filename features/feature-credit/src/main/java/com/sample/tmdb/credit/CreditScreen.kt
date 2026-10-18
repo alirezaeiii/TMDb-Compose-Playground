@@ -24,7 +24,7 @@ import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.model.TYPE
 import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.Content
-import com.sample.tmdb.common.ui.Dimens.TMDb_146_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.PersonCard
@@ -115,7 +115,7 @@ fun CreditScreen(
                     ) {
                         CircularLoadMoreButton(onMoreClick)
                     }
-                    Spacer(Modifier.height(navigationBarPadding() + TMDb_146_dp))
+                    Spacer(Modifier.height(navigationBarPadding() + TMDb_104_dp))
                 }
             }
         },
