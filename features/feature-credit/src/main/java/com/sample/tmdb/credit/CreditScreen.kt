@@ -2,14 +2,11 @@ package com.sample.tmdb.credit
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -27,12 +24,11 @@ import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.model.TYPE
 import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.Content
-import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_146_dp
-import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.PersonCard
+import com.sample.tmdb.common.ui.component.PersonGrid
 import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.navigationBarPadding
@@ -96,14 +92,7 @@ fun CreditScreen(
     onMoreClick: () -> Unit = {},
     testPainter: Painter? = null,
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(TMDb_120_dp),
-        contentPadding =
-            PaddingValues(
-                start = TMDb_6_dp,
-                end = TMDb_6_dp,
-                top = TMDb_6_dp,
-            ),
+    PersonGrid(
         content = {
             fullSpanGridItem {
                 TMDbSpacer()
