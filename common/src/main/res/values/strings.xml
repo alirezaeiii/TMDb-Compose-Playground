@@ -11,6 +11,7 @@
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_system">System Default</string>
+    <string name="language_system">System Default</string>
     <string name="trending_people">Trending Weekly People</string>
     <string name="search">Search %s</string>
     <string name="clear">Clear</string>

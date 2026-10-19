@@ -1,18 +1,19 @@
 package com.sample.tmdb.data.utils
 
+import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.data.BuildConfig
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import java.util.Locale
 import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-fun createNetworkClient(baseUrl: String) = retrofitClient(baseUrl, httpClient())
+fun createNetworkClient(baseUrl: String, languageRepository: LanguageRepository) =
+    retrofitClient(baseUrl, httpClient(languageRepository))
 
-private fun httpClient(): OkHttpClient {
+private fun httpClient(languageRepository: LanguageRepository): OkHttpClient {
     val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
     val clientBuilder = OkHttpClient.Builder()
     if (BuildConfig.DEBUG) {
@@ -25,7 +26,7 @@ private fun httpClient(): OkHttpClient {
 
         val url = originalHttpUrl.newBuilder()
             .addQueryParameter("api_key", BuildConfig.TMDB_API_KEY)
-            .addQueryParameter("language", Locale.getDefault().toLanguageTag())
+            .addQueryParameter("language", languageRepository.languageCode.value)
             .build()
 
         val request = original.newBuilder().url(url).build()

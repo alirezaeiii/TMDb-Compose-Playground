@@ -39,6 +39,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.sample.tmdb.common.R as commonR
+import com.sample.tmdb.common.model.LanguageMode
 import com.sample.tmdb.common.model.ThemeMode
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -56,11 +57,20 @@ import com.sample.tmdb.common.utils.navigationBarPadding
 @Composable
 fun SettingsScreen(viewModel: LanguageViewModel, themeViewModel: ThemeViewModel, modifier: Modifier = Modifier) {
     val themeMode by themeViewModel.themeMode.collectAsState()
-    val languageCode by viewModel.languageCode.collectAsState()
+    val languageMode by viewModel.languageMode.collectAsState()
     val supportedLanguages = viewModel.supportedLanguages
     val supportedThemes = themeViewModel.supportedThemes
 
-    val languageOptions = supportedLanguages.map { Settings.Option(it) }
+    val languageOptions =
+        supportedLanguages.map { mode ->
+            Settings.Option(
+                when (mode) {
+                    LanguageMode.SYSTEM -> stringResource(commonR.string.language_system)
+                    LanguageMode.ENGLISH -> LanguageMode.ENGLISH.code
+                    LanguageMode.SPANISH -> LanguageMode.SPANISH.code
+                },
+            )
+        }
     val themeOptions =
         supportedThemes.map { theme ->
             Settings.Option(
@@ -80,7 +90,7 @@ fun SettingsScreen(viewModel: LanguageViewModel, themeViewModel: ThemeViewModel,
                 iconResourceId = R.drawable.ic_language,
                 titleResourceId = R.string.language,
                 options = languageOptions,
-                selectedIndex = supportedLanguages.indexOf(languageCode).coerceAtLeast(0),
+                selectedIndex = supportedLanguages.indexOf(languageMode).coerceAtLeast(0),
                 onOptionSelected = { viewModel.setLanguage(supportedLanguages[it]) },
             ),
             Settings.SelectBox(
