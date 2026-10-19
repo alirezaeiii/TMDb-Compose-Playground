@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.di
 
+import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.data.BuildConfig
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.network.PersonService
@@ -17,7 +18,8 @@ import retrofit2.Retrofit
 class DataModule {
     @Singleton
     @Provides
-    fun provideNetworkClient(): Retrofit = createNetworkClient(BuildConfig.TMDB_BASE_URL)
+    fun provideNetworkClient(languageRepository: LanguageRepository): Retrofit =
+        createNetworkClient(BuildConfig.TMDB_BASE_URL, languageRepository)
 
     @Singleton
     @Provides

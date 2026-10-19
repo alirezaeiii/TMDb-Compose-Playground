@@ -1,10 +1,12 @@
 package com.sample.tmdb.common.repository
 
 import android.app.Application
+import android.app.LocaleManager
 import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.ui.text.intl.Locale
+import androidx.core.os.ConfigurationCompat
 import androidx.core.os.LocaleListCompat
 import com.sample.tmdb.common.model.LanguageMode
 import javax.inject.Inject
@@ -14,7 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 @Singleton
-class LanguageRepository @Inject constructor(application: Application) {
+class LanguageRepository @Inject constructor(private val application: Application) {
 
     private val sharedPreferences = application.getSharedPreferences("tmdb_prefs", Context.MODE_PRIVATE)
 
@@ -33,10 +35,14 @@ class LanguageRepository @Inject constructor(application: Application) {
     }
 
     fun setLanguageMode(mode: LanguageMode) {
-        sharedPreferences.edit().putString(KEY_LANGUAGE_MODE, mode.name).apply()
+        sharedPreferences.edit()
+            .putString(KEY_LANGUAGE_MODE, mode.name)
+            .apply()
+
+        applyLanguageMode(mode)
+
         _languageMode.value = mode
         _languageCode.value = resolveLanguageCode(mode)
-        applyLanguageMode(mode)
     }
 
     private fun applyLanguageMode(mode: LanguageMode) {
@@ -49,8 +55,18 @@ class LanguageRepository @Inject constructor(application: Application) {
     }
 
     private fun resolveLanguageCode(mode: LanguageMode): String = when (mode) {
-        LanguageMode.SYSTEM -> Resources.getSystem().configuration.locales[0]?.language
-            ?: Locale.current.language
+        LanguageMode.SYSTEM -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                val localeManager =
+                    application.getSystemService(LocaleManager::class.java)
+
+                localeManager.systemLocales[0]?.language ?: "en"
+            } else {
+                ConfigurationCompat.getLocales(
+                    Resources.getSystem().configuration,
+                )[0]?.language ?: "en"
+            }
+        }
 
         LanguageMode.ENGLISH -> LanguageMode.ENGLISH.code
 

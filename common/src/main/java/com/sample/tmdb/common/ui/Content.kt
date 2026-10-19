@@ -25,7 +25,7 @@ fun <T, S, E : UiEvent> Content(
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(languageViewModel, viewModel) {
         languageViewModel?.languageCode?.collectLatest { newLanguageCode ->
             viewModel.refreshOnLanguageChange(newLanguageCode)
         }
