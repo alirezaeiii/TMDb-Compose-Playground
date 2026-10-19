@@ -12,6 +12,7 @@
     <string name="theme_light">Claro</string>
     <string name="theme_dark">Oscuro</string>
     <string name="theme_system">Predeterminado del sistema</string>
+    <string name="language_system">Predeterminado del sistema</string>
     <string name="trending_people">Personas populares de la semana</string>
     <string name="search">Buscar %s</string>
     <string name="clear">Limpiar</string>
