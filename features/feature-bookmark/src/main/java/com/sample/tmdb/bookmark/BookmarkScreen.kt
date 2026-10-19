@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -36,8 +39,8 @@ import androidx.compose.ui.unit.dp
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
-import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_48_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_96_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
@@ -166,7 +169,11 @@ private fun <T : TMDbItem> TabContent(
         onNavigate = onNavigate,
         scaffoldState = scaffoldState,
     ) { state, items ->
-        TMDbSwipeRefresh(state.isRefreshing, { viewModel.refresh(true) }) {
+        TMDbSwipeRefresh(
+            state.isRefreshing,
+            { viewModel.refresh(true) },
+            WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + TMDb_48_dp,
+        ) {
             if (items.isEmpty()) {
                 EmptyView(textResourceId = textResourceId)
             } else {
@@ -182,7 +189,7 @@ fun TabContent(items: List<TMDbItem>, onClick: (TMDbItem) -> Unit) {
         columns = GridCells.Adaptive(minSize = 140.dp),
         contentPadding =
             PaddingValues(
-                top = TMDb_104_dp,
+                top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + TMDb_48_dp,
                 start = TMDb_8_dp,
                 end = TMDb_8_dp,
             ),
