@@ -2,6 +2,7 @@ package com.sample.tmdb.credit
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,7 +25,8 @@ import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.model.TYPE
 import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.Content
-import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_136_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.component.DestinationBar
@@ -102,6 +104,13 @@ fun CreditScreen(
     testPainter: Painter? = null,
 ) {
     PersonGrid(
+        contentPadding =
+            PaddingValues(
+                start = TMDb_6_dp,
+                end = TMDb_6_dp,
+                top = TMDb_6_dp,
+                bottom = if (type == TYPE.CREDIT) navigationBarPadding() + TMDb_8_dp else 0.dp,
+            ),
         content = {
             fullSpanGridItem {
                 TMDbSpacer()
@@ -124,12 +133,16 @@ fun CreditScreen(
                     ) {
                         CircularLoadMoreButton(onMoreClick)
                     }
-                    Spacer(Modifier.height(navigationBarPadding() + TMDb_104_dp))
+                    Spacer(Modifier.height(navigationBarPadding() + TMDb_136_dp))
                 }
             }
         },
     )
-    DestinationBar(title = stringResource(resourceId), onSearchClicked = onSearchClick, upPress = upPress)
+    DestinationBar(
+        title = stringResource(resourceId),
+        onSearchClicked = onSearchClick,
+        upPress = upPress,
+    )
 }
 
 @Composable
