@@ -26,16 +26,22 @@ import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
+import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.ui.component.PersonGrid
+import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.navigation.TMDbNavKey
 
 sealed interface CreditSource {
-    data class FromViewModel(val viewModel: PeopleViewModel, val onNavigate: (TMDbNavKey) -> Unit) : CreditSource
+    data class FromViewModel(
+        val viewModel: PeopleViewModel,
+        val languageViewModel: LanguageViewModel,
+        val onNavigate: (TMDbNavKey) -> Unit,
+    ) : CreditSource
 
     data class FromJson(
         val json: String,
@@ -50,17 +56,20 @@ fun CreditScreen(source: CreditSource, @StringRes resourceId: Int, testPainter: 
         is CreditSource.FromViewModel -> {
             Content(
                 viewModel = source.viewModel,
+                languageViewModel = source.languageViewModel,
                 onNavigate = source.onNavigate,
-            ) { _, item ->
-                CreditScreen(
-                    resourceId = resourceId,
-                    items = item.result,
-                    onSearchClick = source.viewModel::onSearchClick,
-                    onPersonClicked = source.viewModel::onPersonClick,
-                    type = item.type,
-                    onMoreClick = source.viewModel::onMoreClick,
-                    testPainter = testPainter,
-                )
+            ) { state, item ->
+                TMDbSwipeRefresh(state.isRefreshing, { source.viewModel.refresh(true) }) {
+                    CreditScreen(
+                        resourceId = resourceId,
+                        items = item.result,
+                        onSearchClick = source.viewModel::onSearchClick,
+                        onPersonClicked = source.viewModel::onPersonClick,
+                        type = item.type,
+                        onMoreClick = source.viewModel::onMoreClick,
+                        testPainter = testPainter,
+                    )
+                }
             }
         }
 

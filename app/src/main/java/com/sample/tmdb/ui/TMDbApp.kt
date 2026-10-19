@@ -120,7 +120,7 @@ fun TMDbApp() {
         }
         entry<TMDbNavKey.People> {
             CreditScreen(
-                source = CreditSource.FromViewModel(hiltViewModel(), onNavigate),
+                source = CreditSource.FromViewModel(hiltViewModel(), languageViewModel, onNavigate),
                 resourceId = commonR.string.trending_people,
             )
         }
