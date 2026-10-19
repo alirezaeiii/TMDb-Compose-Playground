@@ -48,13 +48,13 @@ class LanguageRepository @Inject constructor(application: Application) {
         AppCompatDelegate.setApplicationLocales(localeList)
     }
 
-    private fun resolveLanguageCode(mode: LanguageMode): String {
-        return when (mode) {
-            LanguageMode.SYSTEM -> Resources.getSystem().configuration.locales[0]?.language
-                ?: Locale.current.language
-            LanguageMode.ENGLISH -> LanguageMode.ENGLISH.code
-            LanguageMode.SPANISH -> LanguageMode.SPANISH.code
-        }
+    private fun resolveLanguageCode(mode: LanguageMode): String = when (mode) {
+        LanguageMode.SYSTEM -> Resources.getSystem().configuration.locales[0]?.language
+            ?: Locale.current.language
+
+        LanguageMode.ENGLISH -> LanguageMode.ENGLISH.code
+
+        LanguageMode.SPANISH -> LanguageMode.SPANISH.code
     }
 
     companion object {
