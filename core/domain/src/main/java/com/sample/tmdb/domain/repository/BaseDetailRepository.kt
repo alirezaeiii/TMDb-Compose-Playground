@@ -3,6 +3,7 @@ package com.sample.tmdb.domain.repository
 import android.content.Context
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.common.model.asPersonModel
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.DetailWrapper
@@ -31,8 +32,8 @@ abstract class BaseDetailRepository<T : TMDbItemDetails>(context: Context, ioDis
         val creditWrapper = creditDeferred.await()
 
         DetailWrapper(
-            creditWrapper.first,
-            creditWrapper.second,
+            creditWrapper.first.asPersonModel().result,
+            creditWrapper.second.asPersonModel().result,
             detailsDeferred.await(),
             imageDeferred.await(),
             similarDeferred.await(),
