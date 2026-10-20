@@ -109,7 +109,6 @@ fun CreditScreen(
                 start = TMDb_6_dp,
                 end = TMDb_6_dp,
                 top = TMDb_6_dp,
-                bottom = if (type == TYPE.CREDIT) navigationBarPadding() + TMDb_8_dp else 0.dp,
             ),
         content = {
             fullSpanGridItem {
@@ -123,8 +122,9 @@ fun CreditScreen(
                     testPainter = testPainter,
                 )
             }
-            if (type == TYPE.TRENDING) {
-                fullSpanGridItem {
+
+            fullSpanGridItem {
+                if (type == TYPE.TRENDING) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -134,6 +134,8 @@ fun CreditScreen(
                         CircularLoadMoreButton(onMoreClick)
                     }
                     Spacer(Modifier.height(navigationBarPadding() + TMDb_136_dp))
+                } else {
+                    Spacer(Modifier.height(navigationBarPadding() + TMDb_8_dp))
                 }
             }
         },
