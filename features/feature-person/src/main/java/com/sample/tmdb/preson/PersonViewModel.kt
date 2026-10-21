@@ -13,7 +13,6 @@ class PersonViewModel @AssistedInject constructor(repository: BaseRepository<Per
     BaseViewModel<Person, Int, PersonUiEvent>(
         repository,
         personId,
-        createWarningEvent = PersonUiEvent::ShowWarning,
     ) {
     fun onNavigateUp() {
         emitEvent(PersonUiEvent.NavigateUp)

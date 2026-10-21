@@ -23,7 +23,6 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
 ) : BaseViewModel<DetailWrapper, Int, DetailUiEvent>(
     repository,
     tmdbId,
-    createWarningEvent = DetailUiEvent::ShowWarning,
 ) {
     private val gson = Gson()
 

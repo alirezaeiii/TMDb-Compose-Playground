@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 abstract class BaseViewModel<T, S, E : UiEvent>(
     private val repository: BaseRepository<T, S>,
     private val id: S? = null,
-    private val createWarningEvent: (String) -> E,
+    private val createWarningEvent: ((String) -> E)? = null,
     languageRepository: LanguageRepository? = null,
     loadDataOnInit: Boolean = true,
 ) : ViewModel() {
@@ -103,7 +103,7 @@ abstract class BaseViewModel<T, S, E : UiEvent>(
     }
 
     private suspend fun emitWarning(message: String) {
-        _uiEvent.emit(createWarningEvent(message))
+        createWarningEvent?.let { _uiEvent.emit(it(message)) }
     }
 
     protected fun emitEvent(event: E) {
