@@ -2,16 +2,13 @@ package com.sample.tmdb.paging
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -19,16 +16,10 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sample.tmdb.common.base.BasePagingViewModel
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
-import com.sample.tmdb.common.ui.HandleUiEvents
-import com.sample.tmdb.common.ui.component.ErrorScreen
-import com.sample.tmdb.common.ui.component.LoadingRow
+import com.sample.tmdb.common.ui.PagingContent
 import com.sample.tmdb.common.ui.component.TMDbContent
 import com.sample.tmdb.common.ui.component.TMDbGrid
-import com.sample.tmdb.common.ui.component.TMDbProgressBar
-import com.sample.tmdb.common.utils.TMDbSpacer
-import com.sample.tmdb.common.utils.fullSpanGridItem
-import com.sample.tmdb.common.utils.getPagingErrorMsg
+import com.sample.tmdb.common.utils.pagingItems
 import com.sample.tmdb.navigation.TMDbNavKey
 
 @Composable
@@ -38,67 +29,25 @@ fun <T : TMDbItem> PagingScreen(
     onNavigateUp: () -> Unit = {},
     onClick: (T) -> Unit = viewModel::onItemClick,
 ) {
-    HandleUiEvents(
-        uiEvent = viewModel.uiEvent,
+    PagingContent(
+        viewModel = viewModel,
         onNavigate = onNavigate,
         onNavigateUp = onNavigateUp,
-    )
-
-    val lazyTMDbItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
-
-    when (lazyTMDbItems.loadState.refresh) {
-        is LoadState.Loading -> {
-            TMDbProgressBar()
-        }
-
-        is LoadState.Error -> {
-            ErrorScreen(
-                message = getPagingErrorMsg(lazyTMDbItems.loadState.refresh),
-                modifier = Modifier.fillMaxSize(),
-                refresh = { lazyTMDbItems.retry() },
-            )
-        }
-
-        else -> {
-            if (lazyTMDbItems.itemCount == 0) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    NoDataFoundAnimation(modifier = Modifier.size(200.dp))
-                }
-            } else {
-                LazyTMDbItemGrid(lazyTMDbItems, onClick)
+        emptyContent = {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                NoDataFoundAnimation(modifier = Modifier.size(200.dp))
             }
-        }
+        },
+    ) { lazyTMDbItems ->
+        LazyTMDbItemGrid(lazyTMDbItems, onClick)
     }
 }
 
 @Composable
 private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, onClick: (T) -> Unit) {
     TMDbGrid {
-        fullSpanGridItem {
-            TMDbSpacer()
-        }
-
-        items(lazyTMDbItems.itemCount) { index ->
-            val tmdbItem = lazyTMDbItems[index]
-            tmdbItem?.let { item ->
-                TMDbContent(item, onClick = { onClick(item) })
-            }
-        }
-
-        if (lazyTMDbItems.loadState.append is LoadState.Loading) {
-            fullSpanGridItem {
-                LoadingRow(modifier = Modifier.padding(vertical = TMDb_8_dp))
-            }
-        }
-
-        if (lazyTMDbItems.loadState.append is LoadState.Error) {
-            fullSpanGridItem {
-                ErrorScreen(
-                    message = getPagingErrorMsg(lazyTMDbItems.loadState.append),
-                    modifier = Modifier.padding(vertical = TMDb_8_dp),
-                    refresh = { lazyTMDbItems.retry() },
-                )
-            }
+        pagingItems(lazyTMDbItems) { item ->
+            TMDbContent(item, onClick = { onClick(item) })
         }
     }
 }
