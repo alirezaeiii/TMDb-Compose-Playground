@@ -15,8 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import com.sample.tmdb.common.ui.component.TMDbGrid
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.MaterialTheme
@@ -185,18 +184,12 @@ private fun <T : TMDbItem> TabContent(
 
 @Composable
 fun TabContent(items: List<TMDbItem>, onClick: (TMDbItem) -> Unit) {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 140.dp),
+    TMDbGrid(
         contentPadding =
             PaddingValues(
                 top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + TMDb_48_dp,
                 start = TMDb_8_dp,
                 end = TMDb_8_dp,
-            ),
-        horizontalArrangement =
-            Arrangement.spacedBy(
-                TMDb_8_dp,
-                Alignment.CenterHorizontally,
             ),
         content = {
             items(items.size) { index ->

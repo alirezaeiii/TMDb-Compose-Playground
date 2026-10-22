@@ -1,13 +1,10 @@
 package com.sample.tmdb.paging
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import com.sample.tmdb.common.ui.component.TMDbGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -32,7 +29,6 @@ import com.sample.tmdb.common.ui.component.TMDbProgressBar
 import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.getPagingErrorMsg
-import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.navigation.TMDbNavKey
 
 @Composable
@@ -77,48 +73,34 @@ fun <T : TMDbItem> PagingScreen(
 
 @Composable
 private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, onClick: (T) -> Unit) {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 140.dp),
-        contentPadding =
-            PaddingValues(
-                start = TMDb_8_dp,
-                end = TMDb_8_dp,
-                bottom = navigationBarPadding().plus(TMDb_8_dp),
-            ),
-        horizontalArrangement =
-            Arrangement.spacedBy(
-                TMDb_8_dp,
-                Alignment.CenterHorizontally,
-            ),
-        content = {
+    TMDbGrid {
+        fullSpanGridItem {
+            TMDbSpacer()
+        }
+
+        items(lazyTMDbItems.itemCount) { index ->
+            val tmdbItem = lazyTMDbItems[index]
+            tmdbItem?.let { item ->
+                TMDbContent(item, onClick = { onClick(item) })
+            }
+        }
+
+        if (lazyTMDbItems.loadState.append is LoadState.Loading) {
             fullSpanGridItem {
-                TMDbSpacer()
+                LoadingRow(modifier = Modifier.padding(vertical = TMDb_8_dp))
             }
+        }
 
-            items(lazyTMDbItems.itemCount) { index ->
-                val tmdbItem = lazyTMDbItems[index]
-                tmdbItem?.let { item ->
-                    TMDbContent(item, onClick = { onClick(item) })
-                }
+        if (lazyTMDbItems.loadState.append is LoadState.Error) {
+            fullSpanGridItem {
+                ErrorScreen(
+                    message = getPagingErrorMsg(lazyTMDbItems.loadState.append),
+                    modifier = Modifier.padding(vertical = TMDb_8_dp),
+                    refresh = { lazyTMDbItems.retry() },
+                )
             }
-
-            if (lazyTMDbItems.loadState.append is LoadState.Loading) {
-                fullSpanGridItem {
-                    LoadingRow(modifier = Modifier.padding(vertical = TMDb_8_dp))
-                }
-            }
-
-            if (lazyTMDbItems.loadState.append is LoadState.Error) {
-                fullSpanGridItem {
-                    ErrorScreen(
-                        message = getPagingErrorMsg(lazyTMDbItems.loadState.append),
-                        modifier = Modifier.padding(vertical = TMDb_8_dp),
-                        refresh = { lazyTMDbItems.retry() },
-                    )
-                }
-            }
-        },
-    )
+        }
+    }
 }
 
 @Composable
