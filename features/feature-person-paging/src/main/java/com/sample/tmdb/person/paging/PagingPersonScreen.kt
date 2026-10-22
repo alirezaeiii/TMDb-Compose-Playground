@@ -3,7 +3,6 @@ package com.sample.tmdb.person.paging
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.paging.compose.LazyPagingItems
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.base.BasePagingViewModel
 import com.sample.tmdb.common.model.TrendingPerson
@@ -44,15 +43,10 @@ fun PagingPersonScreen(
         onNavigate = onNavigate,
         onNavigateUp = onNavigateUp,
     ) { lazyItems ->
-        LazyItemGrid(lazyItems, onClick)
-    }
-}
-
-@Composable
-private fun LazyItemGrid(lazyItems: LazyPagingItems<TrendingPerson>, onClick: (TrendingPerson) -> Unit) {
-    PersonGrid {
-        pagingItems(lazyItems) { item ->
-            PersonCard(item, onClick)
+        PersonGrid {
+            pagingItems(lazyItems) { item ->
+                PersonCard(item, onClick)
+            }
         }
     }
 }

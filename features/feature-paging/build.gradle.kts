@@ -46,7 +46,6 @@ dependencies {
     implementation(libs.compose.paging)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    implementation(libs.lottie.compose)
     testImplementation(project(":test:common-test"))
     testImplementation(project(":test:feature-test"))
     testImplementation(libs.junit)
