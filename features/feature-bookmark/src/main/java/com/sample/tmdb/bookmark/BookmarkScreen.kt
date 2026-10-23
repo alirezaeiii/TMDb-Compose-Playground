@@ -216,7 +216,10 @@ fun EmptyView(@StringRes textResourceId: Int) {
             Image(
                 modifier = Modifier.padding(bottom = TMDb_16_dp),
                 painter = painterResource(id = R.drawable.ic_empty),
-                contentDescription = stringResource(id = R.string.empty_list),
+                contentDescription = stringResource(
+                    id = R.string.empty_list,
+                    stringResource(id = textResourceId),
+                ),
             )
         }
         Text(

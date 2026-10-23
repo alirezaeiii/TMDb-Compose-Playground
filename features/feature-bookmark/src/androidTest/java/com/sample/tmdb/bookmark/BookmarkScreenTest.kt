@@ -47,7 +47,12 @@ class BookmarkScreenTest {
             setContent {
                 EmptyView(R.string.movie)
             }
-            onNodeWithContentDescription(activity.getString(R.string.empty_list)).assertIsDisplayed()
+            onNodeWithContentDescription(
+                activity.getString(
+                    R.string.empty_list,
+                    activity.getString(R.string.movie),
+                ),
+            ).assertIsDisplayed()
             onNodeWithText(activity.getString(R.string.empty_list, activity.getString(R.string.movie)))
         }
     }
