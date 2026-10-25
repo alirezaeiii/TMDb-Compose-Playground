@@ -3,6 +3,9 @@ package com.sample.tmdb.preson
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.domain.model.Person
+import com.sample.tmdb.navigation.Media
+import com.sample.tmdb.navigation.MediaType
+import com.sample.tmdb.navigation.TMDbNavKey
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -14,8 +17,16 @@ class PersonViewModel @AssistedInject constructor(repository: BaseRepository<Per
         repository,
         personId,
     ) {
+
     fun onNavigateUp() {
         emitEvent(PersonUiEvent.NavigateUp)
+    }
+
+    fun onMediaClick(media: Media) {
+        when (media.mediaType) {
+            MediaType.MOVIE -> emitEvent(PersonUiEvent.Navigate(TMDbNavKey.MovieDetail(media.id)))
+            MediaType.TV_SHOW -> emitEvent(PersonUiEvent.Navigate(TMDbNavKey.TvShowDetail(media.id)))
+        }
     }
 
     @AssistedFactory

@@ -213,6 +213,7 @@ fun TMDbApp() {
                     key = "Person_${key.trendingPerson.id}",
                     creationCallback = { factory -> factory.create(key.trendingPerson.id) },
                 ),
+                onNavigate,
                 onNavigateUp,
                 key.trendingPerson,
             )

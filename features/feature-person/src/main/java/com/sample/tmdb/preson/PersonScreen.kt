@@ -3,6 +3,7 @@ package com.sample.tmdb.preson
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -73,6 +74,7 @@ import com.sample.tmdb.common.ui.theme.Tornado
 import com.sample.tmdb.common.utils.CircleTopCropTransformation
 import com.sample.tmdb.domain.model.Person
 import com.sample.tmdb.navigation.Media
+import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.TrendingPerson
 import kotlin.math.max
 import kotlin.math.min
@@ -89,10 +91,16 @@ private val CollapsedImageSize = 150.dp
 private val HzPadding = Modifier.padding(horizontal = 24.dp)
 
 @Composable
-fun PersonScreen(viewModel: PersonViewModel, onNavigateUp: () -> Unit, trendingPerson: TrendingPerson) {
+fun PersonScreen(
+    viewModel: PersonViewModel,
+    onNavigate: (TMDbNavKey) -> Unit,
+    onNavigateUp: () -> Unit,
+    trendingPerson: TrendingPerson,
+) {
     val titleHeight = remember { mutableStateOf(0.dp) }
     Content(
         viewModel = viewModel,
+        onNavigate = onNavigate,
         onNavigateUp = onNavigateUp,
     ) { _, person ->
         Box(
@@ -106,7 +114,7 @@ fun PersonScreen(viewModel: PersonViewModel, onNavigateUp: () -> Unit, trendingP
                         .fillMaxWidth()
                         .background(Brush.horizontalGradient(Tornado)),
             )
-            Body(person.biography, titleHeight, scroll, trendingPerson)
+            Body(person.biography, titleHeight, scroll, trendingPerson, viewModel::onMediaClick)
             Title(person, titleHeight) { scroll.value }
             person.profilePath?.let {
                 PersonImage(it) { scroll.value }
@@ -139,7 +147,13 @@ fun Up(upPress: () -> Unit) {
 }
 
 @Composable
-fun Body(biography: String, titleHeight: MutableState<Dp>, scroll: ScrollState, person: TrendingPerson) {
+fun Body(
+    biography: String,
+    titleHeight: MutableState<Dp>,
+    scroll: ScrollState,
+    person: TrendingPerson,
+    onMediaClick: (Media) -> Unit,
+) {
     Column {
         Spacer(
             modifier =
@@ -191,7 +205,7 @@ fun Body(biography: String, titleHeight: MutableState<Dp>, scroll: ScrollState, 
                             contentPadding = PaddingValues(start = TMDb_2_dp, end = TMDb_2_dp),
                         ) {
                             items(it) { media ->
-                                MediaCard(media)
+                                MediaCard(media, onMediaClick)
                             }
                         }
                     }
@@ -222,13 +236,15 @@ fun Title(person: Person, titleHeight: MutableState<Dp>, scrollProvider: () -> I
             Modifier
                 .onGloballyPositioned { coordinates ->
                     with(localDestiny) { titleHeight.value = coordinates.size.height.toDp() }
-                }.heightIn(min = titleHeight.value)
+                }
+                .heightIn(min = titleHeight.value)
                 .statusBarsPadding()
                 .offset {
                     val scroll = scrollProvider()
                     val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
                     IntOffset(x = 0, y = offset.toInt())
-                }.background(color = MaterialTheme.colors.surface),
+                }
+                .background(color = MaterialTheme.colors.surface),
     ) {
         Spacer(Modifier.height(TMDb_16_dp))
         Text(
@@ -338,11 +354,12 @@ private fun CollapsingImageLayout(
 }
 
 @Composable
-private fun MediaCard(media: Media) {
+private fun MediaCard(media: Media, onMediaClick: (Media) -> Unit) {
     Card(
         modifier =
             Modifier
-                .padding(TMDb_6_dp),
+                .padding(TMDb_6_dp)
+                .clickable { onMediaClick.invoke(media) },
         shape = RoundedCornerShape(10.dp),
     ) {
         Column {
