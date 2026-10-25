@@ -4,7 +4,7 @@ import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TVShowDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
-import com.sample.tmdb.navigation.SortType
+import com.sample.tmdb.navigation.model.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

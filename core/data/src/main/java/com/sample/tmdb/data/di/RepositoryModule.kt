@@ -29,7 +29,7 @@ import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.domain.utils.Search
 import com.sample.tmdb.domain.utils.TMDb
-import com.sample.tmdb.navigation.TrendingPerson
+import com.sample.tmdb.navigation.model.TrendingPerson
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

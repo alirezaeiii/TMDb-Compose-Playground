@@ -1,4 +1,4 @@
-package com.sample.tmdb.navigation
+package com.sample.tmdb.navigation.model
 
 import kotlinx.serialization.Serializable
 

@@ -69,7 +69,7 @@ import com.sample.tmdb.detail.TVShowDetailViewModel
 import com.sample.tmdb.feed.MovieFeedScreen
 import com.sample.tmdb.feed.TVShowFeedScreen
 import com.sample.tmdb.gallery.ImagesScreen
-import com.sample.tmdb.navigation.SortType
+import com.sample.tmdb.navigation.model.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.paging.main.MoviePagingScreen
 import com.sample.tmdb.paging.main.MoviePagingViewModel

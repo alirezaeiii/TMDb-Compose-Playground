@@ -1,6 +1,6 @@
 package com.sample.tmdb.common.model
 
-import com.sample.tmdb.navigation.TrendingPerson
+import com.sample.tmdb.navigation.model.TrendingPerson
 
 data class People(val result: List<TrendingPerson>, val type: TYPE = TYPE.TRENDING)
 

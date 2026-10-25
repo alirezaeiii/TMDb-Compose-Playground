@@ -3,8 +3,8 @@ package com.sample.tmdb.preson
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.domain.model.Person
-import com.sample.tmdb.navigation.Media
-import com.sample.tmdb.navigation.MediaType
+import com.sample.tmdb.navigation.model.Media
+import com.sample.tmdb.navigation.model.MediaType
 import com.sample.tmdb.navigation.TMDbNavKey
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

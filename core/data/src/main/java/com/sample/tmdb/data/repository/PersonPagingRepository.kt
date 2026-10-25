@@ -5,8 +5,8 @@ import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.paging.PersonPagingSource
 import com.sample.tmdb.domain.paging.BasePagingSource
 import com.sample.tmdb.domain.repository.BasePagingRepository
-import com.sample.tmdb.navigation.SortType
-import com.sample.tmdb.navigation.TrendingPerson
+import com.sample.tmdb.navigation.model.SortType
+import com.sample.tmdb.navigation.model.TrendingPerson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

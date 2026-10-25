@@ -6,7 +6,7 @@ import com.sample.tmdb.common.base.BaseSearchPagingViewModel
 import com.sample.tmdb.common.ui.PagingUiEvent
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.TrendingPerson
+import com.sample.tmdb.navigation.model.TrendingPerson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow

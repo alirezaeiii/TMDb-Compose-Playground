@@ -6,7 +6,7 @@ import androidx.compose.ui.res.stringResource
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.component.DestinationBar
-import com.sample.tmdb.navigation.SortType
+import com.sample.tmdb.navigation.model.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.paging.PagingScreen
 import com.sample.tmdb.paging.R

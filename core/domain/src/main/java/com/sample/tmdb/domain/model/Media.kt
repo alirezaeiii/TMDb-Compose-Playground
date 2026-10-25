@@ -1,7 +1,7 @@
 package com.sample.tmdb.domain.model
 
-import com.sample.tmdb.navigation.Media as NavMedia
-import com.sample.tmdb.navigation.MediaType
+import com.sample.tmdb.navigation.model.Media as NavMedia
+import com.sample.tmdb.navigation.model.MediaType
 
 interface Media {
     val id: Int

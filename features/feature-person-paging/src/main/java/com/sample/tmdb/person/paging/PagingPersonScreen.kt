@@ -11,7 +11,7 @@ import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.ui.component.PersonGrid
 import com.sample.tmdb.common.utils.pagingItems
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.TrendingPerson
+import com.sample.tmdb.navigation.model.TrendingPerson
 
 @Composable
 fun PagingPersonScreen(

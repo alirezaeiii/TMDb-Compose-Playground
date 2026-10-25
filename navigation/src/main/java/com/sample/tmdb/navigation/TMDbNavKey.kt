@@ -1,6 +1,8 @@
 package com.sample.tmdb.navigation
 
 import androidx.navigation3.runtime.NavKey
+import com.sample.tmdb.navigation.model.SortType
+import com.sample.tmdb.navigation.model.TrendingPerson
 import kotlinx.serialization.Serializable
 
 @Serializable

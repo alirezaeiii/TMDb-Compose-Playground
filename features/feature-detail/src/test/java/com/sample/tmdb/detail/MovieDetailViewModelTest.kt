@@ -3,7 +3,7 @@ package com.sample.tmdb.detail
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.MovieDetails
 import com.sample.tmdb.feature.test.MovieFixtures
-import com.sample.tmdb.navigation.SortType
+import com.sample.tmdb.navigation.model.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
 
 class MovieDetailViewModelTest :

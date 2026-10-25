@@ -32,7 +32,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.utils.CircleTopCropTransformation
 import com.sample.tmdb.common.utils.placeholderIcon
-import com.sample.tmdb.navigation.TrendingPerson
+import com.sample.tmdb.navigation.model.TrendingPerson
 
 @Composable
 fun PersonCard(

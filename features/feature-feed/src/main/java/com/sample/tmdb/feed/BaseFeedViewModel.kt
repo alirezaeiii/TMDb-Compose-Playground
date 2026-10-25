@@ -5,7 +5,7 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.repository.BaseFeedRepository
-import com.sample.tmdb.navigation.MediaType
+import com.sample.tmdb.navigation.model.MediaType
 import com.sample.tmdb.navigation.TMDbNavKey
 
 abstract class BaseFeedViewModel<T : TMDbItem>(

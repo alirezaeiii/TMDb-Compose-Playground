@@ -3,7 +3,7 @@ package com.sample.tmdb.common.utils
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Man
 import androidx.compose.material.icons.rounded.Woman
-import com.sample.tmdb.navigation.Gender
+import com.sample.tmdb.navigation.model.Gender
 
 val Gender.placeholderIcon
     get() =

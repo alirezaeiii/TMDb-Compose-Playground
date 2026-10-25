@@ -5,7 +5,7 @@ import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.People
 import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.TrendingPerson
+import com.sample.tmdb.navigation.model.TrendingPerson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
