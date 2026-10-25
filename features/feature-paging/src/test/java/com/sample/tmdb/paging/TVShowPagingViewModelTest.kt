@@ -2,8 +2,8 @@ package com.sample.tmdb.paging
 
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feature.test.TVShowFixtures
-import com.sample.tmdb.navigation.model.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.SortType
 import com.sample.tmdb.paging.main.TvShowPagingViewModel
 
 class TVShowPagingViewModelTest :

@@ -5,8 +5,8 @@ import app.cash.turbine.test
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.ui.PagingUiEvent
 import com.sample.tmdb.domain.repository.BasePagingRepository
-import com.sample.tmdb.navigation.model.Gender
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.Gender
 import com.sample.tmdb.navigation.model.TrendingPerson
 import io.mockk.every
 import io.mockk.mockk

@@ -7,8 +7,8 @@ import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
-import com.sample.tmdb.navigation.model.Gender
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.Gender
 import com.sample.tmdb.navigation.model.TrendingPerson
 import io.mockk.every
 import io.mockk.mockk

@@ -2,9 +2,9 @@ package com.sample.tmdb.feed
 
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feature.test.TVShowFixtures
+import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.model.MediaType
 import com.sample.tmdb.navigation.model.SortType
-import com.sample.tmdb.navigation.TMDbNavKey
 
 class TVShowFeedViewModelTest :
     BaseFeedViewModelTest<TVShow>(),

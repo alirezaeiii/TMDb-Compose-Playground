@@ -11,8 +11,8 @@ import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.feature.test.TMDbItemFixtures
-import com.sample.tmdb.navigation.model.Gender
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.Gender
 import com.sample.tmdb.navigation.model.TrendingPerson
 import io.mockk.coEvery
 import io.mockk.coJustRun

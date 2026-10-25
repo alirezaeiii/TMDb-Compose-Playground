@@ -75,8 +75,8 @@ import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
 import com.sample.tmdb.common.ui.theme.Tornado
 import com.sample.tmdb.common.utils.CircleTopCropTransformation
 import com.sample.tmdb.domain.model.Person
-import com.sample.tmdb.navigation.model.Media
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.Media
 import kotlin.math.max
 import kotlin.math.min
 

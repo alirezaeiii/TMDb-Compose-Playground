@@ -2,9 +2,9 @@ package com.sample.tmdb.feed
 
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.feature.test.MovieFixtures
+import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.model.MediaType
 import com.sample.tmdb.navigation.model.SortType
-import com.sample.tmdb.navigation.TMDbNavKey
 
 class MovieFeedViewModelTest :
     BaseFeedViewModelTest<Movie>(),
