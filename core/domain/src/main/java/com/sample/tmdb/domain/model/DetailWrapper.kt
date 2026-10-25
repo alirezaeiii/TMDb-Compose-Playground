@@ -1,7 +1,6 @@
 package com.sample.tmdb.domain.model
 
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.navigation.model.TrendingPerson
 
 class DetailWrapper(
     val cast: List<TrendingPerson>,

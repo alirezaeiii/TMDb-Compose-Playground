@@ -6,6 +6,9 @@ import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.Person
+import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.Media
+import com.sample.tmdb.navigation.model.MediaType
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -53,6 +56,32 @@ class PersonViewModelTest {
         viewModel.uiEvent.test {
             viewModel.onNavigateUp()
             assertEquals(PersonUiEvent.NavigateUp, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onMediaClick with movie emits Navigate to MovieDetail`() = runTest {
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        viewModel = PersonViewModel(repository, PERSON_ID)
+
+        val media = Media(10, "url", MediaType.MOVIE, "Movie Title")
+        viewModel.uiEvent.test {
+            viewModel.onMediaClick(media)
+            assertEquals(PersonUiEvent.Navigate(TMDbNavKey.MovieDetail(10)), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onMediaClick with tv show emits Navigate to TvShowDetail`() = runTest {
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        viewModel = PersonViewModel(repository, PERSON_ID)
+
+        val media = Media(20, "url", MediaType.TV_SHOW, "Tv Title")
+        viewModel.uiEvent.test {
+            viewModel.onMediaClick(media)
+            assertEquals(PersonUiEvent.Navigate(TMDbNavKey.TvShowDetail(20)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

@@ -9,6 +9,7 @@ import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
+import com.sample.tmdb.domain.model.asDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -32,8 +33,8 @@ abstract class BaseDetailRepository<T : TMDbItemDetails>(context: Context, ioDis
         val creditWrapper = creditDeferred.await()
 
         DetailWrapper(
-            creditWrapper.first.asPersonModel().result,
-            creditWrapper.second.asPersonModel().result,
+            creditWrapper.first.asPersonModel().result.asDomainModel(),
+            creditWrapper.second.asPersonModel().result.asDomainModel(),
             detailsDeferred.await(),
             imageDeferred.await(),
             similarDeferred.await(),

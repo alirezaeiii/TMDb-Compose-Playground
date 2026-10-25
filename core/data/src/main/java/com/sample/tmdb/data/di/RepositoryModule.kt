@@ -22,6 +22,7 @@ import com.sample.tmdb.domain.model.MovieDetails
 import com.sample.tmdb.domain.model.Person
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TVShowDetails
+import com.sample.tmdb.domain.model.TrendingPerson
 import com.sample.tmdb.domain.repository.BaseBookmarkRepository
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BaseFeedRepository
@@ -29,7 +30,6 @@ import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.domain.utils.Search
 import com.sample.tmdb.domain.utils.TMDb
-import com.sample.tmdb.navigation.model.TrendingPerson
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

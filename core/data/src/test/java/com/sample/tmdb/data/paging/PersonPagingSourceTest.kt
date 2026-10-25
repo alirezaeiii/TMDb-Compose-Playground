@@ -7,6 +7,7 @@ import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.PeopleDTO
 import com.sample.tmdb.data.response.TrendingPersonDTO
 import com.sample.tmdb.data.response.asDomainModel
+import com.sample.tmdb.domain.model.asDomainModel
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
@@ -39,7 +40,7 @@ class PersonPagingSourceTest {
 
         assertEquals(
             expected = Page(
-                data = people.asDomainModel().result,
+                data = people.asDomainModel().result.asDomainModel(),
                 prevKey = null,
                 nextKey = 2,
             ),
@@ -60,7 +61,7 @@ class PersonPagingSourceTest {
 
         assertEquals(
             expected = Page(
-                data = people.asDomainModel().result,
+                data = people.asDomainModel().result.asDomainModel(),
                 prevKey = null,
                 nextKey = 2,
             ),

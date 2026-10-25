@@ -6,7 +6,7 @@ import com.sample.tmdb.common.utils.Constants.ID
 import com.sample.tmdb.common.utils.Constants.NAME
 import com.sample.tmdb.common.utils.Constants.PROFILE_PATH
 import com.sample.tmdb.common.utils.toGender
-import com.sample.tmdb.navigation.model.TrendingPerson
+import com.sample.tmdb.domain.model.TrendingPerson
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

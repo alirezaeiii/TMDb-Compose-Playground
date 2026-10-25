@@ -8,12 +8,13 @@ import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
+import com.sample.tmdb.domain.model.TrendingPerson
+import com.sample.tmdb.domain.model.asNavPerson
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.feature.test.TMDbItemFixtures
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.model.Gender
-import com.sample.tmdb.navigation.model.TrendingPerson
 import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.coVerify
@@ -117,7 +118,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
         viewModel.uiEvent.test {
             viewModel.onPersonClick(person)
-            assertEquals(DetailUiEvent.Navigate(TMDbNavKey.Person(person)), awaitItem())
+            assertEquals(DetailUiEvent.Navigate(TMDbNavKey.Person(person.asNavPerson())), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
