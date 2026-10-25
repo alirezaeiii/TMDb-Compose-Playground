@@ -34,12 +34,11 @@ class PersonScreenTest {
         with(composeTestRule) {
             setContent {
                 Body(
-                    biography = "biography",
+                    person = Person(null, null, 1, "name", "biography", null, null),
                     titleHeight = titleHeight,
                     scroll = rememberScrollState(0),
                     emptyList(),
-                    {},
-                )
+                ) {}
             }
             onNodeWithText(activity.getString(R.string.biography)).assertIsDisplayed()
             onNodeWithText("biography").assertIsDisplayed()
