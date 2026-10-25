@@ -203,29 +203,31 @@ fun Body(
                         )
                     }
                     knownFor?.let {
-                        Spacer(
-                            Modifier.height(
-                                if (person.biography.isBlank() &&
-                                    person.profilePath != null
-                                ) {
-                                    TMDb_72_dp
-                                } else {
-                                    TMDb_16_dp
-                                },
-                            ),
-                        )
-                        Text(
-                            text = stringResource(R.string.known_for),
-                            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
-                            color = MaterialTheme.colors.onSurface,
-                            modifier = HzPadding,
-                        )
-                        Spacer(Modifier.height(TMDb_6_dp))
-                        LazyRow(
-                            contentPadding = PaddingValues(start = TMDb_2_dp, end = TMDb_2_dp),
-                        ) {
-                            items(it) { media ->
-                                MediaCard(media, onMediaClick)
+                        if (it.isNotEmpty()) {
+                            Spacer(
+                                Modifier.height(
+                                    if (person.biography.isBlank() &&
+                                        person.profilePath != null
+                                    ) {
+                                        TMDb_72_dp
+                                    } else {
+                                        TMDb_16_dp
+                                    },
+                                ),
+                            )
+                            Text(
+                                text = stringResource(R.string.known_for),
+                                style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
+                                color = MaterialTheme.colors.onSurface,
+                                modifier = HzPadding,
+                            )
+                            Spacer(Modifier.height(TMDb_6_dp))
+                            LazyRow(
+                                contentPadding = PaddingValues(start = TMDb_2_dp, end = TMDb_2_dp),
+                            ) {
+                                items(it) { media ->
+                                    MediaCard(media, onMediaClick)
+                                }
                             }
                         }
                     }
