@@ -62,6 +62,7 @@ import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feed.utils.pagerTransition
+import com.sample.tmdb.navigation.MediaType
 import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
 
@@ -313,15 +314,15 @@ fun Feeds(feeds: List<TMDbItem>, onFeedClick: (TMDbItem) -> Unit, index: Int, mo
 }
 
 private fun moreFeedOnClick(item: TMDbItem, sortType: SortType, navigate: (FeedNavigationEvent) -> Unit) {
-    val contentType = when (item) {
-        is Movie -> ContentType.MOVIE
-        is TVShow -> ContentType.TV_SHOW
+    val mediaType = when (item) {
+        is Movie -> MediaType.MOVIE
+        is TVShow -> MediaType.TV_SHOW
         else -> throw RuntimeException("Invalid content type: $item")
     }
 
     navigate(
         FeedNavigationEvent.More(
-            contentType = contentType,
+            mediaType = mediaType,
             sortType = sortType,
         ),
     )
@@ -329,12 +330,7 @@ private fun moreFeedOnClick(item: TMDbItem, sortType: SortType, navigate: (FeedN
 
 sealed interface FeedNavigationEvent {
 
-    data class More(val contentType: ContentType, val sortType: SortType) : FeedNavigationEvent
-}
-
-enum class ContentType {
-    MOVIE,
-    TV_SHOW,
+    data class More(val mediaType: MediaType, val sortType: SortType) : FeedNavigationEvent
 }
 
 @Preview("default")

@@ -1,12 +1,12 @@
 package com.sample.tmdb.data.repository
 
 import android.content.Context
-import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.paging.PersonPagingSource
 import com.sample.tmdb.domain.paging.BasePagingSource
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.navigation.SortType
+import com.sample.tmdb.navigation.TrendingPerson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

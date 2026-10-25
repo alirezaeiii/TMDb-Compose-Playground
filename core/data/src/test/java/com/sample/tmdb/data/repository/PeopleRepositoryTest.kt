@@ -4,11 +4,11 @@ import app.cash.turbine.test
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.model.People
 import com.sample.tmdb.common.utils.Async
-import com.sample.tmdb.common.utils.Gender
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.PeopleDTO
 import com.sample.tmdb.data.response.TrendingPersonDTO
 import com.sample.tmdb.data.response.asDomainModel
+import com.sample.tmdb.navigation.Gender
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest

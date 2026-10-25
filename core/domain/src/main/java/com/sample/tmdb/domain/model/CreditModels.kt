@@ -1,7 +1,7 @@
 package com.sample.tmdb.domain.model
 
 import com.sample.tmdb.common.model.Credit
-import com.sample.tmdb.common.utils.Gender
+import com.sample.tmdb.navigation.Gender
 
 class Cast(
     override val role: String,

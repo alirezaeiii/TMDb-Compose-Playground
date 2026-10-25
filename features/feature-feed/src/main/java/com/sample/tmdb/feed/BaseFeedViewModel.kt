@@ -5,6 +5,7 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.repository.BaseFeedRepository
+import com.sample.tmdb.navigation.MediaType
 import com.sample.tmdb.navigation.TMDbNavKey
 
 abstract class BaseFeedViewModel<T : TMDbItem>(
@@ -24,9 +25,9 @@ abstract class BaseFeedViewModel<T : TMDbItem>(
     fun onMoreClick(event: FeedNavigationEvent) {
         when (event) {
             is FeedNavigationEvent.More -> {
-                when (event.contentType) {
-                    ContentType.MOVIE -> emitEvent(FeedUiEvent.Navigate(TMDbNavKey.PagingMovies(event.sortType)))
-                    ContentType.TV_SHOW -> emitEvent(FeedUiEvent.Navigate(TMDbNavKey.PagingTvShows(event.sortType)))
+                when (event.mediaType) {
+                    MediaType.MOVIE -> emitEvent(FeedUiEvent.Navigate(TMDbNavKey.PagingMovies(event.sortType)))
+                    MediaType.TV_SHOW -> emitEvent(FeedUiEvent.Navigate(TMDbNavKey.PagingTvShows(event.sortType)))
                 }
             }
         }

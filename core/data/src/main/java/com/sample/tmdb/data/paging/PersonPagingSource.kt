@@ -1,10 +1,10 @@
 package com.sample.tmdb.data.paging
 
 import android.content.Context
-import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.domain.paging.BasePagingSource
+import com.sample.tmdb.navigation.TrendingPerson
 
 class PersonPagingSource(private val personApi: PersonService, context: Context, private val query: String? = null) :
     BasePagingSource<TrendingPerson>(context) {

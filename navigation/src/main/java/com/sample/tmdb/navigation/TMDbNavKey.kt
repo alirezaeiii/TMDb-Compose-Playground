@@ -34,7 +34,7 @@ sealed interface TMDbNavKey : NavKey {
     data object SearchTvShows : TMDbNavKey
 
     @Serializable
-    data class Person(val id: Int) : TMDbNavKey
+    data class Person(val trendingPerson: TrendingPerson) : TMDbNavKey
 
     @Serializable
     data class PagingMovies(val sortType: SortType, val id: Int? = null) : TMDbNavKey

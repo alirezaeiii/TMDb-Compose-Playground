@@ -5,13 +5,13 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.TrendingPerson
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -51,7 +51,7 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
     abstract fun onAllSimilarClick(id: Int)
 
     fun onPersonClick(person: TrendingPerson) {
-        emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Person(person.id)))
+        emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Person(person)))
     }
 
     fun onImageSelected(images: List<TMDbImage>, index: Int) {

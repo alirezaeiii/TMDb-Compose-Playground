@@ -3,13 +3,13 @@ package com.sample.tmdb.credit
 import app.cash.turbine.test
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.model.People
-import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
-import com.sample.tmdb.common.utils.Gender
 import com.sample.tmdb.common.utils.ViewState
+import com.sample.tmdb.navigation.Gender
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.TrendingPerson
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -88,7 +88,7 @@ class PeopleViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onPersonClick(person)
-            assertEquals(PeopleUIEvent.Navigate(TMDbNavKey.Person(person.id)), awaitItem())
+            assertEquals(PeopleUIEvent.Navigate(TMDbNavKey.Person(person)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

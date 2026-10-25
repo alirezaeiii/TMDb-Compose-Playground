@@ -2,6 +2,7 @@ package com.sample.tmdb.feed
 
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.feature.test.MovieFixtures
+import com.sample.tmdb.navigation.MediaType
 import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
 
@@ -15,8 +16,8 @@ class MovieFeedViewModelTest :
     override val searchNavKey: TMDbNavKey
         get() = TMDbNavKey.SearchMovies
 
-    override val contentType: ContentType
-        get() = ContentType.MOVIE
+    override val mediaType: MediaType
+        get() = MediaType.MOVIE
 
     override fun expectedNavKey(sortType: SortType): TMDbNavKey = TMDbNavKey.PagingMovies(sortType)
 }

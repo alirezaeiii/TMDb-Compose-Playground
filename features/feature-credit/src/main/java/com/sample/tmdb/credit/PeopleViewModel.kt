@@ -3,9 +3,9 @@ package com.sample.tmdb.credit
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.People
-import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.TrendingPerson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ class PeopleViewModel @Inject constructor(
     languageRepository = languageRepository,
 ) {
     fun onPersonClick(people: TrendingPerson) {
-        emitEvent(PeopleUIEvent.Navigate(TMDbNavKey.Person(people.id)))
+        emitEvent(PeopleUIEvent.Navigate(TMDbNavKey.Person(people)))
     }
 
     fun onMoreClick() {

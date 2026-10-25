@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.model.TYPE
-import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_136_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
@@ -37,6 +36,7 @@ import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.TrendingPerson
 
 sealed interface CreditSource {
     data class FromViewModel(

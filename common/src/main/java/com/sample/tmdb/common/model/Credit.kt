@@ -1,6 +1,6 @@
 package com.sample.tmdb.common.model
 
-import com.sample.tmdb.common.utils.Gender
+import com.sample.tmdb.navigation.Gender
 
 interface Credit {
     val id: Int
