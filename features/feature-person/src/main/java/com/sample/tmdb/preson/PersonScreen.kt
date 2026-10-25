@@ -66,7 +66,9 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_72_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_96_dp
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.Neutral8
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
@@ -113,7 +115,7 @@ fun PersonScreen(
                         .fillMaxWidth()
                         .background(Brush.horizontalGradient(Tornado)),
             )
-            Body(person.biography, titleHeight, scroll, knownFor, viewModel::onMediaClick)
+            Body(person, titleHeight, scroll, knownFor, viewModel::onMediaClick)
             Title(person, titleHeight) { scroll.value }
             person.profilePath?.let {
                 PersonImage(it) { scroll.value }
@@ -147,7 +149,7 @@ fun Up(upPress: () -> Unit) {
 
 @Composable
 fun Body(
-    biography: String,
+    person: Person,
     titleHeight: MutableState<Dp>,
     scroll: ScrollState,
     knownFor: List<Media>?,
@@ -167,10 +169,19 @@ fun Body(
             Spacer(Modifier.height(GradientScroll))
             Surface(Modifier.fillMaxWidth()) {
                 Column {
-                    Spacer(Modifier.height(96.dp))
-                    Spacer(Modifier.height(titleHeight.value))
+                    Spacer(
+                        Modifier.height(
+                            if (person.profilePath == null) {
+                                0.dp
+                            } else if (person.biography.isBlank()) {
+                                titleHeight.value
+                            } else {
+                                TMDb_96_dp + titleHeight.value
+                            },
+                        ),
+                    )
 
-                    if (biography.isNotEmpty()) {
+                    if (person.biography.isNotEmpty()) {
                         Text(
                             text = stringResource(R.string.biography),
                             style = MaterialTheme.typography.overline,
@@ -179,7 +190,7 @@ fun Body(
                         )
                         Spacer(Modifier.height(TMDb_16_dp))
                         Text(
-                            text = biography,
+                            text = person.biography,
                             style =
                                 MaterialTheme.typography.body2.copy(
                                     letterSpacing = 2.sp,
@@ -192,7 +203,17 @@ fun Body(
                         )
                     }
                     knownFor?.let {
-                        Spacer(Modifier.height(TMDb_16_dp))
+                        Spacer(
+                            Modifier.height(
+                                if (person.biography.isBlank() &&
+                                    person.profilePath != null
+                                ) {
+                                    TMDb_72_dp
+                                } else {
+                                    TMDb_16_dp
+                                },
+                            ),
+                        )
                         Text(
                             text = stringResource(R.string.known_for),
                             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
@@ -364,7 +385,7 @@ private fun MediaCard(media: Media, onMediaClick: (Media) -> Unit) {
         Column {
             AsyncImage(
                 model = media.posterUrl,
-                contentDescription = null,
+                contentDescription = media.title,
                 modifier =
                     Modifier
                         .size(width = 120.dp, height = 180.dp),
