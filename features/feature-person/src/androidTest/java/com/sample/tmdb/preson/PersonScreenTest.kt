@@ -33,7 +33,13 @@ class PersonScreenTest {
         val titleHeight = mutableStateOf(0.dp)
         with(composeTestRule) {
             setContent {
-                Body(biography = "biography", titleHeight = titleHeight, scroll = rememberScrollState(0))
+                Body(
+                    biography = "biography",
+                    titleHeight = titleHeight,
+                    scroll = rememberScrollState(0),
+                    emptyList(),
+                    {},
+                )
             }
             onNodeWithText(activity.getString(R.string.biography)).assertIsDisplayed()
             onNodeWithText("biography").assertIsDisplayed()

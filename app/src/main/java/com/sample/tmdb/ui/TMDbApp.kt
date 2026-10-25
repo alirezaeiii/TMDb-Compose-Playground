@@ -215,7 +215,7 @@ fun TMDbApp() {
                 ),
                 onNavigate,
                 onNavigateUp,
-                key.trendingPerson,
+                key.trendingPerson.knownFor,
             )
         }
         entry<TMDbNavKey.Images> { key ->

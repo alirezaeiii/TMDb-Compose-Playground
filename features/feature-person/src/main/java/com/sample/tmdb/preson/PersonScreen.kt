@@ -75,7 +75,6 @@ import com.sample.tmdb.common.utils.CircleTopCropTransformation
 import com.sample.tmdb.domain.model.Person
 import com.sample.tmdb.navigation.Media
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.TrendingPerson
 import kotlin.math.max
 import kotlin.math.min
 
@@ -95,7 +94,7 @@ fun PersonScreen(
     viewModel: PersonViewModel,
     onNavigate: (TMDbNavKey) -> Unit,
     onNavigateUp: () -> Unit,
-    trendingPerson: TrendingPerson,
+    knownFor: List<Media>?,
 ) {
     val titleHeight = remember { mutableStateOf(0.dp) }
     Content(
@@ -114,7 +113,7 @@ fun PersonScreen(
                         .fillMaxWidth()
                         .background(Brush.horizontalGradient(Tornado)),
             )
-            Body(person.biography, titleHeight, scroll, trendingPerson, viewModel::onMediaClick)
+            Body(person.biography, titleHeight, scroll, knownFor, viewModel::onMediaClick)
             Title(person, titleHeight) { scroll.value }
             person.profilePath?.let {
                 PersonImage(it) { scroll.value }
@@ -151,7 +150,7 @@ fun Body(
     biography: String,
     titleHeight: MutableState<Dp>,
     scroll: ScrollState,
-    person: TrendingPerson,
+    knownFor: List<Media>?,
     onMediaClick: (Media) -> Unit,
 ) {
     Column {
@@ -192,7 +191,7 @@ fun Body(
                             modifier = HzPadding,
                         )
                     }
-                    person.knownFor?.let {
+                    knownFor?.let {
                         Spacer(Modifier.height(TMDb_16_dp))
                         Text(
                             text = stringResource(R.string.known_for),
