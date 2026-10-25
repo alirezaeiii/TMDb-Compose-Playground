@@ -3,8 +3,8 @@ package com.sample.tmdb.detail
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TVShowDetails
 import com.sample.tmdb.feature.test.TVShowFixtures
-import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.SortType
 
 class TVShowDetailViewModelTest :
     BaseDetailViewModelTest<TVShowDetails, TVShow>(),

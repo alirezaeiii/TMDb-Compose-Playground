@@ -9,8 +9,9 @@ import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.feature.test.TMDbItemFixtures
-import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.MediaType
+import com.sample.tmdb.navigation.model.SortType
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -35,7 +36,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
 
     protected abstract val searchNavKey: TMDbNavKey
 
-    protected abstract val contentType: ContentType
+    protected abstract val mediaType: MediaType
 
     protected abstract fun expectedNavKey(sortType: SortType): TMDbNavKey
 
@@ -101,7 +102,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
             initViewModel()
 
             viewModel.uiEvent.test {
-                viewModel.onMoreClick(FeedNavigationEvent.More(contentType, sortType))
+                viewModel.onMoreClick(FeedNavigationEvent.More(mediaType, sortType))
                 assertEquals(
                     FeedUiEvent.Navigate(expectedNavKey(sortType)),
                     awaitItem(),

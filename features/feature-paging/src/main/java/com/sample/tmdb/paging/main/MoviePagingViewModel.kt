@@ -4,8 +4,8 @@ import com.sample.tmdb.common.ui.PagingUiEvent
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.domain.utils.TMDb
-import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.SortType
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

@@ -8,9 +8,9 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import com.sample.tmdb.common.R
 import com.sample.tmdb.common.model.TYPE
-import com.sample.tmdb.common.model.TrendingPerson
-import com.sample.tmdb.common.utils.Gender
 import com.sample.tmdb.common.utils.placeholderIcon
+import com.sample.tmdb.navigation.model.Gender
+import com.sample.tmdb.navigation.model.TrendingPerson
 import org.junit.Rule
 import org.junit.Test
 

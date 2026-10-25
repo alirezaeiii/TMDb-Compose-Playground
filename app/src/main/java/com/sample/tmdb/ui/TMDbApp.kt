@@ -69,8 +69,8 @@ import com.sample.tmdb.detail.TVShowDetailViewModel
 import com.sample.tmdb.feed.MovieFeedScreen
 import com.sample.tmdb.feed.TVShowFeedScreen
 import com.sample.tmdb.gallery.ImagesScreen
-import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.SortType
 import com.sample.tmdb.paging.main.MoviePagingScreen
 import com.sample.tmdb.paging.main.MoviePagingViewModel
 import com.sample.tmdb.paging.main.TVShowPagingScreen
@@ -192,7 +192,7 @@ fun TMDbApp() {
                 source = CreditSource.FromJson(
                     key.creditsJson,
                     onNavigateUp,
-                    onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.id)) },
+                    onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person)) },
                 ),
                 resourceId = R.string.cast,
             )
@@ -202,7 +202,7 @@ fun TMDbApp() {
                 source = CreditSource.FromJson(
                     key.creditsJson,
                     onNavigateUp,
-                    onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.id)) },
+                    onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person)) },
                 ),
                 resourceId = R.string.crew,
             )
@@ -210,10 +210,12 @@ fun TMDbApp() {
         entry<TMDbNavKey.Person> { key ->
             PersonScreen(
                 hiltViewModel<PersonViewModel, PersonViewModel.Factory>(
-                    key = "Person_${key.id}",
-                    creationCallback = { factory -> factory.create(key.id) },
+                    key = "Person_${key.trendingPerson.id}",
+                    creationCallback = { factory -> factory.create(key.trendingPerson.id) },
                 ),
+                onNavigate,
                 onNavigateUp,
+                key.trendingPerson.knownFor,
             )
         }
         entry<TMDbNavKey.Images> { key ->

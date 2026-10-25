@@ -5,7 +5,7 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.data.response.TMDbItemResponse
 import com.sample.tmdb.domain.paging.BasePagingSource
-import com.sample.tmdb.navigation.SortType
+import com.sample.tmdb.navigation.model.SortType
 import org.mockito.Mock
 
 abstract class BasePagingSourceTest<T : TMDbItem, R : TMDbItemResponse> {

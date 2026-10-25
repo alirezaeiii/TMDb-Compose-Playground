@@ -5,7 +5,7 @@ import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.R
 import com.sample.tmdb.domain.model.FeedWrapper
-import com.sample.tmdb.navigation.SortType
+import com.sample.tmdb.navigation.model.SortType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope

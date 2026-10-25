@@ -5,13 +5,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.base.BasePagingViewModel
-import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.ui.PagingContent
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.ui.component.PersonGrid
 import com.sample.tmdb.common.utils.pagingItems
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.TrendingPerson
 
 @Composable
 fun PagingPersonScreen(

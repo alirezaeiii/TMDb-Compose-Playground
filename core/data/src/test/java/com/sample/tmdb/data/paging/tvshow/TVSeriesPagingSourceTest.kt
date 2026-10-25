@@ -9,7 +9,7 @@ import com.sample.tmdb.data.response.TVShowResponse
 import com.sample.tmdb.data.response.asTVShowDomainModel
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.paging.BasePagingSource
-import com.sample.tmdb.navigation.SortType
+import com.sample.tmdb.navigation.model.SortType
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.Test

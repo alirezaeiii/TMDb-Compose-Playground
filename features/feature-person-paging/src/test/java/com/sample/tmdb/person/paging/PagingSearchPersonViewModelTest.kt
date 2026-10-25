@@ -3,12 +3,12 @@ package com.sample.tmdb.person.paging
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.PagingData
 import app.cash.turbine.test
-import com.sample.tmdb.common.model.TrendingPerson
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.ui.PagingUiEvent
-import com.sample.tmdb.common.utils.Gender
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.Gender
+import com.sample.tmdb.navigation.model.TrendingPerson
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -33,7 +33,7 @@ class PagingSearchPersonViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onItemClick(person)
-            assertEquals(PagingUiEvent.Navigate(TMDbNavKey.Person(person.id)), awaitItem())
+            assertEquals(PagingUiEvent.Navigate(TMDbNavKey.Person(person)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

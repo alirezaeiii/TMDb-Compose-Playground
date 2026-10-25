@@ -1,6 +1,8 @@
 package com.sample.tmdb.navigation
 
 import androidx.navigation3.runtime.NavKey
+import com.sample.tmdb.navigation.model.SortType
+import com.sample.tmdb.navigation.model.TrendingPerson
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -34,7 +36,7 @@ sealed interface TMDbNavKey : NavKey {
     data object SearchTvShows : TMDbNavKey
 
     @Serializable
-    data class Person(val id: Int) : TMDbNavKey
+    data class Person(val trendingPerson: TrendingPerson) : TMDbNavKey
 
     @Serializable
     data class PagingMovies(val sortType: SortType, val id: Int? = null) : TMDbNavKey

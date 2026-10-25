@@ -3,9 +3,11 @@ package com.sample.tmdb.preson
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,9 +18,14 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -40,6 +47,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
@@ -47,6 +55,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sample.tmdb.common.R as commonR
@@ -56,12 +65,18 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_72_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_96_dp
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.Neutral8
+import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
 import com.sample.tmdb.common.ui.theme.Tornado
 import com.sample.tmdb.common.utils.CircleTopCropTransformation
 import com.sample.tmdb.domain.model.Person
+import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.Media
 import kotlin.math.max
 import kotlin.math.min
 
@@ -77,12 +92,18 @@ private val CollapsedImageSize = 150.dp
 private val HzPadding = Modifier.padding(horizontal = 24.dp)
 
 @Composable
-fun PersonScreen(viewModel: PersonViewModel, onNavigateUp: () -> Unit) {
+fun PersonScreen(
+    viewModel: PersonViewModel,
+    onNavigate: (TMDbNavKey) -> Unit,
+    onNavigateUp: () -> Unit,
+    knownFor: List<Media>?,
+) {
     val titleHeight = remember { mutableStateOf(0.dp) }
     Content(
         viewModel = viewModel,
+        onNavigate = onNavigate,
         onNavigateUp = onNavigateUp,
-    ) { state, person ->
+    ) { _, person ->
         Box(
             modifier = Modifier.fillMaxSize(),
         ) {
@@ -94,7 +115,7 @@ fun PersonScreen(viewModel: PersonViewModel, onNavigateUp: () -> Unit) {
                         .fillMaxWidth()
                         .background(Brush.horizontalGradient(Tornado)),
             )
-            Body(person.biography, titleHeight, scroll)
+            Body(person, titleHeight, scroll, knownFor, viewModel::onMediaClick)
             Title(person, titleHeight) { scroll.value }
             person.profilePath?.let {
                 PersonImage(it) { scroll.value }
@@ -127,7 +148,13 @@ fun Up(upPress: () -> Unit) {
 }
 
 @Composable
-fun Body(biography: String, titleHeight: MutableState<Dp>, scroll: ScrollState) {
+fun Body(
+    person: Person,
+    titleHeight: MutableState<Dp>,
+    scroll: ScrollState,
+    knownFor: List<Media>?,
+    onMediaClick: (Media) -> Unit,
+) {
     Column {
         Spacer(
             modifier =
@@ -142,10 +169,19 @@ fun Body(biography: String, titleHeight: MutableState<Dp>, scroll: ScrollState) 
             Spacer(Modifier.height(GradientScroll))
             Surface(Modifier.fillMaxWidth()) {
                 Column {
-                    Spacer(Modifier.height(96.dp))
-                    Spacer(Modifier.height(titleHeight.value))
+                    Spacer(
+                        Modifier.height(
+                            if (person.profilePath == null) {
+                                0.dp
+                            } else if (person.biography.isBlank()) {
+                                titleHeight.value
+                            } else {
+                                TMDb_96_dp + titleHeight.value
+                            },
+                        ),
+                    )
 
-                    if (biography.isNotEmpty()) {
+                    if (person.biography.isNotEmpty()) {
                         Text(
                             text = stringResource(R.string.biography),
                             style = MaterialTheme.typography.overline,
@@ -154,7 +190,7 @@ fun Body(biography: String, titleHeight: MutableState<Dp>, scroll: ScrollState) 
                         )
                         Spacer(Modifier.height(TMDb_16_dp))
                         Text(
-                            text = biography,
+                            text = person.biography,
                             style =
                                 MaterialTheme.typography.body2.copy(
                                     letterSpacing = 2.sp,
@@ -165,6 +201,33 @@ fun Body(biography: String, titleHeight: MutableState<Dp>, scroll: ScrollState) 
                             overflow = TextOverflow.Ellipsis,
                             modifier = HzPadding,
                         )
+                    }
+                    knownFor?.let {
+                        Spacer(
+                            Modifier.height(
+                                if (person.biography.isBlank() &&
+                                    person.profilePath != null
+                                ) {
+                                    TMDb_72_dp
+                                } else {
+                                    TMDb_16_dp
+                                },
+                            ),
+                        )
+                        Text(
+                            text = stringResource(R.string.known_for),
+                            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
+                            color = MaterialTheme.colors.onSurface,
+                            modifier = HzPadding,
+                        )
+                        Spacer(Modifier.height(TMDb_6_dp))
+                        LazyRow(
+                            contentPadding = PaddingValues(start = TMDb_2_dp, end = TMDb_2_dp),
+                        ) {
+                            items(it) { media ->
+                                MediaCard(media, onMediaClick)
+                            }
+                        }
                     }
                     Spacer(
                         modifier =
@@ -193,13 +256,15 @@ fun Title(person: Person, titleHeight: MutableState<Dp>, scrollProvider: () -> I
             Modifier
                 .onGloballyPositioned { coordinates ->
                     with(localDestiny) { titleHeight.value = coordinates.size.height.toDp() }
-                }.heightIn(min = titleHeight.value)
+                }
+                .heightIn(min = titleHeight.value)
                 .statusBarsPadding()
                 .offset {
                     val scroll = scrollProvider()
                     val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
                     IntOffset(x = 0, y = offset.toInt())
-                }.background(color = MaterialTheme.colors.surface),
+                }
+                .background(color = MaterialTheme.colors.surface),
     ) {
         Spacer(Modifier.height(TMDb_16_dp))
         Text(
@@ -304,6 +369,40 @@ private fun CollapsingImageLayout(
             height = imageY + imageWidth,
         ) {
             imagePlaceable.placeRelative(imageX, imageY)
+        }
+    }
+}
+
+@Composable
+private fun MediaCard(media: Media, onMediaClick: (Media) -> Unit) {
+    Card(
+        modifier =
+            Modifier
+                .padding(TMDb_6_dp)
+                .clickable { onMediaClick.invoke(media) },
+        shape = RoundedCornerShape(10.dp),
+    ) {
+        Column {
+            AsyncImage(
+                model = media.posterUrl,
+                contentDescription = media.title,
+                modifier =
+                    Modifier
+                        .size(width = 120.dp, height = 180.dp),
+                contentScale = ContentScale.Crop,
+            )
+            Text(
+                text = media.title,
+                fontSize = TmdbPagingComposeTheme.fontSizes.sp_11,
+                color = MaterialTheme.colors.onSurface,
+                textAlign = TextAlign.Center,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier =
+                    Modifier
+                        .size(width = 120.dp, height = 36.dp)
+                        .wrapContentHeight(),
+            )
         }
     }
 }

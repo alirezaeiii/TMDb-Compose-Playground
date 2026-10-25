@@ -2,8 +2,9 @@ package com.sample.tmdb.feed
 
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feature.test.TVShowFixtures
-import com.sample.tmdb.navigation.SortType
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.MediaType
+import com.sample.tmdb.navigation.model.SortType
 
 class TVShowFeedViewModelTest :
     BaseFeedViewModelTest<TVShow>(),
@@ -15,8 +16,8 @@ class TVShowFeedViewModelTest :
     override val searchNavKey: TMDbNavKey
         get() = TMDbNavKey.SearchTvShows
 
-    override val contentType: ContentType
-        get() = ContentType.TV_SHOW
+    override val mediaType: MediaType
+        get() = MediaType.TV_SHOW
 
     override fun expectedNavKey(sortType: SortType): TMDbNavKey = TMDbNavKey.PagingTvShows(sortType)
 }

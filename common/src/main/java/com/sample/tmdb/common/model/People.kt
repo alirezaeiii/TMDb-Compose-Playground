@@ -1,16 +1,8 @@
 package com.sample.tmdb.common.model
 
-import com.sample.tmdb.common.utils.Gender
+import com.sample.tmdb.navigation.model.TrendingPerson
 
 data class People(val result: List<TrendingPerson>, val type: TYPE = TYPE.TRENDING)
-
-data class TrendingPerson(
-    val id: Int,
-    val name: String,
-    val subtitle: String,
-    val gender: Gender,
-    val profileUrl: String?,
-)
 
 enum class TYPE { TRENDING, CREDIT }
 
