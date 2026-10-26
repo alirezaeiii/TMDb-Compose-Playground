@@ -171,7 +171,8 @@ fun Body(
                 Column {
                     Spacer(
                         Modifier.height(
-                            if (person.profilePath == null) {
+                            if (person.profilePath == null && 
+ person.biography.isBlank()) {
                                 0.dp
                             } else if (person.biography.isBlank()) {
                                 titleHeight.value
