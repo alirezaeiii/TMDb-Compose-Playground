@@ -1,6 +1,6 @@
-package com.sample.tmdb.common.model
+package com.sample.tmdb.domain.model
 
-import com.sample.tmdb.navigation.model.TrendingPerson
+import com.sample.tmdb.common.model.Credit
 
 data class People(val result: List<TrendingPerson>, val type: TYPE = TYPE.TRENDING)
 

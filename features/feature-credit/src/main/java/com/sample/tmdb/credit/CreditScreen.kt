@@ -22,7 +22,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.sample.tmdb.common.model.TYPE
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_136_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
@@ -35,8 +34,10 @@ import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.navigationBarPadding
+import com.sample.tmdb.domain.model.TYPE
+import com.sample.tmdb.domain.model.TrendingPerson
+import com.sample.tmdb.domain.model.asNavPerson
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.model.TrendingPerson
 
 sealed interface CreditSource {
     data class FromViewModel(
@@ -117,8 +118,8 @@ fun CreditScreen(
 
             items(items.size) { index ->
                 PersonCard(
-                    person = items[index],
-                    onPersonClicked = onPersonClicked,
+                    person = items[index].asNavPerson(),
+                    onPersonClicked = { onPersonClicked(items[index]) },
                     testPainter = testPainter,
                 )
             }

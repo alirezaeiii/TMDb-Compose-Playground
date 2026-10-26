@@ -3,13 +3,12 @@ package com.sample.tmdb.domain.repository
 import android.content.Context
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.common.model.asPersonModel
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
-import com.sample.tmdb.domain.model.asDomainModel
+import com.sample.tmdb.domain.model.asPersonModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -33,8 +32,8 @@ abstract class BaseDetailRepository<T : TMDbItemDetails>(context: Context, ioDis
         val creditWrapper = creditDeferred.await()
 
         DetailWrapper(
-            creditWrapper.first.asPersonModel().result.asDomainModel(),
-            creditWrapper.second.asPersonModel().result.asDomainModel(),
+            creditWrapper.first.asPersonModel().result,
+            creditWrapper.second.asPersonModel().result,
             detailsDeferred.await(),
             imageDeferred.await(),
             similarDeferred.await(),

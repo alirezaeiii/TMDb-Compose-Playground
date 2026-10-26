@@ -1,7 +1,6 @@
 package com.sample.tmdb.data.di
 
 import com.sample.tmdb.common.base.BaseRepository
-import com.sample.tmdb.common.model.People
 import com.sample.tmdb.data.repository.PeopleRepository
 import com.sample.tmdb.data.repository.PersonPagingRepository
 import com.sample.tmdb.data.repository.PersonRepository
@@ -19,6 +18,7 @@ import com.sample.tmdb.data.repository.tvshow.paging.SearchTVSeriesPagingReposit
 import com.sample.tmdb.data.repository.tvshow.paging.TVSeriesPagingRepository
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.MovieDetails
+import com.sample.tmdb.domain.model.People
 import com.sample.tmdb.domain.model.Person
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TVShowDetails

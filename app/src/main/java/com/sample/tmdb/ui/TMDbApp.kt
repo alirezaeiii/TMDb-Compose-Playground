@@ -66,6 +66,7 @@ import com.sample.tmdb.detail.MovieDetailScreen
 import com.sample.tmdb.detail.MovieDetailViewModel
 import com.sample.tmdb.detail.TVShowDetailScreen
 import com.sample.tmdb.detail.TVShowDetailViewModel
+import com.sample.tmdb.domain.model.asNavPerson
 import com.sample.tmdb.feed.MovieFeedScreen
 import com.sample.tmdb.feed.TVShowFeedScreen
 import com.sample.tmdb.gallery.ImagesScreen
@@ -192,7 +193,7 @@ fun TMDbApp() {
                 source = CreditSource.FromJson(
                     key.creditsJson,
                     onNavigateUp,
-                    onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person)) },
+                    onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.asNavPerson())) },
                 ),
                 resourceId = R.string.cast,
             )
@@ -202,7 +203,7 @@ fun TMDbApp() {
                 source = CreditSource.FromJson(
                     key.creditsJson,
                     onNavigateUp,
-                    onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person)) },
+                    onPersonClicked = { person -> onNavigate(TMDbNavKey.Person(person.asNavPerson())) },
                 ),
                 resourceId = R.string.crew,
             )

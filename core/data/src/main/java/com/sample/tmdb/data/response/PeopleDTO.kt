@@ -1,7 +1,6 @@
 package com.sample.tmdb.data.response
 
-import com.sample.tmdb.common.model.People
-import com.sample.tmdb.domain.model.asNavPerson
+import com.sample.tmdb.domain.model.People
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -11,4 +10,4 @@ class PeopleDTO(
     val results: List<TrendingPersonDTO>,
 )
 
-fun PeopleDTO.asDomainModel(): People = People(results.map(TrendingPersonDTO::asDomainModel).asNavPerson())
+fun PeopleDTO.asDomainModel(): People = People(results.map(TrendingPersonDTO::asDomainModel))
