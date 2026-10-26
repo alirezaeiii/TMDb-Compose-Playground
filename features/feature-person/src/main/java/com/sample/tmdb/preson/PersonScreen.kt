@@ -171,11 +171,7 @@ fun Body(
                 Column {
                     Spacer(
                         Modifier.height(
-                            if (person.biography.isNotBlank() && person.profilePath != null) {
-                                titleHeight.value + TMDb_96_dp
-                            } else {
-                                TMDb_120_dp
-                            },
+                            person.profilePath?.let { titleHeight.value + TMDb_96_dp } ?: run { TMDb_120_dp },
                         ),
                     )
 
