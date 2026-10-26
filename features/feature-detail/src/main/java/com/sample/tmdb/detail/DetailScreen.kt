@@ -126,7 +126,6 @@ import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TrendingPerson
-import com.sample.tmdb.domain.model.asNavPerson
 import com.sample.tmdb.navigation.TMDbNavKey
 
 @Composable
@@ -474,7 +473,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                             headerResId = R.string.cast,
                             itemContent = { item, _ ->
                                 PersonCard(
-                                    person = item.asNavPerson(),
+                                    person = item,
                                     onPersonClicked = { navigateToPerson(item) },
                                     modifier = Modifier.width(140.dp),
                                 )
@@ -502,7 +501,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                             headerResId = R.string.crew,
                             itemContent = { item, _ ->
                                 PersonCard(
-                                    person = item.asNavPerson(),
+                                    person = item,
                                     onPersonClicked = { navigateToPerson(item) },
                                     modifier = Modifier.width(140.dp),
                                 )

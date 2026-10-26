@@ -11,7 +11,6 @@ import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.ui.component.PersonGrid
 import com.sample.tmdb.common.utils.pagingItems
 import com.sample.tmdb.domain.model.TrendingPerson
-import com.sample.tmdb.domain.model.asNavPerson
 import com.sample.tmdb.navigation.TMDbNavKey
 
 @Composable
@@ -47,7 +46,7 @@ fun PagingPersonScreen(
         PersonGrid {
             pagingItems(lazyItems) { item ->
                 PersonCard(
-                    person = item.asNavPerson(),
+                    person = item,
                     onPersonClicked = { onClick(item) },
                 )
             }

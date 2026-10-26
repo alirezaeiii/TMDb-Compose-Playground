@@ -25,6 +25,7 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sample.tmdb.common.R
+import com.sample.tmdb.common.model.TrendingPersonItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
@@ -32,12 +33,11 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.utils.CircleTopCropTransformation
 import com.sample.tmdb.common.utils.placeholderIcon
-import com.sample.tmdb.navigation.model.TrendingPerson
 
 @Composable
 fun PersonCard(
-    person: TrendingPerson,
-    onPersonClicked: (person: TrendingPerson) -> Unit,
+    person: TrendingPersonItem,
+    onPersonClicked: (person: TrendingPersonItem) -> Unit,
     modifier: Modifier = Modifier,
     testPainter: Painter? = null,
 ) {

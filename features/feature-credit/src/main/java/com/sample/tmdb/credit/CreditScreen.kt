@@ -36,7 +36,6 @@ import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.domain.model.TYPE
 import com.sample.tmdb.domain.model.TrendingPerson
-import com.sample.tmdb.domain.model.asNavPerson
 import com.sample.tmdb.navigation.TMDbNavKey
 
 sealed interface CreditSource {
@@ -118,7 +117,7 @@ fun CreditScreen(
 
             items(items.size) { index ->
                 PersonCard(
-                    person = items[index].asNavPerson(),
+                    person = items[index],
                     onPersonClicked = { onPersonClicked(items[index]) },
                     testPainter = testPainter,
                 )

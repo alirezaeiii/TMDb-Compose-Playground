@@ -1,4 +1,4 @@
-package com.sample.tmdb.domain.model
+package com.sample.tmdb.common.model
 
 import com.sample.tmdb.navigation.model.Media as NavMedia
 import com.sample.tmdb.navigation.model.MediaType

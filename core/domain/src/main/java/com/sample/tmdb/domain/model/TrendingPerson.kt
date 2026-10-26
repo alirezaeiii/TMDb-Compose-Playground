@@ -1,17 +1,19 @@
 package com.sample.tmdb.domain.model
 
+import com.sample.tmdb.common.model.Media
+import com.sample.tmdb.common.model.TrendingPersonItem
+import com.sample.tmdb.common.model.asNavMedia
 import com.sample.tmdb.navigation.model.Gender
-import com.sample.tmdb.navigation.model.MediaType
 import com.sample.tmdb.navigation.model.TrendingPerson as NavTrendingPerson
 
 data class TrendingPerson(
-    val id: Int,
-    val name: String,
-    val subtitle: String,
-    val gender: Gender,
-    val profileUrl: String?,
-    val knownFor: List<Media>? = null,
-)
+    override val id: Int,
+    override val name: String,
+    override val subtitle: String,
+    override val gender: Gender,
+    override val profileUrl: String?,
+    override val knownFor: List<Media>? = null,
+) : TrendingPersonItem
 
 fun TrendingPerson.asNavPerson(): NavTrendingPerson = NavTrendingPerson(
     id = id,
