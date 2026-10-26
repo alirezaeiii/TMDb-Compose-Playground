@@ -60,13 +60,13 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.ui.Content
+import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
-import com.sample.tmdb.common.ui.Dimens.TMDb_72_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_96_dp
 import com.sample.tmdb.common.ui.component.TMDbDivider
@@ -171,13 +171,10 @@ fun Body(
                 Column {
                     Spacer(
                         Modifier.height(
-                            if (person.profilePath == null && 
-                                person.biography.isBlank()) {
-                                0.dp
-                            } else if (person.biography.isBlank()) {
-                                titleHeight.value
+                            if (person.biography.isNotBlank() && person.profilePath != null) {
+                                titleHeight.value + TMDb_96_dp
                             } else {
-                                TMDb_96_dp + titleHeight.value
+                                TMDb_120_dp
                             },
                         ),
                     )
@@ -205,17 +202,7 @@ fun Body(
                     }
                     knownFor?.let {
                         if (it.isNotEmpty()) {
-                            Spacer(
-                                Modifier.height(
-                                    if (person.biography.isBlank() &&
-                                        person.profilePath != null
-                                    ) {
-                                        TMDb_72_dp
-                                    } else {
-                                        TMDb_16_dp
-                                    },
-                                ),
-                            )
+                            Spacer(Modifier.height(TMDb_16_dp))
                             Text(
                                 text = stringResource(R.string.known_for),
                                 style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
