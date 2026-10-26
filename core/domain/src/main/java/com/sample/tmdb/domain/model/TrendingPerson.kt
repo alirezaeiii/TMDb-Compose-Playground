@@ -1,8 +1,6 @@
 package com.sample.tmdb.domain.model
 
-import com.sample.tmdb.common.model.Media
 import com.sample.tmdb.common.model.TrendingPersonItem
-import com.sample.tmdb.common.model.asNavMedia
 import com.sample.tmdb.navigation.model.Gender
 import com.sample.tmdb.navigation.model.TrendingPerson as NavTrendingPerson
 

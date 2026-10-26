@@ -8,5 +8,5 @@ interface TrendingPersonItem {
     val subtitle: String
     val gender: Gender
     val profileUrl: String?
-    val knownFor: List<Media>?
+    val knownFor: List<MediaItem>?
 }

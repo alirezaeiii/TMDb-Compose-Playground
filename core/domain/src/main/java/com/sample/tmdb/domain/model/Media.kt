@@ -1,13 +1,14 @@
-package com.sample.tmdb.common.model
+package com.sample.tmdb.domain.model
 
+import com.sample.tmdb.common.model.MediaItem
 import com.sample.tmdb.navigation.model.Media as NavMedia
 import com.sample.tmdb.navigation.model.MediaType
 
-interface Media {
-    val id: Int
-    val posterUrl: String?
-    val mediaType: MediaType
-    val title: String
+interface Media : MediaItem {
+    override val id: Int
+    override val posterUrl: String?
+    override val mediaType: MediaType
+    override val title: String
 }
 
 data class MovieMedia(
