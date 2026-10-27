@@ -63,8 +63,8 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feed.utils.pagerTransition
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.model.MediaType
-import com.sample.tmdb.navigation.model.SortType
+import com.sample.tmdb.common.model.MediaType
+import com.sample.tmdb.domain.model.SortType
 
 @Composable
 fun MovieFeedScreen(

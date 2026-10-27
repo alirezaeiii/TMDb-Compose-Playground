@@ -7,7 +7,7 @@ import com.sample.tmdb.common.base.BasePagingViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.PagingUiEvent
 import com.sample.tmdb.domain.repository.BasePagingRepository
-import com.sample.tmdb.navigation.model.SortType
+import com.sample.tmdb.domain.model.SortType
 import kotlinx.coroutines.flow.Flow
 
 abstract class BaseMainPagingViewModel<T : TMDbItem>(

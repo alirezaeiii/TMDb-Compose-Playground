@@ -6,7 +6,8 @@ import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.model.MediaType
+import com.sample.tmdb.common.model.MediaType
+import com.sample.tmdb.domain.model.asNavSortType
 
 abstract class BaseFeedViewModel<T : TMDbItem>(
     repository: BaseFeedRepository<T>,
@@ -26,8 +27,8 @@ abstract class BaseFeedViewModel<T : TMDbItem>(
         when (event) {
             is FeedNavigationEvent.More -> {
                 when (event.mediaType) {
-                    MediaType.MOVIE -> emitEvent(FeedUiEvent.Navigate(TMDbNavKey.PagingMovies(event.sortType)))
-                    MediaType.TV_SHOW -> emitEvent(FeedUiEvent.Navigate(TMDbNavKey.PagingTvShows(event.sortType)))
+                    MediaType.MOVIE -> emitEvent(FeedUiEvent.Navigate(TMDbNavKey.PagingMovies(event.sortType.asNavSortType())))
+                    MediaType.TV_SHOW -> emitEvent(FeedUiEvent.Navigate(TMDbNavKey.PagingTvShows(event.sortType.asNavSortType())))
                 }
             }
         }

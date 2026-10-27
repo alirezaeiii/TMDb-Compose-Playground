@@ -9,7 +9,7 @@ import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.data.response.asMovieDomainModel
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.paging.BasePagingSource
-import com.sample.tmdb.navigation.model.SortType
+import com.sample.tmdb.domain.model.SortType
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.Test

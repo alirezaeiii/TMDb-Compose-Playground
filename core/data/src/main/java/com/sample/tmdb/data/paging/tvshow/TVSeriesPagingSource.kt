@@ -5,7 +5,7 @@ import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.response.asTVShowDomainModel
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.paging.BasePagingSource
-import com.sample.tmdb.navigation.model.SortType
+import com.sample.tmdb.domain.model.SortType
 
 class TVSeriesPagingSource(
     context: Context,

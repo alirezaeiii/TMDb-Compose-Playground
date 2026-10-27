@@ -10,8 +10,8 @@ import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.feature.test.TMDbItemFixtures
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.model.MediaType
-import com.sample.tmdb.navigation.model.SortType
+import com.sample.tmdb.common.model.MediaType
+import com.sample.tmdb.domain.model.SortType
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals

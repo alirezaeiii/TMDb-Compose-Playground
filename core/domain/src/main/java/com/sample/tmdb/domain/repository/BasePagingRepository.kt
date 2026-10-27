@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.sample.tmdb.domain.paging.BasePagingSource
-import com.sample.tmdb.navigation.model.SortType
+import com.sample.tmdb.domain.model.SortType
 import kotlinx.coroutines.flow.Flow
 
 abstract class BasePagingRepository<T : Any> {
