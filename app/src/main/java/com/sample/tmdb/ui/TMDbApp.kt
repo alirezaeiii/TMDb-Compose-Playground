@@ -66,6 +66,7 @@ import com.sample.tmdb.detail.MovieDetailScreen
 import com.sample.tmdb.detail.MovieDetailViewModel
 import com.sample.tmdb.detail.TVShowDetailScreen
 import com.sample.tmdb.detail.TVShowDetailViewModel
+import com.sample.tmdb.domain.model.asDomainModel
 import com.sample.tmdb.domain.model.asNavPerson
 import com.sample.tmdb.feed.MovieFeedScreen
 import com.sample.tmdb.feed.TVShowFeedScreen
@@ -216,7 +217,7 @@ fun TMDbApp() {
                 ),
                 onNavigate,
                 onNavigateUp,
-                key.trendingPerson.knownFor,
+                key.trendingPerson.knownFor?.asDomainModel(),
             )
         }
         entry<TMDbNavKey.Images> { key ->

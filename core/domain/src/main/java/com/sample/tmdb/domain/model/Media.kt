@@ -5,26 +5,12 @@ import com.sample.tmdb.common.model.MediaType
 import com.sample.tmdb.navigation.model.Media as NavMedia
 import com.sample.tmdb.navigation.model.MediaType as NavMediaType
 
-interface Media : MediaItem {
-    override val id: Int
-    override val posterUrl: String?
-    override val mediaType: MediaType
-    override val title: String
-}
-
-data class MovieMedia(
+data class Media(
     override val id: Int,
     override val posterUrl: String?,
-    override val mediaType: MediaType = MediaType.MOVIE,
+    override val mediaType: MediaType,
     override val title: String,
-) : Media
-
-data class TVShowMedia(
-    override val id: Int,
-    override val posterUrl: String?,
-    override val mediaType: MediaType = MediaType.TV_SHOW,
-    override val title: String,
-) : Media
+) : MediaItem
 
 fun Media.asNavMedia(): NavMedia = NavMedia(
     id = id,
@@ -34,3 +20,12 @@ fun Media.asNavMedia(): NavMedia = NavMedia(
 )
 
 fun List<Media>.asNavMedia(): List<NavMedia> = map(Media::asNavMedia)
+
+fun NavMedia.asDomainModel(): Media = Media(
+    id = id,
+    posterUrl = posterUrl,
+    mediaType = if (mediaType == NavMediaType.MOVIE) MediaType.MOVIE else MediaType.TV_SHOW,
+    title = title,
+)
+
+fun List<NavMedia>.asDomainModel() = map(NavMedia::asDomainModel)

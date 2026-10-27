@@ -1,13 +1,12 @@
 package com.sample.tmdb.data.response
 
+import com.sample.tmdb.common.model.MediaType
 import com.sample.tmdb.common.utils.Constants.BASE_WIDTH_342_PATH
 import com.sample.tmdb.common.utils.Constants.ID
 import com.sample.tmdb.common.utils.Constants.NAME
 import com.sample.tmdb.common.utils.Constants.POSTER_PATH
 import com.sample.tmdb.common.utils.Constants.TITLE
 import com.sample.tmdb.domain.model.Media
-import com.sample.tmdb.domain.model.MovieMedia
-import com.sample.tmdb.domain.model.TVShowMedia
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -30,15 +29,17 @@ fun List<MediaDTO>.asDomainModel(): List<Media> = map { dto ->
         String.format(BASE_WIDTH_342_PATH, posterPath)
     }
     if (dto.mediaType == "movie") {
-        MovieMedia(
+        Media(
             id = dto.id,
             posterUrl = formattedPoster,
+            mediaType = MediaType.MOVIE,
             title = dto.title.orEmpty(),
         )
     } else {
-        TVShowMedia(
+        Media(
             id = dto.id,
             posterUrl = formattedPoster,
+            mediaType = MediaType.TV_SHOW,
             title = dto.name.orEmpty(),
         )
     }

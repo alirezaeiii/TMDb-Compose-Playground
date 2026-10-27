@@ -2,13 +2,13 @@ package com.sample.tmdb.preson
 
 import app.cash.turbine.test
 import com.sample.tmdb.common.base.BaseRepository
+import com.sample.tmdb.common.model.MediaType
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
+import com.sample.tmdb.domain.model.Media
 import com.sample.tmdb.domain.model.Person
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.model.Media
-import com.sample.tmdb.navigation.model.MediaType
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
