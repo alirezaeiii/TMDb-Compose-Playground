@@ -4,8 +4,8 @@ import android.content.Context
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.response.asMovieDomainModel
 import com.sample.tmdb.domain.model.Movie
-import com.sample.tmdb.domain.paging.BasePagingSource
 import com.sample.tmdb.domain.model.SortType
+import com.sample.tmdb.domain.paging.BasePagingSource
 
 class MoviePagingSource(
     context: Context,

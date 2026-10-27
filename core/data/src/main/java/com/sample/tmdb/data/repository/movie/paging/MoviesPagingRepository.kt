@@ -4,9 +4,9 @@ import android.content.Context
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.paging.movie.MoviePagingSource
 import com.sample.tmdb.domain.model.Movie
+import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.paging.BasePagingSource
 import com.sample.tmdb.domain.repository.BasePagingRepository
-import com.sample.tmdb.domain.model.SortType
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

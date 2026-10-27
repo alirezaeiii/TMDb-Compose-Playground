@@ -55,6 +55,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.sample.tmdb.R
 import com.sample.tmdb.bookmark.BookmarkScreen
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.ui.Dimens.TMDb_48_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_64_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
@@ -65,13 +66,13 @@ import com.sample.tmdb.detail.MovieDetailScreen
 import com.sample.tmdb.detail.MovieDetailViewModel
 import com.sample.tmdb.detail.TVShowDetailScreen
 import com.sample.tmdb.detail.TVShowDetailViewModel
+import com.sample.tmdb.domain.model.SortType
+import com.sample.tmdb.domain.model.asDomainModel
+import com.sample.tmdb.domain.model.asNavPerson
 import com.sample.tmdb.feed.MovieFeedScreen
 import com.sample.tmdb.feed.TVShowFeedScreen
 import com.sample.tmdb.gallery.ImagesScreen
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.domain.model.SortType
-import com.sample.tmdb.domain.model.asDomainModel
-import com.sample.tmdb.domain.model.asNavPerson
 import com.sample.tmdb.paging.main.MoviePagingScreen
 import com.sample.tmdb.paging.main.MoviePagingViewModel
 import com.sample.tmdb.paging.main.TVShowPagingScreen
@@ -83,7 +84,6 @@ import com.sample.tmdb.person.paging.SearchPagingScreen
 import com.sample.tmdb.preson.PersonScreen
 import com.sample.tmdb.preson.PersonViewModel
 import com.sample.tmdb.setting.SettingsScreen
-import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun TMDbApp() {

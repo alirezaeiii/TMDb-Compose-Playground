@@ -4,9 +4,9 @@ import androidx.paging.PagingData
 import app.cash.turbine.test
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.PagingUiEvent
+import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.feature.test.TMDbItemFixtures
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.paging.main.BaseMainPagingViewModel
 import io.mockk.every
 import junit.framework.TestCase.assertEquals
