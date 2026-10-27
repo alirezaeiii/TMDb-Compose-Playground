@@ -1,7 +1,5 @@
 package com.sample.tmdb.common.model
 
-import com.sample.tmdb.navigation.model.Gender
-
 interface TrendingPersonItem {
     val id: Int
     val name: String

@@ -1,7 +1,5 @@
 package com.sample.tmdb.common.model
 
-import com.sample.tmdb.navigation.model.Gender
-
 interface Credit {
     val id: Int
     val role: String

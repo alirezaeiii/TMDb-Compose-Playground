@@ -1,9 +1,10 @@
-package com.sample.tmdb.common.utils
+package com.sample.tmdb.common.model
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Man
 import androidx.compose.material.icons.rounded.Woman
-import com.sample.tmdb.navigation.model.Gender
+
+enum class Gender { MALE, FEMALE }
 
 val Gender.placeholderIcon
     get() =

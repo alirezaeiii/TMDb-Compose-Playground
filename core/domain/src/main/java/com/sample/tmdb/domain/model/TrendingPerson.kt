@@ -1,7 +1,8 @@
 package com.sample.tmdb.domain.model
 
+import com.sample.tmdb.common.model.Gender
 import com.sample.tmdb.common.model.TrendingPersonItem
-import com.sample.tmdb.navigation.model.Gender
+import com.sample.tmdb.navigation.model.Gender as NavGender
 import com.sample.tmdb.navigation.model.TrendingPerson as NavTrendingPerson
 
 data class TrendingPerson(
@@ -17,7 +18,7 @@ fun TrendingPerson.asNavPerson(): NavTrendingPerson = NavTrendingPerson(
     id = id,
     name = name,
     subtitle = subtitle,
-    gender = gender,
+    gender = if (gender == Gender.MALE) NavGender.MALE else NavGender.FEMALE,
     profileUrl = profileUrl,
     knownFor = knownFor?.asNavMedia(),
 )

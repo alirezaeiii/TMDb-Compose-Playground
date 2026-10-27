@@ -1,8 +1,9 @@
 package com.sample.tmdb.domain.model
 
 import com.sample.tmdb.common.model.MediaItem
+import com.sample.tmdb.common.model.MediaType
 import com.sample.tmdb.navigation.model.Media as NavMedia
-import com.sample.tmdb.navigation.model.MediaType
+import com.sample.tmdb.navigation.model.MediaType as NavMediaType
 
 interface Media : MediaItem {
     override val id: Int
@@ -28,7 +29,7 @@ data class TVShowMedia(
 fun Media.asNavMedia(): NavMedia = NavMedia(
     id = id,
     posterUrl = posterUrl,
-    mediaType = mediaType,
+    mediaType = if (mediaType == MediaType.MOVIE) NavMediaType.MOVIE else NavMediaType.TV_SHOW,
     title = title,
 )
 

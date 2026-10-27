@@ -11,3 +11,4 @@ data class TrendingPerson(
     val profileUrl: String?,
     val knownFor: List<Media>? = null,
 )
+enum class Gender { MALE, FEMALE }

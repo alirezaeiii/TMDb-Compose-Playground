@@ -34,7 +34,7 @@ import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.navigationBarPadding
-import com.sample.tmdb.domain.model.TYPE
+import com.sample.tmdb.domain.model.PeopleType
 import com.sample.tmdb.domain.model.TrendingPerson
 import com.sample.tmdb.navigation.TMDbNavKey
 
@@ -85,7 +85,7 @@ fun CreditScreen(source: CreditSource, @StringRes resourceId: Int, testPainter: 
                 upPress = source.upPress,
                 onPersonClicked = source.onPersonClicked,
                 items = items,
-                type = TYPE.CREDIT,
+                type = PeopleType.CREDIT,
                 testPainter = testPainter,
             )
         }
@@ -99,7 +99,7 @@ fun CreditScreen(
     onSearchClick: (() -> Unit)? = null,
     onPersonClicked: (person: TrendingPerson) -> Unit,
     items: List<TrendingPerson>,
-    type: TYPE,
+    type: PeopleType,
     onMoreClick: () -> Unit = {},
     testPainter: Painter? = null,
 ) {
@@ -124,7 +124,7 @@ fun CreditScreen(
             }
 
             fullSpanGridItem {
-                if (type == TYPE.TRENDING) {
+                if (type == PeopleType.TRENDING) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
