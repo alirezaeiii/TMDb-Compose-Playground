@@ -26,9 +26,11 @@ fun rememberTMDbAppState(
 
 @Stable
 class TMDbAppState(val navigationState: NavigationState) {
+
     val navigator = Navigator(navigationState)
 
     val bottomBarTabs = HomeSections.entries.toTypedArray()
+
     private val bottomBarRoutes = bottomBarTabs.map { it.navKey }
 
     val shouldShowBottomBar: Boolean
