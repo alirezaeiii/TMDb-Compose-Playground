@@ -36,8 +36,8 @@ android {
 }
 
 dependencies {
-    api(project(":core:domain"))
     api(project(":common"))
+    implementation(project(":core:domain"))
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
     implementation(libs.okhttp.logging)
