@@ -16,4 +16,7 @@ object Constants {
     const val VOTE_COUNT = "vote_count"
     const val PROFILE_PATH = "profile_path"
     const val GENDER = "gender"
+    const val APPLE_TV_PROVIDER_ID = 2
+    const val NETFLIX_PROVIDER_ID = 8
+    const val AMAZON_PRIME_PROVIDER_ID = 9
 }

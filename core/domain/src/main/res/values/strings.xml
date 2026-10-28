@@ -6,4 +6,7 @@
     <string name="text_popular">Popular</string>
     <string name="text_highest_rate">Top Rated</string>
     <string name="text_discover">Discover</string>
+    <string name="text_apple_tv" translatable="false">Apple TV</string>
+    <string name="text_netflix" translatable="false">Netflix</string>
+    <string name="text_amazon_prime" translatable="false">Amazon Prime</string>
 </resources>

@@ -7,6 +7,9 @@ import com.sample.tmdb.data.paging.BasePagingSourceTest
 import com.sample.tmdb.data.response.MovieResponse
 import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.data.response.asMovieDomainModel
+import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
+import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
+import com.sample.tmdb.data.utils.Constants.NETFLIX_PROVIDER_ID
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.paging.BasePagingSource
@@ -57,6 +60,9 @@ class MoviesPagingSourceTest : BasePagingSourceTest<Movie, MovieResponse>() {
         SortType.UPCOMING -> api.upcomingMovies(1)
         SortType.HIGHEST_RATED -> api.topRatedMovies(1)
         SortType.SIMILAR -> api.fetchSimilarMovies(1, 1)
+        SortType.APPLE_TV -> api.providerMovies(APPLE_TV_PROVIDER_ID)
+        SortType.NETFLIX -> api.providerMovies(NETFLIX_PROVIDER_ID)
+        SortType.AMAZON_PRIME -> api.providerMovies(AMAZON_PRIME_PROVIDER_ID)
     }
 
     override fun getPagingDataSource(sortType: SortType): BasePagingSource<Movie> = MoviePagingSource(

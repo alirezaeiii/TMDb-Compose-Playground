@@ -8,4 +8,7 @@ enum class SortType {
     HIGHEST_RATED,
     DISCOVER,
     SIMILAR,
+    APPLE_TV,
+    NETFLIX,
+    AMAZON_PRIME,
 }

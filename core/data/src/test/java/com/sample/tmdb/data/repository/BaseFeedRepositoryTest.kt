@@ -29,6 +29,9 @@ abstract class BaseFeedRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
             assertThat(result[3].feeds, `is`(emptyList()))
             assertThat(result[4].feeds, `is`(emptyList()))
             assertThat(result[5].feeds, `is`(emptyList()))
+            assertThat(result[6].feeds, `is`(emptyList()))
+            assertThat(result[7].feeds, `is`(emptyList()))
+            assertThat(result[8].feeds, `is`(emptyList()))
         }
     }
 

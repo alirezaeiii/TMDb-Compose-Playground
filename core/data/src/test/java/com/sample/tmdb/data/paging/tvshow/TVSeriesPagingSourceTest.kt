@@ -7,6 +7,9 @@ import com.sample.tmdb.data.paging.BasePagingSourceTest
 import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.data.response.TVShowResponse
 import com.sample.tmdb.data.response.asTVShowDomainModel
+import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
+import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
+import com.sample.tmdb.data.utils.Constants.NETFLIX_PROVIDER_ID
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.paging.BasePagingSource
@@ -57,6 +60,9 @@ class TVSeriesPagingSourceTest : BasePagingSourceTest<TVShow, TVShowResponse>() 
         SortType.UPCOMING -> api.onTheAirTVSeries(1)
         SortType.HIGHEST_RATED -> api.topRatedTVSeries(1)
         SortType.SIMILAR -> api.fetchSimilarTVSeries(1, 1)
+        SortType.APPLE_TV -> api.providerTVSeries(APPLE_TV_PROVIDER_ID)
+        SortType.NETFLIX -> api.providerTVSeries(NETFLIX_PROVIDER_ID)
+        SortType.AMAZON_PRIME -> api.providerTVSeries(AMAZON_PRIME_PROVIDER_ID)
     }
 
     override fun getPagingDataSource(sortType: SortType): BasePagingSource<TVShow> = TVSeriesPagingSource(
