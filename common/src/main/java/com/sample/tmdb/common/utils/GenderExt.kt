@@ -11,5 +11,3 @@ val Gender.placeholderIcon
             Gender.MALE -> Icons.Rounded.Man
             Gender.FEMALE -> Icons.Rounded.Woman
         }
-
-fun Int.toGender() = if (this == 1) Gender.FEMALE else Gender.MALE

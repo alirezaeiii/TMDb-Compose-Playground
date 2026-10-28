@@ -1,13 +1,13 @@
 package com.sample.tmdb.credit
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.Gender
 import com.sample.tmdb.domain.model.People
 import com.sample.tmdb.domain.model.TrendingPerson
 import com.sample.tmdb.domain.repository.BaseRepository
+import com.sample.tmdb.domain.repository.LanguageRepository
 import com.sample.tmdb.domain.utils.Async
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.model.asNavPerson

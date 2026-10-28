@@ -16,11 +16,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
 import androidx.navigationevent.compose.LocalNavigationEventDispatcherOwner
-import com.sample.tmdb.common.model.ThemeMode
 import com.sample.tmdb.common.ui.ThemeViewModel
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
+import com.sample.tmdb.domain.model.ThemeMode
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

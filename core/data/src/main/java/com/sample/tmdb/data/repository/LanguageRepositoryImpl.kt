@@ -1,4 +1,4 @@
-package com.sample.tmdb.common.repository
+package com.sample.tmdb.data.repository
 
 import android.app.Application
 import android.app.LocaleManager
@@ -8,7 +8,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.ConfigurationCompat
 import androidx.core.os.LocaleListCompat
-import com.sample.tmdb.common.model.LanguageMode
+import com.sample.tmdb.domain.model.LanguageMode
+import com.sample.tmdb.domain.repository.LanguageRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 @Singleton
-class LanguageRepository @Inject constructor(private val application: Application) {
+class LanguageRepositoryImpl @Inject constructor(private val application: Application) : LanguageRepository {
 
     private val sharedPreferences = application.getSharedPreferences("tmdb_prefs", Context.MODE_PRIVATE)
 
@@ -25,16 +26,16 @@ class LanguageRepository @Inject constructor(private val application: Applicatio
     )
 
     private val _languageMode = MutableStateFlow(initialMode)
-    val languageMode: StateFlow<LanguageMode> = _languageMode.asStateFlow()
+    override val languageMode: StateFlow<LanguageMode> = _languageMode.asStateFlow()
 
     private val _languageCode = MutableStateFlow(resolveLanguageCode(initialMode))
-    val languageCode: StateFlow<String> = _languageCode.asStateFlow()
+    override val languageCode: StateFlow<String> = _languageCode.asStateFlow()
 
     init {
         applyLanguageMode(initialMode)
     }
 
-    fun setLanguageMode(mode: LanguageMode) {
+    override fun setLanguageMode(mode: LanguageMode) {
         sharedPreferences.edit()
             .putString(KEY_LANGUAGE_MODE, mode.name)
             .apply()

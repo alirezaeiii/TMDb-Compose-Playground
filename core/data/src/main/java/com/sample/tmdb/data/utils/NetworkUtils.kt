@@ -1,7 +1,7 @@
 package com.sample.tmdb.data.utils
 
-import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.data.BuildConfig
+import com.sample.tmdb.domain.repository.LanguageRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.util.concurrent.TimeUnit

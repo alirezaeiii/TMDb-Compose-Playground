@@ -1,8 +1,10 @@
 package com.sample.tmdb.data.di
 
+import com.sample.tmdb.data.repository.LanguageRepositoryImpl
 import com.sample.tmdb.data.repository.PeopleRepository
 import com.sample.tmdb.data.repository.PersonPagingRepository
 import com.sample.tmdb.data.repository.PersonRepository
+import com.sample.tmdb.data.repository.ThemeRepositoryImpl
 import com.sample.tmdb.data.repository.movie.MovieFeedRepository
 import com.sample.tmdb.data.repository.movie.detail.BookmarkMovieDetailsRepositoryImpl
 import com.sample.tmdb.data.repository.movie.detail.BookmarkMovieRepository
@@ -28,6 +30,8 @@ import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.domain.repository.BaseRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
+import com.sample.tmdb.domain.repository.LanguageRepository
+import com.sample.tmdb.domain.repository.ThemeRepository
 import com.sample.tmdb.domain.utils.Search
 import com.sample.tmdb.domain.utils.TMDb
 import dagger.Binds
@@ -126,4 +130,12 @@ abstract class RepositoryModule {
     internal abstract fun bindPersonPagingRepository(
         personPagingRepository: PersonPagingRepository,
     ): BasePagingRepository<TrendingPerson>
+
+    @Singleton
+    @Binds
+    internal abstract fun bindThemeRepository(themeRepositoryImpl: ThemeRepositoryImpl): ThemeRepository
+
+    @Singleton
+    @Binds
+    internal abstract fun bindLanguageRepository(languageRepositoryImpl: LanguageRepositoryImpl): LanguageRepository
 }

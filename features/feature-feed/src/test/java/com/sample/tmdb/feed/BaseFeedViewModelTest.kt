@@ -1,7 +1,6 @@
 package com.sample.tmdb.feed
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.FeedWrapper
@@ -9,6 +8,7 @@ import com.sample.tmdb.domain.model.MediaType
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.repository.BaseFeedRepository
+import com.sample.tmdb.domain.repository.LanguageRepository
 import com.sample.tmdb.domain.utils.Async
 import com.sample.tmdb.feature.test.TMDbItemFixtures
 import com.sample.tmdb.navigation.TMDbNavKey

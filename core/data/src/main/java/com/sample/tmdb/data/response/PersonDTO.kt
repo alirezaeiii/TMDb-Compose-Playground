@@ -1,9 +1,9 @@
 package com.sample.tmdb.data.response
 
-import com.sample.tmdb.common.utils.Constants
-import com.sample.tmdb.common.utils.Constants.ID
-import com.sample.tmdb.common.utils.Constants.NAME
-import com.sample.tmdb.common.utils.Constants.PROFILE_PATH
+import com.sample.tmdb.data.utils.Constants
+import com.sample.tmdb.data.utils.Constants.ID
+import com.sample.tmdb.data.utils.Constants.NAME
+import com.sample.tmdb.data.utils.Constants.PROFILE_PATH
 import com.sample.tmdb.domain.model.Person
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

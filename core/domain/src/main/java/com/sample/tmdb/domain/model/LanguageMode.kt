@@ -1,4 +1,4 @@
-package com.sample.tmdb.common.model
+package com.sample.tmdb.domain.model
 
 enum class LanguageMode(val code: String) {
     SYSTEM("system"),

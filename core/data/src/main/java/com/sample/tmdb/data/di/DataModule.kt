@@ -1,11 +1,11 @@
 package com.sample.tmdb.data.di
 
-import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.data.BuildConfig
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.utils.createNetworkClient
+import com.sample.tmdb.domain.repository.LanguageRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

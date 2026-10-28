@@ -1,9 +1,9 @@
 package com.sample.tmdb.data.response
 
-import com.sample.tmdb.common.utils.Constants.BASE_IMAGE_PATH
-import com.sample.tmdb.common.utils.Constants.ID
-import com.sample.tmdb.common.utils.Constants.VOTE_AVERAGE
-import com.sample.tmdb.common.utils.Constants.VOTE_COUNT
+import com.sample.tmdb.data.utils.Constants.BASE_IMAGE_PATH
+import com.sample.tmdb.data.utils.Constants.ID
+import com.sample.tmdb.data.utils.Constants.VOTE_AVERAGE
+import com.sample.tmdb.data.utils.Constants.VOTE_COUNT
 import com.sample.tmdb.domain.model.TMDbImage
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

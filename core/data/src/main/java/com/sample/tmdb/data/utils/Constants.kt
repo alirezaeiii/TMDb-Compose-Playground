@@ -1,4 +1,4 @@
-package com.sample.tmdb.common.utils
+package com.sample.tmdb.data.utils
 
 object Constants {
     const val BASE_WIDTH_342_PATH = "http://image.tmdb.org/t/p/w342%s"

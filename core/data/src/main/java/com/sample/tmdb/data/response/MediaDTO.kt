@@ -1,10 +1,10 @@
 package com.sample.tmdb.data.response
 
-import com.sample.tmdb.common.utils.Constants.BASE_WIDTH_342_PATH
-import com.sample.tmdb.common.utils.Constants.ID
-import com.sample.tmdb.common.utils.Constants.NAME
-import com.sample.tmdb.common.utils.Constants.POSTER_PATH
-import com.sample.tmdb.common.utils.Constants.TITLE
+import com.sample.tmdb.data.utils.Constants.BASE_WIDTH_342_PATH
+import com.sample.tmdb.data.utils.Constants.ID
+import com.sample.tmdb.data.utils.Constants.NAME
+import com.sample.tmdb.data.utils.Constants.POSTER_PATH
+import com.sample.tmdb.data.utils.Constants.TITLE
 import com.sample.tmdb.domain.model.Media
 import com.sample.tmdb.domain.model.MediaType
 import com.squareup.moshi.Json

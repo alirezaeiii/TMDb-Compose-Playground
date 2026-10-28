@@ -1,8 +1,8 @@
 package com.sample.tmdb.common.ui
 
 import androidx.lifecycle.ViewModel
-import com.sample.tmdb.common.model.ThemeMode
-import com.sample.tmdb.common.repository.ThemeRepository
+import com.sample.tmdb.domain.model.ThemeMode
+import com.sample.tmdb.domain.repository.ThemeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow

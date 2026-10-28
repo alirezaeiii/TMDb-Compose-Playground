@@ -3,6 +3,7 @@ package com.sample.tmdb.common.utils
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalDensity
+import com.sample.tmdb.domain.model.Gender
 
 @Composable
 fun Int.dpToPx(): Float {
