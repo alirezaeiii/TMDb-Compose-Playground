@@ -23,6 +23,12 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
 
     protected abstract suspend fun discoverItems(): List<T>
 
+    protected abstract suspend fun appleTVItems(): List<T>
+
+    protected abstract suspend fun netflixItems(): List<T>
+
+    protected abstract suspend fun amazonPrimeItems(): List<T>
+
     protected abstract fun getNowPlayingResId(): Int
 
     protected abstract fun getLatestResId(): Int
@@ -34,6 +40,9 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
         val latestDeferred = async { latestItems() }
         val topRatedDeferred = async { topRatedItems() }
         val discoverDeferred = async { discoverItems() }
+        val appleTVDeferred = async { appleTVItems() }
+        val netflixDeferred = async { netflixItems() }
+        val amazonPrimeDeferred = async { amazonPrimeItems() }
 
         listOf(
             FeedWrapper(trendingDeferred.await(), R.string.text_trending, SortType.TRENDING),
@@ -42,6 +51,9 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
             FeedWrapper(discoverDeferred.await(), R.string.text_discover, SortType.DISCOVER),
             FeedWrapper(latestDeferred.await(), getLatestResId(), SortType.UPCOMING),
             FeedWrapper(topRatedDeferred.await(), R.string.text_highest_rate, SortType.HIGHEST_RATED),
+            FeedWrapper(appleTVDeferred.await(), R.string.text_apple_tv, SortType.APPLE_TV),
+            FeedWrapper(netflixDeferred.await(), R.string.text_netflix, SortType.NETFLIX),
+            FeedWrapper(amazonPrimeDeferred.await(), R.string.text_amazon_prime, SortType.AMAZON_PRIME),
         )
     }
 }

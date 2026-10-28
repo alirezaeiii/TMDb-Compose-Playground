@@ -5,6 +5,9 @@ import com.sample.tmdb.data.R
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.response.asMovieDomainModel
+import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
+import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
+import com.sample.tmdb.data.utils.Constants.NETFLIX_PROVIDER_ID
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -29,6 +32,15 @@ class MovieFeedRepository @Inject constructor(
     override suspend fun nowPlayingItems(): List<Movie> = movieApi.nowPlayingMovies().items.asMovieDomainModel()
 
     override suspend fun discoverItems(): List<Movie> = movieApi.discoverMovies().items.asMovieDomainModel()
+
+    override suspend fun appleTVItems(): List<Movie> =
+        movieApi.providerMovies(APPLE_TV_PROVIDER_ID).items.asMovieDomainModel()
+
+    override suspend fun netflixItems(): List<Movie> =
+        movieApi.providerMovies(NETFLIX_PROVIDER_ID).items.asMovieDomainModel()
+
+    override suspend fun amazonPrimeItems(): List<Movie> =
+        movieApi.providerMovies(AMAZON_PRIME_PROVIDER_ID).items.asMovieDomainModel()
 
     override fun getNowPlayingResId(): Int = R.string.text_now_playing
 

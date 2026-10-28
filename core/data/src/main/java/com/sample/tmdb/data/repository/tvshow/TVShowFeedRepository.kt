@@ -5,6 +5,9 @@ import com.sample.tmdb.data.R
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.response.asTVShowDomainModel
+import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
+import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
+import com.sample.tmdb.data.utils.Constants.NETFLIX_PROVIDER_ID
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -29,6 +32,15 @@ class TVShowFeedRepository @Inject constructor(
     override suspend fun nowPlayingItems(): List<TVShow> = tvShowApi.airingTodayTVSeries().items.asTVShowDomainModel()
 
     override suspend fun discoverItems(): List<TVShow> = tvShowApi.discoverTVSeries().items.asTVShowDomainModel()
+
+    override suspend fun appleTVItems(): List<TVShow> =
+        tvShowApi.providerTVSeries(APPLE_TV_PROVIDER_ID).items.asTVShowDomainModel()
+
+    override suspend fun netflixItems(): List<TVShow> =
+        tvShowApi.providerTVSeries(NETFLIX_PROVIDER_ID).items.asTVShowDomainModel()
+
+    override suspend fun amazonPrimeItems(): List<TVShow> =
+        tvShowApi.providerTVSeries(AMAZON_PRIME_PROVIDER_ID).items.asTVShowDomainModel()
 
     override fun getNowPlayingResId(): Int = R.string.text_airing_today
 

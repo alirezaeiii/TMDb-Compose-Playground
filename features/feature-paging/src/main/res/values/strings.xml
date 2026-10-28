@@ -9,4 +9,7 @@
     <string name="highest_rate">Top Rated %s</string>
     <string name="discover">Discover %s</string>
     <string name="similar_items">Similar %s</string>
+    <string name="apple_tv_items" translatable="false">Apple TV %s</string>
+    <string name="netflix_items" translatable="false">Netflix %s</string>
+    <string name="amazon_prime_items" translatable="false">Amazon Prime %s</string>
 </resources>

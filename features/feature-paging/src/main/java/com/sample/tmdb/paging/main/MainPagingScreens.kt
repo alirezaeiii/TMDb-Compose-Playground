@@ -61,6 +61,9 @@ private fun pagingTitle(sortType: SortType, itemType: Int, upcomingRes: Int, now
         SortType.MOST_POPULAR -> R.string.popular
         SortType.HIGHEST_RATED -> R.string.highest_rate
         SortType.SIMILAR -> R.string.similar_items
+        SortType.APPLE_TV -> R.string.apple_tv_items
+        SortType.NETFLIX -> R.string.netflix_items
+        SortType.AMAZON_PRIME -> R.string.amazon_prime_items
     }
     return stringResource(titleRes, stringResource(itemType))
 }

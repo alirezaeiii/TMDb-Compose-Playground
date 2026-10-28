@@ -46,6 +46,13 @@ interface MovieService {
     @GET("3/discover/movie")
     suspend fun discoverMovies(@Query("page") page: Int): NetworkTMDbWrapper<MovieResponse>
 
+    @GET("3/discover/movie")
+    suspend fun providerMovies(
+        @Query("with_watch_providers") id: Int,
+        @Query("page") page: Int = 1,
+        @Query("watch_region") region: String = "US",
+    ): NetworkTMDbWrapper<MovieResponse>
+
     @GET("3/movie/{movieId}/credits")
     suspend fun movieCredit(@Path("movieId") movieId: Int): NetworkCreditWrapper
 

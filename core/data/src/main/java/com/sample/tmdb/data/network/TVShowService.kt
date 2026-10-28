@@ -46,6 +46,13 @@ interface TVShowService {
     @GET("3/discover/tv")
     suspend fun discoverTVSeries(@Query("page") page: Int): NetworkTMDbWrapper<TVShowResponse>
 
+    @GET("3/discover/tv")
+    suspend fun providerTVSeries(
+        @Query("with_watch_providers") id: Int,
+        @Query("page") page: Int = 1,
+        @Query("watch_region") region: String = "US",
+    ): NetworkTMDbWrapper<TVShowResponse>
+
     @GET("3/tv/{tvId}/credits")
     suspend fun fetchTVSeriesCredit(@Path("tvId") tvId: Int): NetworkCreditWrapper
 
