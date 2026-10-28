@@ -2,8 +2,6 @@
 <resources>
     <string name="movies">Películas</string>
     <string name="tv_series">Series</string>
-    <string name="failed_loading_msg">Algo fue mal…</string>
-    <string name="failed_refresh_msg">Algo fue mal al actualizar</string>
     <string name="retry">Reintentar</string>
     <string name="search_desc">Buscar</string>
     <string name="back">Volver</string>

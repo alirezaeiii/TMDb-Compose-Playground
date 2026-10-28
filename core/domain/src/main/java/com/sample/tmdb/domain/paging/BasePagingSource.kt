@@ -3,8 +3,8 @@ package com.sample.tmdb.domain.paging
 import android.content.Context
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.sample.tmdb.common.R
-import com.sample.tmdb.common.utils.TMDbException
+import com.sample.tmdb.domain.R
+import com.sample.tmdb.domain.utils.TMDbException
 import java.io.IOException
 
 private const val STARTING_PAGE_INDEX = 1

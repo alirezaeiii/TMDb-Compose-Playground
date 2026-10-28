@@ -1,6 +1,6 @@
 package com.sample.tmdb.domain.repository
 
-import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.domain.model.TMDbItem
 
 interface BookmarkDetailsRepository<T : TMDbItem> {
     suspend fun addBookmark(item: T)

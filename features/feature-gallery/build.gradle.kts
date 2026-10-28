@@ -35,6 +35,7 @@ android {
 
 dependencies {
     implementation(libs.gson)
+    implementation(project(":common"))
     implementation(project(":core:domain"))
 
     implementation(libs.compose.ui)

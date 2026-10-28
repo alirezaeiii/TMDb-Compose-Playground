@@ -1,4 +1,4 @@
-package com.sample.tmdb.common.utils
+package com.sample.tmdb.domain.utils
 
 sealed class Async<out R> {
     data class Loading(val isRefreshing: Boolean = false) : Async<Nothing>()

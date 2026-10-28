@@ -1,11 +1,11 @@
 package com.sample.tmdb.data.repository
 
 import android.content.Context
-import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.domain.model.Person
+import com.sample.tmdb.domain.repository.BaseRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

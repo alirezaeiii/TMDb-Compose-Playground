@@ -1,7 +1,7 @@
 package com.sample.tmdb.paging
 
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.test.TestCoroutineRule
+import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import io.mockk.mockk
 import org.junit.Rule

@@ -1,7 +1,5 @@
 package com.sample.tmdb.domain.model
 
-import com.sample.tmdb.common.model.TMDbItem
-
 class DetailWrapper(
     val cast: List<TrendingPerson>,
     val crew: List<TrendingPerson>,

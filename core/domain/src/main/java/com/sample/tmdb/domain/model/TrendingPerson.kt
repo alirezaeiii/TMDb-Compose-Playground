@@ -1,9 +1,13 @@
 package com.sample.tmdb.domain.model
 
-import com.sample.tmdb.common.model.Gender
-import com.sample.tmdb.common.model.TrendingPersonItem
-import com.sample.tmdb.navigation.model.Gender as NavGender
-import com.sample.tmdb.navigation.model.TrendingPerson as NavTrendingPerson
+interface TrendingPersonItem {
+    val id: Int
+    val name: String
+    val subtitle: String
+    val gender: Gender
+    val profileUrl: String?
+    val knownFor: List<MediaItem>?
+}
 
 data class TrendingPerson(
     override val id: Int,
@@ -13,14 +17,3 @@ data class TrendingPerson(
     override val profileUrl: String?,
     override val knownFor: List<Media>? = null,
 ) : TrendingPersonItem
-
-fun TrendingPerson.asNavPerson(): NavTrendingPerson = NavTrendingPerson(
-    id = id,
-    name = name,
-    subtitle = subtitle,
-    gender = if (gender == Gender.MALE) NavGender.MALE else NavGender.FEMALE,
-    profileUrl = profileUrl,
-    knownFor = knownFor?.asNavMedia(),
-)
-
-fun List<TrendingPerson>.asNavPerson(): List<NavTrendingPerson> = map(TrendingPerson::asNavPerson)

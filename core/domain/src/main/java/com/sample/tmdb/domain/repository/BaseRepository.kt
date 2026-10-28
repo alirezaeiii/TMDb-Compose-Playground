@@ -1,8 +1,8 @@
-package com.sample.tmdb.common.base
+package com.sample.tmdb.domain.repository
 
 import android.content.Context
-import com.sample.tmdb.common.R
-import com.sample.tmdb.common.utils.Async
+import com.sample.tmdb.domain.R
+import com.sample.tmdb.domain.utils.Async
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

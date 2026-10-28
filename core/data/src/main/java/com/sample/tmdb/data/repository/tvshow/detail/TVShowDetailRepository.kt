@@ -1,7 +1,6 @@
 package com.sample.tmdb.data.repository.tvshow.detail
 
 import android.content.Context
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.response.asCastDomainModel
@@ -11,6 +10,7 @@ import com.sample.tmdb.data.response.asTVShowDomainModel
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.TMDbImage
+import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.model.TVShowDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import dagger.hilt.android.qualifiers.ApplicationContext

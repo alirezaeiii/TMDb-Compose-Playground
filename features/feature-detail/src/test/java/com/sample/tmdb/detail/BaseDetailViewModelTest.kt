@@ -1,20 +1,20 @@
 package com.sample.tmdb.detail
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.model.Gender
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.DetailWrapper
+import com.sample.tmdb.domain.model.Gender
 import com.sample.tmdb.domain.model.TMDbImage
+import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TrendingPerson
-import com.sample.tmdb.domain.model.asNavPerson
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
+import com.sample.tmdb.domain.utils.Async
 import com.sample.tmdb.feature.test.TMDbItemFixtures
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.asNavPerson
 import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.coVerify

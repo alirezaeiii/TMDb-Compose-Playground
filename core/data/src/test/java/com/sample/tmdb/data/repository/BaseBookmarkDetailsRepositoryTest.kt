@@ -1,6 +1,6 @@
 package com.sample.tmdb.data.repository
 
-import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest

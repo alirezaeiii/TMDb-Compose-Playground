@@ -1,11 +1,10 @@
 package com.sample.tmdb.domain.repository
 
 import android.content.Context
-import com.sample.tmdb.common.base.BaseRepository
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.R
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.SortType
+import com.sample.tmdb.domain.model.TMDbItem
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope

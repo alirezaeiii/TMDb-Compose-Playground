@@ -1,9 +1,9 @@
 package com.sample.tmdb.data.repository
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.common.utils.Async
+import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.repository.BaseFeedRepository
+import com.sample.tmdb.domain.utils.Async
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.last

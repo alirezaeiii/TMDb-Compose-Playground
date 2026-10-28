@@ -35,6 +35,7 @@ android {
 }
 
 dependencies {
+    api(project(":core:domain"))
     implementation(project(":navigation"))
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
@@ -53,7 +54,6 @@ dependencies {
     implementation(libs.compose.icons.extended)
     implementation(libs.androidx.appcompat)
     androidTestImplementation(libs.compose.ui.test)
-    androidTestImplementation(project(":core:domain"))
     debugImplementation(libs.compose.ui.test.manifest)
     androidTestImplementation(libs.androidx.runner)
 }

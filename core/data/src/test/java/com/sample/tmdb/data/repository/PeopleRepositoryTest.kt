@@ -1,14 +1,14 @@
 package com.sample.tmdb.data.repository
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.base.BaseRepository
-import com.sample.tmdb.common.model.Gender
-import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.PeopleDTO
 import com.sample.tmdb.data.response.TrendingPersonDTO
 import com.sample.tmdb.data.response.asDomainModel
+import com.sample.tmdb.domain.model.Gender
 import com.sample.tmdb.domain.model.People
+import com.sample.tmdb.domain.repository.BaseRepository
+import com.sample.tmdb.domain.utils.Async
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest

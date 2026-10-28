@@ -4,15 +4,16 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.base.BaseViewModel
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
+import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TrendingPerson
-import com.sample.tmdb.domain.model.asNavPerson
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.asNavPerson
+import com.sample.tmdb.navigation.model.toDetailNavKey
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -46,7 +47,7 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
     }
 
     fun onTMDbItemClick(item: TMDbItem) {
-        emitEvent(DetailUiEvent.Navigate(item.detailNavKey))
+        emitEvent(DetailUiEvent.Navigate(item.toDetailNavKey()))
     }
 
     abstract fun onAllSimilarClick(id: Int)

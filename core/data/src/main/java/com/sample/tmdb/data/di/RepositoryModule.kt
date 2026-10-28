@@ -1,6 +1,5 @@
 package com.sample.tmdb.data.di
 
-import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.data.repository.PeopleRepository
 import com.sample.tmdb.data.repository.PersonPagingRepository
 import com.sample.tmdb.data.repository.PersonRepository
@@ -27,6 +26,7 @@ import com.sample.tmdb.domain.repository.BaseBookmarkRepository
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.repository.BasePagingRepository
+import com.sample.tmdb.domain.repository.BaseRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.domain.utils.Search
 import com.sample.tmdb.domain.utils.TMDb

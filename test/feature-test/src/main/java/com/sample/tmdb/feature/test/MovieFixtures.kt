@@ -1,6 +1,5 @@
 package com.sample.tmdb.feature.test
 
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.navigation.TMDbNavKey
 

@@ -105,7 +105,6 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.sample.tmdb.common.R as commonR
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -123,6 +122,7 @@ import com.sample.tmdb.detail.utils.openInChromeCustomTab
 import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TMDbImage
+import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TrendingPerson

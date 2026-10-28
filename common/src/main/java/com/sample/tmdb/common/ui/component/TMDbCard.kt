@@ -17,10 +17,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
+import com.sample.tmdb.domain.model.TMDbItem
 
 @Composable
 fun TMDbCard(

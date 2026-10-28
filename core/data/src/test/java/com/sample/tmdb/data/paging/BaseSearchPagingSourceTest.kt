@@ -1,9 +1,9 @@
 package com.sample.tmdb.data.paging
 
 import android.content.Context
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.data.response.TMDbItemResponse
+import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.paging.BasePagingSource
 import org.mockito.Mock
 

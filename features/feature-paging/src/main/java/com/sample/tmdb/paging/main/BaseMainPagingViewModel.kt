@@ -4,10 +4,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.sample.tmdb.common.base.BasePagingViewModel
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.PagingUiEvent
 import com.sample.tmdb.domain.model.SortType
+import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.repository.BasePagingRepository
+import com.sample.tmdb.navigation.model.toDetailNavKey
 import kotlinx.coroutines.flow.Flow
 
 abstract class BaseMainPagingViewModel<T : TMDbItem>(
@@ -21,6 +22,6 @@ abstract class BaseMainPagingViewModel<T : TMDbItem>(
     abstract fun onSearchClick()
 
     override fun onItemClick(item: T) {
-        emitEvent(PagingUiEvent.Navigate(item.detailNavKey))
+        emitEvent(PagingUiEvent.Navigate(item.toDetailNavKey()))
     }
 }

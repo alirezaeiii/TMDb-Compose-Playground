@@ -1,7 +1,15 @@
 package com.sample.tmdb.domain.model
 
-import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.navigation.TMDbNavKey
+interface TMDbItem {
+    val id: Int
+    val overview: String
+    val releaseDate: String?
+    val posterUrl: String?
+    val backdropUrl: String?
+    val name: String
+    val voteAverage: Double
+    val voteCount: Int
+}
 
 data class Movie(
     override val id: Int,
@@ -12,9 +20,7 @@ data class Movie(
     override val name: String,
     override val voteAverage: Double,
     override val voteCount: Int,
-) : TMDbItem {
-    override val detailNavKey: TMDbNavKey get() = TMDbNavKey.MovieDetail(id)
-}
+) : TMDbItem
 
 data class TVShow(
     override val id: Int,
@@ -25,6 +31,4 @@ data class TVShow(
     override val name: String,
     override val voteAverage: Double,
     override val voteCount: Int,
-) : TMDbItem {
-    override val detailNavKey: TMDbNavKey get() = TMDbNavKey.TvShowDetail(id)
-}
+) : TMDbItem

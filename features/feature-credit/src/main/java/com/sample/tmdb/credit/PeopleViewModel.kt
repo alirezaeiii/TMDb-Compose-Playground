@@ -1,12 +1,12 @@
 package com.sample.tmdb.credit
 
-import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.domain.model.People
 import com.sample.tmdb.domain.model.TrendingPerson
-import com.sample.tmdb.domain.model.asNavPerson
+import com.sample.tmdb.domain.repository.BaseRepository
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.asNavPerson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

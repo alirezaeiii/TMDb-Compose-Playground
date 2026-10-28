@@ -1,17 +1,17 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-        //maven { url = 'https://maven.myket.ir' }
+        maven { url = 'https://maven.myket.ir' }
+        //gradlePluginPortal()
+        //google()
+        //mavenCentral()
     }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
-        mavenCentral()
-        //maven { url = 'https://maven.myket.ir' }
+        maven { url = 'https://maven.myket.ir' }
+        //google()
+        //mavenCentral()
     }
 }
 rootProject.name = "Tmdb-Compose"

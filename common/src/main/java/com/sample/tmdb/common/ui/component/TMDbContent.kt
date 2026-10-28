@@ -42,7 +42,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
@@ -50,6 +49,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.ui.theme.rateColors
+import com.sample.tmdb.domain.model.TMDbItem
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

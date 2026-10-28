@@ -1,13 +1,13 @@
 package com.sample.tmdb.preson
 
 import app.cash.turbine.test
-import com.sample.tmdb.common.base.BaseRepository
-import com.sample.tmdb.common.model.MediaType
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.Media
+import com.sample.tmdb.domain.model.MediaType
 import com.sample.tmdb.domain.model.Person
+import com.sample.tmdb.domain.repository.BaseRepository
+import com.sample.tmdb.domain.utils.Async
 import com.sample.tmdb.navigation.TMDbNavKey
 import io.mockk.every
 import io.mockk.mockk

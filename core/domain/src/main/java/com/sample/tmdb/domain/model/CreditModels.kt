@@ -1,7 +1,12 @@
 package com.sample.tmdb.domain.model
 
-import com.sample.tmdb.common.model.Credit
-import com.sample.tmdb.common.model.Gender
+interface Credit {
+    val id: Int
+    val role: String
+    val name: String
+    val profileUrl: String?
+    val gender: Gender
+}
 
 class Cast(
     override val role: String,

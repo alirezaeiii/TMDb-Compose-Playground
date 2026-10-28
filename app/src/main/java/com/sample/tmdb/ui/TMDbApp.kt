@@ -67,12 +67,12 @@ import com.sample.tmdb.detail.MovieDetailViewModel
 import com.sample.tmdb.detail.TVShowDetailScreen
 import com.sample.tmdb.detail.TVShowDetailViewModel
 import com.sample.tmdb.domain.model.SortType
-import com.sample.tmdb.domain.model.asDomainModel
-import com.sample.tmdb.domain.model.asNavPerson
 import com.sample.tmdb.feed.MovieFeedScreen
 import com.sample.tmdb.feed.TVShowFeedScreen
 import com.sample.tmdb.gallery.ImagesScreen
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.navigation.model.asDomainModel
+import com.sample.tmdb.navigation.model.asNavPerson
 import com.sample.tmdb.paging.main.MoviePagingScreen
 import com.sample.tmdb.paging.main.MoviePagingViewModel
 import com.sample.tmdb.paging.main.TVShowPagingScreen

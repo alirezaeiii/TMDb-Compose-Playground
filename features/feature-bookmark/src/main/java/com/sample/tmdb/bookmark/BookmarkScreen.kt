@@ -35,7 +35,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.sample.tmdb.common.R as commonR
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_48_dp
@@ -49,6 +48,7 @@ import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.navigationBarPadding
+import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.navigation.TMDbNavKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

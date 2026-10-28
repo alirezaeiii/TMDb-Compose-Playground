@@ -4,9 +4,9 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.sample.tmdb.common.R as commonR
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.HandleUiEvents
 import com.sample.tmdb.common.ui.component.SearchScreenContent
+import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.paging.PagingScreen
 

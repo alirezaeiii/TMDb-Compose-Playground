@@ -1,12 +1,11 @@
 package com.sample.tmdb.domain.repository
 
 import android.content.Context
-import com.sample.tmdb.common.base.BaseRepository
-import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
+import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.asPersonModel
 import kotlinx.coroutines.CoroutineDispatcher
