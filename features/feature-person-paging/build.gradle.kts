@@ -26,7 +26,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core)
     implementation(libs.material)
-    implementation(project(":core:domain"))
     implementation(project(":common"))
     implementation(project(":navigation"))
 

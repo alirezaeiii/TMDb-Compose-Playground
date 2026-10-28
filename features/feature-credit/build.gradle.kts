@@ -36,7 +36,6 @@ android {
 
 dependencies {
     implementation(libs.gson)
-    implementation(project(":core:domain"))
     implementation(project(":common"))
     implementation(project(":navigation"))
 
