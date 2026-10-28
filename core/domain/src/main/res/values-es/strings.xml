@@ -2,4 +2,8 @@
 <resources>
     <string name="failed_loading_msg">Algo fue mal…</string>
     <string name="failed_refresh_msg">Algo fue mal al actualizar</string>
+    <string name="text_trending">Tendencias</string>
+    <string name="text_popular">Popular</string>
+    <string name="text_highest_rate">Mejor valorado</string>
+    <string name="text_discover">Descubrir</string>
 </resources>

@@ -2,8 +2,8 @@
 <resources>
     <string name="failed_loading_msg">Something went wrong</string>
     <string name="failed_refresh_msg">Something went wrong to refresh</string>
-    <string name="text_trending" translatable="false">Trending</string>
-    <string name="text_popular" translatable="false">Popular</string>
-    <string name="text_highest_rate" translatable="false">Top Rated</string>
-    <string name="text_discover" translatable="false">Discover</string>
+    <string name="text_trending">Trending</string>
+    <string name="text_popular">Popular</string>
+    <string name="text_highest_rate">Top Rated</string>
+    <string name="text_discover">Discover</string>
 </resources>
