@@ -10,6 +10,7 @@ import com.sample.tmdb.domain.model.MovieDetails
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mock
 import org.mockito.Mockito.anyInt
 import org.mockito.Mockito.`when`
@@ -47,7 +48,7 @@ class MovieDetailRepositoryTest : BaseDetailRepositoryTest<MovieDetails>() {
         )
         `when`(api.movieCredit(anyInt())).thenReturn(NetworkCreditWrapper(emptyList(), emptyList()))
         `when`(api.fetchImages(anyInt())).thenReturn(ImagesResponse(emptyList(), ID, emptyList()))
-        `when`(api.fetchSimilarMovies(anyInt())).thenReturn(NetworkTMDbWrapper(emptyList()))
+        `when`(api.fetchSimilarMovies(anyInt(), eq(1))).thenReturn(NetworkTMDbWrapper(emptyList()))
     }
 
     override fun mockFailApiResponse() = runTest {

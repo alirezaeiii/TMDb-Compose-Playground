@@ -1,13 +1,12 @@
 package com.sample.tmdb.data.repository
 
 import app.cash.turbine.test
-import com.sample.tmdb.domain.model.Cast
-import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.SpokenLanguage
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.model.TMDbItemDetails
+import com.sample.tmdb.domain.model.TrendingPerson
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.utils.Async
 import junit.framework.TestCase.assertEquals
@@ -45,8 +44,8 @@ abstract class BaseDetailRepositoryTest<T : TMDbItemDetails> : BaseRepositoryTes
             assertEquals(emptyList<SpokenLanguage>(), result.details.spokenLanguages)
             assertEquals(VOTE_AVERAGE, result.details.voteAverage)
             assertEquals(VOTE_COUNT, result.details.voteCount)
-            assertEquals(emptyList<Cast>(), result.cast)
-            assertEquals(emptyList<Crew>(), result.crew)
+            assertEquals(emptyList<TrendingPerson>(), result.cast)
+            assertEquals(emptyList<TrendingPerson>(), result.crew)
             assertEquals(emptyList<TMDbImage>(), result.images)
             assertEquals(emptyList<TMDbItem>(), result.similarItems)
         }
