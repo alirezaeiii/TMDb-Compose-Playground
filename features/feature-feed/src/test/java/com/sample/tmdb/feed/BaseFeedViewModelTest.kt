@@ -2,7 +2,7 @@ package com.sample.tmdb.feed
 
 import app.cash.turbine.test
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.utils.ViewState
+import com.sample.tmdb.common.ui.ViewState
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.MediaType
 import com.sample.tmdb.domain.model.SortType

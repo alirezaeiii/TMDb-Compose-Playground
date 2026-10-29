@@ -2,7 +2,7 @@ package com.sample.tmdb.preson
 
 import app.cash.turbine.test
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.utils.ViewState
+import com.sample.tmdb.common.ui.ViewState
 import com.sample.tmdb.domain.model.Media
 import com.sample.tmdb.domain.model.MediaType
 import com.sample.tmdb.domain.model.Person

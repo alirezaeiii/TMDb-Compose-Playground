@@ -9,7 +9,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.ui.component.ErrorScreen
 import com.sample.tmdb.common.ui.component.TMDbProgressBar
-import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.UiEvent
 import kotlinx.coroutines.flow.collectLatest

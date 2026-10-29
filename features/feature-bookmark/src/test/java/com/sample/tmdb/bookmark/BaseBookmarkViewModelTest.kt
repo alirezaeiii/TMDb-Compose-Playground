@@ -2,7 +2,7 @@ package com.sample.tmdb.bookmark
 
 import app.cash.turbine.test
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.utils.ViewState
+import com.sample.tmdb.common.ui.ViewState
 import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.repository.BaseBookmarkRepository
 import com.sample.tmdb.domain.repository.LanguageRepository

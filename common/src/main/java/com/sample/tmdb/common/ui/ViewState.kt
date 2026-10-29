@@ -1,4 +1,4 @@
-package com.sample.tmdb.common.utils
+package com.sample.tmdb.common.ui
 
 data class ViewState<T>(
     val items: T? = null,
