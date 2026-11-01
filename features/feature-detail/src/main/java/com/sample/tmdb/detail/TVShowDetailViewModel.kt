@@ -1,5 +1,6 @@
 package com.sample.tmdb.detail
 
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TVShowDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
@@ -19,7 +20,7 @@ class TVShowDetailViewModel @AssistedInject constructor(
 ) : BaseDetailViewModel<TVShowDetails, TVShow>(bookmarkRepository, repository, tmdbId) {
 
     override fun onAllSimilarClick(id: Int) {
-        emitEvent(DetailUiEvent.Navigate(TMDbNavKey.PagingTvShows(SortType.SIMILAR, id)))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.PagingTvShows(SortType.SIMILAR, id)))
     }
 
     @AssistedFactory

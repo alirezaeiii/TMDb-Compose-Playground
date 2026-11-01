@@ -2,11 +2,11 @@ package com.sample.tmdb.common.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.common.ui.ViewState
 import com.sample.tmdb.domain.repository.BaseRepository
 import com.sample.tmdb.domain.repository.LanguageRepository
 import com.sample.tmdb.domain.utils.Async
-import com.sample.tmdb.navigation.UiEvent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,10 +17,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-abstract class BaseViewModel<T, S, E : UiEvent>(
+abstract class BaseViewModel<T, S>(
     private val repository: BaseRepository<T, S>,
     private val id: S? = null,
-    private val createWarningEvent: ((String) -> E)? = null,
     languageRepository: LanguageRepository? = null,
     loadDataOnInit: Boolean = true,
 ) : ViewModel() {
@@ -28,7 +27,7 @@ abstract class BaseViewModel<T, S, E : UiEvent>(
     private val _state = MutableStateFlow(ViewState<T>(isLoading = true))
     val state = _state.asStateFlow()
 
-    private val _uiEvent = MutableSharedFlow<E>()
+    private val _uiEvent = MutableSharedFlow<UiEvent>()
     val uiEvent = _uiEvent.asSharedFlow()
 
     private var lastLanguage: String? = null
@@ -104,10 +103,10 @@ abstract class BaseViewModel<T, S, E : UiEvent>(
     }
 
     private suspend fun emitWarning(message: String) {
-        createWarningEvent?.let { _uiEvent.emit(it(message)) }
+        _uiEvent.emit(UiEvent.ShowWarning(message))
     }
 
-    protected fun emitEvent(event: E) {
+    protected fun emitEvent(event: UiEvent) {
         viewModelScope.launch {
             _uiEvent.emit(event)
         }

@@ -14,8 +14,8 @@ import com.sample.tmdb.navigation.UiEvent
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun <T, S, E : UiEvent> Content(
-    viewModel: BaseViewModel<T, S, E>,
+fun <T, S> Content(
+    viewModel: BaseViewModel<T, S>,
     languageViewModel: LanguageViewModel? = null,
     scaffoldState: ScaffoldState? = null,
     onNavigate: (TMDbNavKey) -> Unit = {},

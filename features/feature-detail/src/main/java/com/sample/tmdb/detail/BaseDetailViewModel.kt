@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.base.BaseViewModel
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItem
@@ -22,9 +23,9 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
     private val bookmarkRepository: BookmarkDetailsRepository<Item>,
     repository: BaseDetailRepository<ItemDetails>,
     tmdbId: Int?,
-) : BaseViewModel<DetailWrapper, Int, DetailUiEvent>(
-    repository,
-    tmdbId,
+) : BaseViewModel<DetailWrapper, Int>(
+    repository = repository,
+    id = tmdbId,
 ) {
     private val gson = Gson()
 
@@ -47,18 +48,18 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
     }
 
     fun onTMDbItemClick(item: TMDbItem) {
-        emitEvent(DetailUiEvent.Navigate(item.toDetailNavKey()))
+        emitEvent(UiEvent.Navigate(item.toDetailNavKey()))
     }
 
     abstract fun onAllSimilarClick(id: Int)
 
     fun onPersonClick(person: TrendingPerson) {
-        emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Person(person.asNavPerson())))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.Person(person.asNavPerson())))
     }
 
     fun onImageSelected(images: List<TMDbImage>, index: Int) {
         val json = gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type)
-        emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Images(json, index)))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.Images(json, index)))
     }
 
     fun onSeeAllCastClicked(cast: List<TrendingPerson>) {
@@ -66,7 +67,7 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
             cast.asNavPerson(),
             object : TypeToken<List<com.sample.tmdb.navigation.model.TrendingPerson>>() {}.type,
         )
-        emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Cast(json)))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.Cast(json)))
     }
 
     fun onSeeAllCrewClicked(crew: List<TrendingPerson>) {
@@ -74,10 +75,10 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
             crew.asNavPerson(),
             object : TypeToken<List<com.sample.tmdb.navigation.model.TrendingPerson>>() {}.type,
         )
-        emitEvent(DetailUiEvent.Navigate(TMDbNavKey.Crew(json)))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.Crew(json)))
     }
 
     fun onNavigateUp() {
-        emitEvent(DetailUiEvent.NavigateUp)
+        emitEvent(UiEvent.NavigateUp)
     }
 }

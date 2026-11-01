@@ -1,6 +1,7 @@
 package com.sample.tmdb.credit
 
 import com.sample.tmdb.common.base.BaseViewModel
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.People
 import com.sample.tmdb.domain.model.TrendingPerson
 import com.sample.tmdb.domain.repository.BaseRepository
@@ -14,20 +15,19 @@ import javax.inject.Inject
 class PeopleViewModel @Inject constructor(
     repository: BaseRepository<People, Nothing>,
     languageRepository: LanguageRepository,
-) : BaseViewModel<People, Nothing, PeopleUIEvent>(
-    repository,
-    createWarningEvent = PeopleUIEvent::ShowWarning,
+) : BaseViewModel<People, Nothing>(
+    repository = repository,
     languageRepository = languageRepository,
 ) {
     fun onPersonClick(people: TrendingPerson) {
-        emitEvent(PeopleUIEvent.Navigate(TMDbNavKey.Person(people.asNavPerson())))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.Person(people.asNavPerson())))
     }
 
     fun onMoreClick() {
-        emitEvent(PeopleUIEvent.Navigate(TMDbNavKey.PersonPaging))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.PersonPaging))
     }
 
     fun onSearchClick() {
-        emitEvent(PeopleUIEvent.Navigate(TMDbNavKey.SearchPerson))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.SearchPerson))
     }
 }

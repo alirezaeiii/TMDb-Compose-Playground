@@ -1,6 +1,7 @@
 package com.sample.tmdb.feed
 
 import com.sample.tmdb.common.base.BaseViewModel
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.MediaType
 import com.sample.tmdb.domain.model.TMDbItem
@@ -13,15 +14,14 @@ import com.sample.tmdb.navigation.model.toDetailNavKey
 abstract class BaseFeedViewModel<T : TMDbItem>(
     repository: BaseFeedRepository<T>,
     languageRepository: LanguageRepository,
-) : BaseViewModel<List<FeedWrapper>, Nothing, FeedUiEvent>(
-    repository,
-    createWarningEvent = FeedUiEvent::ShowWarning,
+) : BaseViewModel<List<FeedWrapper>, Nothing>(
+    repository = repository,
     languageRepository = languageRepository,
 ) {
     abstract fun onSearchClick()
 
     fun onTMDbItemClick(item: TMDbItem) {
-        emitEvent(FeedUiEvent.Navigate(item.toDetailNavKey()))
+        emitEvent(UiEvent.Navigate(item.toDetailNavKey()))
     }
 
     fun onMoreClick(event: FeedNavigationEvent) {
@@ -29,11 +29,11 @@ abstract class BaseFeedViewModel<T : TMDbItem>(
             is FeedNavigationEvent.More -> {
                 when (event.mediaType) {
                     MediaType.MOVIE -> emitEvent(
-                        FeedUiEvent.Navigate(TMDbNavKey.PagingMovies(event.sortType.asNavSortType())),
+                        UiEvent.Navigate(TMDbNavKey.PagingMovies(event.sortType.asNavSortType())),
                     )
 
                     MediaType.TV_SHOW -> emitEvent(
-                        FeedUiEvent.Navigate(TMDbNavKey.PagingTvShows(event.sortType.asNavSortType())),
+                        UiEvent.Navigate(TMDbNavKey.PagingTvShows(event.sortType.asNavSortType())),
                     )
                 }
             }

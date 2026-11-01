@@ -2,6 +2,7 @@ package com.sample.tmdb.feed
 
 import app.cash.turbine.test
 import com.sample.tmdb.common.test.TestCoroutineRule
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.common.ui.ViewState
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.MediaType
@@ -78,7 +79,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
         )
         viewModel.uiEvent.test {
             viewModel.refresh()
-            assertEquals(FeedUiEvent.ShowWarning("warning message"), awaitItem())
+            assertEquals(UiEvent.ShowWarning("warning message"), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -90,7 +91,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
 
         viewModel.uiEvent.test {
             viewModel.onSearchClick()
-            assertEquals(FeedUiEvent.Navigate(searchNavKey), awaitItem())
+            assertEquals(UiEvent.Navigate(searchNavKey), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -104,7 +105,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
             viewModel.uiEvent.test {
                 viewModel.onMoreClick(FeedNavigationEvent.More(mediaType, sortType))
                 assertEquals(
-                    FeedUiEvent.Navigate(expectedNavKey(sortType)),
+                    UiEvent.Navigate(expectedNavKey(sortType)),
                     awaitItem(),
                 )
                 cancelAndIgnoreRemainingEvents()
@@ -119,7 +120,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
 
         viewModel.uiEvent.test {
             viewModel.onTMDbItemClick(item)
-            assertEquals(FeedUiEvent.Navigate(navKey), awaitItem())
+            assertEquals(UiEvent.Navigate(navKey), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

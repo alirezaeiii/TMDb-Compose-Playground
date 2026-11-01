@@ -2,6 +2,7 @@ package com.sample.tmdb.preson
 
 import app.cash.turbine.test
 import com.sample.tmdb.common.test.TestCoroutineRule
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.common.ui.ViewState
 import com.sample.tmdb.domain.model.Media
 import com.sample.tmdb.domain.model.MediaType
@@ -55,7 +56,7 @@ class PersonViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onNavigateUp()
-            assertEquals(PersonUiEvent.NavigateUp, awaitItem())
+            assertEquals(UiEvent.NavigateUp, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -68,7 +69,7 @@ class PersonViewModelTest {
         val media = Media(10, "url", MediaType.MOVIE, "Movie Title")
         viewModel.uiEvent.test {
             viewModel.onMediaClick(media)
-            assertEquals(PersonUiEvent.Navigate(TMDbNavKey.MovieDetail(10)), awaitItem())
+            assertEquals(UiEvent.Navigate(TMDbNavKey.MovieDetail(10)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -81,7 +82,7 @@ class PersonViewModelTest {
         val media = Media(20, "url", MediaType.TV_SHOW, "Tv Title")
         viewModel.uiEvent.test {
             viewModel.onMediaClick(media)
-            assertEquals(PersonUiEvent.Navigate(TMDbNavKey.TvShowDetail(20)), awaitItem())
+            assertEquals(UiEvent.Navigate(TMDbNavKey.TvShowDetail(20)), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

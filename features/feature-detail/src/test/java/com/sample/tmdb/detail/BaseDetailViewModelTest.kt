@@ -2,6 +2,7 @@ package com.sample.tmdb.detail
 
 import app.cash.turbine.test
 import com.sample.tmdb.common.test.TestCoroutineRule
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.common.ui.ViewState
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.Gender
@@ -118,7 +119,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
         viewModel.uiEvent.test {
             viewModel.onPersonClick(person)
-            assertEquals(DetailUiEvent.Navigate(TMDbNavKey.Person(person.asNavPerson())), awaitItem())
+            assertEquals(UiEvent.Navigate(TMDbNavKey.Person(person.asNavPerson())), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -130,7 +131,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
         viewModel.uiEvent.test {
             viewModel.onNavigateUp()
-            assertEquals(DetailUiEvent.NavigateUp, awaitItem())
+            assertEquals(UiEvent.NavigateUp, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -152,7 +153,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
         viewModel.uiEvent.test {
             viewModel.onSeeAllCastClicked(cast)
             val event = awaitItem()
-            assertTrue(event is DetailUiEvent.Navigate)
+            assertTrue(event is UiEvent.Navigate)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -174,7 +175,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
         viewModel.uiEvent.test {
             viewModel.onSeeAllCrewClicked(crew)
             val event = awaitItem()
-            assertTrue(event is DetailUiEvent.Navigate)
+            assertTrue(event is UiEvent.Navigate)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -193,7 +194,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
         viewModel.uiEvent.test {
             viewModel.onImageSelected(images, 0)
             val event = awaitItem()
-            assertTrue(event is DetailUiEvent.Navigate)
+            assertTrue(event is UiEvent.Navigate)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -205,7 +206,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
         viewModel.uiEvent.test {
             viewModel.onTMDbItemClick(item)
-            assertEquals(DetailUiEvent.Navigate(navKey), awaitItem())
+            assertEquals(UiEvent.Navigate(navKey), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -217,7 +218,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
         viewModel.uiEvent.test {
             viewModel.onAllSimilarClick(TMDB_ITEM_ID)
-            assertEquals(DetailUiEvent.Navigate(similarNavKey), awaitItem())
+            assertEquals(UiEvent.Navigate(similarNavKey), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

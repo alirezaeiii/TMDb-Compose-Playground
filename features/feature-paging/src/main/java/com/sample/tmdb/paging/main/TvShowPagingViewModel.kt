@@ -1,6 +1,6 @@
 package com.sample.tmdb.paging.main
 
-import com.sample.tmdb.common.ui.PagingUiEvent
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BasePagingRepository
@@ -18,7 +18,7 @@ open class TvShowPagingViewModel @AssistedInject constructor(
     @Assisted type: SortType,
 ) : BaseMainPagingViewModel<TVShow>(repository, id, type) {
     override fun onSearchClick() {
-        emitEvent(PagingUiEvent.Navigate(TMDbNavKey.SearchTvShows))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.SearchTvShows))
     }
 
     @AssistedFactory

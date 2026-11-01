@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.sample.tmdb.common.base.BasePagingViewModel
-import com.sample.tmdb.common.ui.PagingUiEvent
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.TrendingPerson
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.navigation.TMDbNavKey
@@ -21,10 +21,10 @@ class PersonPagingViewModel @Inject constructor(repository: BasePagingRepository
         repository.fetchResultStream().cachedIn(viewModelScope)
 
     override fun onItemClick(item: TrendingPerson) {
-        emitEvent(PagingUiEvent.Navigate(TMDbNavKey.Person(item.asNavPerson())))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.Person(item.asNavPerson())))
     }
 
     fun onSearchClick() {
-        emitEvent(PagingUiEvent.Navigate(TMDbNavKey.SearchPerson))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.SearchPerson))
     }
 }

@@ -2,7 +2,7 @@ package com.sample.tmdb.paging
 
 import androidx.paging.PagingData
 import app.cash.turbine.test
-import com.sample.tmdb.common.ui.PagingUiEvent
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.feature.test.TMDbItemFixtures
@@ -31,7 +31,7 @@ abstract class BaseMainPagingViewModelTest<T : TMDbItem> :
 
             viewModel.uiEvent.test {
                 viewModel.onItemClick(item)
-                assertEquals(PagingUiEvent.Navigate(navKey), awaitItem())
+                assertEquals(UiEvent.Navigate(navKey), awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -45,7 +45,7 @@ abstract class BaseMainPagingViewModelTest<T : TMDbItem> :
 
             viewModel.uiEvent.test {
                 viewModel.onNavigateUp()
-                assertEquals(PagingUiEvent.NavigateUp, awaitItem())
+                assertEquals(UiEvent.NavigateUp, awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -59,7 +59,7 @@ abstract class BaseMainPagingViewModelTest<T : TMDbItem> :
 
             viewModel.uiEvent.test {
                 viewModel.onSearchClick()
-                assertEquals(PagingUiEvent.Navigate(searchNavKey), awaitItem())
+                assertEquals(UiEvent.Navigate(searchNavKey), awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }

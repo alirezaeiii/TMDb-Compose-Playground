@@ -3,7 +3,7 @@ package com.sample.tmdb.person.paging
 import androidx.paging.PagingData
 import app.cash.turbine.test
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.ui.PagingUiEvent
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.Gender
 import com.sample.tmdb.domain.model.TrendingPerson
 import com.sample.tmdb.domain.repository.BasePagingRepository
@@ -32,7 +32,7 @@ class PersonPagingViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onItemClick(person)
-            assertEquals(PagingUiEvent.Navigate(TMDbNavKey.Person(person.asNavPerson())), awaitItem())
+            assertEquals(UiEvent.Navigate(TMDbNavKey.Person(person.asNavPerson())), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -44,7 +44,7 @@ class PersonPagingViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onNavigateUp()
-            assertEquals(PagingUiEvent.NavigateUp, awaitItem())
+            assertEquals(UiEvent.NavigateUp, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -56,7 +56,7 @@ class PersonPagingViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onSearchClick()
-            assertEquals(PagingUiEvent.Navigate(TMDbNavKey.SearchPerson), awaitItem())
+            assertEquals(UiEvent.Navigate(TMDbNavKey.SearchPerson), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

@@ -3,7 +3,7 @@ package com.sample.tmdb.person.paging
 import androidx.lifecycle.SavedStateHandle
 import androidx.paging.PagingData
 import com.sample.tmdb.common.base.BaseSearchPagingViewModel
-import com.sample.tmdb.common.ui.PagingUiEvent
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.TrendingPerson
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.navigation.TMDbNavKey
@@ -22,6 +22,6 @@ class PagingSearchPersonViewModel @Inject constructor(
         repository.fetchResultStream(query)
 
     override fun onItemClick(item: TrendingPerson) {
-        emitEvent(PagingUiEvent.Navigate(TMDbNavKey.Person(item.asNavPerson())))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.Person(item.asNavPerson())))
     }
 }

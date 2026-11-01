@@ -2,6 +2,7 @@ package com.sample.tmdb.bookmark
 
 import app.cash.turbine.test
 import com.sample.tmdb.common.test.TestCoroutineRule
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.common.ui.ViewState
 import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.repository.BaseBookmarkRepository
@@ -69,7 +70,7 @@ abstract class BaseBookmarkViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
         )
         viewModel.uiEvent.test {
             viewModel.refresh()
-            assertEquals(BookmarkUiEvent.ShowWarning("warning message"), awaitItem())
+            assertEquals(UiEvent.ShowWarning("warning message"), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -78,7 +79,7 @@ abstract class BaseBookmarkViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
     fun `onItemClick emits Navigate to Detail`() = runTest {
         viewModel.uiEvent.test {
             viewModel.onTMDbItemClick(item)
-            assertEquals(BookmarkUiEvent.Navigate(navKey), awaitItem())
+            assertEquals(UiEvent.Navigate(navKey), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

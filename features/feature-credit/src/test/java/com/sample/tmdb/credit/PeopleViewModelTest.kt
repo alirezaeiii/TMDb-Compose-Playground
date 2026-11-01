@@ -2,6 +2,7 @@ package com.sample.tmdb.credit
 
 import app.cash.turbine.test
 import com.sample.tmdb.common.test.TestCoroutineRule
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.common.ui.ViewState
 import com.sample.tmdb.domain.model.Gender
 import com.sample.tmdb.domain.model.People
@@ -77,7 +78,7 @@ class PeopleViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.refresh()
-            assertEquals(PeopleUIEvent.ShowWarning("warning message"), awaitItem())
+            assertEquals(UiEvent.ShowWarning("warning message"), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -89,7 +90,7 @@ class PeopleViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onPersonClick(person)
-            assertEquals(PeopleUIEvent.Navigate(TMDbNavKey.Person(person.asNavPerson())), awaitItem())
+            assertEquals(UiEvent.Navigate(TMDbNavKey.Person(person.asNavPerson())), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -101,7 +102,7 @@ class PeopleViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onMoreClick()
-            assertEquals(PeopleUIEvent.Navigate(TMDbNavKey.PersonPaging), awaitItem())
+            assertEquals(UiEvent.Navigate(TMDbNavKey.PersonPaging), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -113,7 +114,7 @@ class PeopleViewModelTest {
 
         viewModel.uiEvent.test {
             viewModel.onSearchClick()
-            assertEquals(PeopleUIEvent.Navigate(TMDbNavKey.SearchPerson), awaitItem())
+            assertEquals(UiEvent.Navigate(TMDbNavKey.SearchPerson), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

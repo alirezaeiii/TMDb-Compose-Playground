@@ -1,5 +1,6 @@
 package com.sample.tmdb.feed
 
+import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.repository.LanguageRepository
@@ -13,6 +14,6 @@ class MovieFeedViewModel @Inject constructor(
     languageRepository: LanguageRepository,
 ) : BaseFeedViewModel<Movie>(repository, languageRepository) {
     override fun onSearchClick() {
-        emitEvent(FeedUiEvent.Navigate(TMDbNavKey.SearchMovies))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.SearchMovies))
     }
 }
