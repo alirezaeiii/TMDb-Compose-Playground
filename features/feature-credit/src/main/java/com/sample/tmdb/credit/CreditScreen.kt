@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -42,6 +43,7 @@ sealed interface CreditSource {
     data class FromViewModel(
         val viewModel: PeopleViewModel,
         val languageViewModel: LanguageViewModel,
+        val scaffoldState: ScaffoldState,
         val onNavigate: (TMDbNavKey) -> Unit,
     ) : CreditSource
 
@@ -60,6 +62,7 @@ fun CreditScreen(source: CreditSource, @StringRes resourceId: Int, testPainter: 
                 viewModel = source.viewModel,
                 languageViewModel = source.languageViewModel,
                 onNavigate = source.onNavigate,
+                scaffoldState = source.scaffoldState,
             ) { state, item ->
                 TMDbSwipeRefresh(state.isRefreshing, { source.viewModel.refresh(true) }) {
                     CreditScreen(
