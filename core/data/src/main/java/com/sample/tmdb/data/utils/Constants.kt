@@ -19,4 +19,5 @@ object Constants {
     const val APPLE_TV_PROVIDER_ID = 2
     const val NETFLIX_PROVIDER_ID = 8
     const val AMAZON_PRIME_PROVIDER_ID = 9
+    const val GOOGLE_PLAY_PROVIDER_ID = 3
 }

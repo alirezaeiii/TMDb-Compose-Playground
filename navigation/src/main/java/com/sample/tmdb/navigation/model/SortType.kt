@@ -13,6 +13,7 @@ enum class SortType {
     APPLE_TV,
     NETFLIX,
     AMAZON_PRIME,
+    GOOGLE_PLAY,
 }
 
 fun SortType.asDomainModel(): DomainSortType = when (this) {
@@ -26,6 +27,7 @@ fun SortType.asDomainModel(): DomainSortType = when (this) {
     SortType.APPLE_TV -> DomainSortType.APPLE_TV
     SortType.NETFLIX -> DomainSortType.NETFLIX
     SortType.AMAZON_PRIME -> DomainSortType.AMAZON_PRIME
+    SortType.GOOGLE_PLAY -> DomainSortType.GOOGLE_PLAY
 }
 
 fun DomainSortType.asNavSortType(): SortType = when (this) {
@@ -39,4 +41,5 @@ fun DomainSortType.asNavSortType(): SortType = when (this) {
     DomainSortType.APPLE_TV -> SortType.APPLE_TV
     DomainSortType.NETFLIX -> SortType.NETFLIX
     DomainSortType.AMAZON_PRIME -> SortType.AMAZON_PRIME
+    DomainSortType.GOOGLE_PLAY -> SortType.GOOGLE_PLAY
 }

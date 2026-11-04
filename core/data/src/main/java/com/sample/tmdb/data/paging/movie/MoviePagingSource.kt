@@ -5,6 +5,7 @@ import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.response.asMovieDomainModel
 import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
+import com.sample.tmdb.data.utils.Constants.GOOGLE_PLAY_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.NETFLIX_PROVIDER_ID
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
@@ -27,5 +28,6 @@ class MoviePagingSource(
         SortType.APPLE_TV -> movieApi.providerMovies(APPLE_TV_PROVIDER_ID, page).items.asMovieDomainModel()
         SortType.NETFLIX -> movieApi.providerMovies(NETFLIX_PROVIDER_ID, page).items.asMovieDomainModel()
         SortType.AMAZON_PRIME -> movieApi.providerMovies(AMAZON_PRIME_PROVIDER_ID, page).items.asMovieDomainModel()
+        SortType.GOOGLE_PLAY -> movieApi.providerMovies(GOOGLE_PLAY_PROVIDER_ID, page).items.asMovieDomainModel()
     }
 }

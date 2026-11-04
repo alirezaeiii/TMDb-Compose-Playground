@@ -12,4 +12,5 @@
     <string name="apple_tv_items" translatable="false">Apple TV %s</string>
     <string name="netflix_items" translatable="false">Netflix %s</string>
     <string name="amazon_prime_items" translatable="false">Amazon Prime %s</string>
+    <string name="google_play_items" translatable="false">Google Play %s</string>
 </resources>

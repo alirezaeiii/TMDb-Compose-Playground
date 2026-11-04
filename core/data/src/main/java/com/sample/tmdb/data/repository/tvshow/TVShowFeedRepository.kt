@@ -7,6 +7,7 @@ import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.response.asTVShowDomainModel
 import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
+import com.sample.tmdb.data.utils.Constants.GOOGLE_PLAY_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.NETFLIX_PROVIDER_ID
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BaseFeedRepository
@@ -41,6 +42,9 @@ class TVShowFeedRepository @Inject constructor(
 
     override suspend fun amazonPrimeItems(): List<TVShow> =
         tvShowApi.providerTVSeries(AMAZON_PRIME_PROVIDER_ID).items.asTVShowDomainModel()
+
+    override suspend fun googlePlayItems(): List<TVShow> =
+        tvShowApi.providerTVSeries(GOOGLE_PLAY_PROVIDER_ID).items.asTVShowDomainModel()
 
     override fun getNowPlayingResId(): Int = R.string.text_airing_today
 

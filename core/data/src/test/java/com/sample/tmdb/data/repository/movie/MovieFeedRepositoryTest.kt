@@ -5,6 +5,7 @@ import com.sample.tmdb.data.repository.BaseFeedRepositoryTest
 import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
+import com.sample.tmdb.data.utils.Constants.GOOGLE_PLAY_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.NETFLIX_PROVIDER_ID
 import com.sample.tmdb.domain.model.Movie
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +34,7 @@ class MovieFeedRepositoryTest : BaseFeedRepositoryTest<Movie>() {
         `when`(api.providerMovies(APPLE_TV_PROVIDER_ID)).thenReturn(NetworkTMDbWrapper(emptyList()))
         `when`(api.providerMovies(NETFLIX_PROVIDER_ID)).thenReturn(NetworkTMDbWrapper(emptyList()))
         `when`(api.providerMovies(AMAZON_PRIME_PROVIDER_ID)).thenReturn(NetworkTMDbWrapper(emptyList()))
+        `when`(api.providerMovies(GOOGLE_PLAY_PROVIDER_ID)).thenReturn(NetworkTMDbWrapper(emptyList()))
     }
 
     override fun mockFailApiResponse() = runTest {

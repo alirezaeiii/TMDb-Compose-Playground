@@ -5,6 +5,7 @@ import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.response.asTVShowDomainModel
 import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
+import com.sample.tmdb.data.utils.Constants.GOOGLE_PLAY_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.NETFLIX_PROVIDER_ID
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
@@ -27,5 +28,6 @@ class TVSeriesPagingSource(
         SortType.APPLE_TV -> tvShowApi.providerTVSeries(APPLE_TV_PROVIDER_ID, page).items.asTVShowDomainModel()
         SortType.NETFLIX -> tvShowApi.providerTVSeries(NETFLIX_PROVIDER_ID, page).items.asTVShowDomainModel()
         SortType.AMAZON_PRIME -> tvShowApi.providerTVSeries(AMAZON_PRIME_PROVIDER_ID, page).items.asTVShowDomainModel()
+        SortType.GOOGLE_PLAY -> tvShowApi.providerTVSeries(GOOGLE_PLAY_PROVIDER_ID, page).items.asTVShowDomainModel()
     }
 }

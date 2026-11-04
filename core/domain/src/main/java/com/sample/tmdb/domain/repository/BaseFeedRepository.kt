@@ -29,6 +29,8 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
 
     protected abstract suspend fun amazonPrimeItems(): List<T>
 
+    protected abstract suspend fun googlePlayItems(): List<T>
+
     protected abstract fun getNowPlayingResId(): Int
 
     protected abstract fun getLatestResId(): Int
@@ -43,6 +45,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
         val appleTVDeferred = async { appleTVItems() }
         val netflixDeferred = async { netflixItems() }
         val amazonPrimeDeferred = async { amazonPrimeItems() }
+        val googlePlayDeferred = async { googlePlayItems() }
 
         listOf(
             FeedWrapper(trendingDeferred.await(), R.string.text_trending, SortType.TRENDING),
@@ -54,6 +57,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
             FeedWrapper(appleTVDeferred.await(), R.string.text_apple_tv, SortType.APPLE_TV),
             FeedWrapper(netflixDeferred.await(), R.string.text_netflix, SortType.NETFLIX),
             FeedWrapper(amazonPrimeDeferred.await(), R.string.text_amazon_prime, SortType.AMAZON_PRIME),
+            FeedWrapper(googlePlayDeferred.await(), R.string.text_google_play, SortType.GOOGLE_PLAY),
         )
     }
 }

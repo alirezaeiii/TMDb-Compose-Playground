@@ -11,4 +11,5 @@ enum class SortType {
     APPLE_TV,
     NETFLIX,
     AMAZON_PRIME,
+    GOOGLE_PLAY,
 }
