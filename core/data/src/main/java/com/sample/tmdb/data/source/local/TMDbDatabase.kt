@@ -1,6 +1,5 @@
 package com.sample.tmdb.data.source.local
 
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -20,9 +19,6 @@ import com.sample.tmdb.data.source.entity.TVShowFeedEntity
     ],
     version = 2,
     exportSchema = true,
-    autoMigrations = [
-        AutoMigration(from = 1, to = 2),
-    ],
 )
 @TypeConverters(FeedTypeConverters::class)
 abstract class TMDbDatabase : RoomDatabase() {

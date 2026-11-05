@@ -49,3 +49,13 @@
 # Retain generic signatures of Gson TypeToken and its subclasses with R8 version 3.0 and higher.
 -keep,allowobfuscation,allowshrinking class com.google.gson.reflect.TypeToken
 -keep,allowobfuscation,allowshrinking class * extends com.google.gson.reflect.TypeToken
+
+# Keep Room core classes
+-keep class androidx.room.** { *; }
+-keep class * extends androidx.room.RoomDatabase { *; }
+
+# Keep Entity classes (Room needs to read table structure via reflection)
+-keep @androidx.room.Entity class * { *; }
+
+# Keep TypeConverters
+-keep class com.sample.tmdb.data.source.local.FeedTypeConverters { *; }
