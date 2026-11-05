@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 def appVersion = (new File(project.rootDir, 'version.txt')).text.trim()
@@ -92,5 +94,8 @@ dependencies {
     implementation libs.hilt.navigation.compose
     implementation libs.hilt.viewmodel.compose
     ksp libs.hilt.compiler
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
     androidTestImplementation libs.androidx.runner
 }

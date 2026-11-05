@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "557823531708",
+    "project_id": "tmdb-774f0",
+    "storage_bucket": "tmdb-774f0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557823531708:android:e59f6ee858491b9f394eb9",
+        "android_client_info": {
+          "package_name": "com.sample.tmdb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCUJU4TVPMiVxCO1UweubCnIoQ6uTop8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
