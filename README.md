@@ -1,6 +1,9 @@
 # TMDb-Compose-Playground
 Modular Android architecture which showcase Kotlin, Jetpack Compose, Navigation3 Compose, Paging3 Compose, MVVM, Hilt, Room, Coroutines, StateFlow, Retrofit, Coil-compose and Github Actions.
 
+### 🚧 Work in progress 👷‍♀️⛏👷🔧️👷🔧 🚧
+Cache is going to implemented for whole app. At the moment feed screen is supported.
+
 ## Screenshots
 <p float="left">
   <img src="https://github.com/alirezaeiii/TMDb-Compose/blob/main/screenshots/screenshot1.gif" width="250" />
