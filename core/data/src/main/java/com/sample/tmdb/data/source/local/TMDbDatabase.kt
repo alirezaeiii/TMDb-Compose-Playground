@@ -57,7 +57,7 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
                 `name` TEXT NOT NULL,
                 `overview` TEXT NOT NULL,
                 `posterUrl` TEXT,
-                `firstAirDate` TEXT,
+                `releaseDate` TEXT,
                 `sortType` TEXT NOT NULL,
                 `voteAverage` REAL NOT NULL,
                 `voteCount` INTEGER NOT NULL,
