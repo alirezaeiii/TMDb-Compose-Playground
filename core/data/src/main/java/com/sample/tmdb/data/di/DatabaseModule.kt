@@ -2,6 +2,7 @@ package com.sample.tmdb.data.di
 
 import android.content.Context
 import androidx.room.Room
+import com.sample.tmdb.data.source.local.MIGRATION_1_2
 import com.sample.tmdb.data.source.local.MovieDao
 import com.sample.tmdb.data.source.local.MovieFeedDao
 import com.sample.tmdb.data.source.local.TMDbDatabase
@@ -24,7 +25,7 @@ class DatabaseModule {
             context,
             TMDbDatabase::class.java,
             "TMDb.db",
-        ).build()
+        ).addMigrations(MIGRATION_1_2).build()
 
     @Provides
     @Singleton
