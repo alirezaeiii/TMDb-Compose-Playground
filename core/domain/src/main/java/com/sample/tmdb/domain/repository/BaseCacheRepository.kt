@@ -64,18 +64,10 @@ abstract class BaseCacheRepository<DataType, QueryType, FetchType>(
                     emit(Async.Loading(true))
                 }
                 // ****** MAKE NETWORK CALL, SAVE RESULT TO CACHE ******
-                val fetchedData = refresh(fetchParam)
+                refresh(fetchParam)
                 lastRefreshTime = getCurrentTime()
                 // ****** VIEW CACHE ******
-                val cachedData = query(queryParam)
-                val result = if (cachedData is List<*> &&
-                    cachedData.isEmpty()
-                ) {
-                    fetchedData
-                } else {
-                    (cachedData ?: fetchedData)
-                }
-                emit(Async.Success(result))
+                emit(Async.Success(query(queryParam)!!))
             }
         } catch (_: Throwable) {
             emit(
@@ -89,10 +81,8 @@ abstract class BaseCacheRepository<DataType, QueryType, FetchType>(
         }
     }
 
-    private suspend fun refresh(fetchParam: FetchType?): DataType {
-        val data = fetch(fetchParam)
-        saveFetchResult(data)
-        return data
+    private suspend fun refresh(fetchParam: FetchType?) {
+        saveFetchResult(fetch(fetchParam))
     }
 
     private fun isCacheExpired(): Boolean = getCurrentTime() - lastRefreshTime > cacheDurationMs
