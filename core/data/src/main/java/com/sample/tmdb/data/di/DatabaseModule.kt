@@ -3,8 +3,10 @@ package com.sample.tmdb.data.di
 import android.content.Context
 import androidx.room.Room
 import com.sample.tmdb.data.source.local.MovieDao
+import com.sample.tmdb.data.source.local.MovieFeedDao
 import com.sample.tmdb.data.source.local.TMDbDatabase
 import com.sample.tmdb.data.source.local.TVShowDao
+import com.sample.tmdb.data.source.local.TVShowFeedDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,4 +33,12 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideTVShowDao(db: TMDbDatabase): TVShowDao = db.tvShowDao
+
+    @Provides
+    @Singleton
+    fun provideMovieFeedDao(db: TMDbDatabase): MovieFeedDao = db.movieFeedDao
+
+    @Provides
+    @Singleton
+    fun provideTVShowFeedDao(db: TMDbDatabase): TVShowFeedDao = db.tvShowFeedDao
 }

@@ -10,7 +10,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: CoroutineDispatcher) :
-    BaseRepository<List<FeedWrapper>, Nothing>(context, ioDispatcher) {
+    BaseCacheRepository<List<FeedWrapper>, Unit, Unit>(context, ioDispatcher) {
+
     protected abstract suspend fun popularItems(): List<T>
 
     protected abstract suspend fun nowPlayingItems(): List<T>
@@ -35,7 +36,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
 
     protected abstract fun getLatestResId(): Int
 
-    override suspend fun getSuccessResult(isRefreshing: Boolean, id: Nothing?): List<FeedWrapper> = coroutineScope {
+    override suspend fun fetch(fetchParam: Unit?): List<FeedWrapper> = coroutineScope {
         val trendingDeferred = async { trendingItems() }
         val nowPlayingDeferred = async { nowPlayingItems() }
         val popularDeferred = async { popularItems() }
@@ -59,5 +60,25 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
             FeedWrapper(amazonPrimeDeferred.await(), R.string.text_amazon_prime, SortType.AMAZON_PRIME),
             FeedWrapper(googlePlayDeferred.await(), R.string.text_google_play, SortType.GOOGLE_PLAY),
         )
+    }
+
+    protected fun createFeedWrappers(itemsBySortType: Map<SortType, List<T>>): List<FeedWrapper> {
+        val sortTypes = listOf(
+            SortType.TRENDING to R.string.text_trending,
+            SortType.MOST_POPULAR to R.string.text_popular,
+            SortType.NOW_PLAYING to getNowPlayingResId(),
+            SortType.DISCOVER to R.string.text_discover,
+            SortType.UPCOMING to getLatestResId(),
+            SortType.HIGHEST_RATED to R.string.text_highest_rate,
+            SortType.APPLE_TV to R.string.text_apple_tv,
+            SortType.NETFLIX to R.string.text_netflix,
+            SortType.AMAZON_PRIME to R.string.text_amazon_prime,
+            SortType.GOOGLE_PLAY to R.string.text_google_play,
+        )
+        return sortTypes.mapNotNull { (sortType, resId) ->
+            itemsBySortType[sortType]?.let { feeds ->
+                FeedWrapper(feeds, resId, sortType)
+            }
+        }
     }
 }
