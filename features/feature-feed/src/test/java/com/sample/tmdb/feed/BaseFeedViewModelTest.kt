@@ -48,30 +48,30 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
 
     @Test
     fun `load feeds`() {
-        every { repository.getResult() } returns flowOf(Async.Loading())
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Loading())
         initViewModel()
         assertEquals(ViewState<Nothing>(isLoading = true), viewModel.state.value)
     }
 
     @Test
     fun `load feeds success`() {
-        every { repository.getResult() } returns flowOf(Async.Success(emptyList()))
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Success(emptyList()))
         initViewModel()
         assertEquals(ViewState(emptyList<FeedWrapper>()), viewModel.state.value)
     }
 
     @Test
     fun `load feeds failed`() {
-        every { repository.getResult() } returns flowOf(Async.Error("error"))
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Error("error"))
         initViewModel()
         assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
     }
 
     @Test
     fun `load feeds warning emits showWarningUiEvent`() = runTest {
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(Async.Success(emptyList()))
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Success(emptyList()))
         initViewModel()
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(
+        every { repository.getResult(null, null, any()) } returns flowOf(
             Async.Error(
                 "warning message",
                 isWarning = true,
@@ -86,7 +86,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
 
     @Test
     fun `onSearchClick emits Navigate to SearchItems`() = runTest {
-        every { repository.getResult() } returns flowOf()
+        every { repository.getResult(null, null, any()) } returns flowOf()
         initViewModel()
 
         viewModel.uiEvent.test {
@@ -99,7 +99,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
     @Test
     fun `onMoreClick emits Navigate to Paging with correct sortType`() = runTest {
         SortType.entries.forEach { sortType ->
-            every { repository.getResult() } returns flowOf()
+            every { repository.getResult(null, null, any()) } returns flowOf()
             initViewModel()
 
             viewModel.uiEvent.test {
@@ -115,7 +115,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
 
     @Test
     fun `onItemClick emits Navigate to Detail`() = runTest {
-        every { repository.getResult() } returns flowOf()
+        every { repository.getResult(null, null, any()) } returns flowOf()
         initViewModel()
 
         viewModel.uiEvent.test {

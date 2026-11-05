@@ -1,6 +1,6 @@
 package com.sample.tmdb.feed
 
-import com.sample.tmdb.common.base.BaseViewModel
+import com.sample.tmdb.common.base.BaseCacheViewModel
 import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.MediaType
@@ -14,7 +14,7 @@ import com.sample.tmdb.navigation.model.toDetailNavKey
 abstract class BaseFeedViewModel<T : TMDbItem>(
     repository: BaseFeedRepository<T>,
     languageRepository: LanguageRepository,
-) : BaseViewModel<List<FeedWrapper>, Nothing>(
+) : BaseCacheViewModel<List<FeedWrapper>, Unit, Unit>(
     repository = repository,
     languageRepository = languageRepository,
 ) {

@@ -5,10 +5,14 @@ import com.sample.tmdb.data.R
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.response.asTVShowDomainModel
+import com.sample.tmdb.data.source.entity.asDomainModel
+import com.sample.tmdb.data.source.entity.asFeedDatabaseModel
+import com.sample.tmdb.data.source.local.TVShowFeedDao
 import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.GOOGLE_PLAY_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.NETFLIX_PROVIDER_ID
+import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -21,6 +25,7 @@ class TVShowFeedRepository @Inject constructor(
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
     private val tvShowApi: TVShowService,
+    private val tvShowFeedDao: TVShowFeedDao,
 ) : BaseFeedRepository<TVShow>(context, ioDispatcher) {
     override suspend fun popularItems(): List<TVShow> = tvShowApi.popularTVSeries().items.asTVShowDomainModel()
 
@@ -49,4 +54,22 @@ class TVShowFeedRepository @Inject constructor(
     override fun getNowPlayingResId(): Int = R.string.text_airing_today
 
     override fun getLatestResId(): Int = R.string.text_on_the_air
+
+    override suspend fun query(queryParam: Unit?): List<FeedWrapper> {
+        val dbEntities = tvShowFeedDao.getFeed()
+        if (dbEntities.isEmpty()) return emptyList()
+        val itemsBySortType = dbEntities
+            .groupBy { it.sortType }
+            .mapValues { entry -> entry.value.map { it.asDomainModel() } }
+        return createFeedWrappers(itemsBySortType)
+    }
+
+    override suspend fun saveFetchResult(item: List<FeedWrapper>) {
+        val entities = item.flatMap { feedWrapper ->
+            feedWrapper.feeds.filterIsInstance<TVShow>().mapIndexed { index, tvShow ->
+                tvShow.asFeedDatabaseModel(feedWrapper.sortType, index)
+            }
+        }
+        tvShowFeedDao.deleteAndInsert(entities)
+    }
 }

@@ -3,6 +3,7 @@ package com.sample.tmdb.common.ui.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -20,7 +21,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 @Composable
 fun ErrorScreen(message: String, modifier: Modifier = Modifier, refresh: () -> Unit) {
     Column(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

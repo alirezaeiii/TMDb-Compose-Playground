@@ -40,7 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sample.tmdb.common.R as commonR
-import com.sample.tmdb.common.ui.Content
+import com.sample.tmdb.common.ui.CacheContent
 import com.sample.tmdb.common.ui.Dimens
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
@@ -106,28 +106,30 @@ private fun <T : TMDbItem> FeedScreen(
     scaffoldState: ScaffoldState,
     @StringRes resourceId: Int,
 ) {
-    Content(
+    CacheContent(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
         onNavigate = onNavigate,
         scaffoldState = scaffoldState,
-    ) { state, feeds ->
-        Box {
-            TMDbSwipeRefresh(state.isRefreshing, { viewModel.refresh(true) }) {
-                FeedCollectionList(
-                    feeds,
-                    viewModel::onMoreClick,
-                    viewModel::onTMDbItemClick,
+    ) { state ->
+        state.items?.let { feeds ->
+            Box {
+                TMDbSwipeRefresh(state.isRefreshing, { viewModel.refresh(true) }) {
+                    FeedCollectionList(
+                        feeds,
+                        viewModel::onMoreClick,
+                        viewModel::onTMDbItemClick,
+                    )
+                }
+                DestinationBar(
+                    title =
+                        stringResource(
+                            R.string.app_title,
+                            stringResource(resourceId),
+                        ),
+                    onSearchClicked = viewModel::onSearchClick,
                 )
             }
-            DestinationBar(
-                title =
-                    stringResource(
-                        R.string.app_title,
-                        stringResource(resourceId),
-                    ),
-                onSearchClicked = viewModel::onSearchClick,
-            )
         }
     }
 }

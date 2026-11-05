@@ -23,15 +23,33 @@ abstract class BaseFeedRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
         runTest {
             assertThat(repository.getResult().first(), `is`(Async.Loading()))
             val result = (repository.getResult().last() as Async.Success).data
-            assertThat(result[0].feeds, `is`(emptyList()))
-            assertThat(result[1].feeds, `is`(emptyList()))
-            assertThat(result[2].feeds, `is`(emptyList()))
-            assertThat(result[3].feeds, `is`(emptyList()))
-            assertThat(result[4].feeds, `is`(emptyList()))
-            assertThat(result[5].feeds, `is`(emptyList()))
-            assertThat(result[6].feeds, `is`(emptyList()))
-            assertThat(result[7].feeds, `is`(emptyList()))
-            assertThat(result[8].feeds, `is`(emptyList()))
+            assertThat(result.size, `is`(10))
+            assertThat(result[0].feeds.size, `is`(1))
+            assertThat(result[1].feeds.size, `is`(1))
+            assertThat(result[2].feeds.size, `is`(1))
+            assertThat(result[3].feeds.size, `is`(1))
+            assertThat(result[4].feeds.size, `is`(1))
+            assertThat(result[5].feeds.size, `is`(1))
+            assertThat(result[6].feeds.size, `is`(1))
+            assertThat(result[7].feeds.size, `is`(1))
+            assertThat(result[8].feeds.size, `is`(1))
+            assertThat(result[9].feeds.size, `is`(1))
+        }
+    }
+
+    @Test
+    fun `load feeds cached`() {
+        mockApiResponse()
+        runTest {
+            val firstResult = (repository.getResult().last() as Async.Success).data
+            assertThat(firstResult.size, `is`(10))
+
+            repository.getResult(forceRefresh = false).test {
+                assertEquals(Async.Loading(), awaitItem())
+                val cachedResult = (awaitItem() as Async.Success).data
+                assertThat(cachedResult.size, `is`(10))
+                awaitComplete()
+            }
         }
     }
 
