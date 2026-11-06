@@ -25,7 +25,7 @@ abstract class BaseCoreViewModel<T>(languageRepository: LanguageRepository? = nu
 
     private var hasCriticalError = false
 
-    abstract fun executeRefresh(isUserRefresh: Boolean, languageCode: String?)
+    protected abstract fun executeRefresh(isUserRefresh: Boolean, languageCode: String?)
 
     fun refreshOnLanguageChange(language: String) {
         if (language != lastLanguage && !hasCriticalError) {
