@@ -40,6 +40,11 @@ class TMDbAppState(val navigationState: NavigationState) {
         get() = navigationState.backStacks[navigationState.topLevelRoute]?.last()
             ?: navigationState.topLevelRoute
 
+    val isDetailOrPersonRoute: Boolean
+        get() = currentRoute is TMDbNavKey.Person ||
+            currentRoute is TMDbNavKey.MovieDetail ||
+            currentRoute is TMDbNavKey.TvShowDetail
+
     fun navigateToBottomBarRoute(navKey: TMDbNavKey) {
         navigator.navigate(navKey)
     }

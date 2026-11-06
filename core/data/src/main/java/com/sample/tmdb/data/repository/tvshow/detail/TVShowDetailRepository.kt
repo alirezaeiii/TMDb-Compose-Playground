@@ -7,8 +7,12 @@ import com.sample.tmdb.data.response.asCastDomainModel
 import com.sample.tmdb.data.response.asCrewDomainModel
 import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.data.response.asTVShowDomainModel
+import com.sample.tmdb.data.source.entity.asDomainModel
+import com.sample.tmdb.data.source.entity.asTVShowDetailDatabaseModel
+import com.sample.tmdb.data.source.local.TVShowDetailDao
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
+import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.model.TVShowDetails
@@ -21,9 +25,17 @@ import kotlinx.coroutines.CoroutineDispatcher
 @Singleton
 class TVShowDetailRepository @Inject constructor(
     private val tvShowApi: TVShowService,
+    private val tvShowDetailDao: TVShowDetailDao,
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
 ) : BaseDetailRepository<TVShowDetails>(context, ioDispatcher) {
+    override suspend fun query(queryParam: Int?): DetailWrapper? =
+        tvShowDetailDao.getTVShowDetail(queryParam!!)?.asDomainModel()
+
+    override suspend fun saveFetchResult(item: DetailWrapper) {
+        tvShowDetailDao.insert(item.asTVShowDetailDatabaseModel(item.details.id))
+    }
+
     override suspend fun getDetails(id: Int): TVShowDetails = tvShowApi.fetchTVSeriesDetail(id).asDomainModel()
 
     override suspend fun getCredit(id: Int): Pair<List<Cast>, List<Crew>> {

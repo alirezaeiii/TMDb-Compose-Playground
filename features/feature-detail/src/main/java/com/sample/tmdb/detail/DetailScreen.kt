@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -45,6 +46,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -105,7 +107,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.sample.tmdb.common.R as commonR
-import com.sample.tmdb.common.ui.Content
+import com.sample.tmdb.common.ui.CacheContent
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_24_dp
@@ -114,6 +116,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.ui.component.TMDbCard
+import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.utils.dpToPx
 import com.sample.tmdb.common.utils.navigationBarPadding
@@ -129,11 +132,17 @@ import com.sample.tmdb.domain.model.TrendingPerson
 import com.sample.tmdb.navigation.TMDbNavKey
 
 @Composable
-fun MovieDetailScreen(viewModel: MovieDetailViewModel, onNavigate: (TMDbNavKey) -> Unit, onNavigateUp: () -> Unit) {
+fun MovieDetailScreen(
+    viewModel: MovieDetailViewModel,
+    onNavigate: (TMDbNavKey) -> Unit,
+    onNavigateUp: () -> Unit,
+    scaffoldState: ScaffoldState,
+) {
     DetailScreen(
         viewModel = viewModel,
         onNavigate = onNavigate,
         onNavigateUp = onNavigateUp,
+        scaffoldState = scaffoldState,
     ) { details ->
         Movie(
             id = details.id,
@@ -149,11 +158,17 @@ fun MovieDetailScreen(viewModel: MovieDetailViewModel, onNavigate: (TMDbNavKey) 
 }
 
 @Composable
-fun TVShowDetailScreen(viewModel: TVShowDetailViewModel, onNavigate: (TMDbNavKey) -> Unit, onNavigateUp: () -> Unit) {
+fun TVShowDetailScreen(
+    viewModel: TVShowDetailViewModel,
+    onNavigate: (TMDbNavKey) -> Unit,
+    onNavigateUp: () -> Unit,
+    scaffoldState: ScaffoldState,
+) {
     DetailScreen(
         viewModel = viewModel,
         onNavigate = onNavigate,
         onNavigateUp = onNavigateUp,
+        scaffoldState = scaffoldState,
     ) { details ->
         TVShow(
             id = details.id,
@@ -173,6 +188,7 @@ private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     viewModel: BaseDetailViewModel<T, E>,
     onNavigate: (TMDbNavKey) -> Unit,
     onNavigateUp: () -> Unit,
+    scaffoldState: ScaffoldState,
     getBookmarkedItem: (TMDbItemDetails) -> E,
 ) {
     DetailScreen(
@@ -186,6 +202,7 @@ private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
         onSeeAllCastClicked = viewModel::onSeeAllCastClicked,
         onSeeAllCrewClicked = viewModel::onSeeAllCrewClicked,
         navigateUp = viewModel::onNavigateUp,
+        scaffoldState = scaffoldState,
         fab = { isFabVisible, isBookmark, details ->
             ToggleBookmarkFab(isBookmark = isBookmark, isVisible = isFabVisible) {
                 if (isBookmark) {
@@ -213,375 +230,385 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     onSeeAllCastClicked: (List<TrendingPerson>) -> Unit,
     onSeeAllCrewClicked: (List<TrendingPerson>) -> Unit,
     navigateUp: () -> Unit,
+    scaffoldState: ScaffoldState,
     fab: @Composable (MutableState<Boolean>, Boolean, TMDbItemDetails) -> Unit,
 ) {
     // Visibility for FAB
     val isFabVisible = rememberSaveable { mutableStateOf(true) }
     val defaultTextColor = MaterialTheme.colors.onBackground
     val vibrantColor = remember { Animatable(defaultTextColor) }
-    Content(
+    CacheContent(
         viewModel = viewModel,
         onNavigate = onNavigate,
         onNavigateUp = onNavigateUp,
-    ) { _, it ->
-        viewModel.isBookmarked(it.details.id)
-        // Nested scroll for control FAB
-        val nestedScrollConnection =
-            remember {
-                object : NestedScrollConnection {
-                    override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                        // Hide FAB
-                        if (available.y < -1) {
-                            isFabVisible.value = false
+        scaffoldState = scaffoldState,
+    ) { state ->
+        state.items?.let {
+            TMDbSwipeRefresh(
+                isRefreshing = state.isRefreshing,
+                onRefresh = { viewModel.refresh(true) },
+                indicatorTopPadding = WindowInsets.statusBars.asPaddingValues().calculateTopPadding(),
+            ) {
+                viewModel.isBookmarked(it.details.id)
+                // Nested scroll for control FAB
+                val nestedScrollConnection =
+                    remember {
+                        object : NestedScrollConnection {
+                            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                                // Hide FAB
+                                if (available.y < -1) {
+                                    isFabVisible.value = false
+                                }
+                                // Show FAB
+                                if (available.y > 1) {
+                                    isFabVisible.value = true
+                                }
+                                return Offset.Zero
+                            }
                         }
-                        // Show FAB
-                        if (available.y > 1) {
-                            isFabVisible.value = true
-                        }
-                        return Offset.Zero
                     }
-                }
-            }
-        CompositionLocalProvider(
-            localVibrantColor provides vibrantColor,
-        ) {
-            Scaffold(
-                Modifier.nestedScroll(nestedScrollConnection),
-                floatingActionButton = {
-                    fab.invoke(
-                        isFabVisible,
-                        viewModel.isBookmarked.collectAsState().value,
-                        it.details,
-                    )
-                },
-                floatingActionButtonPosition = FabPosition.End,
-            ) { contentPadding ->
-                ConstraintLayout(
-                    Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colors.surface)
-                        .verticalScroll(rememberScrollState())
-                        .padding(contentPadding),
+                CompositionLocalProvider(
+                    localVibrantColor provides vibrantColor,
                 ) {
-                    val (
-                        appbar, backdrop, poster, title, originalTitle, genres, specs,
-                        rateStars, tagline, overview,
-                    ) = createRefs()
-                    val (castSection, crewSection, imagesSection, similarSection, space) = createRefs()
-                    val startGuideline = createGuidelineFromStart(TMDb_16_dp)
-                    val endGuideline = createGuidelineFromEnd(TMDb_16_dp)
-
-                    it.details.backdropPath?.let { backdropPath ->
-                        Backdrop(
-                            backdropUrl = backdropPath,
-                            it.details.title,
-                            Modifier.constrainAs(backdrop) {
-                                top.linkTo(parent.top)
-                            },
-                        )
-                    } ?: run {
-                        val density = LocalDensity.current
-                        val insets = WindowInsets.statusBars.getTop(density).toDp()
-                        Spacer(
-                            modifier =
-                                Modifier.constrainAs(backdrop) {
-                                    top.linkTo(parent.top, insets.dp)
-                                },
-                        )
-                    }
-
-                    val posterWidth = 160.dp
-                    AppBar(
-                        homepage = it.details.homepage,
-                        upPress = navigateUp,
-                        modifier =
+                    Scaffold(
+                        Modifier.nestedScroll(nestedScrollConnection),
+                        floatingActionButton = {
+                            fab.invoke(
+                                isFabVisible,
+                                viewModel.isBookmarked.collectAsState().value,
+                                it.details,
+                            )
+                        },
+                        floatingActionButtonPosition = FabPosition.End,
+                    ) { contentPadding ->
+                        ConstraintLayout(
                             Modifier
-                                .requiredWidth(posterWidth * 2.2f)
-                                .constrainAs(appbar) { centerTo(poster) }
-                                .offset(y = TMDb_24_dp),
-                    )
+                                .fillMaxSize()
+                                .background(MaterialTheme.colors.surface)
+                                .verticalScroll(rememberScrollState())
+                                .padding(contentPadding),
+                        ) {
+                            val (
+                                appbar, backdrop, poster, title, originalTitle, genres, specs,
+                                rateStars, tagline, overview,
+                            ) = createRefs()
+                            val (castSection, crewSection, imagesSection, similarSection, space) = createRefs()
+                            val startGuideline = createGuidelineFromStart(TMDb_16_dp)
+                            val endGuideline = createGuidelineFromEnd(TMDb_16_dp)
 
-                    it.details.posterPath?.let { posterPath ->
-                        GetVibrantColorFromPoster(
-                            posterPath,
-                            localVibrantColor.current,
-                        )
-                        Poster(
-                            it.details.posterPath,
-                            it.details.title,
-                            Modifier
-                                .zIndex(17f)
-                                .width(posterWidth)
-                                .height(240.dp)
-                                .constrainAs(poster) {
-                                    it.details.backdropPath?.let {
-                                        centerAround(backdrop.bottom)
-                                    } ?: run {
-                                        top.linkTo(backdrop.bottom)
-                                    }
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    } ?: run {
-                        Spacer(
-                            modifier =
-                                Modifier.constrainAs(poster) {
-                                    top.linkTo(backdrop.bottom)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    }
+                            it.details.backdropPath?.let { backdropPath ->
+                                Backdrop(
+                                    backdropUrl = backdropPath,
+                                    it.details.title,
+                                    Modifier.constrainAs(backdrop) {
+                                        top.linkTo(parent.top)
+                                    },
+                                )
+                            } ?: run {
+                                val density = LocalDensity.current
+                                val insets = WindowInsets.statusBars.getTop(density).toDp()
+                                Spacer(
+                                    modifier =
+                                        Modifier.constrainAs(backdrop) {
+                                            top.linkTo(parent.top, insets.dp)
+                                        },
+                                )
+                            }
 
-                    Text(
-                        text = it.details.title,
-                        style =
-                            MaterialTheme.typography.subtitle1.copy(
-                                fontSize = 26.sp,
-                                letterSpacing = 3.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                textAlign = TextAlign.Center,
-                            ),
-                        modifier =
-                            Modifier
-                                .padding(horizontal = TMDb_16_dp)
-                                .constrainAs(title) {
-                                    top.linkTo(poster.bottom, 8.dp)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                    )
-                    if (it.details.title != it.details.originalTitle) {
-                        Text(
-                            text = "(${it.details.originalTitle})",
-                            style =
-                                MaterialTheme.typography.subtitle2.copy(
-                                    fontStyle = FontStyle.Italic,
-                                    letterSpacing = 2.sp,
-                                ),
-                            modifier =
-                                Modifier
-                                    .padding(horizontal = TMDb_16_dp)
-                                    .constrainAs(originalTitle) {
-                                        top.linkTo(title.bottom)
+                            val posterWidth = 160.dp
+                            AppBar(
+                                homepage = it.details.homepage,
+                                upPress = navigateUp,
+                                modifier =
+                                    Modifier
+                                        .requiredWidth(posterWidth * 2.2f)
+                                        .constrainAs(appbar) { centerTo(poster) }
+                                        .offset(y = TMDb_24_dp),
+                            )
+
+                            it.details.posterPath?.let { posterPath ->
+                                GetVibrantColorFromPoster(
+                                    posterPath,
+                                    localVibrantColor.current,
+                                )
+                                Poster(
+                                    it.details.posterPath,
+                                    it.details.title,
+                                    Modifier
+                                        .zIndex(17f)
+                                        .width(posterWidth)
+                                        .height(240.dp)
+                                        .constrainAs(poster) {
+                                            it.details.backdropPath?.let {
+                                                centerAround(backdrop.bottom)
+                                            } ?: run {
+                                                top.linkTo(backdrop.bottom)
+                                            }
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            } ?: run {
+                                Spacer(
+                                    modifier =
+                                        Modifier.constrainAs(poster) {
+                                            top.linkTo(backdrop.bottom)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            }
+
+                            Text(
+                                text = it.details.title,
+                                style =
+                                    MaterialTheme.typography.subtitle1.copy(
+                                        fontSize = 26.sp,
+                                        letterSpacing = 3.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        textAlign = TextAlign.Center,
+                                    ),
+                                modifier =
+                                    Modifier
+                                        .padding(horizontal = TMDb_16_dp)
+                                        .constrainAs(title) {
+                                            top.linkTo(poster.bottom, 8.dp)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                            )
+                            if (it.details.title != it.details.originalTitle) {
+                                Text(
+                                    text = "(${it.details.originalTitle})",
+                                    style =
+                                        MaterialTheme.typography.subtitle2.copy(
+                                            fontStyle = FontStyle.Italic,
+                                            letterSpacing = 2.sp,
+                                        ),
+                                    modifier =
+                                        Modifier
+                                            .padding(horizontal = TMDb_16_dp)
+                                            .constrainAs(originalTitle) {
+                                                top.linkTo(title.bottom)
+                                                linkTo(startGuideline, endGuideline)
+                                            },
+                                )
+                            } else {
+                                Spacer(
+                                    modifier =
+                                        Modifier.constrainAs(originalTitle) {
+                                            top.linkTo(title.bottom)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            }
+
+                            if (it.details.genres.isNotEmpty()) {
+                                GenreChips(
+                                    it.details.genres.take(4),
+                                    modifier =
+                                        Modifier.constrainAs(genres) {
+                                            top.linkTo(originalTitle.bottom, 16.dp)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            } else {
+                                Spacer(
+                                    modifier =
+                                        Modifier.constrainAs(genres) {
+                                            top.linkTo(originalTitle.bottom)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            }
+
+                            TMDbItemFields(
+                                it.details,
+                                modifier =
+                                    Modifier.constrainAs(specs) {
+                                        top.linkTo(genres.bottom, 12.dp)
                                         linkTo(startGuideline, endGuideline)
                                     },
-                        )
-                    } else {
-                        Spacer(
-                            modifier =
-                                Modifier.constrainAs(originalTitle) {
-                                    top.linkTo(title.bottom)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    }
+                            )
 
-                    if (it.details.genres.isNotEmpty()) {
-                        GenreChips(
-                            it.details.genres.take(4),
-                            modifier =
-                                Modifier.constrainAs(genres) {
-                                    top.linkTo(originalTitle.bottom, 16.dp)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    } else {
-                        Spacer(
-                            modifier =
-                                Modifier.constrainAs(genres) {
-                                    top.linkTo(originalTitle.bottom)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    }
-
-                    TMDbItemFields(
-                        it.details,
-                        modifier =
-                            Modifier.constrainAs(specs) {
-                                top.linkTo(genres.bottom, 12.dp)
-                                linkTo(startGuideline, endGuideline)
-                            },
-                    )
-
-                    RateStars(
-                        it.details.voteAverage,
-                        modifier =
-                            Modifier.constrainAs(rateStars) {
-                                top.linkTo(specs.bottom, 12.dp)
-                                linkTo(startGuideline, endGuideline)
-                            },
-                    )
-
-                    if (it.details.tagline.isNotEmpty()) {
-                        Text(
-                            text = it.details.tagline,
-                            color = localVibrantColor.current.value,
-                            style =
-                                MaterialTheme.typography.body1.copy(
-                                    letterSpacing = 2.sp,
-                                    lineHeight = 24.sp,
-                                    fontFamily = FontFamily.Serif,
-                                    fontWeight = FontWeight.Bold,
-                                ),
-                            modifier =
-                                Modifier
-                                    .padding(horizontal = TMDb_16_dp)
-                                    .constrainAs(tagline) {
-                                        top.linkTo(rateStars.bottom, 12.dp)
-                                    },
-                        )
-                    } else {
-                        Spacer(
-                            modifier =
-                                Modifier.constrainAs(tagline) {
-                                    top.linkTo(rateStars.bottom)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    }
-
-                    if (it.details.overview.isNotEmpty()) {
-                        Text(
-                            text = it.details.overview,
-                            style =
-                                MaterialTheme.typography.body2.copy(
-                                    letterSpacing = 2.sp,
-                                    lineHeight = 30.sp,
-                                    fontFamily = FontFamily.SansSerif,
-                                ),
-                            modifier =
-                                Modifier
-                                    .padding(horizontal = TMDb_16_dp)
-                                    .constrainAs(overview) {
-                                        top.linkTo(tagline.bottom, 8.dp)
+                            RateStars(
+                                it.details.voteAverage,
+                                modifier =
+                                    Modifier.constrainAs(rateStars) {
+                                        top.linkTo(specs.bottom, 12.dp)
                                         linkTo(startGuideline, endGuideline)
                                     },
-                        )
-                    } else {
-                        Spacer(
-                            modifier =
-                                Modifier.constrainAs(overview) {
-                                    top.linkTo(tagline.bottom)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    }
+                            )
 
-                    if (it.cast.isNotEmpty()) {
-                        TMDbDetailItemSection(
-                            items = it.cast,
-                            headerResId = R.string.cast,
-                            itemContent = { item, _ ->
-                                PersonCard(
-                                    person = item,
-                                    onPersonClicked = { navigateToPerson(item) },
-                                    modifier = Modifier.width(140.dp),
+                            if (it.details.tagline.isNotEmpty()) {
+                                Text(
+                                    text = it.details.tagline,
+                                    color = localVibrantColor.current.value,
+                                    style =
+                                        MaterialTheme.typography.body1.copy(
+                                            letterSpacing = 2.sp,
+                                            lineHeight = 24.sp,
+                                            fontFamily = FontFamily.Serif,
+                                            fontWeight = FontWeight.Bold,
+                                        ),
+                                    modifier =
+                                        Modifier
+                                            .padding(horizontal = TMDb_16_dp)
+                                            .constrainAs(tagline) {
+                                                top.linkTo(rateStars.bottom, 12.dp)
+                                            },
                                 )
-                            },
-                            onSeeAllClicked = onSeeAllCastClicked,
-                            modifier =
-                                Modifier.constrainAs(castSection) {
-                                    top.linkTo(overview.bottom, 16.dp)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    } else {
-                        Spacer(
-                            modifier =
-                                Modifier.constrainAs(castSection) {
-                                    top.linkTo(overview.bottom)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    }
-
-                    if (it.crew.isNotEmpty()) {
-                        TMDbDetailItemSection(
-                            items = it.crew,
-                            headerResId = R.string.crew,
-                            itemContent = { item, _ ->
-                                PersonCard(
-                                    person = item,
-                                    onPersonClicked = { navigateToPerson(item) },
-                                    modifier = Modifier.width(140.dp),
+                            } else {
+                                Spacer(
+                                    modifier =
+                                        Modifier.constrainAs(tagline) {
+                                            top.linkTo(rateStars.bottom)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
                                 )
-                            },
-                            onSeeAllClicked = onSeeAllCrewClicked,
-                            modifier =
-                                Modifier.constrainAs(crewSection) {
-                                    top.linkTo(castSection.bottom, 16.dp)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    } else {
-                        Spacer(
-                            modifier =
-                                Modifier.constrainAs(crewSection) {
-                                    top.linkTo(castSection.bottom)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    }
+                            }
 
-                    if (it.images.isNotEmpty()) {
-                        TMDbDetailItemSection(
-                            items = it.images,
-                            headerResId = R.string.images,
-                            onSeeAllClicked = { images -> onImagesSelected.invoke(images, 0) },
-                            itemContent = { item, index ->
-                                ImageSection(
-                                    item,
-                                ) { onImagesSelected.invoke(it.images, index) }
-                            },
-                            modifier =
-                                Modifier.constrainAs(imagesSection) {
-                                    top.linkTo(crewSection.bottom, 16.dp)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    } else {
-                        Spacer(
-                            modifier =
-                                Modifier.constrainAs(imagesSection) {
-                                    top.linkTo(crewSection.bottom)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    }
+                            if (it.details.overview.isNotEmpty()) {
+                                Text(
+                                    text = it.details.overview,
+                                    style =
+                                        MaterialTheme.typography.body2.copy(
+                                            letterSpacing = 2.sp,
+                                            lineHeight = 30.sp,
+                                            fontFamily = FontFamily.SansSerif,
+                                        ),
+                                    modifier =
+                                        Modifier
+                                            .padding(horizontal = TMDb_16_dp)
+                                            .constrainAs(overview) {
+                                                top.linkTo(tagline.bottom, 8.dp)
+                                                linkTo(startGuideline, endGuideline)
+                                            },
+                                )
+                            } else {
+                                Spacer(
+                                    modifier =
+                                        Modifier.constrainAs(overview) {
+                                            top.linkTo(tagline.bottom)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            }
 
-                    if (it.similarItems.isNotEmpty()) {
-                        TMDbDetailItemSection(
-                            items = it.similarItems,
-                            headerResId = R.string.similar,
-                            onSeeAllClicked = { _ -> onAllSimilarSelected.invoke(it.details.id) },
-                            itemContent = { item, _ ->
-                                TMDbCard(item, onTMDbItemSelected)
-                            },
-                            headerText = stringResource(R.string.see_all_items),
-                            modifier =
-                                Modifier.constrainAs(similarSection) {
-                                    top.linkTo(imagesSection.bottom, 16.dp)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    } else {
-                        Spacer(
-                            modifier =
-                                Modifier.constrainAs(similarSection) {
-                                    top.linkTo(imagesSection.bottom)
-                                    linkTo(startGuideline, endGuideline)
-                                },
-                        )
-                    }
+                            if (it.cast.isNotEmpty()) {
+                                TMDbDetailItemSection(
+                                    items = it.cast,
+                                    headerResId = R.string.cast,
+                                    itemContent = { item, _ ->
+                                        PersonCard(
+                                            person = item,
+                                            onPersonClicked = { navigateToPerson(item) },
+                                            modifier = Modifier.width(140.dp),
+                                        )
+                                    },
+                                    onSeeAllClicked = onSeeAllCastClicked,
+                                    modifier =
+                                        Modifier.constrainAs(castSection) {
+                                            top.linkTo(overview.bottom, 16.dp)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            } else {
+                                Spacer(
+                                    modifier =
+                                        Modifier.constrainAs(castSection) {
+                                            top.linkTo(overview.bottom)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            }
 
-                    Spacer(
-                        modifier =
-                            Modifier
-                                .windowInsetsBottomHeight(WindowInsets.navigationBars)
-                                .constrainAs(space) {
-                                    top.linkTo(similarSection.bottom)
-                                },
-                    )
+                            if (it.crew.isNotEmpty()) {
+                                TMDbDetailItemSection(
+                                    items = it.crew,
+                                    headerResId = R.string.crew,
+                                    itemContent = { item, _ ->
+                                        PersonCard(
+                                            person = item,
+                                            onPersonClicked = { navigateToPerson(item) },
+                                            modifier = Modifier.width(140.dp),
+                                        )
+                                    },
+                                    onSeeAllClicked = onSeeAllCrewClicked,
+                                    modifier =
+                                        Modifier.constrainAs(crewSection) {
+                                            top.linkTo(castSection.bottom, 16.dp)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            } else {
+                                Spacer(
+                                    modifier =
+                                        Modifier.constrainAs(crewSection) {
+                                            top.linkTo(castSection.bottom)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            }
+
+                            if (it.images.isNotEmpty()) {
+                                TMDbDetailItemSection(
+                                    items = it.images,
+                                    headerResId = R.string.images,
+                                    onSeeAllClicked = { images -> onImagesSelected.invoke(images, 0) },
+                                    itemContent = { item, index ->
+                                        ImageSection(
+                                            item,
+                                        ) { onImagesSelected.invoke(it.images, index) }
+                                    },
+                                    modifier =
+                                        Modifier.constrainAs(imagesSection) {
+                                            top.linkTo(crewSection.bottom, 16.dp)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            } else {
+                                Spacer(
+                                    modifier =
+                                        Modifier.constrainAs(imagesSection) {
+                                            top.linkTo(crewSection.bottom)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            }
+
+                            if (it.similarItems.isNotEmpty()) {
+                                TMDbDetailItemSection(
+                                    items = it.similarItems,
+                                    headerResId = R.string.similar,
+                                    onSeeAllClicked = { _ -> onAllSimilarSelected.invoke(it.details.id) },
+                                    itemContent = { item, _ ->
+                                        TMDbCard(item, onTMDbItemSelected)
+                                    },
+                                    headerText = stringResource(R.string.see_all_items),
+                                    modifier =
+                                        Modifier.constrainAs(similarSection) {
+                                            top.linkTo(imagesSection.bottom, 16.dp)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            } else {
+                                Spacer(
+                                    modifier =
+                                        Modifier.constrainAs(similarSection) {
+                                            top.linkTo(imagesSection.bottom)
+                                            linkTo(startGuideline, endGuideline)
+                                        },
+                                )
+                            }
+
+                            Spacer(
+                                modifier =
+                                    Modifier
+                                        .windowInsetsBottomHeight(WindowInsets.navigationBars)
+                                        .constrainAs(space) {
+                                            top.linkTo(similarSection.bottom)
+                                        },
+                            )
+                        }
+                    }
                 }
             }
         }

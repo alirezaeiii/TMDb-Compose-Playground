@@ -46,28 +46,32 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
     @Test
     fun `load details`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Loading())
         initViewModel()
         assertEquals(ViewState<Nothing>(isLoading = true), viewModel.state.value)
     }
 
     @Test
     fun `load details success`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Success(detailWrapper))
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Success(detailWrapper))
         initViewModel()
         assertEquals(ViewState(items = detailWrapper), viewModel.state.value)
     }
 
     @Test
     fun `load details failed`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Error("error"))
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Error("error"))
         initViewModel()
         assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
     }
 
     @Test
     fun `add bookmark`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Loading())
         coJustRun { bookmarkRepository.addBookmark(item) }
         coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns true
         initViewModel()
@@ -78,7 +82,8 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
     @Test
     fun `remove bookmark`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Loading())
         coJustRun { bookmarkRepository.deleteBookmark(TMDB_ITEM_ID) }
         coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns false
         initViewModel()
@@ -89,7 +94,8 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
     @Test
     fun `is bookmarked`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Loading())
         coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns true
         initViewModel()
         viewModel.isBookmarked(TMDB_ITEM_ID)
@@ -98,7 +104,8 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
     @Test
     fun `is not bookmarked`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Loading())
         coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns false
         initViewModel()
         viewModel.isBookmarked(TMDB_ITEM_ID)
@@ -107,7 +114,8 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
     @Test
     fun `onPersonClick emits Navigate`() = runTest {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Loading())
         initViewModel()
         val person = TrendingPerson(
             id = 5,
@@ -126,7 +134,8 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
     @Test
     fun `onNavigateUp emits NavigateUp`() = runTest {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Loading())
         initViewModel()
 
         viewModel.uiEvent.test {
@@ -138,7 +147,8 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
     @Test
     fun `onSeeAllCastClicked emits Navigate Cast event`() = runTest {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Loading())
         val cast = listOf(
             TrendingPerson(
                 id = 1,
@@ -160,7 +170,8 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
     @Test
     fun `onSeeAllCrewClicked emits Navigate Crew event`() = runTest {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Loading())
         val crew = listOf(
             TrendingPerson(
                 id = 1,
@@ -182,7 +193,8 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
     @Test
     fun `onImageSelected emits Navigate Image selected event`() = runTest {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Loading())
         val images = listOf(
             TMDbImage(
                 url = "",
@@ -201,7 +213,8 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
     @Test
     fun `onTMDbItemClick emits Navigate to ItemDetails`() = runTest {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns
+            flowOf(Async.Loading())
         initViewModel()
 
         viewModel.uiEvent.test {
@@ -213,7 +226,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> : TMDb
 
     @Test
     fun `onAllSimilarClick emits Navigate to SimilarItems`() = runTest {
-        every { repository.getResult(id = any()) } returns flowOf()
+        every { repository.getResult(queryParam = any(), fetchParam = any(), forceRefresh = any()) } returns flowOf()
         initViewModel()
 
         viewModel.uiEvent.test {

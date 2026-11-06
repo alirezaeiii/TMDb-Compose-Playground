@@ -7,8 +7,12 @@ import com.sample.tmdb.data.response.asCastDomainModel
 import com.sample.tmdb.data.response.asCrewDomainModel
 import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.data.response.asMovieDomainModel
+import com.sample.tmdb.data.source.entity.asDomainModel
+import com.sample.tmdb.data.source.entity.asMovieDetailDatabaseModel
+import com.sample.tmdb.data.source.local.MovieDetailDao
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
+import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.MovieDetails
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItem
@@ -21,9 +25,17 @@ import kotlinx.coroutines.CoroutineDispatcher
 @Singleton
 class MovieDetailRepository @Inject constructor(
     private val movieApi: MovieService,
+    private val movieDetailDao: MovieDetailDao,
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
 ) : BaseDetailRepository<MovieDetails>(context, ioDispatcher) {
+    override suspend fun query(queryParam: Int?): DetailWrapper? =
+        movieDetailDao.getMovieDetail(queryParam!!)?.asDomainModel()
+
+    override suspend fun saveFetchResult(item: DetailWrapper) {
+        movieDetailDao.insert(item.asMovieDetailDatabaseModel(item.details.id))
+    }
+
     override suspend fun getDetails(id: Int): MovieDetails = movieApi.fetchMovieDetail(id).asDomainModel()
 
     override suspend fun getCredit(id: Int): Pair<List<Cast>, List<Crew>> {

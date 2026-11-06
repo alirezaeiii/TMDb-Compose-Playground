@@ -3,7 +3,7 @@ package com.sample.tmdb.detail
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.sample.tmdb.common.base.BaseViewModel
+import com.sample.tmdb.common.base.BaseCacheViewModel
 import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
@@ -23,9 +23,10 @@ abstract class BaseDetailViewModel<ItemDetails : TMDbItemDetails, Item : TMDbIte
     private val bookmarkRepository: BookmarkDetailsRepository<Item>,
     repository: BaseDetailRepository<ItemDetails>,
     tmdbId: Int?,
-) : BaseViewModel<DetailWrapper, Int>(
+) : BaseCacheViewModel<DetailWrapper, Int, Int>(
     repository = repository,
-    id = tmdbId,
+    queryParam = tmdbId,
+    fetchParam = tmdbId,
 ) {
     private val gson = Gson()
 

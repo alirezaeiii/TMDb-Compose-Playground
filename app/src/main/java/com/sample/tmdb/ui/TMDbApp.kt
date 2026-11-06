@@ -138,6 +138,7 @@ fun TMDbApp() {
                 ),
                 onNavigate,
                 onNavigateUp,
+                scaffoldState,
             )
         }
         entry<TMDbNavKey.TvShowDetail> { key ->
@@ -148,6 +149,7 @@ fun TMDbApp() {
                 ),
                 onNavigate,
                 onNavigateUp,
+                scaffoldState,
             )
         }
 
@@ -249,7 +251,7 @@ fun TMDbApp() {
     Scaffold(
         scaffoldState = scaffoldState,
         snackbarHost = { hostState ->
-            val modifier = if (appState.currentRoute is TMDbNavKey.Person) {
+            val modifier = if (appState.isDetailOrPersonRoute) {
                 Modifier.navigationBarsPadding()
             } else {
                 Modifier

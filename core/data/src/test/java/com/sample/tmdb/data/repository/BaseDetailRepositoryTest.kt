@@ -26,8 +26,8 @@ abstract class BaseDetailRepositoryTest<T : TMDbItemDetails> : BaseRepositoryTes
     fun `load details success`() {
         mockApiResponse()
         runTest {
-            assertThat(repository.getResult(id = anyInt()).first(), `is`(Async.Loading()))
-            val result = (repository.getResult(id = anyInt()).last() as Async.Success).data
+            assertThat(repository.getResult(queryParam = ID, fetchParam = ID).first(), `is`(Async.Loading()))
+            val result = (repository.getResult(queryParam = ID, fetchParam = ID).last() as Async.Success).data
             assertEquals(ID, result.details.id)
             assertEquals(emptyList<Genre>(), result.details.genres)
             assertEquals(STATUS, result.details.status)
@@ -52,12 +52,28 @@ abstract class BaseDetailRepositoryTest<T : TMDbItemDetails> : BaseRepositoryTes
     }
 
     @Test
+    fun `load details cached`() {
+        mockApiResponse()
+        runTest {
+            val firstResult = (repository.getResult(queryParam = ID, fetchParam = ID).last() as Async.Success).data
+            assertEquals(ID, firstResult.details.id)
+
+            repository.getResult(queryParam = ID, fetchParam = ID, forceRefresh = false).test {
+                assertEquals(Async.Loading(), awaitItem())
+                val cachedResult = (awaitItem() as Async.Success).data
+                assertEquals(ID, cachedResult.details.id)
+                awaitComplete()
+            }
+        }
+    }
+
+    @Test
     fun `load details failed`() {
         val errorMsg = "error message"
         `when`(context.getString(anyInt())).thenReturn(errorMsg)
         mockFailApiResponse()
         runTest {
-            repository.getResult(id = anyInt()).test {
+            repository.getResult(queryParam = ID, fetchParam = ID).test {
                 assertEquals(Async.Loading(), awaitItem())
                 assertEquals(Async.Error(errorMsg), awaitItem())
                 awaitComplete()
