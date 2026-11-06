@@ -2,7 +2,7 @@
 Modular Android architecture which showcase Kotlin, Jetpack Compose, Navigation3 Compose, Paging3 Compose, MVVM, Hilt, Room, Coroutines, StateFlow, Retrofit, Coil-compose and Github Actions.
 
 ### 🚧 Work in progress 👷‍♀️⛏👷🔧️👷🔧 🚧
-Cache is going to implemented for whole app. At the moment feed screen is supported.
+Cache is going to implemented for whole app. At the moment feed and detail screens are supported.
 
 ## Screenshots
 <p float="left">
