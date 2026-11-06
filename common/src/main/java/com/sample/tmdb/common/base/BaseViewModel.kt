@@ -21,7 +21,10 @@ abstract class BaseViewModel<T, S>(
         }
     }
 
-    override fun refresh(isUserRefresh: Boolean, languageCode: String?) {
+    fun refresh(isUserRefresh: Boolean = false, languageCode: String? = null) =
+        executeRefresh(isUserRefresh, languageCode)
+
+    override fun executeRefresh(isUserRefresh: Boolean, languageCode: String?) {
         repository.getResult(isUserRefresh, id)
             .onEach { reduce(it, languageCode) }
             .launchIn(viewModelScope)

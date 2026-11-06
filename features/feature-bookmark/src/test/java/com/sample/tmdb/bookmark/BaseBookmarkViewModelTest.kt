@@ -9,7 +9,6 @@ import com.sample.tmdb.domain.repository.BaseBookmarkRepository
 import com.sample.tmdb.domain.repository.LanguageRepository
 import com.sample.tmdb.domain.utils.Async
 import com.sample.tmdb.feature.test.TMDbItemFixtures
-import com.sample.tmdb.navigation.model.toDetailNavKey
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -44,7 +43,7 @@ abstract class BaseBookmarkViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
 
     private fun mockResult(result: Async<List<T>>) {
         every {
-            repository.getResult(true, null)
+            repository.getResult(false, null)
         } returns flowOf(result)
     }
 

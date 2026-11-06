@@ -25,7 +25,10 @@ abstract class BaseCacheViewModel<DataType, QueryType, FetchType>(
 
     private var job: Job? = null
 
-    override fun refresh(isUserRefresh: Boolean, languageCode: String?) {
+    fun refresh(isUserRefresh: Boolean = true, languageCode: String? = null) =
+        executeRefresh(isUserRefresh, languageCode)
+
+    override fun executeRefresh(isUserRefresh: Boolean, languageCode: String?) {
         job?.cancel()
 
         job = repository.getResult(
