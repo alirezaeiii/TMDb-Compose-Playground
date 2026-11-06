@@ -9,6 +9,7 @@ import com.sample.tmdb.domain.repository.BaseBookmarkRepository
 import com.sample.tmdb.domain.repository.LanguageRepository
 import com.sample.tmdb.domain.utils.Async
 import com.sample.tmdb.feature.test.TMDbItemFixtures
+import com.sample.tmdb.navigation.model.toDetailNavKey
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -20,6 +21,7 @@ import org.junit.Rule
 import org.junit.Test
 
 abstract class BaseBookmarkViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
+
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
@@ -33,44 +35,72 @@ abstract class BaseBookmarkViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
 
     @Before
     fun setup() {
-        every { languageRepository.languageCode } returns MutableStateFlow("en")
+        every {
+            languageRepository.languageCode
+        } returns MutableStateFlow("en")
+
         initViewModel()
     }
 
-    @Test
-    fun `load bookmarks`() {
-        every { repository.getResult() } returns flowOf(Async.Loading())
-        viewModel.refresh()
-        assertEquals(ViewState<Nothing>(isLoading = true), viewModel.state.value)
+    private fun mockResult(result: Async<List<T>>) {
+        every {
+            repository.getResult(true, null)
+        } returns flowOf(result)
     }
 
     @Test
-    fun `load bookmarks success`() {
-        every { repository.getResult() } returns flowOf(Async.Success(emptyList()))
+    fun `load bookmarks`() = runTest {
+        mockResult(Async.Loading())
+
         viewModel.refresh()
-        assertEquals(ViewState(emptyList<T>()), viewModel.state.value)
+
+        assertEquals(
+            ViewState<T>(isLoading = true),
+            viewModel.state.value,
+        )
     }
 
     @Test
-    fun `load bookmarks failed`() {
-        every { repository.getResult() } returns flowOf(Async.Error("error"))
+    fun `load bookmarks success`() = runTest {
+        mockResult(Async.Success(emptyList()))
+
         viewModel.refresh()
-        assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
+
+        assertEquals(
+            ViewState(emptyList<T>()),
+            viewModel.state.value,
+        )
     }
 
     @Test
-    fun `load feeds warning emits showWarningUiEvent`() = runTest {
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(Async.Success(emptyList()))
+    fun `load bookmarks failed`() = runTest {
+        mockResult(Async.Error("error"))
+
         viewModel.refresh()
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(
+
+        assertEquals(
+            ViewState<T>(error = "error"),
+            viewModel.state.value,
+        )
+    }
+
+    @Test
+    fun `load bookmarks warning emits showWarningUiEvent`() = runTest {
+        mockResult(
             Async.Error(
-                "warning message",
+                message = "warning message",
                 isWarning = true,
             ),
         )
+
         viewModel.uiEvent.test {
             viewModel.refresh()
-            assertEquals(UiEvent.ShowWarning("warning message"), awaitItem())
+
+            assertEquals(
+                UiEvent.ShowWarning("warning message"),
+                awaitItem(),
+            )
+
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -79,7 +109,12 @@ abstract class BaseBookmarkViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
     fun `onItemClick emits Navigate to Detail`() = runTest {
         viewModel.uiEvent.test {
             viewModel.onTMDbItemClick(item)
-            assertEquals(UiEvent.Navigate(navKey), awaitItem())
+
+            assertEquals(
+                UiEvent.Navigate(navKey),
+                awaitItem(),
+            )
+
             cancelAndIgnoreRemainingEvents()
         }
     }
