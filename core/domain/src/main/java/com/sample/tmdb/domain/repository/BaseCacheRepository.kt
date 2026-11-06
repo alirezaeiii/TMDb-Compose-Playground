@@ -59,7 +59,7 @@ abstract class BaseCacheRepository<DataType, QueryType, FetchType>(
             emit(Async.Success(it))
         }
         try {
-            if (forceRefresh || isCacheExpired()) {
+            if (forceRefresh || dbData == null || isCacheExpired()) {
                 if (dbData != null) {
                     emit(Async.Loading(true))
                 }
