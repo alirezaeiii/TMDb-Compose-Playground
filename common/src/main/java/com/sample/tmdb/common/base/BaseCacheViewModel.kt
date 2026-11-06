@@ -45,7 +45,7 @@ abstract class BaseCacheViewModel<DataType, QueryType, FetchType>(
         lastLanguage = languageRepository?.languageCode?.value
     }
 
-    fun refresh(isUserRefresh: Boolean = false, languageCode: String? = null) {
+    fun refresh(isUserRefresh: Boolean = true, languageCode: String? = null) {
         execute(languageCode) {
             repository.getResult(queryParam, fetchParam, isUserRefresh)
         }
