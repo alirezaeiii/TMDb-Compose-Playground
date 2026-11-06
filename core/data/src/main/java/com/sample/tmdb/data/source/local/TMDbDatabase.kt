@@ -7,6 +7,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.sample.tmdb.data.source.entity.MovieEntity
 import com.sample.tmdb.data.source.entity.MovieFeedEntity
+import com.sample.tmdb.data.source.entity.PersonFeedEntity
 import com.sample.tmdb.data.source.entity.TVShowEntity
 import com.sample.tmdb.data.source.entity.TVShowFeedEntity
 
@@ -16,8 +17,9 @@ import com.sample.tmdb.data.source.entity.TVShowFeedEntity
         TVShowEntity::class,
         MovieFeedEntity::class,
         TVShowFeedEntity::class,
+        PersonFeedEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 @TypeConverters(FeedTypeConverters::class)
@@ -26,6 +28,7 @@ abstract class TMDbDatabase : RoomDatabase() {
     abstract val tvShowDao: TVShowDao
     abstract val movieFeedDao: MovieFeedDao
     abstract val tvShowFeedDao: TVShowFeedDao
+    abstract val personFeedDao: PersonFeedDao
 }
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
@@ -62,6 +65,24 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
                 `voteAverage` REAL NOT NULL,
                 `voteCount` INTEGER NOT NULL,
                 PRIMARY KEY(`sortType`, `id`)
+            )
+            """.trimIndent(),
+        )
+    }
+}
+
+val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `PersonFeed` (
+                `id` INTEGER NOT NULL,
+                `gender` TEXT NOT NULL,
+                `itemOrder` INTEGER NOT NULL,
+                `name` TEXT NOT NULL,
+                `profileUrl` TEXT,
+                `subtitle` TEXT NOT NULL,
+                PRIMARY KEY(`id`)
             )
             """.trimIndent(),
         )

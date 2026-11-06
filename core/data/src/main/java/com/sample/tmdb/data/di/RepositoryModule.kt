@@ -25,6 +25,7 @@ import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TVShowDetails
 import com.sample.tmdb.domain.model.TrendingPerson
 import com.sample.tmdb.domain.repository.BaseBookmarkRepository
+import com.sample.tmdb.domain.repository.BaseCacheRepository
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.repository.BasePagingRepository
@@ -123,7 +124,9 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    internal abstract fun bindPeopleRepository(peopleRepository: PeopleRepository): BaseRepository<People, Nothing>
+    internal abstract fun bindPeopleRepository(
+        peopleRepository: PeopleRepository,
+    ): BaseCacheRepository<People, Unit, Unit>
 
     @Singleton
     @Binds

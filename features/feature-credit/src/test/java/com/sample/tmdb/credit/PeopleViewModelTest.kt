@@ -7,7 +7,7 @@ import com.sample.tmdb.common.ui.ViewState
 import com.sample.tmdb.domain.model.Gender
 import com.sample.tmdb.domain.model.People
 import com.sample.tmdb.domain.model.TrendingPerson
-import com.sample.tmdb.domain.repository.BaseRepository
+import com.sample.tmdb.domain.repository.BaseCacheRepository
 import com.sample.tmdb.domain.repository.LanguageRepository
 import com.sample.tmdb.domain.utils.Async
 import com.sample.tmdb.navigation.TMDbNavKey
@@ -27,7 +27,7 @@ class PeopleViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    private val repository = mockk<BaseRepository<People, Nothing>>()
+    private val repository = mockk<BaseCacheRepository<People, Unit, Unit>>()
     private val languageRepository = mockk<LanguageRepository>()
 
     private val person = TrendingPerson(
@@ -48,31 +48,31 @@ class PeopleViewModelTest {
 
     @Test
     fun `load people`() {
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(Async.Loading())
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Loading())
         viewModel = PeopleViewModel(repository, languageRepository)
         assertEquals(ViewState<Nothing>(isLoading = true), viewModel.state.value)
     }
 
     @Test
     fun `load people success`() {
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(Async.Success(people))
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Success(people))
         viewModel = PeopleViewModel(repository, languageRepository)
         assertEquals(ViewState(people), viewModel.state.value)
     }
 
     @Test
     fun `load people failed`() {
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(Async.Error("error message"))
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Error("error message"))
         viewModel = PeopleViewModel(repository, languageRepository)
         assertEquals(ViewState<Nothing>(error = "error message"), viewModel.state.value)
     }
 
     @Test
     fun `load people warning emits ShowWarning`() = runTest {
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(Async.Success(people))
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Success(people))
         viewModel = PeopleViewModel(repository, languageRepository)
 
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(
+        every { repository.getResult(null, null, any()) } returns flowOf(
             Async.Error("warning message", isWarning = true),
         )
 
@@ -85,7 +85,7 @@ class PeopleViewModelTest {
 
     @Test
     fun `onPersonClick emits Navigate to Person`() = runTest {
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(Async.Loading())
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Loading())
         viewModel = PeopleViewModel(repository, languageRepository)
 
         viewModel.uiEvent.test {
@@ -97,7 +97,7 @@ class PeopleViewModelTest {
 
     @Test
     fun `onMoreClick emits Navigate to PersonPaging`() = runTest {
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(Async.Loading())
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Loading())
         viewModel = PeopleViewModel(repository, languageRepository)
 
         viewModel.uiEvent.test {
@@ -109,7 +109,7 @@ class PeopleViewModelTest {
 
     @Test
     fun `onSearchClick emits Navigate to SearchPerson`() = runTest {
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(Async.Loading())
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Loading())
         viewModel = PeopleViewModel(repository, languageRepository)
 
         viewModel.uiEvent.test {
@@ -121,10 +121,10 @@ class PeopleViewModelTest {
 
     @Test
     fun `refreshOnLanguageChange reloads data when language changes`() {
-        every { repository.getResult(isRefreshing = false, id = null) } returns flowOf(Async.Success(people))
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Success(people))
         viewModel = PeopleViewModel(repository, languageRepository)
 
-        every { repository.getResult(isRefreshing = true, id = null) } returns flowOf(Async.Success(people))
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Success(people))
         viewModel.refreshOnLanguageChange("es")
 
         assertEquals(ViewState(people), viewModel.state.value)

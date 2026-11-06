@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.sample.tmdb.common.ui.Content
+import com.sample.tmdb.common.ui.CacheContent
 import com.sample.tmdb.common.ui.Dimens.TMDb_136_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
@@ -58,22 +58,24 @@ sealed interface CreditSource {
 fun CreditScreen(source: CreditSource, @StringRes resourceId: Int, testPainter: Painter? = null) {
     when (source) {
         is CreditSource.FromViewModel -> {
-            Content(
+            CacheContent(
                 viewModel = source.viewModel,
                 languageViewModel = source.languageViewModel,
                 onNavigate = source.onNavigate,
                 scaffoldState = source.scaffoldState,
-            ) { state, item ->
-                TMDbSwipeRefresh(state.isRefreshing, { source.viewModel.refresh(true) }) {
-                    CreditScreen(
-                        resourceId = resourceId,
-                        items = item.result,
-                        onSearchClick = source.viewModel::onSearchClick,
-                        onPersonClicked = source.viewModel::onPersonClick,
-                        type = item.type,
-                        onMoreClick = source.viewModel::onMoreClick,
-                        testPainter = testPainter,
-                    )
+            ) { state ->
+                state.items?.let { items ->
+                    TMDbSwipeRefresh(state.isRefreshing, { source.viewModel.refresh(true) }) {
+                        CreditScreen(
+                            resourceId = resourceId,
+                            items = items.result,
+                            onSearchClick = source.viewModel::onSearchClick,
+                            onPersonClicked = source.viewModel::onPersonClick,
+                            type = items.type,
+                            onMoreClick = source.viewModel::onMoreClick,
+                            testPainter = testPainter,
+                        )
+                    }
                 }
             }
         }
