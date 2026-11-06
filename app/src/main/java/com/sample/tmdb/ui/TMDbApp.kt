@@ -25,6 +25,7 @@ import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHost
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -247,6 +248,17 @@ fun TMDbApp() {
 
     Scaffold(
         scaffoldState = scaffoldState,
+        snackbarHost = { hostState ->
+            val modifier = if (appState.currentRoute is TMDbNavKey.Person) {
+                Modifier.navigationBarsPadding()
+            } else {
+                Modifier
+            }
+            SnackbarHost(
+                hostState = hostState,
+                modifier = modifier,
+            )
+        },
         bottomBar = {
             if (appState.shouldShowBottomBar) {
                 TMDbBottomBar(
