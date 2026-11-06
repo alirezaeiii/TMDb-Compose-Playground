@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
@@ -29,6 +32,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -59,7 +63,7 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sample.tmdb.common.R as commonR
-import com.sample.tmdb.common.ui.Content
+import com.sample.tmdb.common.ui.CacheContent
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -70,6 +74,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_96_dp
 import com.sample.tmdb.common.ui.component.TMDbDivider
+import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.ui.theme.Neutral8
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
 import com.sample.tmdb.common.ui.theme.Tornado
@@ -96,31 +101,41 @@ fun PersonScreen(
     viewModel: PersonViewModel,
     onNavigate: (TMDbNavKey) -> Unit,
     onNavigateUp: () -> Unit,
+    scaffoldState: ScaffoldState,
     knownFor: List<Media>?,
 ) {
     val titleHeight = remember { mutableStateOf(0.dp) }
-    Content(
+    CacheContent(
         viewModel = viewModel,
         onNavigate = onNavigate,
         onNavigateUp = onNavigateUp,
-    ) { _, person ->
-        Box(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            val scroll = rememberScrollState(0)
-            Spacer(
-                modifier =
-                    Modifier
-                        .height(280.dp)
-                        .fillMaxWidth()
-                        .background(Brush.horizontalGradient(Tornado)),
-            )
-            Body(person, titleHeight, scroll, knownFor, viewModel::onMediaClick)
-            Title(person, titleHeight) { scroll.value }
-            person.profilePath?.let {
-                PersonImage(it) { scroll.value }
+        scaffoldState = scaffoldState,
+    ) { state ->
+        state.items?.let { person ->
+            TMDbSwipeRefresh(
+                isRefreshing = state.isRefreshing,
+                onRefresh = { viewModel.refresh(true) },
+                indicatorTopPadding = WindowInsets.statusBars.asPaddingValues().calculateTopPadding(),
+            ) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    val scroll = rememberScrollState(0)
+                    Spacer(
+                        modifier =
+                            Modifier
+                                .height(280.dp)
+                                .fillMaxWidth()
+                                .background(Brush.horizontalGradient(Tornado)),
+                    )
+                    Body(person, titleHeight, scroll, knownFor, viewModel::onMediaClick)
+                    Title(person, titleHeight) { scroll.value }
+                    person.profilePath?.let {
+                        PersonImage(it) { scroll.value }
+                    }
+                    Up(viewModel::onNavigateUp)
+                }
             }
-            Up(viewModel::onNavigateUp)
         }
     }
 }

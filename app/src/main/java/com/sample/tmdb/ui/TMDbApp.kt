@@ -219,6 +219,7 @@ fun TMDbApp() {
                 ),
                 onNavigate,
                 onNavigateUp,
+                scaffoldState,
                 key.trendingPerson.knownFor?.asDomainModel(),
             )
         }

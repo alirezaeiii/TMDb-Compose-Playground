@@ -7,6 +7,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.sample.tmdb.data.source.entity.MovieEntity
 import com.sample.tmdb.data.source.entity.MovieFeedEntity
+import com.sample.tmdb.data.source.entity.PersonEntity
 import com.sample.tmdb.data.source.entity.PersonFeedEntity
 import com.sample.tmdb.data.source.entity.TVShowEntity
 import com.sample.tmdb.data.source.entity.TVShowFeedEntity
@@ -18,8 +19,9 @@ import com.sample.tmdb.data.source.entity.TVShowFeedEntity
         MovieFeedEntity::class,
         TVShowFeedEntity::class,
         PersonFeedEntity::class,
+        PersonEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = true,
 )
 @TypeConverters(FeedTypeConverters::class)
@@ -29,6 +31,7 @@ abstract class TMDbDatabase : RoomDatabase() {
     abstract val movieFeedDao: MovieFeedDao
     abstract val tvShowFeedDao: TVShowFeedDao
     abstract val personFeedDao: PersonFeedDao
+    abstract val personDao: PersonDao
 }
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
@@ -82,6 +85,25 @@ val MIGRATION_2_3 = object : Migration(2, 3) {
                 `name` TEXT NOT NULL,
                 `profileUrl` TEXT,
                 `subtitle` TEXT NOT NULL,
+                PRIMARY KEY(`id`)
+            )
+            """.trimIndent(),
+        )
+    }
+}
+
+val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `Person` (
+                `biography` TEXT NOT NULL,
+                `birthDay` TEXT,
+                `deathDay` TEXT,
+                `id` INTEGER NOT NULL,
+                `name` TEXT NOT NULL,
+                `placeOfBirth` TEXT,
+                `profilePath` TEXT,
                 PRIMARY KEY(`id`)
             )
             """.trimIndent(),
