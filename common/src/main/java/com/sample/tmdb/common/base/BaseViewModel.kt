@@ -6,12 +6,12 @@ import com.sample.tmdb.domain.repository.LanguageRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-abstract class BaseViewModel<T, S>(
-    private val repository: BaseRepository<T, S>,
-    private val id: S? = null,
+abstract class BaseViewModel<DataType, Param>(
+    private val repository: BaseRepository<DataType, Param>,
+    private val id: Param? = null,
     languageRepository: LanguageRepository? = null,
     loadDataOnInit: Boolean = true,
-) : BaseCoreViewModel<T>(
+) : BaseCoreViewModel<DataType>(
     languageRepository,
 ) {
 

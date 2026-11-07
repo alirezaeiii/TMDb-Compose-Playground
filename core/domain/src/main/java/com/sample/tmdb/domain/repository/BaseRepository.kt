@@ -8,15 +8,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-abstract class BaseRepository<T, S>(private val context: Context, private val ioDispatcher: CoroutineDispatcher) {
+abstract class BaseRepository<DataType, Param>(
+    private val context: Context,
+    private val ioDispatcher: CoroutineDispatcher,
+) {
 
-    protected abstract suspend fun getSuccessResult(isRefreshing: Boolean = false, id: S? = null): T
+    protected abstract suspend fun getSuccessResult(isRefreshing: Boolean = false, id: Param? = null): DataType
 
-    fun getResult(isRefreshing: Boolean = false, id: S? = null): Flow<Async<T>> = execute(isRefreshing) {
+    fun getResult(isRefreshing: Boolean = false, id: Param? = null): Flow<Async<DataType>> = execute(isRefreshing) {
         getSuccessResult(isRefreshing, id)
     }
 
-    private fun execute(isRefreshing: Boolean, block: suspend () -> T): Flow<Async<T>> = flow {
+    private fun execute(isRefreshing: Boolean, block: suspend () -> DataType): Flow<Async<DataType>> = flow {
         emit(Async.Loading(isRefreshing))
         try {
             emit(Async.Success(block()))
