@@ -59,8 +59,8 @@ fun TVShowDetailEntity.asDomainModel(): DetailWrapper = DetailWrapper(
     similarItems = similarItems,
 )
 
-fun DetailWrapper.asTVShowDetailDatabaseModel(id: Int): TVShowDetailEntity = TVShowDetailEntity(
-    id = id,
+fun DetailWrapper.asTVShowDetailDatabaseModel(): TVShowDetailEntity = TVShowDetailEntity(
+    id = details.id,
     backdropPath = details.backdropPath,
     genres = details.genres,
     homepage = details.homepage,

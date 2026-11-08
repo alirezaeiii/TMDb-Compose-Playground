@@ -33,7 +33,7 @@ class TVShowDetailRepository @Inject constructor(
         tvShowDetailDao.getTVShowDetail(queryParam!!)?.asDomainModel()
 
     override suspend fun saveFetchResult(item: DetailWrapper) {
-        tvShowDetailDao.insert(item.asTVShowDetailDatabaseModel(item.details.id))
+        tvShowDetailDao.insert(item.asTVShowDetailDatabaseModel())
     }
 
     override suspend fun getDetails(id: Int): TVShowDetails = tvShowApi.fetchTVSeriesDetail(id).asDomainModel()

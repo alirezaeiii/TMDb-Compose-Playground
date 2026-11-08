@@ -59,8 +59,8 @@ fun MovieDetailEntity.asDomainModel(): DetailWrapper = DetailWrapper(
     similarItems = similarItems,
 )
 
-fun DetailWrapper.asMovieDetailDatabaseModel(id: Int): MovieDetailEntity = MovieDetailEntity(
-    id = id,
+fun DetailWrapper.asMovieDetailDatabaseModel(): MovieDetailEntity = MovieDetailEntity(
+    id = details.id,
     backdropPath = details.backdropPath,
     genres = details.genres,
     homepage = details.homepage,

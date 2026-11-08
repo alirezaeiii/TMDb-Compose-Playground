@@ -33,7 +33,7 @@ class MovieDetailRepository @Inject constructor(
         movieDetailDao.getMovieDetail(queryParam!!)?.asDomainModel()
 
     override suspend fun saveFetchResult(item: DetailWrapper) {
-        movieDetailDao.insert(item.asMovieDetailDatabaseModel(item.details.id))
+        movieDetailDao.insert(item.asMovieDetailDatabaseModel())
     }
 
     override suspend fun getDetails(id: Int): MovieDetails = movieApi.fetchMovieDetail(id).asDomainModel()
