@@ -1,9 +1,11 @@
 package com.sample.tmdb.common.ui
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sample.tmdb.common.base.BaseCacheViewModel
 import com.sample.tmdb.common.ui.component.ErrorScreen
@@ -33,7 +35,11 @@ fun <DataType, QueryType, FetchType> CacheContent(
         state.isLoading -> TMDbProgressBar()
 
         state.error.isNotEmpty() && !state.isWarning ->
-            ErrorScreen(state.error) { refresh.invoke() }
+            ErrorScreen(
+                message = state.error,
+                modifier = Modifier.fillMaxSize(),
+                refresh = refresh,
+            )
 
         else -> successScreen(state)
     }

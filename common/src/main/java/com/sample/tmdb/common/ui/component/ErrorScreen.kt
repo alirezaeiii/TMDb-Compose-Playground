@@ -21,7 +21,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 @Composable
 fun ErrorScreen(message: String, modifier: Modifier = Modifier, refresh: () -> Unit) {
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
