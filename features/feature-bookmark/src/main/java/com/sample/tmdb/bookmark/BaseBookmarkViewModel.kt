@@ -5,7 +5,7 @@ import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.repository.BaseBookmarkRepository
 import com.sample.tmdb.domain.repository.LanguageRepository
-import com.sample.tmdb.navigation.model.toDetailNavKey
+import com.sample.tmdb.navigation.utils.toDetailNavKey
 
 open class BaseBookmarkViewModel<T : TMDbItem>(
     repository: BaseBookmarkRepository<T>,

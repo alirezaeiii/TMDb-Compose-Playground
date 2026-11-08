@@ -9,7 +9,7 @@ import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.repository.LanguageRepository
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.model.asNavSortType
-import com.sample.tmdb.navigation.model.toDetailNavKey
+import com.sample.tmdb.navigation.utils.toDetailNavKey
 
 abstract class BaseFeedViewModel<T : TMDbItem>(
     repository: BaseFeedRepository<T>,

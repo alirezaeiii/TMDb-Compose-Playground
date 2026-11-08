@@ -1,4 +1,4 @@
-package com.sample.tmdb.navigation.model
+package com.sample.tmdb.navigation.utils
 
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TMDbItem

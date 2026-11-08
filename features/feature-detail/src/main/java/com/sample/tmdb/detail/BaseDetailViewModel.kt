@@ -14,7 +14,7 @@ import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.model.asNavPerson
-import com.sample.tmdb.navigation.model.toDetailNavKey
+import com.sample.tmdb.navigation.utils.toDetailNavKey
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
