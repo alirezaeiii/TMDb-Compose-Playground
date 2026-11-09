@@ -1,5 +1,7 @@
 package com.sample.tmdb.data.response
 
+import com.sample.tmdb.data.source.entity.MovieEntity
+import com.sample.tmdb.data.source.entity.TVShowEntity
 import com.sample.tmdb.data.utils.Constants.BACKDROP_PATH
 import com.sample.tmdb.data.utils.Constants.BASE_WIDTH_342_PATH
 import com.sample.tmdb.data.utils.Constants.BASE_WIDTH_780_PATH
@@ -13,10 +15,8 @@ import com.sample.tmdb.data.utils.Constants.TITLE
 import com.sample.tmdb.data.utils.Constants.VOTE_AVERAGE
 import com.sample.tmdb.data.utils.Constants.VOTE_COUNT
 import com.sample.tmdb.domain.model.Genre
-import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.MovieDetails
 import com.sample.tmdb.domain.model.SpokenLanguage
-import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TVShowDetails
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -144,7 +144,7 @@ fun TvDetailResponse.asDomainModel(): TVShowDetails = TVShowDetails(
     voteCount,
 )
 
-fun MovieDetailResponse.asMovieDomainModel() = Movie(
+fun MovieDetailResponse.asMovieDatabaseModel() = MovieEntity(
     id = id,
     overview = overview,
     releaseDate = releaseDate,
@@ -155,7 +155,7 @@ fun MovieDetailResponse.asMovieDomainModel() = Movie(
     voteCount = voteCount,
 )
 
-fun TvDetailResponse.asTVShowDomainModel() = TVShow(
+fun TvDetailResponse.asTVShowDatabaseModel() = TVShowEntity(
     id = id,
     overview = overview,
     releaseDate = releaseDate,

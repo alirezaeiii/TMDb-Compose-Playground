@@ -19,4 +19,7 @@ interface MovieDao {
 
     @Query("SELECT * FROM Movies ORDER BY releaseDate DESC")
     suspend fun getBookmarks(): List<MovieEntity>
+
+    @Query("SELECT id FROM Movies")
+    suspend fun getBookmarkIds(): List<Int>
 }

@@ -19,4 +19,7 @@ interface TVShowDao {
 
     @Query("SELECT * FROM TVShows ORDER BY releaseDate DESC")
     suspend fun getBookmarks(): List<TVShowEntity>
+
+    @Query("SELECT id FROM TVShows")
+    suspend fun getBookmarkIds(): List<Int>
 }

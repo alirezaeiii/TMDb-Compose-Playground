@@ -3,8 +3,7 @@ package com.sample.tmdb.data.repository.tvshow.detail
 import android.content.Context
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.TVShowService
-import com.sample.tmdb.data.response.asTVShowDomainModel
-import com.sample.tmdb.data.source.entity.asDatabaseModel
+import com.sample.tmdb.data.response.asTVShowDatabaseModel
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.local.TVShowDao
 import com.sample.tmdb.domain.model.TVShow
@@ -28,12 +27,10 @@ class BookmarkTVShowRepository @Inject constructor(
     override suspend fun getSuccessResult(isRefreshing: Boolean, id: Nothing?): List<TVShow> {
         if (isRefreshing) {
             coroutineScope {
-                val jobs = tvShowDao.getBookmarks().asDomainModel().map { tvShow ->
+                val jobs = tvShowDao.getBookmarkIds().map { tvShowId ->
                     async {
                         tvShowDao.addBookmark(
-                            tvShowApi.fetchTVSeriesDetail(tvShow.id)
-                                .asTVShowDomainModel()
-                                .asDatabaseModel(),
+                            tvShowApi.fetchTVSeriesDetail(tvShowId).asTVShowDatabaseModel(),
                         )
                     }
                 }

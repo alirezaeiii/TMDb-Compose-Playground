@@ -3,8 +3,7 @@ package com.sample.tmdb.data.repository.movie.detail
 import android.content.Context
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.MovieService
-import com.sample.tmdb.data.response.asMovieDomainModel
-import com.sample.tmdb.data.source.entity.asDatabaseModel
+import com.sample.tmdb.data.response.asMovieDatabaseModel
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.local.MovieDao
 import com.sample.tmdb.domain.model.Movie
@@ -28,12 +27,10 @@ class BookmarkMovieRepository @Inject constructor(
     override suspend fun getSuccessResult(isRefreshing: Boolean, id: Nothing?): List<Movie> {
         if (isRefreshing) {
             coroutineScope {
-                val jobs = movieDao.getBookmarks().asDomainModel().map { movie ->
+                val jobs = movieDao.getBookmarkIds().map { movieId ->
                     async {
                         movieDao.addBookmark(
-                            movieApi.fetchMovieDetail(movie.id)
-                                .asMovieDomainModel()
-                                .asDatabaseModel(),
+                            movieApi.fetchMovieDetail(movieId).asMovieDatabaseModel(),
                         )
                     }
                 }
