@@ -6,7 +6,6 @@ import com.sample.tmdb.domain.model.MovieDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.model.SortType
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -20,7 +19,7 @@ class MovieDetailViewModel @AssistedInject constructor(
 ) : BaseDetailViewModel<MovieDetails, Movie>(bookmarkRepository, repository, tmdbId) {
 
     override fun onAllSimilarClick(id: Int) {
-        emitEvent(UiEvent.Navigate(TMDbNavKey.PagingMovies(SortType.SIMILAR, id)))
+        emitEvent(UiEvent.Navigate(TMDbNavKey.PagingSimilarMovies(id)))
     }
 
     @AssistedFactory

@@ -4,7 +4,6 @@ import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TVShowDetails
 import com.sample.tmdb.feature.test.TVShowFixtures
 import com.sample.tmdb.navigation.TMDbNavKey
-import com.sample.tmdb.navigation.model.SortType
 
 class TVShowDetailViewModelTest :
     BaseDetailViewModelTest<TVShowDetails, TVShow>(),
@@ -14,5 +13,5 @@ class TVShowDetailViewModelTest :
     }
 
     override val similarNavKey: TMDbNavKey
-        get() = TMDbNavKey.PagingTvShows(SortType.SIMILAR, TMDB_ITEM_ID)
+        get() = TMDbNavKey.PagingSimilarTvShows(TMDB_ITEM_ID)
 }

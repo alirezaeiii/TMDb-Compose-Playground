@@ -17,7 +17,6 @@ class MovieRemoteMediator(
     private val database: TMDbDatabase,
     private val movieApi: MovieService,
     private val sortType: SortType,
-    private val movieId: Int? = null,
     context: Context,
 ) : BaseRemoteMediator<MoviePagingEntity, SortType, MovieRemoteKeyEntity>(database, context) {
 
@@ -28,7 +27,6 @@ class MovieRemoteMediator(
         SortType.NOW_PLAYING -> movieApi.nowPlayingMovies(page)
         SortType.UPCOMING -> movieApi.upcomingMovies(page)
         SortType.HIGHEST_RATED -> movieApi.topRatedMovies(page)
-        SortType.SIMILAR -> movieApi.fetchSimilarMovies(movieId!!, page)
         SortType.APPLE_TV -> movieApi.providerMovies(APPLE_TV_PROVIDER_ID, page)
         SortType.NETFLIX -> movieApi.providerMovies(NETFLIX_PROVIDER_ID, page)
         SortType.AMAZON_PRIME -> movieApi.providerMovies(AMAZON_PRIME_PROVIDER_ID, page)

@@ -71,7 +71,6 @@ class MovieRemoteMediatorTest : BaseRemoteMediatorTest() {
         SortType.NOW_PLAYING -> api.nowPlayingMovies(1)
         SortType.UPCOMING -> api.upcomingMovies(1)
         SortType.HIGHEST_RATED -> api.topRatedMovies(1)
-        SortType.SIMILAR -> api.fetchSimilarMovies(1, 1)
         SortType.APPLE_TV -> api.providerMovies(APPLE_TV_PROVIDER_ID, 1)
         SortType.NETFLIX -> api.providerMovies(NETFLIX_PROVIDER_ID, 1)
         SortType.AMAZON_PRIME -> api.providerMovies(AMAZON_PRIME_PROVIDER_ID, 1)
@@ -86,7 +85,6 @@ class MovieRemoteMediatorTest : BaseRemoteMediatorTest() {
                 database = database,
                 movieApi = api,
                 sortType = sortType,
-                movieId = if (sortType == SortType.SIMILAR) 1 else null,
                 context = context,
             )
             val pagingState = PagingState<Int, MoviePagingEntity>(

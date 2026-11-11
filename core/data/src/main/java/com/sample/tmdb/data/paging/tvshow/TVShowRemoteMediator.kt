@@ -17,7 +17,6 @@ class TVShowRemoteMediator(
     private val database: TMDbDatabase,
     private val tvShowApi: TVShowService,
     private val sortType: SortType,
-    private val tvShowId: Int? = null,
     context: Context,
 ) : BaseRemoteMediator<TVShowPagingEntity, SortType, TVShowRemoteKeyEntity>(database, context) {
 
@@ -33,8 +32,6 @@ class TVShowRemoteMediator(
         SortType.UPCOMING -> tvShowApi.onTheAirTVSeries(page)
 
         SortType.HIGHEST_RATED -> tvShowApi.topRatedTVSeries(page)
-
-        SortType.SIMILAR -> tvShowApi.fetchSimilarTVSeries(tvShowId!!, page)
 
         SortType.APPLE_TV -> tvShowApi.providerTVSeries(APPLE_TV_PROVIDER_ID, page)
 

@@ -76,6 +76,10 @@ import com.sample.tmdb.navigation.model.asDomainModel
 import com.sample.tmdb.navigation.model.asNavPerson
 import com.sample.tmdb.paging.main.MoviePagingScreen
 import com.sample.tmdb.paging.main.MoviePagingViewModel
+import com.sample.tmdb.paging.main.SimilarMoviePagingScreen
+import com.sample.tmdb.paging.main.SimilarMoviePagingViewModel
+import com.sample.tmdb.paging.main.SimilarTvShowPagingScreen
+import com.sample.tmdb.paging.main.SimilarTvShowPagingViewModel
 import com.sample.tmdb.paging.main.TVShowPagingScreen
 import com.sample.tmdb.paging.main.TvShowPagingViewModel
 import com.sample.tmdb.paging.search.SearchMoviesScreen
@@ -157,12 +161,9 @@ fun TMDbApp() {
             val sortType = key.sortType.asDomainModel()
             MoviePagingScreen(
                 hiltViewModel<MoviePagingViewModel, MoviePagingViewModel.Factory>(
-                    key = "PagingMovies_${key.id}",
+                    key = "PagingMovies_${sortType.name}",
                     creationCallback = { factory ->
-                        factory.create(
-                            if (sortType == SortType.SIMILAR) key.id else null,
-                            sortType,
-                        )
+                        factory.create(type = sortType)
                     },
                 ),
                 onNavigate,
@@ -175,17 +176,36 @@ fun TMDbApp() {
             val sortType = key.sortType.asDomainModel()
             TVShowPagingScreen(
                 hiltViewModel<TvShowPagingViewModel, TvShowPagingViewModel.Factory>(
-                    key = "PagingTVShows_${key.id}",
+                    key = "PagingTVShows_${sortType.name}",
                     creationCallback = { factory ->
-                        factory.create(
-                            if (sortType == SortType.SIMILAR) key.id else null,
-                            sortType,
-                        )
+                        factory.create(type = sortType)
                     },
                 ),
                 onNavigate,
                 onNavigateUp,
                 sortType,
+            )
+        }
+
+        entry<TMDbNavKey.PagingSimilarMovies> { key ->
+            SimilarMoviePagingScreen(
+                hiltViewModel<SimilarMoviePagingViewModel, SimilarMoviePagingViewModel.Factory>(
+                    key = "PagingSimilarMovies_${key.id}",
+                    creationCallback = { factory -> factory.create(key.id) },
+                ),
+                onNavigate,
+                onNavigateUp,
+            )
+        }
+
+        entry<TMDbNavKey.PagingSimilarTvShows> { key ->
+            SimilarTvShowPagingScreen(
+                hiltViewModel<SimilarTvShowPagingViewModel, SimilarTvShowPagingViewModel.Factory>(
+                    key = "PagingSimilarTVShows_${key.id}",
+                    creationCallback = { factory -> factory.create(key.id) },
+                ),
+                onNavigate,
+                onNavigateUp,
             )
         }
         entry<TMDbNavKey.SearchMovies> {
