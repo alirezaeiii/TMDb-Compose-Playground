@@ -18,7 +18,7 @@ class TVShowRemoteMediator(
     private val tvShowApi: TVShowService,
     private val sortType: SortType,
     private val tvShowId: Int? = null,
-    context: Context
+    context: Context,
 ) : BaseRemoteMediator<TVShowPagingEntity, SortType, TVShowRemoteKeyEntity>(database, context) {
 
     override suspend fun fetchItems(page: Int): List<TVShowPagingEntity> = when (sortType) {

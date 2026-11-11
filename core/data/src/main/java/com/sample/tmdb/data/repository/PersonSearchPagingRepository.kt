@@ -19,7 +19,7 @@ import javax.inject.Singleton
 class PersonSearchPagingRepository @Inject constructor(
     private val database: TMDbDatabase,
     private val personApi: PersonService,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : BasePagingRepository<TrendingPerson, PersonSearchPagingEntity>() {
 
     @OptIn(ExperimentalPagingApi::class)

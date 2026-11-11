@@ -12,7 +12,7 @@ class SearchTVSeriesRemoteMediator(
     private val database: TMDbDatabase,
     private val tvShowApi: TVShowService,
     private val query: String,
-    context: Context
+    context: Context,
 ) : BaseRemoteMediator<SearchTVShowPagingEntity, String, SearchTVShowRemoteKeyEntity>(database, context) {
 
     override suspend fun fetchItems(page: Int): List<SearchTVShowPagingEntity> =

@@ -6,12 +6,12 @@ import androidx.paging.PagingSource
 import androidx.paging.RemoteMediator
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.paging.movie.MovieRemoteMediator
+import com.sample.tmdb.data.repository.BasePagingRepository
 import com.sample.tmdb.data.source.entity.MoviePagingEntity
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.local.TMDbDatabase
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
-import com.sample.tmdb.data.repository.BasePagingRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

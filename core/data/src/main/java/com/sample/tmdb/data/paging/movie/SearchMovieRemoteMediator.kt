@@ -12,7 +12,7 @@ class SearchMovieRemoteMediator(
     private val database: TMDbDatabase,
     private val movieApi: MovieService,
     private val query: String,
-    context: Context
+    context: Context,
 ) : BaseRemoteMediator<SearchMoviePagingEntity, String, SearchMovieRemoteKeyEntity>(database, context) {
 
     override suspend fun fetchItems(page: Int): List<SearchMoviePagingEntity> =

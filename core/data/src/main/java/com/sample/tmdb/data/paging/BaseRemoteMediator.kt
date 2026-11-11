@@ -9,8 +9,8 @@ import androidx.room.withTransaction
 import com.sample.tmdb.data.source.local.TMDbDatabase
 import com.sample.tmdb.data.utils.TMDbException
 import com.sample.tmdb.domain.R
-import retrofit2.HttpException
 import java.io.IOException
+import retrofit2.HttpException
 
 private const val STARTING_PAGE_INDEX = 1
 

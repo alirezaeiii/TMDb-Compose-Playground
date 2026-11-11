@@ -11,7 +11,7 @@ class PersonSearchRemoteMediator(
     private val database: TMDbDatabase,
     private val personApi: PersonService,
     private val query: String,
-    context: Context
+    context: Context,
 ) : BaseRemoteMediator<PersonSearchPagingEntity, String, PersonSearchRemoteKeyEntity>(database, context) {
 
     override suspend fun fetchItems(page: Int): List<PersonSearchPagingEntity> =

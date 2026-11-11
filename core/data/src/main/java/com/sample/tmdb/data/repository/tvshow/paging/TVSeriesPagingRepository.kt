@@ -6,12 +6,12 @@ import androidx.paging.PagingSource
 import androidx.paging.RemoteMediator
 import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.paging.tvshow.TVShowRemoteMediator
+import com.sample.tmdb.data.repository.BasePagingRepository
 import com.sample.tmdb.data.source.entity.TVShowPagingEntity
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.local.TMDbDatabase
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
-import com.sample.tmdb.data.repository.BasePagingRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,8 +28,7 @@ class TVSeriesPagingRepository @Inject constructor(
         query: String?,
         id: Int?,
         type: SortType?,
-    ): RemoteMediator<Int, TVShowPagingEntity> =
-        TVShowRemoteMediator(database, tvShowApi, type!!, id, context)
+    ): RemoteMediator<Int, TVShowPagingEntity> = TVShowRemoteMediator(database, tvShowApi, type!!, id, context)
 
     override fun createPagingSource(query: String?, id: Int?, type: SortType?): PagingSource<Int, TVShowPagingEntity> =
         database.tvShowPagingDao.getPagingTVShows(type!!)

@@ -6,12 +6,12 @@ import androidx.paging.PagingSource
 import androidx.paging.RemoteMediator
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.paging.movie.SearchMovieRemoteMediator
+import com.sample.tmdb.data.repository.BasePagingRepository
 import com.sample.tmdb.data.source.entity.SearchMoviePagingEntity
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.local.TMDbDatabase
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
-import com.sample.tmdb.data.repository.BasePagingRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,7 +20,7 @@ import javax.inject.Singleton
 class SearchMoviesPagingRepository @Inject constructor(
     private val database: TMDbDatabase,
     private val movieApi: MovieService,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : BasePagingRepository<Movie, SearchMoviePagingEntity>() {
 
     @OptIn(ExperimentalPagingApi::class)

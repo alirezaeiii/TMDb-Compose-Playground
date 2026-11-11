@@ -18,7 +18,7 @@ class MovieRemoteMediator(
     private val movieApi: MovieService,
     private val sortType: SortType,
     private val movieId: Int? = null,
-    context: Context
+    context: Context,
 ) : BaseRemoteMediator<MoviePagingEntity, SortType, MovieRemoteKeyEntity>(database, context) {
 
     override suspend fun fetchItems(page: Int): List<MoviePagingEntity> = when (sortType) {
