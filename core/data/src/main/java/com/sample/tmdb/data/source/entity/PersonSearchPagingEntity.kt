@@ -2,6 +2,7 @@ package com.sample.tmdb.data.source.entity
 
 import androidx.room.Entity
 import com.sample.tmdb.data.utils.toGender
+import com.sample.tmdb.domain.model.Media
 import com.sample.tmdb.domain.model.TrendingPerson
 
 @Entity(
@@ -15,6 +16,7 @@ class PersonSearchPagingEntity(
     val subtitle: String,
     val gender: Int,
     val profileUrl: String?,
+    val knownFor: List<Media>? = null,
     val itemOrder: Int = 0,
 )
 
@@ -26,4 +28,5 @@ fun PersonSearchPagingEntity.asDomainModel(): TrendingPerson = TrendingPerson(
     subtitle = subtitle,
     gender = gender.toGender(),
     profileUrl = profileUrl,
+    knownFor = knownFor,
 )

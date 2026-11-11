@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.domain.model.Genre
+import com.sample.tmdb.domain.model.Media
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SpokenLanguage
 import com.sample.tmdb.domain.model.TMDbImage
@@ -54,4 +55,11 @@ class DetailTypeConverters {
     @TypeConverter
     fun toTVShowList(json: String?): List<TVShow> =
         json?.let { gson.fromJson(it, object : TypeToken<List<TVShow>>() {}.type) } ?: emptyList()
+
+    @TypeConverter
+    fun fromMediaList(list: List<Media>?): String? = list?.let { gson.toJson(it) }
+
+    @TypeConverter
+    fun toMediaList(json: String?): List<Media>? =
+        json?.let { gson.fromJson(it, object : TypeToken<List<Media>>() {}.type) }
 }

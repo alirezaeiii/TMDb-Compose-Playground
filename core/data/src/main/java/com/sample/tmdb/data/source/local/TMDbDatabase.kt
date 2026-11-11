@@ -49,7 +49,7 @@ import com.sample.tmdb.data.source.entity.TVShowRemoteKeyEntity
         SearchMovieRemoteKeyEntity::class,
         SearchTVShowRemoteKeyEntity::class,
     ],
-    version = 6,
+    version = 7,
     exportSchema = true,
 )
 @TypeConverters(FeedTypeConverters::class, DetailTypeConverters::class)
@@ -381,5 +381,11 @@ val MIGRATION_5_6 = object : Migration(5, 6) {
             )
             """.trimIndent(),
         )
+    }
+}
+
+val MIGRATION_6_7 = object : Migration(6, 7) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE `PersonSearchPaging` ADD COLUMN `knownFor` TEXT")
     }
 }

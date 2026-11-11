@@ -80,5 +80,6 @@ fun TrendingPersonDTO.asSearchPagingDatabaseModel(query: String, order: Int): Pe
                 profilePath,
             )
         },
+        knownFor = knownFor?.asDomainModel(),
         itemOrder = order,
     )
