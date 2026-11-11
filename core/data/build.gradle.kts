@@ -60,6 +60,7 @@ dependencies {
     testImplementation(project(":test:common-test"))
     testImplementation(libs.junit)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
     testImplementation(libs.kotlinTest)
