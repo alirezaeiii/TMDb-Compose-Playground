@@ -7,7 +7,7 @@ import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.Gender
 import com.sample.tmdb.domain.model.TrendingPerson
-import com.sample.tmdb.domain.repository.BasePagingRepositoryImpl
+import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.model.asNavPerson
 import io.mockk.every
@@ -23,7 +23,7 @@ class PagingSearchPersonViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    private val repository = mockk<BasePagingRepositoryImpl<TrendingPerson>>()
+    private val repository = mockk<BasePagingRepository<TrendingPerson>>()
     private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true)
     private val person = TrendingPerson(10, "name", "subtitle", Gender.MALE, null)
 

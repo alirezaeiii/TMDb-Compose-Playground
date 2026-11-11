@@ -1,19 +1,24 @@
 package com.sample.tmdb.data.paging
 
+import android.content.Context
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.sample.tmdb.data.source.local.TMDbDatabase
-import java.io.IOException
+import com.sample.tmdb.data.utils.TMDbException
+import com.sample.tmdb.domain.R
 import retrofit2.HttpException
+import java.io.IOException
 
 private const val STARTING_PAGE_INDEX = 1
 
 @OptIn(ExperimentalPagingApi::class)
-abstract class BaseRemoteMediator<T : Any, K : Any, E : Any>(private val database: TMDbDatabase) :
-    RemoteMediator<Int, T>() {
+abstract class BaseRemoteMediator<T : Any, K : Any, E : Any>(
+    private val database: TMDbDatabase,
+    private val context: Context,
+) : RemoteMediator<Int, T>() {
 
     protected abstract suspend fun fetchItems(page: Int): List<T>
 
@@ -93,10 +98,10 @@ abstract class BaseRemoteMediator<T : Any, K : Any, E : Any>(private val databas
             MediatorResult.Success(
                 endOfPaginationReached = endOfPaginationReached,
             )
-        } catch (exception: IOException) {
-            MediatorResult.Error(exception)
-        } catch (exception: HttpException) {
-            MediatorResult.Error(exception)
+        } catch (_: IOException) {
+            MediatorResult.Error(TMDbException(context.getString(R.string.failed_loading_msg)))
+        } catch (_: HttpException) {
+            MediatorResult.Error(TMDbException(context.getString(R.string.failed_loading_msg)))
         }
     }
 

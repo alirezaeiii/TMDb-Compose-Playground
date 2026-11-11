@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.paging.movie
 
+import android.content.Context
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.paging.BaseRemoteMediator
 import com.sample.tmdb.data.response.asMoviePagingDatabaseModel
@@ -17,7 +18,8 @@ class MovieRemoteMediator(
     private val movieApi: MovieService,
     private val sortType: SortType,
     private val movieId: Int? = null,
-) : BaseRemoteMediator<MoviePagingEntity, SortType, MovieRemoteKeyEntity>(database) {
+    context: Context
+) : BaseRemoteMediator<MoviePagingEntity, SortType, MovieRemoteKeyEntity>(database, context) {
 
     override suspend fun fetchItems(page: Int): List<MoviePagingEntity> = when (sortType) {
         SortType.TRENDING -> movieApi.trendingMovies(page)

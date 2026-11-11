@@ -1,13 +1,17 @@
 package com.sample.tmdb.data.paging
 
+import android.content.Context
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.asPagingDatabaseModel
 import com.sample.tmdb.data.source.entity.PersonPagingEntity
 import com.sample.tmdb.data.source.entity.PersonRemoteKeyEntity
 import com.sample.tmdb.data.source.local.TMDbDatabase
 
-class PersonRemoteMediator(private val database: TMDbDatabase, private val personApi: PersonService) :
-    BaseRemoteMediator<PersonPagingEntity, Int, PersonRemoteKeyEntity>(database) {
+class PersonRemoteMediator(
+    private val database: TMDbDatabase,
+    private val personApi: PersonService,
+    context: Context,
+) : BaseRemoteMediator<PersonPagingEntity, Int, PersonRemoteKeyEntity>(database, context) {
 
     override suspend fun fetchItems(page: Int): List<PersonPagingEntity> =
         personApi.getTrendingPeople(page).results.asPagingDatabaseModel(page)

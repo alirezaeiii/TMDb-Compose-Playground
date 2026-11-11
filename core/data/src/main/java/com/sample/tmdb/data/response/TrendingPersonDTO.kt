@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.response
 
+import com.sample.tmdb.data.repository.BasePagingRepository.Companion.NETWORK_PAGE_SIZE
 import com.sample.tmdb.data.source.entity.PersonPagingEntity
 import com.sample.tmdb.data.source.entity.PersonSearchPagingEntity
 import com.sample.tmdb.data.utils.Constants.BASE_WIDTH_342_PATH
@@ -31,11 +32,11 @@ class TrendingPersonDTO(
 fun List<TrendingPersonDTO>.asDomainModel() = map(TrendingPersonDTO::asDomainModel)
 
 fun List<TrendingPersonDTO>.asPagingDatabaseModel(page: Int) = mapIndexed { index, person ->
-    person.asPagingDatabaseModel((page - 1) * 20 + index)
+    person.asPagingDatabaseModel((page - 1) * NETWORK_PAGE_SIZE + index)
 }
 
 fun List<TrendingPersonDTO>.asSearchPagingDatabaseModel(query: String, page: Int) = mapIndexed { index, person ->
-    person.asSearchPagingDatabaseModel(query, (page - 1) * 20 + index)
+    person.asSearchPagingDatabaseModel(query, (page - 1) * NETWORK_PAGE_SIZE + index)
 }
 
 fun TrendingPersonDTO.asDomainModel(): TrendingPerson = TrendingPerson(

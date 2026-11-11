@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.paging
 
+import android.content.Context
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.asSearchPagingDatabaseModel
 import com.sample.tmdb.data.source.entity.PersonSearchPagingEntity
@@ -10,7 +11,8 @@ class PersonSearchRemoteMediator(
     private val database: TMDbDatabase,
     private val personApi: PersonService,
     private val query: String,
-) : BaseRemoteMediator<PersonSearchPagingEntity, String, PersonSearchRemoteKeyEntity>(database) {
+    context: Context
+) : BaseRemoteMediator<PersonSearchPagingEntity, String, PersonSearchRemoteKeyEntity>(database, context) {
 
     override suspend fun fetchItems(page: Int): List<PersonSearchPagingEntity> =
         personApi.getTrendingPeople(query, page).results.asSearchPagingDatabaseModel(query, page)

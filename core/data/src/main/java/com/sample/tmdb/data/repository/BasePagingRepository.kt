@@ -1,4 +1,4 @@
-package com.sample.tmdb.domain.repository
+package com.sample.tmdb.data.repository
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -8,10 +8,11 @@ import androidx.paging.PagingSource
 import androidx.paging.RemoteMediator
 import androidx.paging.map
 import com.sample.tmdb.domain.model.SortType
+import com.sample.tmdb.domain.repository.PagingRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-abstract class BasePagingRepositoryImpl<T : Any, E : Any> : PagingRepository<T> {
+abstract class BasePagingRepository<T : Any, E : Any> : PagingRepository<T> {
 
     @OptIn(ExperimentalPagingApi::class)
     protected abstract fun createRemoteMediator(
@@ -40,6 +41,6 @@ abstract class BasePagingRepositoryImpl<T : Any, E : Any> : PagingRepository<T> 
     }
 
     companion object {
-        private const val NETWORK_PAGE_SIZE = 20
+        const val NETWORK_PAGE_SIZE = 20
     }
 }

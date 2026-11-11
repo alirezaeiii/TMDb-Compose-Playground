@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.paging.tvshow
 
+import android.content.Context
 import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.paging.BaseRemoteMediator
 import com.sample.tmdb.data.response.asTVShowPagingDatabaseModel
@@ -17,7 +18,8 @@ class TVShowRemoteMediator(
     private val tvShowApi: TVShowService,
     private val sortType: SortType,
     private val tvShowId: Int? = null,
-) : BaseRemoteMediator<TVShowPagingEntity, SortType, TVShowRemoteKeyEntity>(database) {
+    context: Context
+) : BaseRemoteMediator<TVShowPagingEntity, SortType, TVShowRemoteKeyEntity>(database, context) {
 
     override suspend fun fetchItems(page: Int): List<TVShowPagingEntity> = when (sortType) {
         SortType.TRENDING -> tvShowApi.trendingTVSeries(page)

@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.paging.movie
 
+import android.content.Context
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.paging.BaseRemoteMediator
 import com.sample.tmdb.data.response.asMovieSearchPagingDatabaseModel
@@ -11,7 +12,8 @@ class SearchMovieRemoteMediator(
     private val database: TMDbDatabase,
     private val movieApi: MovieService,
     private val query: String,
-) : BaseRemoteMediator<SearchMoviePagingEntity, String, SearchMovieRemoteKeyEntity>(database) {
+    context: Context
+) : BaseRemoteMediator<SearchMoviePagingEntity, String, SearchMovieRemoteKeyEntity>(database, context) {
 
     override suspend fun fetchItems(page: Int): List<SearchMoviePagingEntity> =
         movieApi.searchMovies(page, query).items.asMovieSearchPagingDatabaseModel(query, page)

@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.response
 
+import com.sample.tmdb.data.repository.BasePagingRepository.Companion.NETWORK_PAGE_SIZE
 import com.sample.tmdb.data.source.entity.MoviePagingEntity
 import com.sample.tmdb.data.source.entity.SearchMoviePagingEntity
 import com.sample.tmdb.data.source.entity.SearchTVShowPagingEntity
@@ -78,19 +79,19 @@ fun List<MovieResponse>.asMovieDomainModel() = map(MovieResponse::asMovieDomainM
 fun List<TVShowResponse>.asTVShowDomainModel() = map(TVShowResponse::asTVShowDomainModel)
 
 fun List<MovieResponse>.asMoviePagingDatabaseModel(sortType: SortType, page: Int) = mapIndexed { index, movie ->
-    movie.asPagingDatabaseModel(sortType, (page - 1) * 20 + index)
+    movie.asPagingDatabaseModel(sortType, (page - 1) * NETWORK_PAGE_SIZE + index)
 }
 
 fun List<TVShowResponse>.asTVShowPagingDatabaseModel(sortType: SortType, page: Int) = mapIndexed { index, tvShow ->
-    tvShow.asPagingDatabaseModel(sortType, (page - 1) * 20 + index)
+    tvShow.asPagingDatabaseModel(sortType, (page - 1) * NETWORK_PAGE_SIZE + index)
 }
 
 fun List<MovieResponse>.asMovieSearchPagingDatabaseModel(query: String, page: Int) = mapIndexed { index, movie ->
-    movie.asSearchPagingDatabaseModel(query, (page - 1) * 20 + index)
+    movie.asSearchPagingDatabaseModel(query, (page - 1) * NETWORK_PAGE_SIZE + index)
 }
 
 fun List<TVShowResponse>.asTVShowSearchPagingDatabaseModel(query: String, page: Int) = mapIndexed { index, tvShow ->
-    tvShow.asSearchPagingDatabaseModel(query, (page - 1) * 20 + index)
+    tvShow.asSearchPagingDatabaseModel(query, (page - 1) * NETWORK_PAGE_SIZE + index)
 }
 
 fun MovieResponse.asPagingDatabaseModel(sortType: SortType, order: Int): MoviePagingEntity = MoviePagingEntity(
