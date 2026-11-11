@@ -212,3 +212,174 @@ val MIGRATION_4_5 = object : Migration(4, 5) {
         )
     }
 }
+
+val MIGRATION_5_6 = object : Migration(5, 6) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `MoviePaging` (
+                `id` INTEGER NOT NULL,
+                `sortType` TEXT NOT NULL,
+                `overview` TEXT NOT NULL,
+                `releaseDate` TEXT,
+                `posterUrl` TEXT,
+                `backdropUrl` TEXT,
+                `name` TEXT NOT NULL,
+                `voteAverage` REAL NOT NULL,
+                `voteCount` INTEGER NOT NULL,
+                `itemOrder` INTEGER NOT NULL,
+                PRIMARY KEY(`sortType`, `id`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `TVShowPaging` (
+                `id` INTEGER NOT NULL,
+                `sortType` TEXT NOT NULL,
+                `overview` TEXT NOT NULL,
+                `releaseDate` TEXT,
+                `posterUrl` TEXT,
+                `backdropUrl` TEXT,
+                `name` TEXT NOT NULL,
+                `voteAverage` REAL NOT NULL,
+                `voteCount` INTEGER NOT NULL,
+                `itemOrder` INTEGER NOT NULL,
+                PRIMARY KEY(`sortType`, `id`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `PersonPaging` (
+                `id` INTEGER NOT NULL,
+                `name` TEXT NOT NULL,
+                `subtitle` TEXT NOT NULL,
+                `gender` INTEGER NOT NULL,
+                `profileUrl` TEXT,
+                `itemOrder` INTEGER NOT NULL,
+                PRIMARY KEY(`id`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `PersonSearchPaging` (
+                `queryStr` TEXT NOT NULL,
+                `id` INTEGER NOT NULL,
+                `name` TEXT NOT NULL,
+                `subtitle` TEXT NOT NULL,
+                `gender` INTEGER NOT NULL,
+                `profileUrl` TEXT,
+                `itemOrder` INTEGER NOT NULL,
+                PRIMARY KEY(`queryStr`, `id`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `SearchMoviePaging` (
+                `queryStr` TEXT NOT NULL,
+                `id` INTEGER NOT NULL,
+                `overview` TEXT NOT NULL,
+                `releaseDate` TEXT,
+                `posterUrl` TEXT,
+                `backdropUrl` TEXT,
+                `name` TEXT NOT NULL,
+                `voteAverage` REAL NOT NULL,
+                `voteCount` INTEGER NOT NULL,
+                `itemOrder` INTEGER NOT NULL,
+                PRIMARY KEY(`queryStr`, `id`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `SearchTVShowPaging` (
+                `queryStr` TEXT NOT NULL,
+                `id` INTEGER NOT NULL,
+                `overview` TEXT NOT NULL,
+                `releaseDate` TEXT,
+                `posterUrl` TEXT,
+                `backdropUrl` TEXT,
+                `name` TEXT NOT NULL,
+                `voteAverage` REAL NOT NULL,
+                `voteCount` INTEGER NOT NULL,
+                `itemOrder` INTEGER NOT NULL,
+                PRIMARY KEY(`queryStr`, `id`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `MovieRemoteKeys` (
+                `sortType` TEXT NOT NULL,
+                `prevKey` INTEGER,
+                `nextKey` INTEGER,
+                PRIMARY KEY(`sortType`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `TVShowRemoteKeys` (
+                `sortType` TEXT NOT NULL,
+                `prevKey` INTEGER,
+                `nextKey` INTEGER,
+                PRIMARY KEY(`sortType`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `PersonRemoteKeys` (
+                `id` INTEGER NOT NULL,
+                `prevKey` INTEGER,
+                `nextKey` INTEGER,
+                PRIMARY KEY(`id`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `PersonSearchRemoteKeys` (
+                `queryStr` TEXT NOT NULL,
+                `prevKey` INTEGER,
+                `nextKey` INTEGER,
+                PRIMARY KEY(`queryStr`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `SearchMovieRemoteKeys` (
+                `queryStr` TEXT NOT NULL,
+                `prevKey` INTEGER,
+                `nextKey` INTEGER,
+                PRIMARY KEY(`queryStr`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `SearchTVShowRemoteKeys` (
+                `queryStr` TEXT NOT NULL,
+                `prevKey` INTEGER,
+                `nextKey` INTEGER,
+                PRIMARY KEY(`queryStr`)
+            )
+            """.trimIndent(),
+        )
+    }
+}

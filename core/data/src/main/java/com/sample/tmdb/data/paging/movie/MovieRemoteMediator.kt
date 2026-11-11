@@ -37,9 +37,9 @@ class MovieRemoteMediator(
 
     override suspend fun getRemoteKey(id: SortType): MovieRemoteKeyEntity? = database.movieRemoteKeyDao.getRemoteKey(id)
 
-    override fun getPrevKey(remoteKey: MovieRemoteKeyEntity): Int? = remoteKey.nextKey
+    override fun getPrevKey(remoteKey: MovieRemoteKeyEntity): Int? = remoteKey.prevKey
 
-    override fun getNextKey(remoteKey: MovieRemoteKeyEntity): Int? = remoteKey.prevKey
+    override fun getNextKey(remoteKey: MovieRemoteKeyEntity): Int? = remoteKey.nextKey
 
     override fun createRemoteKeys(
         items: List<MoviePagingEntity>,
