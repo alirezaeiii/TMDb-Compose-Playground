@@ -4,6 +4,7 @@ import com.sample.tmdb.data.repository.LanguageRepositoryImpl
 import com.sample.tmdb.data.repository.PeopleRepository
 import com.sample.tmdb.data.repository.PersonPagingRepository
 import com.sample.tmdb.data.repository.PersonRepository
+import com.sample.tmdb.data.repository.PersonSearchPagingRepository
 import com.sample.tmdb.data.repository.ThemeRepositoryImpl
 import com.sample.tmdb.data.repository.movie.MovieFeedRepository
 import com.sample.tmdb.data.repository.movie.detail.BookmarkMovieDetailsRepositoryImpl
@@ -28,10 +29,9 @@ import com.sample.tmdb.domain.repository.BaseBookmarkRepository
 import com.sample.tmdb.domain.repository.BaseCacheRepository
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BaseFeedRepository
-import com.sample.tmdb.domain.repository.BasePagingRepository
-import com.sample.tmdb.domain.repository.BaseRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
 import com.sample.tmdb.domain.repository.LanguageRepository
+import com.sample.tmdb.domain.repository.PagingRepository
 import com.sample.tmdb.domain.repository.ThemeRepository
 import com.sample.tmdb.domain.utils.Search
 import com.sample.tmdb.domain.utils.TMDb
@@ -71,28 +71,28 @@ abstract class RepositoryModule {
     @Binds
     internal abstract fun bindMoviePagingRepository(
         moviesPagingRepository: MoviesPagingRepository,
-    ): BasePagingRepository<Movie>
+    ): PagingRepository<Movie>
 
     @Singleton
     @Search
     @Binds
     internal abstract fun bindSearchMoviesRepository(
         searchMoviesPagingRepository: SearchMoviesPagingRepository,
-    ): BasePagingRepository<Movie>
+    ): PagingRepository<Movie>
 
     @Singleton
     @TMDb
     @Binds
     internal abstract fun bindTVShowPagingRepository(
         tVSeriesPagingRepository: TVSeriesPagingRepository,
-    ): BasePagingRepository<TVShow>
+    ): PagingRepository<TVShow>
 
     @Singleton
     @Search
     @Binds
     internal abstract fun bindSearchTVShowRepository(
         searchTvSeriesPagingRepository: SearchTVSeriesPagingRepository,
-    ): BasePagingRepository<TVShow>
+    ): PagingRepository<TVShow>
 
     @Singleton
     @Binds
@@ -131,10 +131,18 @@ abstract class RepositoryModule {
     ): BaseCacheRepository<People, Unit, Unit>
 
     @Singleton
+    @TMDb
     @Binds
     internal abstract fun bindPersonPagingRepository(
         personPagingRepository: PersonPagingRepository,
-    ): BasePagingRepository<TrendingPerson>
+    ): PagingRepository<TrendingPerson>
+
+    @Singleton
+    @Search
+    @Binds
+    internal abstract fun bindPersonSearchPagingRepository(
+        personPagingRepository: PersonSearchPagingRepository,
+    ): PagingRepository<TrendingPerson>
 
     @Singleton
     @Binds

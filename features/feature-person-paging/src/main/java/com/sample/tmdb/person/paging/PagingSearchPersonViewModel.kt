@@ -5,7 +5,8 @@ import androidx.paging.PagingData
 import com.sample.tmdb.common.base.BaseSearchPagingViewModel
 import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.TrendingPerson
-import com.sample.tmdb.domain.repository.BasePagingRepository
+import com.sample.tmdb.domain.repository.PagingRepository
+import com.sample.tmdb.domain.utils.Search
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.model.asNavPerson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 
 @HiltViewModel
 class PagingSearchPersonViewModel @Inject constructor(
-    private val repository: BasePagingRepository<TrendingPerson>,
+    @Search private val repository: PagingRepository<TrendingPerson>,
     savedStateHandle: SavedStateHandle,
 ) : BaseSearchPagingViewModel<TrendingPerson>(savedStateHandle) {
 

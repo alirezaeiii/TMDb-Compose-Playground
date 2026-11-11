@@ -1,3 +1,3 @@
-package com.sample.tmdb.domain.utils
+package com.sample.tmdb.data.utils
 
 class TMDbException(message: String) : Exception(message)

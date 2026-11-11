@@ -38,12 +38,16 @@ fun <T : Any> PagingContent(
 
     val lazyItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
 
-    when (lazyItems.loadState.refresh) {
-        is LoadState.Loading -> {
+    when {
+        lazyItems.itemCount > 0 -> {
+            content(lazyItems)
+        }
+
+        lazyItems.loadState.refresh is LoadState.Loading -> {
             TMDbProgressBar()
         }
 
-        is LoadState.Error -> {
+        lazyItems.loadState.refresh is LoadState.Error -> {
             ErrorScreen(
                 message = getPagingErrorMsg(lazyItems.loadState.refresh),
                 modifier = Modifier.fillMaxSize(),
@@ -52,12 +56,13 @@ fun <T : Any> PagingContent(
         }
 
         else -> {
-            if (lazyItems.itemCount == 0) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    NoDataFoundAnimation(modifier = Modifier.size(200.dp))
-                }
-            } else {
-                content(lazyItems)
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                NoDataFoundAnimation(
+                    modifier = Modifier.size(200.dp),
+                )
             }
         }
     }
