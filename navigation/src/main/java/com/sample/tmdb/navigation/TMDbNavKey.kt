@@ -39,10 +39,16 @@ sealed interface TMDbNavKey : NavKey {
     data class Person(val trendingPerson: TrendingPerson) : TMDbNavKey
 
     @Serializable
-    data class PagingMovies(val sortType: SortType, val id: Int? = null) : TMDbNavKey
+    data class PagingMovies(val sortType: SortType) : TMDbNavKey
 
     @Serializable
-    data class PagingTvShows(val sortType: SortType, val id: Int? = null) : TMDbNavKey
+    data class PagingTvShows(val sortType: SortType) : TMDbNavKey
+
+    @Serializable
+    data class PagingSimilarMovies(val id: Int) : TMDbNavKey
+
+    @Serializable
+    data class PagingSimilarTvShows(val id: Int) : TMDbNavKey
 
     @Serializable
     data class Cast(val creditsJson: String) : TMDbNavKey

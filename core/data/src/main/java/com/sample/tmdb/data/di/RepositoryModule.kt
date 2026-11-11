@@ -12,11 +12,13 @@ import com.sample.tmdb.data.repository.movie.detail.BookmarkMovieRepository
 import com.sample.tmdb.data.repository.movie.detail.MovieDetailRepository
 import com.sample.tmdb.data.repository.movie.paging.MoviesPagingRepository
 import com.sample.tmdb.data.repository.movie.paging.SearchMoviesPagingRepository
+import com.sample.tmdb.data.repository.movie.paging.SimilarMoviesPagingRepository
 import com.sample.tmdb.data.repository.tvshow.TVShowFeedRepository
 import com.sample.tmdb.data.repository.tvshow.detail.BookmarkTVShowDetailsRepositoryImpl
 import com.sample.tmdb.data.repository.tvshow.detail.BookmarkTVShowRepository
 import com.sample.tmdb.data.repository.tvshow.detail.TVShowDetailRepository
 import com.sample.tmdb.data.repository.tvshow.paging.SearchTVSeriesPagingRepository
+import com.sample.tmdb.data.repository.tvshow.paging.SimilarTVSeriesPagingRepository
 import com.sample.tmdb.data.repository.tvshow.paging.TVSeriesPagingRepository
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.MovieDetails
@@ -34,6 +36,7 @@ import com.sample.tmdb.domain.repository.LanguageRepository
 import com.sample.tmdb.domain.repository.PagingRepository
 import com.sample.tmdb.domain.repository.ThemeRepository
 import com.sample.tmdb.domain.utils.Search
+import com.sample.tmdb.domain.utils.Similar
 import com.sample.tmdb.domain.utils.TMDb
 import dagger.Binds
 import dagger.Module
@@ -81,6 +84,13 @@ abstract class RepositoryModule {
     ): PagingRepository<Movie>
 
     @Singleton
+    @Similar
+    @Binds
+    internal abstract fun bindSimilarMoviesRepository(
+        similarMoviesPagingRepository: SimilarMoviesPagingRepository,
+    ): PagingRepository<Movie>
+
+    @Singleton
     @TMDb
     @Binds
     internal abstract fun bindTVShowPagingRepository(
@@ -92,6 +102,13 @@ abstract class RepositoryModule {
     @Binds
     internal abstract fun bindSearchTVShowRepository(
         searchTvSeriesPagingRepository: SearchTVSeriesPagingRepository,
+    ): PagingRepository<TVShow>
+
+    @Singleton
+    @Similar
+    @Binds
+    internal abstract fun bindSimilarTVShowRepository(
+        similarTVSeriesPagingRepository: SimilarTVSeriesPagingRepository,
     ): PagingRepository<TVShow>
 
     @Singleton

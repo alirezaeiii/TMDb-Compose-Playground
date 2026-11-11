@@ -9,7 +9,6 @@ enum class SortType {
     UPCOMING,
     HIGHEST_RATED,
     DISCOVER,
-    SIMILAR,
     APPLE_TV,
     NETFLIX,
     AMAZON_PRIME,
@@ -23,7 +22,6 @@ fun SortType.asDomainModel(): DomainSortType = when (this) {
     SortType.UPCOMING -> DomainSortType.UPCOMING
     SortType.HIGHEST_RATED -> DomainSortType.HIGHEST_RATED
     SortType.DISCOVER -> DomainSortType.DISCOVER
-    SortType.SIMILAR -> DomainSortType.SIMILAR
     SortType.APPLE_TV -> DomainSortType.APPLE_TV
     SortType.NETFLIX -> DomainSortType.NETFLIX
     SortType.AMAZON_PRIME -> DomainSortType.AMAZON_PRIME
@@ -37,7 +35,6 @@ fun DomainSortType.asNavSortType(): SortType = when (this) {
     DomainSortType.UPCOMING -> SortType.UPCOMING
     DomainSortType.HIGHEST_RATED -> SortType.HIGHEST_RATED
     DomainSortType.DISCOVER -> SortType.DISCOVER
-    DomainSortType.SIMILAR -> SortType.SIMILAR
     DomainSortType.APPLE_TV -> SortType.APPLE_TV
     DomainSortType.NETFLIX -> SortType.NETFLIX
     DomainSortType.AMAZON_PRIME -> SortType.AMAZON_PRIME

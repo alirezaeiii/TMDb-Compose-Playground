@@ -71,7 +71,6 @@ class TVShowRemoteMediatorTest : BaseRemoteMediatorTest() {
         SortType.NOW_PLAYING -> api.airingTodayTVSeries(1)
         SortType.UPCOMING -> api.onTheAirTVSeries(1)
         SortType.HIGHEST_RATED -> api.topRatedTVSeries(1)
-        SortType.SIMILAR -> api.fetchSimilarTVSeries(1, 1)
         SortType.APPLE_TV -> api.providerTVSeries(APPLE_TV_PROVIDER_ID, 1)
         SortType.NETFLIX -> api.providerTVSeries(NETFLIX_PROVIDER_ID, 1)
         SortType.AMAZON_PRIME -> api.providerTVSeries(AMAZON_PRIME_PROVIDER_ID, 1)
@@ -86,7 +85,6 @@ class TVShowRemoteMediatorTest : BaseRemoteMediatorTest() {
                 database = database,
                 tvShowApi = api,
                 sortType = sortType,
-                tvShowId = if (sortType == SortType.SIMILAR) 1 else null,
                 context = context,
             )
             val pagingState = PagingState<Int, TVShowPagingEntity>(

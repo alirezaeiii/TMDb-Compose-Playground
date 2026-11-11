@@ -21,6 +21,8 @@ import com.sample.tmdb.data.source.local.SearchMoviePagingDao
 import com.sample.tmdb.data.source.local.SearchMovieRemoteKeyDao
 import com.sample.tmdb.data.source.local.SearchTVShowPagingDao
 import com.sample.tmdb.data.source.local.SearchTVShowRemoteKeyDao
+import com.sample.tmdb.data.source.local.SimilarMovieRemoteKeyDao
+import com.sample.tmdb.data.source.local.SimilarTVShowRemoteKeyDao
 import com.sample.tmdb.data.source.local.TMDbDatabase
 import com.sample.tmdb.data.source.local.TVShowDao
 import com.sample.tmdb.data.source.local.TVShowDetailDao
@@ -124,4 +126,12 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideSearchTVShowRemoteKeyDao(db: TMDbDatabase): SearchTVShowRemoteKeyDao = db.searchTVShowRemoteKeyDao
+
+    @Provides
+    @Singleton
+    fun provideSimilarMovieRemoteKeyDao(db: TMDbDatabase): SimilarMovieRemoteKeyDao = db.similarMovieRemoteKeyDao
+
+    @Provides
+    @Singleton
+    fun provideSimilarTVShowRemoteKeyDao(db: TMDbDatabase): SimilarTVShowRemoteKeyDao = db.similarTVShowRemoteKeyDao
 }

@@ -20,6 +20,10 @@ import com.sample.tmdb.data.source.entity.SearchMoviePagingEntity
 import com.sample.tmdb.data.source.entity.SearchMovieRemoteKeyEntity
 import com.sample.tmdb.data.source.entity.SearchTVShowPagingEntity
 import com.sample.tmdb.data.source.entity.SearchTVShowRemoteKeyEntity
+import com.sample.tmdb.data.source.entity.SimilarMoviePagingEntity
+import com.sample.tmdb.data.source.entity.SimilarMovieRemoteKeyEntity
+import com.sample.tmdb.data.source.entity.SimilarTVShowPagingEntity
+import com.sample.tmdb.data.source.entity.SimilarTVShowRemoteKeyEntity
 import com.sample.tmdb.data.source.entity.TVShowDetailEntity
 import com.sample.tmdb.data.source.entity.TVShowEntity
 import com.sample.tmdb.data.source.entity.TVShowFeedEntity
@@ -42,12 +46,16 @@ import com.sample.tmdb.data.source.entity.TVShowRemoteKeyEntity
         PersonSearchPagingEntity::class,
         SearchMoviePagingEntity::class,
         SearchTVShowPagingEntity::class,
+        SimilarMoviePagingEntity::class,
+        SimilarTVShowPagingEntity::class,
         MovieRemoteKeyEntity::class,
         TVShowRemoteKeyEntity::class,
         PersonRemoteKeyEntity::class,
         PersonSearchRemoteKeyEntity::class,
         SearchMovieRemoteKeyEntity::class,
         SearchTVShowRemoteKeyEntity::class,
+        SimilarMovieRemoteKeyEntity::class,
+        SimilarTVShowRemoteKeyEntity::class,
     ],
     version = 7,
     exportSchema = true,
@@ -68,12 +76,16 @@ abstract class TMDbDatabase : RoomDatabase() {
     abstract val searchMoviesPagingDao: SearchMoviePagingDao
     abstract val searchTVShowPagingDao: SearchTVShowPagingDao
     abstract val personSearchPagingDao: PersonSearchPagingDao
+    abstract val similarMoviePagingDao: SimilarMoviePagingDao
+    abstract val similarTVShowPagingDao: SimilarTVShowPagingDao
     abstract val movieRemoteKeyDao: MovieRemoteKeyDao
     abstract val tvShowRemoteKeyDao: TVShowRemoteKeyDao
     abstract val personRemoteKeyDao: PersonRemoteKeyDao
     abstract val searchMovieRemoteKeyDao: SearchMovieRemoteKeyDao
     abstract val searchTVShowRemoteKeyDao: SearchTVShowRemoteKeyDao
     abstract val personSearchRemoteKeyDao: PersonSearchRemoteKeyDao
+    abstract val similarMovieRemoteKeyDao: SimilarMovieRemoteKeyDao
+    abstract val similarTVShowRemoteKeyDao: SimilarTVShowRemoteKeyDao
 }
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
@@ -387,5 +399,63 @@ val MIGRATION_5_6 = object : Migration(5, 6) {
 val MIGRATION_6_7 = object : Migration(6, 7) {
     override fun migrate(db: SupportSQLiteDatabase) {
         db.execSQL("ALTER TABLE `PersonSearchPaging` ADD COLUMN `knownFor` TEXT")
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `SimilarMoviePaging` (
+                `movieId` INTEGER NOT NULL,
+                `id` INTEGER NOT NULL,
+                `overview` TEXT NOT NULL,
+                `releaseDate` TEXT,
+                `posterUrl` TEXT,
+                `backdropUrl` TEXT,
+                `name` TEXT NOT NULL,
+                `voteAverage` REAL NOT NULL,
+                `voteCount` INTEGER NOT NULL,
+                `itemOrder` INTEGER NOT NULL,
+                PRIMARY KEY(`movieId`, `id`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `SimilarTVShowPaging` (
+                `tvShowId` INTEGER NOT NULL,
+                `id` INTEGER NOT NULL,
+                `overview` TEXT NOT NULL,
+                `releaseDate` TEXT,
+                `posterUrl` TEXT,
+                `backdropUrl` TEXT,
+                `name` TEXT NOT NULL,
+                `voteAverage` REAL NOT NULL,
+                `voteCount` INTEGER NOT NULL,
+                `itemOrder` INTEGER NOT NULL,
+                PRIMARY KEY(`tvShowId`, `id`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `SimilarMovieRemoteKeys` (
+                `id` INTEGER NOT NULL,
+                `prevKey` INTEGER,
+                `nextKey` INTEGER,
+                PRIMARY KEY(`id`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `SimilarTVShowRemoteKeys` (
+                `id` INTEGER NOT NULL,
+                `prevKey` INTEGER,
+                `nextKey` INTEGER,
+                PRIMARY KEY(`id`)
+            )
+            """.trimIndent(),
+        )
     }
 }

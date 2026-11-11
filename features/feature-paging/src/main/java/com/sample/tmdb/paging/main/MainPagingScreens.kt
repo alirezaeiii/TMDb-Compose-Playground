@@ -52,6 +52,34 @@ fun TVShowPagingScreen(
 }
 
 @Composable
+fun SimilarMoviePagingScreen(
+    viewModel: SimilarMoviePagingViewModel,
+    onNavigate: (TMDbNavKey) -> Unit,
+    onNavigateUp: () -> Unit,
+) {
+    PagingScreen(
+        viewModel = viewModel,
+        onNavigate = onNavigate,
+        onNavigateUp = onNavigateUp,
+        title = stringResource(R.string.similar_items, stringResource(commonR.string.movies)),
+    )
+}
+
+@Composable
+fun SimilarTvShowPagingScreen(
+    viewModel: SimilarTvShowPagingViewModel,
+    onNavigate: (TMDbNavKey) -> Unit,
+    onNavigateUp: () -> Unit,
+) {
+    PagingScreen(
+        viewModel = viewModel,
+        onNavigate = onNavigate,
+        onNavigateUp = onNavigateUp,
+        title = stringResource(R.string.similar_items, stringResource(commonR.string.tv_series)),
+    )
+}
+
+@Composable
 private fun pagingTitle(sortType: SortType, itemType: Int, upcomingRes: Int, nowPlayingRes: Int): String {
     val titleRes = when (sortType) {
         SortType.TRENDING -> R.string.trending
@@ -60,7 +88,6 @@ private fun pagingTitle(sortType: SortType, itemType: Int, upcomingRes: Int, now
         SortType.NOW_PLAYING -> nowPlayingRes
         SortType.MOST_POPULAR -> R.string.popular
         SortType.HIGHEST_RATED -> R.string.highest_rate
-        SortType.SIMILAR -> R.string.similar_items
         SortType.APPLE_TV -> R.string.apple_tv_items
         SortType.NETFLIX -> R.string.netflix_items
         SortType.AMAZON_PRIME -> R.string.amazon_prime_items
