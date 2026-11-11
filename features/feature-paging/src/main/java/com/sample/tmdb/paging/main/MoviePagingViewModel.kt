@@ -3,7 +3,7 @@ package com.sample.tmdb.paging.main
 import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
-import com.sample.tmdb.domain.repository.BasePagingRepository
+import com.sample.tmdb.domain.repository.PagingRepository
 import com.sample.tmdb.domain.utils.TMDb
 import com.sample.tmdb.navigation.TMDbNavKey
 import dagger.assisted.Assisted
@@ -13,7 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel(assistedFactory = MoviePagingViewModel.Factory::class)
 open class MoviePagingViewModel @AssistedInject constructor(
-    @TMDb repository: BasePagingRepository<Movie>,
+    @TMDb repository: PagingRepository<Movie>,
     @Assisted id: Int? = null,
     @Assisted type: SortType,
 ) : BaseMainPagingViewModel<Movie>(repository, id, type) {

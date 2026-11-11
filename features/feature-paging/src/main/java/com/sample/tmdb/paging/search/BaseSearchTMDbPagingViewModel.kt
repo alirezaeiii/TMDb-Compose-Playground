@@ -5,12 +5,12 @@ import androidx.paging.PagingData
 import com.sample.tmdb.common.base.BaseSearchPagingViewModel
 import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.TMDbItem
-import com.sample.tmdb.domain.repository.BasePagingRepository
+import com.sample.tmdb.domain.repository.PagingRepository
 import com.sample.tmdb.navigation.utils.toDetailNavKey
 import kotlinx.coroutines.flow.Flow
 
 open class BaseSearchTMDbPagingViewModel<T : TMDbItem>(
-    private val repository: BasePagingRepository<T>,
+    private val repository: PagingRepository<T>,
     savedStateHandle: SavedStateHandle,
 ) : BaseSearchPagingViewModel<T>(savedStateHandle) {
 

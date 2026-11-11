@@ -6,7 +6,8 @@ import androidx.paging.cachedIn
 import com.sample.tmdb.common.base.BasePagingViewModel
 import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.TrendingPerson
-import com.sample.tmdb.domain.repository.BasePagingRepository
+import com.sample.tmdb.domain.repository.PagingRepository
+import com.sample.tmdb.domain.utils.TMDb
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.model.asNavPerson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
 @HiltViewModel
-class PersonPagingViewModel @Inject constructor(repository: BasePagingRepository<TrendingPerson>) :
+class PersonPagingViewModel @Inject constructor(@TMDb repository: PagingRepository<TrendingPerson>) :
     BasePagingViewModel<TrendingPerson>() {
 
     override val pagingDataFlow: Flow<PagingData<TrendingPerson>> =

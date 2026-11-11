@@ -1,5 +1,7 @@
 package com.sample.tmdb.data.response
 
+import com.sample.tmdb.data.source.entity.PersonPagingEntity
+import com.sample.tmdb.data.source.entity.PersonSearchPagingEntity
 import com.sample.tmdb.data.utils.Constants.BASE_WIDTH_342_PATH
 import com.sample.tmdb.data.utils.Constants.GENDER
 import com.sample.tmdb.data.utils.Constants.ID
@@ -28,6 +30,14 @@ class TrendingPersonDTO(
 
 fun List<TrendingPersonDTO>.asDomainModel() = map(TrendingPersonDTO::asDomainModel)
 
+fun List<TrendingPersonDTO>.asPagingDatabaseModel(page: Int) = mapIndexed { index, person ->
+    person.asPagingDatabaseModel((page - 1) * 20 + index)
+}
+
+fun List<TrendingPersonDTO>.asSearchPagingDatabaseModel(query: String, page: Int) = mapIndexed { index, person ->
+    person.asSearchPagingDatabaseModel(query, (page - 1) * 20 + index)
+}
+
 fun TrendingPersonDTO.asDomainModel(): TrendingPerson = TrendingPerson(
     id = id,
     name = name,
@@ -41,3 +51,33 @@ fun TrendingPersonDTO.asDomainModel(): TrendingPerson = TrendingPerson(
     },
     knownFor = knownFor?.asDomainModel(),
 )
+
+fun TrendingPersonDTO.asPagingDatabaseModel(order: Int): PersonPagingEntity = PersonPagingEntity(
+    id = id,
+    name = name,
+    subtitle = originalName,
+    gender = gender,
+    profileUrl = profilePath?.let { profilePath ->
+        String.format(
+            BASE_WIDTH_342_PATH,
+            profilePath,
+        )
+    },
+    itemOrder = order,
+)
+
+fun TrendingPersonDTO.asSearchPagingDatabaseModel(query: String, order: Int): PersonSearchPagingEntity =
+    PersonSearchPagingEntity(
+        queryStr = query,
+        id = id,
+        name = name,
+        subtitle = originalName,
+        gender = gender,
+        profileUrl = profilePath?.let { profilePath ->
+            String.format(
+                BASE_WIDTH_342_PATH,
+                profilePath,
+            )
+        },
+        itemOrder = order,
+    )

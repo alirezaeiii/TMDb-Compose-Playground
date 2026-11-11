@@ -8,11 +8,23 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.sample.tmdb.data.source.entity.MovieDetailEntity
 import com.sample.tmdb.data.source.entity.MovieEntity
 import com.sample.tmdb.data.source.entity.MovieFeedEntity
+import com.sample.tmdb.data.source.entity.MoviePagingEntity
+import com.sample.tmdb.data.source.entity.MovieRemoteKeyEntity
 import com.sample.tmdb.data.source.entity.PersonEntity
 import com.sample.tmdb.data.source.entity.PersonFeedEntity
+import com.sample.tmdb.data.source.entity.PersonPagingEntity
+import com.sample.tmdb.data.source.entity.PersonRemoteKeyEntity
+import com.sample.tmdb.data.source.entity.PersonSearchPagingEntity
+import com.sample.tmdb.data.source.entity.PersonSearchRemoteKeyEntity
+import com.sample.tmdb.data.source.entity.SearchMoviePagingEntity
+import com.sample.tmdb.data.source.entity.SearchMovieRemoteKeyEntity
+import com.sample.tmdb.data.source.entity.SearchTVShowPagingEntity
+import com.sample.tmdb.data.source.entity.SearchTVShowRemoteKeyEntity
 import com.sample.tmdb.data.source.entity.TVShowDetailEntity
 import com.sample.tmdb.data.source.entity.TVShowEntity
 import com.sample.tmdb.data.source.entity.TVShowFeedEntity
+import com.sample.tmdb.data.source.entity.TVShowPagingEntity
+import com.sample.tmdb.data.source.entity.TVShowRemoteKeyEntity
 
 @Database(
     entities = [
@@ -24,8 +36,20 @@ import com.sample.tmdb.data.source.entity.TVShowFeedEntity
         PersonEntity::class,
         MovieDetailEntity::class,
         TVShowDetailEntity::class,
+        MoviePagingEntity::class,
+        TVShowPagingEntity::class,
+        PersonPagingEntity::class,
+        PersonSearchPagingEntity::class,
+        SearchMoviePagingEntity::class,
+        SearchTVShowPagingEntity::class,
+        MovieRemoteKeyEntity::class,
+        TVShowRemoteKeyEntity::class,
+        PersonRemoteKeyEntity::class,
+        PersonSearchRemoteKeyEntity::class,
+        SearchMovieRemoteKeyEntity::class,
+        SearchTVShowRemoteKeyEntity::class,
     ],
-    version = 5,
+    version = 6,
     exportSchema = true,
 )
 @TypeConverters(FeedTypeConverters::class, DetailTypeConverters::class)
@@ -38,6 +62,18 @@ abstract class TMDbDatabase : RoomDatabase() {
     abstract val personDao: PersonDao
     abstract val movieDetailDao: MovieDetailDao
     abstract val tvShowDetailDao: TVShowDetailDao
+    abstract val moviePagingDao: MoviePagingDao
+    abstract val tvShowPagingDao: TVShowPagingDao
+    abstract val personPagingDao: PersonPagingDao
+    abstract val searchMoviesPagingDao: SearchMoviePagingDao
+    abstract val searchTVShowPagingDao: SearchTVShowPagingDao
+    abstract val personSearchPagingDao: PersonSearchPagingDao
+    abstract val movieRemoteKeyDao: MovieRemoteKeyDao
+    abstract val tvShowRemoteKeyDao: TVShowRemoteKeyDao
+    abstract val personRemoteKeyDao: PersonRemoteKeyDao
+    abstract val searchMovieRemoteKeyDao: SearchMovieRemoteKeyDao
+    abstract val searchTVShowRemoteKeyDao: SearchTVShowRemoteKeyDao
+    abstract val personSearchRemoteKeyDao: PersonSearchRemoteKeyDao
 }
 
 val MIGRATION_1_2 = object : Migration(1, 2) {

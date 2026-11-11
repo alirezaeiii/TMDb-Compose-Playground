@@ -7,6 +7,7 @@ import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.PeopleDTO
 import com.sample.tmdb.data.response.TrendingPersonDTO
 import com.sample.tmdb.data.response.asDomainModel
+import com.sample.tmdb.data.source.entity.asFeedDatabaseModel
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
@@ -36,41 +37,41 @@ class PersonPagingSourceTest {
     fun pageKeyedShowPagingSource() = runTest {
         `when`(api.getTrendingPeople(1)).thenReturn(people)
         val dataSource = PersonPagingSource(api, context)
+        val expectedEntities = people.asDomainModel().result.mapIndexed { index, person ->
+            person.asFeedDatabaseModel(index)
+        }
 
-        assertEquals(
-            expected = Page(
-                data = people.asDomainModel().result,
-                prevKey = null,
-                nextKey = 2,
+        val actual = dataSource.load(
+            PagingSource.LoadParams.Refresh(
+                key = null,
+                loadSize = 2,
+                placeholdersEnabled = false,
             ),
-            actual = dataSource.load(
-                PagingSource.LoadParams.Refresh(
-                    key = null,
-                    loadSize = 2,
-                    placeholdersEnabled = false,
-                ),
-            ),
-        )
+        ) as Page
+
+        assertEquals(expectedEntities.map { it.id }, actual.data.map { it.id })
+        assertEquals(null, actual.prevKey)
+        assertEquals(2, actual.nextKey)
     }
 
     @Test
     fun pageKeyedShowPagingSourceWithQuery() = runTest {
         `when`(api.getTrendingPeople("", 1)).thenReturn(people)
         val dataSource = PersonPagingSource(api, context, "")
+        val expectedEntities = people.asDomainModel().result.mapIndexed { index, person ->
+            person.asFeedDatabaseModel(index)
+        }
 
-        assertEquals(
-            expected = Page(
-                data = people.asDomainModel().result,
-                prevKey = null,
-                nextKey = 2,
+        val actual = dataSource.load(
+            PagingSource.LoadParams.Refresh(
+                key = null,
+                loadSize = 2,
+                placeholdersEnabled = false,
             ),
-            actual = dataSource.load(
-                PagingSource.LoadParams.Refresh(
-                    key = null,
-                    loadSize = 2,
-                    placeholdersEnabled = false,
-                ),
-            ),
-        )
+        ) as Page
+
+        assertEquals(expectedEntities.map { it.id }, actual.data.map { it.id })
+        assertEquals(null, actual.prevKey)
+        assertEquals(2, actual.nextKey)
     }
 }

@@ -50,7 +50,7 @@ class SearchTVSeriesPagingSourceTest : BaseSearchPagingSourceTest<TVShow, TVShow
 
     override suspend fun getApiCall(): NetworkTMDbWrapper<TVShowResponse> = api.searchTVSeries(1, "")
 
-    override fun getPagingDataSource(): BasePagingSource<TVShow> = SearchTVSeriesPagingSource(context, api, "")
+    override fun getPagingDataSource(): BasePagingSource<TVShow> = SearchTVSeriesRemoteMediator(context, api, "")
 
     @Test
     fun pageKeyedShowPagingSource() = runTest {

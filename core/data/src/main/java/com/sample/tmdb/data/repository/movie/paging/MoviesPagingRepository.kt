@@ -1,22 +1,34 @@
 package com.sample.tmdb.data.repository.movie.paging
 
-import android.content.Context
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.PagingSource
+import androidx.paging.RemoteMediator
 import com.sample.tmdb.data.network.MovieService
-import com.sample.tmdb.data.paging.movie.MoviePagingSource
+import com.sample.tmdb.data.paging.movie.MovieRemoteMediator
+import com.sample.tmdb.data.source.entity.MoviePagingEntity
+import com.sample.tmdb.data.source.entity.asDomainModel
+import com.sample.tmdb.data.source.local.TMDbDatabase
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
-import com.sample.tmdb.domain.paging.BasePagingSource
-import com.sample.tmdb.domain.repository.BasePagingRepository
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.sample.tmdb.domain.repository.BasePagingRepositoryImpl
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class MoviesPagingRepository @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val database: TMDbDatabase,
     private val movieApi: MovieService,
-) : BasePagingRepository<Movie>() {
+) : BasePagingRepositoryImpl<Movie, MoviePagingEntity>() {
 
-    override fun createPagingSource(query: String?, id: Int?, type: SortType?): BasePagingSource<Movie> =
-        MoviePagingSource(context, movieApi, type!!, id)
+    @OptIn(ExperimentalPagingApi::class)
+    override fun createRemoteMediator(
+        query: String?,
+        id: Int?,
+        type: SortType?,
+    ): RemoteMediator<Int, MoviePagingEntity> = MovieRemoteMediator(database, movieApi, type!!, id)
+
+    override fun createPagingSource(query: String?, id: Int?, type: SortType?): PagingSource<Int, MoviePagingEntity> =
+        database.moviePagingDao.getPagingMovies(type!!)
+
+    override fun mapEntityToDomain(entity: MoviePagingEntity): Movie = entity.asDomainModel()
 }

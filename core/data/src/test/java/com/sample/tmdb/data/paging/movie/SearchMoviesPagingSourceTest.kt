@@ -50,7 +50,7 @@ class SearchMoviesPagingSourceTest : BaseSearchPagingSourceTest<Movie, MovieResp
 
     override suspend fun getApiCall(): NetworkTMDbWrapper<MovieResponse> = api.searchMovies(1, "")
 
-    override fun getPagingDataSource(): BasePagingSource<Movie> = SearchMoviesPagingSource(context, api, "")
+    override fun getPagingDataSource(): BasePagingSource<Movie> = SearchMovieRemoteMediator(context, api, "")
 
     @Test
     fun pageKeyedShowPagingSource() = runTest {
