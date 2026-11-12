@@ -1,13 +1,11 @@
 package com.sample.tmdb.feed.utils
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.util.lerp
 import kotlin.math.absoluteValue
 
-@OptIn(ExperimentalFoundationApi::class)
 fun Modifier.pagerTransition(pagerState: PagerState, page: Int) = graphicsLayer {
     val pageOffset = pagerState.calculatePageOffset(page)
 
@@ -28,5 +26,4 @@ fun Modifier.pagerTransition(pagerState: PagerState, page: Int) = graphicsLayer 
         )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 private fun PagerState.calculatePageOffset(page: Int) = ((currentPage - page) + currentPageOffsetFraction).absoluteValue

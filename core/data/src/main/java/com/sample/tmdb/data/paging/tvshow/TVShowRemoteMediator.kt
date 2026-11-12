@@ -22,30 +22,15 @@ class TVShowRemoteMediator(
 
     override suspend fun fetchItems(page: Int): List<TVShowPagingEntity> = when (sortType) {
         SortType.TRENDING -> tvShowApi.trendingTVSeries(page)
-
         SortType.DISCOVER -> tvShowApi.discoverTVSeries(page)
-
         SortType.MOST_POPULAR -> tvShowApi.popularTVSeries(page)
-
         SortType.NOW_PLAYING -> tvShowApi.airingTodayTVSeries(page)
-
         SortType.UPCOMING -> tvShowApi.onTheAirTVSeries(page)
-
         SortType.HIGHEST_RATED -> tvShowApi.topRatedTVSeries(page)
-
         SortType.APPLE_TV -> tvShowApi.providerTVSeries(APPLE_TV_PROVIDER_ID, page)
-
         SortType.NETFLIX -> tvShowApi.providerTVSeries(NETFLIX_PROVIDER_ID, page)
-
-        SortType.AMAZON_PRIME -> tvShowApi.providerTVSeries(
-            AMAZON_PRIME_PROVIDER_ID,
-            page,
-        )
-
-        SortType.GOOGLE_PLAY -> tvShowApi.providerTVSeries(
-            GOOGLE_PLAY_PROVIDER_ID,
-            page,
-        )
+        SortType.AMAZON_PRIME -> tvShowApi.providerTVSeries(AMAZON_PRIME_PROVIDER_ID, page)
+        SortType.GOOGLE_PLAY -> tvShowApi.providerTVSeries(GOOGLE_PLAY_PROVIDER_ID, page)
     }.items.asTVShowPagingDatabaseModel(sortType, page)
 
     override fun getRemoteKeyId(item: TVShowPagingEntity): SortType = sortType
