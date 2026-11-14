@@ -9,18 +9,21 @@ import com.sample.tmdb.data.source.entity.TVShowFeedEntity
 
 @Dao
 interface TVShowFeedDao {
-    @Query("SELECT * FROM TVShowFeed ORDER BY itemOrder ASC")
-    suspend fun getFeed(): List<TVShowFeedEntity>
+    @Query("SELECT * FROM TVShowFeed WHERE genres = :genresKey ORDER BY itemOrder ASC")
+    suspend fun getFeed(genresKey: String = ""): List<TVShowFeedEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(feeds: List<TVShowFeedEntity>)
+
+    @Query("DELETE FROM TVShowFeed WHERE genres = :genresKey")
+    suspend fun deleteByGenres(genresKey: String = "")
 
     @Query("DELETE FROM TVShowFeed")
     suspend fun deleteAll()
 
     @Transaction
-    suspend fun deleteAndInsert(feeds: List<TVShowFeedEntity>) {
-        deleteAll()
+    suspend fun deleteAndInsert(genresKey: String = "", feeds: List<TVShowFeedEntity>) {
+        deleteByGenres(genresKey)
         insertAll(feeds)
     }
 }

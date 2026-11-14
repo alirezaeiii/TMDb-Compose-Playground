@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.network
 
+import com.sample.tmdb.data.response.GenresDTO
 import com.sample.tmdb.data.response.ImagesResponse
 import com.sample.tmdb.data.response.MovieDetailResponse
 import com.sample.tmdb.data.response.MovieResponse
@@ -12,27 +13,46 @@ import retrofit2.http.Query
 interface MovieService {
 
     @GET("3/trending/movie/day")
-    suspend fun trendingMovies(@Query("page") page: Int = 1): NetworkTMDbWrapper<MovieResponse>
+    suspend fun trendingMovies(
+        @Query("page") page: Int = 1,
+        @Query("genre_ids") genres: String? = null,
+    ): NetworkTMDbWrapper<MovieResponse>
 
     @GET("3/movie/popular")
-    suspend fun popularMovies(@Query("page") page: Int = 1): NetworkTMDbWrapper<MovieResponse>
+    suspend fun popularMovies(
+        @Query("page") page: Int = 1,
+        @Query("genre_ids") genres: String? = null,
+    ): NetworkTMDbWrapper<MovieResponse>
 
     @GET("3/movie/now_playing")
-    suspend fun nowPlayingMovies(@Query("page") page: Int = 1): NetworkTMDbWrapper<MovieResponse>
+    suspend fun nowPlayingMovies(
+        @Query("page") page: Int = 1,
+        @Query("genre_ids") genres: String? = null,
+    ): NetworkTMDbWrapper<MovieResponse>
 
     @GET("3/movie/upcoming")
-    suspend fun upcomingMovies(@Query("page") page: Int = 1): NetworkTMDbWrapper<MovieResponse>
+    suspend fun upcomingMovies(
+        @Query("page") page: Int = 1,
+        @Query("genre_ids") genres: String? = null,
+    ): NetworkTMDbWrapper<MovieResponse>
 
     @GET("3/movie/top_rated")
-    suspend fun topRatedMovies(@Query("page") page: Int = 1): NetworkTMDbWrapper<MovieResponse>
+    suspend fun topRatedMovies(
+        @Query("page") page: Int = 1,
+        @Query("genre_ids") genres: String? = null,
+    ): NetworkTMDbWrapper<MovieResponse>
 
     @GET("3/discover/movie")
-    suspend fun discoverMovies(@Query("page") page: Int = 1): NetworkTMDbWrapper<MovieResponse>
+    suspend fun discoverMovies(
+        @Query("page") page: Int = 1,
+        @Query("with_genres") genres: String? = null,
+    ): NetworkTMDbWrapper<MovieResponse>
 
     @GET("3/discover/movie")
     suspend fun providerMovies(
         @Query("with_watch_providers") id: Int,
         @Query("page") page: Int = 1,
+        @Query("with_genres") genres: String? = null,
         @Query("watch_region") region: String = "US",
     ): NetworkTMDbWrapper<MovieResponse>
 
@@ -53,4 +73,7 @@ interface MovieService {
         @Path("movieId") movieId: Int,
         @Query("page") page: Int = 1,
     ): NetworkTMDbWrapper<MovieResponse>
+
+    @GET("/3/genre/movie/list")
+    suspend fun fetchGenres(): GenresDTO
 }

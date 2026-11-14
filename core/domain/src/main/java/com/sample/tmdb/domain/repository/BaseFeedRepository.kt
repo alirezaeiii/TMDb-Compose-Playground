@@ -3,6 +3,7 @@ package com.sample.tmdb.domain.repository
 import android.content.Context
 import com.sample.tmdb.domain.R
 import com.sample.tmdb.domain.model.FeedWrapper
+import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TMDbItem
 import kotlinx.coroutines.CoroutineDispatcher
@@ -12,41 +13,51 @@ import kotlinx.coroutines.coroutineScope
 abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: CoroutineDispatcher) :
     BaseCacheRepository<List<FeedWrapper>, Unit, Unit>(context, ioDispatcher) {
 
-    protected abstract suspend fun popularItems(): List<T>
+    private var _selectedGenres: Array<Int> = emptyArray()
+    val selectedGenres: Array<Int> get() = _selectedGenres
 
-    protected abstract suspend fun nowPlayingItems(): List<T>
+    fun setSelectedGenres(genres: Array<Int>) {
+        _selectedGenres = genres
+    }
 
-    protected abstract suspend fun latestItems(): List<T>
+    protected abstract suspend fun popularItems(genres: Array<Int>): List<T>
 
-    protected abstract suspend fun topRatedItems(): List<T>
+    protected abstract suspend fun nowPlayingItems(genres: Array<Int>): List<T>
 
-    protected abstract suspend fun trendingItems(): List<T>
+    protected abstract suspend fun latestItems(genres: Array<Int>): List<T>
 
-    protected abstract suspend fun discoverItems(): List<T>
+    protected abstract suspend fun topRatedItems(genres: Array<Int>): List<T>
 
-    protected abstract suspend fun appleTVItems(): List<T>
+    protected abstract suspend fun trendingItems(genres: Array<Int>): List<T>
 
-    protected abstract suspend fun netflixItems(): List<T>
+    protected abstract suspend fun discoverItems(genres: Array<Int>): List<T>
 
-    protected abstract suspend fun amazonPrimeItems(): List<T>
+    protected abstract suspend fun appleTVItems(genres: Array<Int>): List<T>
 
-    protected abstract suspend fun googlePlayItems(): List<T>
+    protected abstract suspend fun netflixItems(genres: Array<Int>): List<T>
+
+    protected abstract suspend fun amazonPrimeItems(genres: Array<Int>): List<T>
+
+    protected abstract suspend fun googlePlayItems(genres: Array<Int>): List<T>
+
+    abstract suspend fun getGenres(): List<Genre>
 
     protected abstract fun getNowPlayingResId(): Int
 
     protected abstract fun getLatestResId(): Int
 
     override suspend fun fetch(fetchParam: Unit?): List<FeedWrapper> = coroutineScope {
-        val trendingDeferred = async { trendingItems() }
-        val nowPlayingDeferred = async { nowPlayingItems() }
-        val popularDeferred = async { popularItems() }
-        val latestDeferred = async { latestItems() }
-        val topRatedDeferred = async { topRatedItems() }
-        val discoverDeferred = async { discoverItems() }
-        val appleTVDeferred = async { appleTVItems() }
-        val netflixDeferred = async { netflixItems() }
-        val amazonPrimeDeferred = async { amazonPrimeItems() }
-        val googlePlayDeferred = async { googlePlayItems() }
+        val genres = selectedGenres
+        val trendingDeferred = async { trendingItems(genres) }
+        val nowPlayingDeferred = async { nowPlayingItems(genres) }
+        val popularDeferred = async { popularItems(genres) }
+        val latestDeferred = async { latestItems(genres) }
+        val topRatedDeferred = async { topRatedItems(genres) }
+        val discoverDeferred = async { discoverItems(genres) }
+        val appleTVDeferred = async { appleTVItems(genres) }
+        val netflixDeferred = async { netflixItems(genres) }
+        val amazonPrimeDeferred = async { amazonPrimeItems(genres) }
+        val googlePlayDeferred = async { googlePlayItems(genres) }
 
         listOf(
             FeedWrapper(trendingDeferred.await(), R.string.text_trending, SortType.TRENDING),

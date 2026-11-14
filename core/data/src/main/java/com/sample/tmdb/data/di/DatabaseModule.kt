@@ -8,6 +8,7 @@ import com.sample.tmdb.data.source.local.MIGRATION_3_4
 import com.sample.tmdb.data.source.local.MIGRATION_4_5
 import com.sample.tmdb.data.source.local.MIGRATION_5_6
 import com.sample.tmdb.data.source.local.MIGRATION_6_7
+import com.sample.tmdb.data.source.local.MIGRATION_7_8
 import com.sample.tmdb.data.source.local.MovieDao
 import com.sample.tmdb.data.source.local.MovieDetailDao
 import com.sample.tmdb.data.source.local.MovieFeedDao
@@ -17,11 +18,15 @@ import com.sample.tmdb.data.source.local.PersonDao
 import com.sample.tmdb.data.source.local.PersonFeedDao
 import com.sample.tmdb.data.source.local.PersonPagingDao
 import com.sample.tmdb.data.source.local.PersonRemoteKeyDao
+import com.sample.tmdb.data.source.local.PersonSearchPagingDao
+import com.sample.tmdb.data.source.local.PersonSearchRemoteKeyDao
 import com.sample.tmdb.data.source.local.SearchMoviePagingDao
 import com.sample.tmdb.data.source.local.SearchMovieRemoteKeyDao
 import com.sample.tmdb.data.source.local.SearchTVShowPagingDao
 import com.sample.tmdb.data.source.local.SearchTVShowRemoteKeyDao
+import com.sample.tmdb.data.source.local.SimilarMoviePagingDao
 import com.sample.tmdb.data.source.local.SimilarMovieRemoteKeyDao
+import com.sample.tmdb.data.source.local.SimilarTVShowPagingDao
 import com.sample.tmdb.data.source.local.SimilarTVShowRemoteKeyDao
 import com.sample.tmdb.data.source.local.TMDbDatabase
 import com.sample.tmdb.data.source.local.TVShowDao
@@ -53,6 +58,7 @@ class DatabaseModule {
             MIGRATION_4_5,
             MIGRATION_5_6,
             MIGRATION_6_7,
+            MIGRATION_7_8,
         ).build()
 
     @Provides
@@ -109,6 +115,10 @@ class DatabaseModule {
 
     @Provides
     @Singleton
+    fun providePersonSearchPagingDao(db: TMDbDatabase): PersonSearchPagingDao = db.personSearchPagingDao
+
+    @Provides
+    @Singleton
     fun provideMovieRemoteKeyDao(db: TMDbDatabase): MovieRemoteKeyDao = db.movieRemoteKeyDao
 
     @Provides
@@ -117,7 +127,19 @@ class DatabaseModule {
 
     @Provides
     @Singleton
+    fun provideSimilarMoviePagingDao(db: TMDbDatabase): SimilarMoviePagingDao = db.similarMoviePagingDao
+
+    @Provides
+    @Singleton
+    fun provideSimilarTVShowPagingDao(db: TMDbDatabase): SimilarTVShowPagingDao = db.similarTVShowPagingDao
+
+    @Provides
+    @Singleton
     fun providePersonRemoteKeyDao(db: TMDbDatabase): PersonRemoteKeyDao = db.personRemoteKeyDao
+
+    @Provides
+    @Singleton
+    fun providePersonSearchRemoteKeyDao(db: TMDbDatabase): PersonSearchRemoteKeyDao = db.personSearchRemoteKeyDao
 
     @Provides
     @Singleton

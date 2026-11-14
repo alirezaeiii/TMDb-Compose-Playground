@@ -25,7 +25,7 @@ abstract class BaseCacheViewModel<DataType, QueryType, FetchType>(
 
     private var job: Job? = null
 
-    fun refresh(isUserRefresh: Boolean = true, languageCode: String? = null) =
+    open fun refresh(isUserRefresh: Boolean = true, languageCode: String? = null) =
         executeRefresh(isUserRefresh, languageCode)
 
     override fun executeRefresh(isUserRefresh: Boolean, languageCode: String?) {

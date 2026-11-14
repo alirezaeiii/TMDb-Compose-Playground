@@ -44,6 +44,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
     @Before
     fun setup() {
         every { languageRepository.languageCode } returns MutableStateFlow("en")
+        io.mockk.coEvery { repository.getGenres() } returns emptyList()
     }
 
     @Test

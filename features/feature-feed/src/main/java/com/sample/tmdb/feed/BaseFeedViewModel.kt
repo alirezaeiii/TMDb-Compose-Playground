@@ -1,8 +1,10 @@
 package com.sample.tmdb.feed
 
+import androidx.lifecycle.viewModelScope
 import com.sample.tmdb.common.base.BaseCacheViewModel
 import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.FeedWrapper
+import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.MediaType
 import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.repository.BaseFeedRepository
@@ -10,14 +12,54 @@ import com.sample.tmdb.domain.repository.LanguageRepository
 import com.sample.tmdb.navigation.TMDbNavKey
 import com.sample.tmdb.navigation.model.asNavSortType
 import com.sample.tmdb.navigation.utils.toDetailNavKey
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 abstract class BaseFeedViewModel<T : TMDbItem>(
-    repository: BaseFeedRepository<T>,
+    private val repository: BaseFeedRepository<T>,
     languageRepository: LanguageRepository,
 ) : BaseCacheViewModel<List<FeedWrapper>, Unit, Unit>(
     repository = repository,
     languageRepository = languageRepository,
 ) {
+    private val _genres = MutableStateFlow<List<Genre>>(emptyList())
+    val genres: StateFlow<List<Genre>> = _genres.asStateFlow()
+
+    private val _selectedGenreIds = MutableStateFlow<Set<Int>>(emptySet())
+    val selectedGenreIds: StateFlow<Set<Int>> = _selectedGenreIds.asStateFlow()
+
+    init {
+        fetchGenres()
+    }
+
+    override fun refresh(isUserRefresh: Boolean, languageCode: String?) {
+        super.refresh(isUserRefresh, languageCode)
+        fetchGenres()
+    }
+
+    private fun fetchGenres() {
+        viewModelScope.launch {
+            try {
+                _genres.value = repository.getGenres()
+            } catch (_: Exception) {
+            }
+        }
+    }
+
+    fun onGenreSelected(genre: Genre) {
+        val current = _selectedGenreIds.value.toMutableSet()
+        if (current.contains(genre.id)) {
+            current.remove(genre.id)
+        } else {
+            current.add(genre.id)
+        }
+        _selectedGenreIds.value = current
+        repository.setSelectedGenres(current.toTypedArray())
+        refresh(false)
+    }
+
     abstract fun onSearchClick()
 
     fun onTMDbItemClick(item: TMDbItem) {

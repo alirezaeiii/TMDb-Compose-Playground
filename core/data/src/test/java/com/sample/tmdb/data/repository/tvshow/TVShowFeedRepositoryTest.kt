@@ -2,6 +2,7 @@ package com.sample.tmdb.data.repository.tvshow
 
 import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.repository.BaseFeedRepositoryTest
+import com.sample.tmdb.data.response.GenresDTO
 import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.data.response.TVShowResponse
 import com.sample.tmdb.data.source.entity.TVShowFeedEntity
@@ -14,13 +15,17 @@ import com.sample.tmdb.domain.model.TVShow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyList
+import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.anyOrNull
+import org.mockito.kotlin.eq
 
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(MockitoJUnitRunner.Silent::class)
 class TVShowFeedRepositoryTest : BaseFeedRepositoryTest<TVShow>() {
     @Mock
     private lateinit var api: TVShowService
@@ -34,29 +39,35 @@ class TVShowFeedRepositoryTest : BaseFeedRepositoryTest<TVShow>() {
 
     override fun mockApiResponse() = runTest {
         var dbEntities = emptyList<TVShowFeedEntity>()
-        `when`(dao.getFeed()).thenAnswer { dbEntities }
+        `when`(dao.getFeed(anyString())).thenAnswer { dbEntities }
         doAnswer { invocation ->
-            dbEntities = invocation.getArgument(0)
+            dbEntities = invocation.getArgument(1)
             null
-        }.`when`(dao).deleteAndInsert(anyList())
+        }.`when`(dao).deleteAndInsert(anyString(), any())
+
+        `when`(api.fetchGenres()).thenReturn(GenresDTO(emptyList()))
 
         val tvShow = TVShowResponse(1, "overview", "2024-01-01", null, null, "name", 8.0, 100)
         val wrapper = NetworkTMDbWrapper(listOf(tvShow))
 
-        `when`(api.trendingTVSeries()).thenReturn(wrapper)
-        `when`(api.popularTVSeries()).thenReturn(wrapper)
-        `when`(api.airingTodayTVSeries()).thenReturn(wrapper)
-        `when`(api.onTheAirTVSeries()).thenReturn(wrapper)
-        `when`(api.topRatedTVSeries()).thenReturn(wrapper)
-        `when`(api.discoverTVSeries()).thenReturn(wrapper)
-        `when`(api.providerTVSeries(APPLE_TV_PROVIDER_ID)).thenReturn(wrapper)
-        `when`(api.providerTVSeries(NETFLIX_PROVIDER_ID)).thenReturn(wrapper)
-        `when`(api.providerTVSeries(AMAZON_PRIME_PROVIDER_ID)).thenReturn(wrapper)
-        `when`(api.providerTVSeries(GOOGLE_PLAY_PROVIDER_ID)).thenReturn(wrapper)
+        `when`(api.trendingTVSeries(anyInt(), anyOrNull())).thenReturn(wrapper)
+        `when`(api.popularTVSeries(anyInt(), anyOrNull())).thenReturn(wrapper)
+        `when`(api.airingTodayTVSeries(anyInt(), anyOrNull())).thenReturn(wrapper)
+        `when`(api.onTheAirTVSeries(anyInt(), anyOrNull())).thenReturn(wrapper)
+        `when`(api.topRatedTVSeries(anyInt(), anyOrNull())).thenReturn(wrapper)
+        `when`(api.discoverTVSeries(anyInt(), anyOrNull())).thenReturn(wrapper)
+        `when`(api.providerTVSeries(eq(APPLE_TV_PROVIDER_ID), anyInt(), anyOrNull(), anyString())).thenReturn(wrapper)
+        `when`(api.providerTVSeries(eq(NETFLIX_PROVIDER_ID), anyInt(), anyOrNull(), anyString())).thenReturn(wrapper)
+        `when`(
+            api.providerTVSeries(eq(AMAZON_PRIME_PROVIDER_ID), anyInt(), anyOrNull(), anyString()),
+        ).thenReturn(wrapper)
+        `when`(
+            api.providerTVSeries(eq(GOOGLE_PLAY_PROVIDER_ID), anyInt(), anyOrNull(), anyString()),
+        ).thenReturn(wrapper)
     }
 
     override fun mockFailApiResponse() = runTest {
-        `when`(dao.getFeed()).thenReturn(emptyList())
-        `when`(api.trendingTVSeries()).thenThrow(RuntimeException())
+        `when`(dao.getFeed(anyString())).thenReturn(emptyList())
+        `when`(api.trendingTVSeries(anyInt(), anyOrNull())).thenThrow(RuntimeException())
     }
 }

@@ -57,7 +57,7 @@ import com.sample.tmdb.data.source.entity.TVShowRemoteKeyEntity
         SimilarMovieRemoteKeyEntity::class,
         SimilarTVShowRemoteKeyEntity::class,
     ],
-    version = 7,
+    version = 8,
     exportSchema = true,
 )
 @TypeConverters(FeedTypeConverters::class, DetailTypeConverters::class)
@@ -454,6 +454,49 @@ val MIGRATION_6_7 = object : Migration(6, 7) {
                 `prevKey` INTEGER,
                 `nextKey` INTEGER,
                 PRIMARY KEY(`id`)
+            )
+            """.trimIndent(),
+        )
+    }
+}
+
+val MIGRATION_7_8 = object : Migration(7, 8) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("DROP TABLE IF EXISTS `MovieFeed` ")
+        db.execSQL("DROP TABLE IF EXISTS `TVShowFeed` ")
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `MovieFeed` (
+                `backdropUrl` TEXT,
+                `id` INTEGER NOT NULL,
+                `itemOrder` INTEGER NOT NULL,
+                `name` TEXT NOT NULL,
+                `overview` TEXT NOT NULL,
+                `posterUrl` TEXT,
+                `releaseDate` TEXT,
+                `sortType` TEXT NOT NULL,
+                `voteAverage` REAL NOT NULL,
+                `voteCount` INTEGER NOT NULL,
+                `genres` TEXT NOT NULL DEFAULT '',
+                PRIMARY KEY(`genres`, `sortType`, `id`)
+            )
+            """.trimIndent(),
+        )
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `TVShowFeed` (
+                `backdropUrl` TEXT,
+                `id` INTEGER NOT NULL,
+                `itemOrder` INTEGER NOT NULL,
+                `name` TEXT NOT NULL,
+                `overview` TEXT NOT NULL,
+                `posterUrl` TEXT,
+                `releaseDate` TEXT,
+                `sortType` TEXT NOT NULL,
+                `voteAverage` REAL NOT NULL,
+                `voteCount` INTEGER NOT NULL,
+                `genres` TEXT NOT NULL DEFAULT '',
+                PRIMARY KEY(`genres`, `sortType`, `id`)
             )
             """.trimIndent(),
         )

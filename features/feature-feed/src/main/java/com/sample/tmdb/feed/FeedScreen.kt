@@ -1,6 +1,7 @@
 package com.sample.tmdb.feed
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,8 +28,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -58,6 +62,7 @@ import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
 import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.domain.model.FeedWrapper
+import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.MediaType
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
@@ -106,6 +111,9 @@ private fun <T : TMDbItem> FeedScreen(
     scaffoldState: ScaffoldState,
     @StringRes resourceId: Int,
 ) {
+    val genres by viewModel.genres.collectAsState()
+    val selectedGenreIds by viewModel.selectedGenreIds.collectAsState()
+
     CacheContent(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
@@ -114,11 +122,14 @@ private fun <T : TMDbItem> FeedScreen(
     ) { state ->
         state.items?.let { feeds ->
             Box {
-                TMDbSwipeRefresh(state.isRefreshing, { viewModel.refresh(true) }) {
+                TMDbSwipeRefresh(state.isRefreshing, { viewModel.refresh(isUserRefresh = true) }) {
                     FeedCollectionList(
-                        feeds,
-                        viewModel::onMoreClick,
-                        viewModel::onTMDbItemClick,
+                        collection = feeds,
+                        genres = genres,
+                        selectedGenreIds = selectedGenreIds,
+                        onGenreSelected = viewModel::onGenreSelected,
+                        navigate = viewModel::onMoreClick,
+                        onFeedClick = viewModel::onTMDbItemClick,
                     )
                 }
                 DestinationBar(
@@ -137,6 +148,9 @@ private fun <T : TMDbItem> FeedScreen(
 @Composable
 fun FeedCollectionList(
     collection: List<FeedWrapper>,
+    genres: List<Genre> = emptyList(),
+    selectedGenreIds: Set<Int> = emptySet(),
+    onGenreSelected: (Genre) -> Unit = {},
     navigate: (FeedNavigationEvent) -> Unit,
     onFeedClick: (TMDbItem) -> Unit,
 ) {
@@ -144,21 +158,80 @@ fun FeedCollectionList(
         item {
             TMDbSpacer()
         }
-        item {
-            PagerTMDbItemContainer(
-                feedWrapper = collection.first(),
-                navigate = navigate,
-                onFeedClick = onFeedClick,
-            )
+        if (genres.isNotEmpty()) {
+            item {
+                GenreChipsRow(
+                    genres = genres,
+                    selectedGenreIds = selectedGenreIds,
+                    onGenreSelected = onGenreSelected,
+                )
+            }
         }
-        itemsIndexed(collection.drop(1)) { index, feedCollection ->
-            Column(modifier = Modifier.padding(top = TMDb_32_dp)) {
-                Header(feedCollection, navigate)
-                Feeds(feedCollection.feeds, onFeedClick, index)
+        if (collection.isNotEmpty()) {
+            item(key = "pager_${collection.first().feeds.firstOrNull()?.id}") {
+                PagerTMDbItemContainer(
+                    feedWrapper = collection.first(),
+                    navigate = navigate,
+                    onFeedClick = onFeedClick,
+                )
+            }
+            itemsIndexed(
+                items = collection.drop(1),
+                key = { _, item -> item.sortType },
+            ) { index, feedCollection ->
+                Column(modifier = Modifier.padding(top = TMDb_32_dp)) {
+                    Header(feedCollection, navigate)
+                    Feeds(feedCollection.feeds, onFeedClick, index)
+                }
             }
         }
         item {
             Spacer(Modifier.height(navigationBarPadding() + TMDb_72_dp))
+        }
+    }
+}
+
+@Composable
+fun GenreChipsRow(
+    genres: List<Genre>,
+    selectedGenreIds: Set<Int>,
+    onGenreSelected: (Genre) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    LazyRow(
+        modifier = modifier.padding(vertical = Dimens.TMDb_8_dp),
+        contentPadding = PaddingValues(horizontal = Dimens.TMDb_16_dp),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.TMDb_8_dp),
+    ) {
+        items(genres, key = { it.id }) { genre ->
+            val isSelected = selectedGenreIds.contains(genre.id)
+            val backgroundColor = if (isSelected) MaterialTheme.colors.primary else MaterialTheme.colors.surface
+            val contentColor = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface
+            val borderColor = if (isSelected) {
+                MaterialTheme.colors.primary
+            } else {
+                MaterialTheme.colors.onSurface.copy(
+                    alpha = 0.5f,
+                )
+            }
+
+            Surface(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(50))
+                    .clickable { onGenreSelected(genre) },
+                shape = RoundedCornerShape(50),
+                color = backgroundColor,
+                contentColor = contentColor,
+                border = BorderStroke(1.dp, borderColor),
+            ) {
+                Text(
+                    text = genre.name.orEmpty(),
+                    style = MaterialTheme.typography.body2.copy(
+                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                    ),
+                    modifier = Modifier.padding(horizontal = TMDb_12_dp, vertical = TMDb_6_dp),
+                )
+            }
         }
     }
 }
@@ -305,7 +378,7 @@ fun Feeds(feeds: List<TMDbItem>, onFeedClick: (TMDbItem) -> Unit, index: Int, mo
         modifier = modifier,
         contentPadding = PaddingValues(start = TMDb_2_dp, end = TMDb_2_dp),
     ) {
-        items(feeds) { feed ->
+        items(feeds, key = { it.id }) { feed ->
             if (index % 3 == 0) {
                 TMDbCard(feed, onFeedClick, feed.backdropUrl, TMDb_220_dp)
             } else {

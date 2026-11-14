@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.network
 
+import com.sample.tmdb.data.response.GenresDTO
 import com.sample.tmdb.data.response.ImagesResponse
 import com.sample.tmdb.data.response.NetworkCreditWrapper
 import com.sample.tmdb.data.response.NetworkTMDbWrapper
@@ -12,27 +13,46 @@ import retrofit2.http.Query
 interface TVShowService {
 
     @GET("3/trending/tv/day")
-    suspend fun trendingTVSeries(@Query("page") page: Int = 1): NetworkTMDbWrapper<TVShowResponse>
+    suspend fun trendingTVSeries(
+        @Query("page") page: Int = 1,
+        @Query("genre_ids") genres: String? = null,
+    ): NetworkTMDbWrapper<TVShowResponse>
 
     @GET("3/tv/popular")
-    suspend fun popularTVSeries(@Query("page") page: Int = 1): NetworkTMDbWrapper<TVShowResponse>
+    suspend fun popularTVSeries(
+        @Query("page") page: Int = 1,
+        @Query("genre_ids") genres: String? = null,
+    ): NetworkTMDbWrapper<TVShowResponse>
 
     @GET("3/tv/airing_today")
-    suspend fun airingTodayTVSeries(@Query("page") page: Int = 1): NetworkTMDbWrapper<TVShowResponse>
+    suspend fun airingTodayTVSeries(
+        @Query("page") page: Int = 1,
+        @Query("genre_ids") genres: String? = null,
+    ): NetworkTMDbWrapper<TVShowResponse>
 
     @GET("3/tv/on_the_air")
-    suspend fun onTheAirTVSeries(@Query("page") page: Int = 1): NetworkTMDbWrapper<TVShowResponse>
+    suspend fun onTheAirTVSeries(
+        @Query("page") page: Int = 1,
+        @Query("genre_ids") genres: String? = null,
+    ): NetworkTMDbWrapper<TVShowResponse>
 
     @GET("3/tv/top_rated")
-    suspend fun topRatedTVSeries(@Query("page") page: Int = 1): NetworkTMDbWrapper<TVShowResponse>
+    suspend fun topRatedTVSeries(
+        @Query("page") page: Int = 1,
+        @Query("genre_ids") genres: String? = null,
+    ): NetworkTMDbWrapper<TVShowResponse>
 
     @GET("3/discover/tv")
-    suspend fun discoverTVSeries(@Query("page") page: Int = 1): NetworkTMDbWrapper<TVShowResponse>
+    suspend fun discoverTVSeries(
+        @Query("page") page: Int = 1,
+        @Query("with_genres") genres: String? = null,
+    ): NetworkTMDbWrapper<TVShowResponse>
 
     @GET("3/discover/tv")
     suspend fun providerTVSeries(
         @Query("with_watch_providers") id: Int,
         @Query("page") page: Int = 1,
+        @Query("with_genres") genres: String? = null,
         @Query("watch_region") region: String = "US",
     ): NetworkTMDbWrapper<TVShowResponse>
 
@@ -56,4 +76,7 @@ interface TVShowService {
         @Path("tvId") tvId: Int,
         @Query("page") page: Int = 1,
     ): NetworkTMDbWrapper<TVShowResponse>
+
+    @GET("/3/genre/tv/list")
+    suspend fun fetchGenres(): GenresDTO
 }

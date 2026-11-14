@@ -4,6 +4,7 @@ import android.content.Context
 import com.sample.tmdb.data.R
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.MovieService
+import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.data.response.asMovieDomainModel
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.entity.asFeedDatabaseModel
@@ -13,12 +14,15 @@ import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.GOOGLE_PLAY_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.NETFLIX_PROVIDER_ID
 import com.sample.tmdb.domain.model.FeedWrapper
+import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
+
+private fun Array<Int>.toQueryString(): String? = if (isEmpty()) null else joinToString(",")
 
 @Singleton
 class MovieFeedRepository @Inject constructor(
@@ -27,36 +31,60 @@ class MovieFeedRepository @Inject constructor(
     private val movieApi: MovieService,
     private val movieFeedDao: MovieFeedDao,
 ) : BaseFeedRepository<Movie>(context, ioDispatcher) {
-    override suspend fun popularItems(): List<Movie> = movieApi.popularMovies().items.asMovieDomainModel()
+    override suspend fun popularItems(genres: Array<Int>): List<Movie> = if (genres.isEmpty()) {
+        movieApi.popularMovies().items.asMovieDomainModel()
+    } else {
+        movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
+    }
 
-    override suspend fun latestItems(): List<Movie> = movieApi.upcomingMovies().items.asMovieDomainModel()
+    override suspend fun latestItems(genres: Array<Int>): List<Movie> = if (genres.isEmpty()) {
+        movieApi.upcomingMovies().items.asMovieDomainModel()
+    } else {
+        movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
+    }
 
-    override suspend fun topRatedItems(): List<Movie> = movieApi.topRatedMovies().items.asMovieDomainModel()
+    override suspend fun topRatedItems(genres: Array<Int>): List<Movie> = if (genres.isEmpty()) {
+        movieApi.topRatedMovies().items.asMovieDomainModel()
+    } else {
+        movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
+    }
 
-    override suspend fun trendingItems(): List<Movie> = movieApi.trendingMovies().items.asMovieDomainModel()
+    override suspend fun trendingItems(genres: Array<Int>): List<Movie> = if (genres.isEmpty()) {
+        movieApi.trendingMovies().items.asMovieDomainModel()
+    } else {
+        movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
+    }
 
-    override suspend fun nowPlayingItems(): List<Movie> = movieApi.nowPlayingMovies().items.asMovieDomainModel()
+    override suspend fun nowPlayingItems(genres: Array<Int>): List<Movie> = if (genres.isEmpty()) {
+        movieApi.nowPlayingMovies().items.asMovieDomainModel()
+    } else {
+        movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
+    }
 
-    override suspend fun discoverItems(): List<Movie> = movieApi.discoverMovies().items.asMovieDomainModel()
+    override suspend fun discoverItems(genres: Array<Int>): List<Movie> =
+        movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
 
-    override suspend fun appleTVItems(): List<Movie> =
-        movieApi.providerMovies(APPLE_TV_PROVIDER_ID).items.asMovieDomainModel()
+    override suspend fun appleTVItems(genres: Array<Int>): List<Movie> =
+        movieApi.providerMovies(APPLE_TV_PROVIDER_ID, genres = genres.toQueryString()).items.asMovieDomainModel()
 
-    override suspend fun netflixItems(): List<Movie> =
-        movieApi.providerMovies(NETFLIX_PROVIDER_ID).items.asMovieDomainModel()
+    override suspend fun netflixItems(genres: Array<Int>): List<Movie> =
+        movieApi.providerMovies(NETFLIX_PROVIDER_ID, genres = genres.toQueryString()).items.asMovieDomainModel()
 
-    override suspend fun amazonPrimeItems(): List<Movie> =
-        movieApi.providerMovies(AMAZON_PRIME_PROVIDER_ID).items.asMovieDomainModel()
+    override suspend fun amazonPrimeItems(genres: Array<Int>): List<Movie> =
+        movieApi.providerMovies(AMAZON_PRIME_PROVIDER_ID, genres = genres.toQueryString()).items.asMovieDomainModel()
 
-    override suspend fun googlePlayItems(): List<Movie> =
-        movieApi.providerMovies(GOOGLE_PLAY_PROVIDER_ID).items.asMovieDomainModel()
+    override suspend fun googlePlayItems(genres: Array<Int>): List<Movie> =
+        movieApi.providerMovies(GOOGLE_PLAY_PROVIDER_ID, genres = genres.toQueryString()).items.asMovieDomainModel()
+
+    override suspend fun getGenres(): List<Genre> = movieApi.fetchGenres().asDomainModel()
 
     override fun getNowPlayingResId(): Int = R.string.text_now_playing
 
     override fun getLatestResId(): Int = R.string.text_upcoming
 
     override suspend fun query(queryParam: Unit?): List<FeedWrapper> {
-        val dbEntities = movieFeedDao.getFeed()
+        val genresKey = selectedGenres.sortedArray().joinToString(",")
+        val dbEntities = movieFeedDao.getFeed(genresKey)
         if (dbEntities.isEmpty()) return emptyList()
         val itemsBySortType = dbEntities
             .groupBy { it.sortType }
@@ -65,11 +93,12 @@ class MovieFeedRepository @Inject constructor(
     }
 
     override suspend fun saveFetchResult(item: List<FeedWrapper>) {
+        val genresKey = selectedGenres.sortedArray().joinToString(",")
         val entities = item.flatMap { feedWrapper ->
             feedWrapper.feeds.filterIsInstance<Movie>().mapIndexed { index, movie ->
-                movie.asFeedDatabaseModel(feedWrapper.sortType, index)
+                movie.asFeedDatabaseModel(feedWrapper.sortType, index, genresKey)
             }
         }
-        movieFeedDao.deleteAndInsert(entities)
+        movieFeedDao.deleteAndInsert(genresKey, entities)
     }
 }
