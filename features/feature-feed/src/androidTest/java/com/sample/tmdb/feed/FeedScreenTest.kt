@@ -63,8 +63,12 @@ class FeedScreenTest {
                                 SortType.MOST_POPULAR,
                             ),
                         ),
+                    emptyList(),
+                    emptySet(),
                     {},
-                ) {}
+                    {},
+                    {},
+                )
             }
             onNodeWithText(activity.getString(domainR.string.text_trending)).assertIsDisplayed()
             onNodeWithText(activity.getString(domainR.string.text_popular)).assertIsDisplayed()
