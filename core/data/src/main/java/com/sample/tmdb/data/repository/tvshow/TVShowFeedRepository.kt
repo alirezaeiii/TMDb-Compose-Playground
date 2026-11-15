@@ -4,7 +4,6 @@ import android.content.Context
 import com.sample.tmdb.data.R
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.TVShowService
-import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.data.response.asTVShowDomainModel
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.entity.asFeedDatabaseModel
@@ -18,10 +17,12 @@ import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BaseFeedRepository
+import com.sample.tmdb.domain.utils.Async
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.last
 
 private fun Array<Int>.toQueryString(): String? = if (isEmpty()) null else joinToString(",")
 
@@ -31,6 +32,7 @@ class TVShowFeedRepository @Inject constructor(
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
     private val tvShowApi: TVShowService,
     private val tvShowFeedDao: TVShowFeedDao,
+    private val tvShowGenreRepository: TVShowGenreRepository,
 ) : BaseFeedRepository<TVShow>(context, ioDispatcher) {
     override suspend fun popularItems(isFiltered: Boolean): List<TVShow> = if (isFiltered) {
         emptyList()
@@ -79,7 +81,10 @@ class TVShowFeedRepository @Inject constructor(
     override suspend fun googlePlayItems(genres: Array<Int>): List<TVShow> =
         tvShowApi.providerTVSeries(GOOGLE_PLAY_PROVIDER_ID, genres = genres.toQueryString()).items.asTVShowDomainModel()
 
-    override suspend fun getGenres(): List<Genre> = tvShowApi.fetchGenres().asDomainModel()
+    override suspend fun getGenres(): List<Genre> {
+        val result = tvShowGenreRepository.getResult(forceRefresh = false).last()
+        return (result as? Async.Success)?.data ?: emptyList()
+    }
 
     override fun getNowPlayingResId(): Int = R.string.text_airing_today
 

@@ -33,8 +33,11 @@ class MovieFeedRepositoryTest : BaseFeedRepositoryTest<Movie>() {
     @Mock
     private lateinit var dao: MovieFeedDao
 
+    private lateinit var movieGenreRepository: MovieGenreRepository
+
     override fun initRepository() {
-        repository = MovieFeedRepository(context, Dispatchers.Main, api, dao)
+        movieGenreRepository = MovieGenreRepository(api, dao, context, Dispatchers.Main)
+        repository = MovieFeedRepository(context, Dispatchers.Main, api, dao, movieGenreRepository)
     }
 
     override fun mockApiResponse() = runTest {

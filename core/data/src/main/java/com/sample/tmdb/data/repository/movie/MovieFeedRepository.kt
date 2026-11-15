@@ -4,7 +4,6 @@ import android.content.Context
 import com.sample.tmdb.data.R
 import com.sample.tmdb.data.di.IoDispatcher
 import com.sample.tmdb.data.network.MovieService
-import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.data.response.asMovieDomainModel
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.entity.asFeedDatabaseModel
@@ -18,10 +17,12 @@ import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.repository.BaseFeedRepository
+import com.sample.tmdb.domain.utils.Async
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.last
 
 private fun Array<Int>.toQueryString(): String? = if (isEmpty()) null else joinToString(",")
 
@@ -31,6 +32,7 @@ class MovieFeedRepository @Inject constructor(
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
     private val movieApi: MovieService,
     private val movieFeedDao: MovieFeedDao,
+    private val movieGenreRepository: MovieGenreRepository,
 ) : BaseFeedRepository<Movie>(context, ioDispatcher) {
     override suspend fun popularItems(isFiltered: Boolean): List<Movie> = if (isFiltered) {
         emptyList()
@@ -77,7 +79,10 @@ class MovieFeedRepository @Inject constructor(
     override suspend fun googlePlayItems(genres: Array<Int>): List<Movie> =
         movieApi.providerMovies(GOOGLE_PLAY_PROVIDER_ID, genres = genres.toQueryString()).items.asMovieDomainModel()
 
-    override suspend fun getGenres(): List<Genre> = movieApi.fetchGenres().asDomainModel()
+    override suspend fun getGenres(): List<Genre> {
+        val result = movieGenreRepository.getResult(forceRefresh = false).last()
+        return (result as? Async.Success)?.data ?: emptyList()
+    }
 
     override fun getNowPlayingResId(): Int = R.string.text_now_playing
 

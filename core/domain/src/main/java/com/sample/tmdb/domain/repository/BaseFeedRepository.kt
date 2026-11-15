@@ -11,7 +11,11 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: CoroutineDispatcher) :
-    BaseCacheRepository<List<FeedWrapper>, Unit, Unit>(context, ioDispatcher) {
+    BaseCacheRepository<List<FeedWrapper>, Unit, Unit>(
+        context = context,
+        ioDispatcher = ioDispatcher,
+        cacheDurationMs = 60 * 60 * 1000L,
+    ) {
 
     private var _selectedGenres: Array<Int> = emptyArray()
     val selectedGenres: Array<Int> get() = _selectedGenres
