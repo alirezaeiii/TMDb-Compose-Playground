@@ -28,7 +28,6 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
-import androidx.compose.material3.FilterChip
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -54,6 +53,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_72_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.component.DestinationBar
+import com.sample.tmdb.common.ui.component.GenreChipsRow
 import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.ui.theme.Teal200
@@ -186,36 +186,6 @@ fun FeedCollectionList(
         }
         item {
             Spacer(Modifier.height(navigationBarPadding() + TMDb_72_dp))
-        }
-    }
-}
-
-@Composable
-fun GenreChipsRow(
-    genres: List<Genre>,
-    selectedGenreIds: Set<Int>,
-    onGenreSelected: (Genre) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    LazyRow(
-        modifier = modifier.padding(vertical = Dimens.TMDb_8_dp),
-        contentPadding = PaddingValues(horizontal = Dimens.TMDb_16_dp),
-        horizontalArrangement = Arrangement.spacedBy(Dimens.TMDb_8_dp),
-    ) {
-        items(genres, key = { it.id }) { genre ->
-            val isSelected = selectedGenreIds.contains(genre.id)
-            FilterChip(
-                selected = isSelected,
-                onClick = { onGenreSelected(genre) },
-                label = {
-                    Text(
-                        text = genre.name.orEmpty(),
-                        style = MaterialTheme.typography.body2.copy(
-                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                        ),
-                    )
-                },
-            )
         }
     }
 }
