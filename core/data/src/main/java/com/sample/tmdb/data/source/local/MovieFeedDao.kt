@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.sample.tmdb.data.source.entity.MovieFeedEntity
+import com.sample.tmdb.data.source.entity.MovieGenreEntity
 
 @Dao
 interface MovieFeedDao {
@@ -25,5 +26,20 @@ interface MovieFeedDao {
     suspend fun deleteAndInsert(genresKey: String = "", feeds: List<MovieFeedEntity>) {
         deleteByGenres(genresKey)
         insertAll(feeds)
+    }
+
+    @Query("SELECT * FROM MovieGenres")
+    suspend fun getGenres(): List<MovieGenreEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGenres(genres: List<MovieGenreEntity>)
+
+    @Query("DELETE FROM MovieGenres")
+    suspend fun deleteAllGenres()
+
+    @Transaction
+    suspend fun deleteAndInsertGenres(genres: List<MovieGenreEntity>) {
+        deleteAllGenres()
+        insertGenres(genres)
     }
 }

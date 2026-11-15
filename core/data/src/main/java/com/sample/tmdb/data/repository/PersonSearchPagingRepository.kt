@@ -27,12 +27,14 @@ class PersonSearchPagingRepository @Inject constructor(
         query: String?,
         id: Int?,
         type: SortType?,
+        genres: String?,
     ): RemoteMediator<Int, PersonSearchPagingEntity> = PersonSearchRemoteMediator(database, personApi, query!!, context)
 
     override fun createPagingSource(
         query: String?,
         id: Int?,
         type: SortType?,
+        genres: String?,
     ): PagingSource<Int, PersonSearchPagingEntity> = database.personSearchPagingDao.getPersons(query!!)
 
     override fun mapEntityToDomain(entity: PersonSearchPagingEntity): TrendingPerson = entity.asDomainModel()

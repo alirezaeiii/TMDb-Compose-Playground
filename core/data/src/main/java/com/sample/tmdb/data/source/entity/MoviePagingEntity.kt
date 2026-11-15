@@ -4,7 +4,7 @@ import androidx.room.Entity
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
 
-@Entity(tableName = "MoviePaging", primaryKeys = ["sortType", "id"])
+@Entity(tableName = "MoviePaging", primaryKeys = ["genres", "sortType", "id"])
 class MoviePagingEntity(
     val id: Int,
     val sortType: SortType,
@@ -16,6 +16,7 @@ class MoviePagingEntity(
     val voteAverage: Double,
     val voteCount: Int,
     val itemOrder: Int = 0,
+    val genres: String = "",
 )
 
 fun List<MoviePagingEntity>.asDomainModel() = map(MoviePagingEntity::asDomainModel)

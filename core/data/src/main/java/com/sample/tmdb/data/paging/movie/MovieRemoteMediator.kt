@@ -18,24 +18,26 @@ class MovieRemoteMediator(
     private val movieApi: MovieService,
     private val sortType: SortType,
     context: Context,
+    private val genres: String = "",
 ) : BaseRemoteMediator<MoviePagingEntity, SortType, MovieRemoteKeyEntity>(database, context) {
 
     override suspend fun fetchItems(page: Int): List<MoviePagingEntity> = when (sortType) {
         SortType.TRENDING -> movieApi.trendingMovies(page)
-        SortType.DISCOVER -> movieApi.discoverMovies(page)
+        SortType.DISCOVER -> movieApi.discoverMovies(page, genres)
         SortType.MOST_POPULAR -> movieApi.popularMovies(page)
         SortType.NOW_PLAYING -> movieApi.nowPlayingMovies(page)
         SortType.UPCOMING -> movieApi.upcomingMovies(page)
         SortType.HIGHEST_RATED -> movieApi.topRatedMovies(page)
-        SortType.APPLE_TV -> movieApi.providerMovies(APPLE_TV_PROVIDER_ID, page)
-        SortType.NETFLIX -> movieApi.providerMovies(NETFLIX_PROVIDER_ID, page)
-        SortType.AMAZON_PRIME -> movieApi.providerMovies(AMAZON_PRIME_PROVIDER_ID, page)
-        SortType.GOOGLE_PLAY -> movieApi.providerMovies(GOOGLE_PLAY_PROVIDER_ID, page)
-    }.items.asMoviePagingDatabaseModel(sortType, page)
+        SortType.APPLE_TV -> movieApi.providerMovies(APPLE_TV_PROVIDER_ID, page, genres)
+        SortType.NETFLIX -> movieApi.providerMovies(NETFLIX_PROVIDER_ID, page, genres)
+        SortType.AMAZON_PRIME -> movieApi.providerMovies(AMAZON_PRIME_PROVIDER_ID, page, genres)
+        SortType.GOOGLE_PLAY -> movieApi.providerMovies(GOOGLE_PLAY_PROVIDER_ID, page, genres)
+    }.items.asMoviePagingDatabaseModel(sortType, page, genres)
 
     override fun getRemoteKeyId(item: MoviePagingEntity): SortType = sortType
 
-    override suspend fun getRemoteKey(id: SortType): MovieRemoteKeyEntity? = database.movieRemoteKeyDao.getRemoteKey(id)
+    override suspend fun getRemoteKey(id: SortType): MovieRemoteKeyEntity? =
+        database.movieRemoteKeyDao.getRemoteKey(sortType, genres)
 
     override fun getPrevKey(remoteKey: MovieRemoteKeyEntity): Int? = remoteKey.prevKey
 
@@ -50,12 +52,13 @@ class MovieRemoteMediator(
             sortType = sortType,
             prevKey = prevKey,
             nextKey = nextKey,
+            genres = genres,
         ),
     )
 
     override suspend fun clearLocalData() {
-        database.moviePagingDao.deleteBySortType(sortType)
-        database.movieRemoteKeyDao.deleteRemoteKey(sortType)
+        database.moviePagingDao.deleteBySortType(sortType, genres)
+        database.movieRemoteKeyDao.deleteRemoteKey(sortType, genres)
     }
 
     override suspend fun saveLocalData(keys: List<MovieRemoteKeyEntity>, items: List<MoviePagingEntity>) {

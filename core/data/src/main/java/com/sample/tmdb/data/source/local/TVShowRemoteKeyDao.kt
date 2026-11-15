@@ -10,12 +10,12 @@ import com.sample.tmdb.domain.model.SortType
 @Dao
 interface TVShowRemoteKeyDao {
 
-    @Query("SELECT * FROM TVShowRemoteKeys WHERE sortType = :sortType")
-    suspend fun getRemoteKey(sortType: SortType): TVShowRemoteKeyEntity?
+    @Query("SELECT * FROM TVShowRemoteKeys WHERE sortType = :sortType AND genres = :genresKey")
+    suspend fun getRemoteKey(sortType: SortType, genresKey: String = ""): TVShowRemoteKeyEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRemoteKey(remoteKey: TVShowRemoteKeyEntity)
 
-    @Query("DELETE FROM TVShowRemoteKeys WHERE sortType = :sortType")
-    suspend fun deleteRemoteKey(sortType: SortType)
+    @Query("DELETE FROM TVShowRemoteKeys WHERE sortType = :sortType AND genres = :genresKey")
+    suspend fun deleteRemoteKey(sortType: SortType, genresKey: String = "")
 }

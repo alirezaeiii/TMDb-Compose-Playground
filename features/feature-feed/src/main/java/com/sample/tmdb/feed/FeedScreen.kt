@@ -1,7 +1,6 @@
 package com.sample.tmdb.feed
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,8 +27,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material3.FilterChip
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -205,33 +204,18 @@ fun GenreChipsRow(
     ) {
         items(genres, key = { it.id }) { genre ->
             val isSelected = selectedGenreIds.contains(genre.id)
-            val backgroundColor = if (isSelected) MaterialTheme.colors.primary else MaterialTheme.colors.surface
-            val contentColor = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface
-            val borderColor = if (isSelected) {
-                MaterialTheme.colors.primary
-            } else {
-                MaterialTheme.colors.onSurface.copy(
-                    alpha = 0.5f,
-                )
-            }
-
-            Surface(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(50))
-                    .clickable { onGenreSelected(genre) },
-                shape = RoundedCornerShape(50),
-                color = backgroundColor,
-                contentColor = contentColor,
-                border = BorderStroke(1.dp, borderColor),
-            ) {
-                Text(
-                    text = genre.name.orEmpty(),
-                    style = MaterialTheme.typography.body2.copy(
-                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                    ),
-                    modifier = Modifier.padding(horizontal = TMDb_12_dp, vertical = TMDb_6_dp),
-                )
-            }
+            FilterChip(
+                selected = isSelected,
+                onClick = { onGenreSelected(genre) },
+                label = {
+                    Text(
+                        text = genre.name.orEmpty(),
+                        style = MaterialTheme.typography.body2.copy(
+                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                        ),
+                    )
+                },
+            )
         }
     }
 }

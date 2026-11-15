@@ -66,15 +66,15 @@ class TVShowRemoteMediatorTest : BaseRemoteMediatorTest() {
 
     private suspend fun getApiCall(sortType: SortType): NetworkTMDbWrapper<TVShowResponse> = when (sortType) {
         SortType.TRENDING -> api.trendingTVSeries(1)
-        SortType.DISCOVER -> api.discoverTVSeries(1)
+        SortType.DISCOVER -> api.discoverTVSeries(1, "")
         SortType.MOST_POPULAR -> api.popularTVSeries(1)
         SortType.NOW_PLAYING -> api.airingTodayTVSeries(1)
         SortType.UPCOMING -> api.onTheAirTVSeries(1)
         SortType.HIGHEST_RATED -> api.topRatedTVSeries(1)
-        SortType.APPLE_TV -> api.providerTVSeries(APPLE_TV_PROVIDER_ID, 1)
-        SortType.NETFLIX -> api.providerTVSeries(NETFLIX_PROVIDER_ID, 1)
-        SortType.AMAZON_PRIME -> api.providerTVSeries(AMAZON_PRIME_PROVIDER_ID, 1)
-        SortType.GOOGLE_PLAY -> api.providerTVSeries(GOOGLE_PLAY_PROVIDER_ID, 1)
+        SortType.APPLE_TV -> api.providerTVSeries(APPLE_TV_PROVIDER_ID, 1, "")
+        SortType.NETFLIX -> api.providerTVSeries(NETFLIX_PROVIDER_ID, 1, "")
+        SortType.AMAZON_PRIME -> api.providerTVSeries(AMAZON_PRIME_PROVIDER_ID, 1, "")
+        SortType.GOOGLE_PLAY -> api.providerTVSeries(GOOGLE_PLAY_PROVIDER_ID, 1, "")
     }
 
     @Test

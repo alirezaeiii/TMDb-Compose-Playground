@@ -8,6 +8,7 @@ import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.data.response.asMovieDomainModel
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.entity.asFeedDatabaseModel
+import com.sample.tmdb.data.source.entity.asMovieGenreDatabaseModel
 import com.sample.tmdb.data.source.local.MovieFeedDao
 import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
@@ -31,34 +32,34 @@ class MovieFeedRepository @Inject constructor(
     private val movieApi: MovieService,
     private val movieFeedDao: MovieFeedDao,
 ) : BaseFeedRepository<Movie>(context, ioDispatcher) {
-    override suspend fun popularItems(genres: Array<Int>): List<Movie> = if (genres.isEmpty()) {
+    override suspend fun popularItems(isFiltered: Boolean): List<Movie> = if (isFiltered) {
+        emptyList()
+    } else {
         movieApi.popularMovies().items.asMovieDomainModel()
-    } else {
-        movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
     }
 
-    override suspend fun latestItems(genres: Array<Int>): List<Movie> = if (genres.isEmpty()) {
+    override suspend fun latestItems(isFiltered: Boolean): List<Movie> = if (isFiltered) {
+        emptyList()
+    } else {
         movieApi.upcomingMovies().items.asMovieDomainModel()
-    } else {
-        movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
     }
 
-    override suspend fun topRatedItems(genres: Array<Int>): List<Movie> = if (genres.isEmpty()) {
+    override suspend fun topRatedItems(isFiltered: Boolean): List<Movie> = if (isFiltered) {
+        emptyList()
+    } else {
         movieApi.topRatedMovies().items.asMovieDomainModel()
-    } else {
-        movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
     }
 
-    override suspend fun trendingItems(genres: Array<Int>): List<Movie> = if (genres.isEmpty()) {
+    override suspend fun trendingItems(isFiltered: Boolean): List<Movie> = if (isFiltered) {
+        emptyList()
+    } else {
         movieApi.trendingMovies().items.asMovieDomainModel()
-    } else {
-        movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
     }
 
-    override suspend fun nowPlayingItems(genres: Array<Int>): List<Movie> = if (genres.isEmpty()) {
-        movieApi.nowPlayingMovies().items.asMovieDomainModel()
+    override suspend fun nowPlayingItems(isFiltered: Boolean): List<Movie> = if (isFiltered) {
+        emptyList()
     } else {
-        movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
+        movieApi.nowPlayingMovies().items.asMovieDomainModel()
     }
 
     override suspend fun discoverItems(genres: Array<Int>): List<Movie> =
@@ -85,11 +86,15 @@ class MovieFeedRepository @Inject constructor(
     override suspend fun query(queryParam: Unit?): List<FeedWrapper> {
         val genresKey = selectedGenres.sortedArray().joinToString(",")
         val dbEntities = movieFeedDao.getFeed(genresKey)
-        if (dbEntities.isEmpty()) return emptyList()
+        val dbGenres = movieFeedDao.getGenres()
+        if (dbGenres.isEmpty() || dbEntities.isEmpty()) {
+            return emptyList()
+        }
+        val genres = dbGenres.asDomainModel()
         val itemsBySortType = dbEntities
             .groupBy { it.sortType }
             .mapValues { entry -> entry.value.map { it.asDomainModel() } }
-        return createFeedWrappers(itemsBySortType)
+        return createFeedWrappers(itemsBySortType, genres)
     }
 
     override suspend fun saveFetchResult(item: List<FeedWrapper>) {
@@ -100,5 +105,8 @@ class MovieFeedRepository @Inject constructor(
             }
         }
         movieFeedDao.deleteAndInsert(genresKey, entities)
+        item.firstOrNull()?.genres?.let { genres ->
+            movieFeedDao.deleteAndInsertGenres(genres.asMovieGenreDatabaseModel())
+        }
     }
 }

@@ -15,9 +15,11 @@ abstract class BaseCacheRepository<DataType, QueryType, FetchType>(
     private val cacheDurationMs: Long = 60_000L,
 ) {
 
-    private var lastRefreshTime: Long = 0L
+    private val lastRefreshTimes = mutableMapOf<Any?, Long>()
 
     protected open fun getCurrentTime(): Long = System.currentTimeMillis()
+
+    protected open fun getCacheKey(): Any? = null
 
     protected abstract suspend fun query(queryParam: QueryType?): DataType?
 
@@ -59,13 +61,16 @@ abstract class BaseCacheRepository<DataType, QueryType, FetchType>(
             emit(Async.Success(it))
         }
         try {
-            if (forceRefresh || dbData == null || isCacheExpired()) {
+            val cacheKey = getCacheKey()
+            if (forceRefresh || dbData == null || (cacheKey != null && isCacheExpired(cacheKey))) {
                 if (dbData != null) {
                     emit(Async.Loading(true))
                 }
                 // ****** MAKE NETWORK CALL, SAVE RESULT TO CACHE ******
                 refresh(fetchParam)
-                lastRefreshTime = getCurrentTime()
+                cacheKey?.let {
+                    lastRefreshTimes[it] = getCurrentTime()
+                }
                 // ****** VIEW CACHE ******
                 emit(Async.Success(query(queryParam)!!))
             }
@@ -85,5 +90,8 @@ abstract class BaseCacheRepository<DataType, QueryType, FetchType>(
         saveFetchResult(fetch(fetchParam))
     }
 
-    private fun isCacheExpired(): Boolean = getCurrentTime() - lastRefreshTime > cacheDurationMs
+    private fun isCacheExpired(cacheKey: Any): Boolean {
+        val lastRefreshTime = lastRefreshTimes[cacheKey] ?: 0L
+        return getCurrentTime() - lastRefreshTime > cacheDurationMs
+    }
 }

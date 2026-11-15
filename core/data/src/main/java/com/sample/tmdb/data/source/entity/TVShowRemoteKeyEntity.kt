@@ -5,6 +5,6 @@ import com.sample.tmdb.domain.model.SortType
 
 @Entity(
     tableName = "TVShowRemoteKeys",
-    primaryKeys = ["sortType"],
+    primaryKeys = ["genres", "sortType"],
 )
-class TVShowRemoteKeyEntity(val sortType: SortType, val prevKey: Int?, val nextKey: Int?)
+class TVShowRemoteKeyEntity(val sortType: SortType, val prevKey: Int?, val nextKey: Int?, val genres: String = "")

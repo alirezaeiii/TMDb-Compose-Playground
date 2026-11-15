@@ -19,26 +19,29 @@ abstract class BasePagingRepository<T : Any, E : Any> : PagingRepository<T> {
         query: String? = null,
         id: Int? = null,
         type: SortType? = null,
+        genres: String? = null,
     ): RemoteMediator<Int, E>
 
     protected abstract fun createPagingSource(
         query: String? = null,
         id: Int? = null,
         type: SortType? = null,
+        genres: String? = null,
     ): PagingSource<Int, E>
 
     protected abstract fun mapEntityToDomain(entity: E): T
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun fetchResultStream(query: String?, id: Int?, type: SortType?): Flow<PagingData<T>> = Pager(
-        config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
-        remoteMediator = createRemoteMediator(query, id, type),
-        pagingSourceFactory = { createPagingSource(query, id, type) },
-    ).flow.map { pagingData ->
-        pagingData.map { entity ->
-            mapEntityToDomain(entity)
+    override fun fetchResultStream(query: String?, id: Int?, type: SortType?, genres: String?): Flow<PagingData<T>> =
+        Pager(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
+            remoteMediator = createRemoteMediator(query, id, type, genres),
+            pagingSourceFactory = { createPagingSource(query, id, type, genres) },
+        ).flow.map { pagingData ->
+            pagingData.map { entity ->
+                mapEntityToDomain(entity)
+            }
         }
-    }
 
     companion object {
         const val NETWORK_PAGE_SIZE = 20

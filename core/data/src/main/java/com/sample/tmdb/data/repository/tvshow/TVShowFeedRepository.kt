@@ -8,6 +8,7 @@ import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.data.response.asTVShowDomainModel
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.entity.asFeedDatabaseModel
+import com.sample.tmdb.data.source.entity.asTVShowGenreDatabaseModel
 import com.sample.tmdb.data.source.local.TVShowFeedDao
 import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
@@ -31,34 +32,34 @@ class TVShowFeedRepository @Inject constructor(
     private val tvShowApi: TVShowService,
     private val tvShowFeedDao: TVShowFeedDao,
 ) : BaseFeedRepository<TVShow>(context, ioDispatcher) {
-    override suspend fun popularItems(genres: Array<Int>): List<TVShow> = if (genres.isEmpty()) {
+    override suspend fun popularItems(isFiltered: Boolean): List<TVShow> = if (isFiltered) {
+        emptyList()
+    } else {
         tvShowApi.popularTVSeries().items.asTVShowDomainModel()
-    } else {
-        tvShowApi.discoverTVSeries(genres = genres.toQueryString()).items.asTVShowDomainModel()
     }
 
-    override suspend fun latestItems(genres: Array<Int>): List<TVShow> = if (genres.isEmpty()) {
+    override suspend fun latestItems(isFiltered: Boolean): List<TVShow> = if (isFiltered) {
+        emptyList()
+    } else {
         tvShowApi.onTheAirTVSeries().items.asTVShowDomainModel()
-    } else {
-        tvShowApi.discoverTVSeries(genres = genres.toQueryString()).items.asTVShowDomainModel()
     }
 
-    override suspend fun topRatedItems(genres: Array<Int>): List<TVShow> = if (genres.isEmpty()) {
+    override suspend fun topRatedItems(isFiltered: Boolean): List<TVShow> = if (isFiltered) {
+        emptyList()
+    } else {
         tvShowApi.topRatedTVSeries().items.asTVShowDomainModel()
-    } else {
-        tvShowApi.discoverTVSeries(genres = genres.toQueryString()).items.asTVShowDomainModel()
     }
 
-    override suspend fun trendingItems(genres: Array<Int>): List<TVShow> = if (genres.isEmpty()) {
+    override suspend fun trendingItems(isFiltered: Boolean): List<TVShow> = if (isFiltered) {
+        emptyList()
+    } else {
         tvShowApi.trendingTVSeries().items.asTVShowDomainModel()
-    } else {
-        tvShowApi.discoverTVSeries(genres = genres.toQueryString()).items.asTVShowDomainModel()
     }
 
-    override suspend fun nowPlayingItems(genres: Array<Int>): List<TVShow> = if (genres.isEmpty()) {
-        tvShowApi.airingTodayTVSeries().items.asTVShowDomainModel()
+    override suspend fun nowPlayingItems(isFiltered: Boolean): List<TVShow> = if (isFiltered) {
+        emptyList()
     } else {
-        tvShowApi.discoverTVSeries(genres = genres.toQueryString()).items.asTVShowDomainModel()
+        tvShowApi.airingTodayTVSeries().items.asTVShowDomainModel()
     }
 
     override suspend fun discoverItems(genres: Array<Int>): List<TVShow> =
@@ -87,11 +88,15 @@ class TVShowFeedRepository @Inject constructor(
     override suspend fun query(queryParam: Unit?): List<FeedWrapper> {
         val genresKey = selectedGenres.sortedArray().joinToString(",")
         val dbEntities = tvShowFeedDao.getFeed(genresKey)
-        if (dbEntities.isEmpty()) return emptyList()
+        val dbGenres = tvShowFeedDao.getGenres()
+        if (dbGenres.isEmpty() || dbEntities.isEmpty()) {
+            return emptyList()
+        }
+        val genres = dbGenres.asDomainModel()
         val itemsBySortType = dbEntities
             .groupBy { it.sortType }
             .mapValues { entry -> entry.value.map { it.asDomainModel() } }
-        return createFeedWrappers(itemsBySortType)
+        return createFeedWrappers(itemsBySortType, genres)
     }
 
     override suspend fun saveFetchResult(item: List<FeedWrapper>) {
@@ -102,5 +107,8 @@ class TVShowFeedRepository @Inject constructor(
             }
         }
         tvShowFeedDao.deleteAndInsert(genresKey, entities)
+        item.firstOrNull()?.genres?.let { genres ->
+            tvShowFeedDao.deleteAndInsertGenres(genres.asTVShowGenreDatabaseModel())
+        }
     }
 }

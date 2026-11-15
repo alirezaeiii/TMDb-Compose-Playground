@@ -38,6 +38,13 @@ class MovieFeedRepositoryTest : BaseFeedRepositoryTest<Movie>() {
     }
 
     override fun mockApiResponse() = runTest {
+        var dbGenres = emptyList<com.sample.tmdb.data.source.entity.MovieGenreEntity>()
+        `when`(dao.getGenres()).thenAnswer { dbGenres }
+        doAnswer { invocation ->
+            dbGenres = invocation.getArgument(0)
+            null
+        }.`when`(dao).deleteAndInsertGenres(any())
+
         var dbEntities = emptyList<MovieFeedEntity>()
         `when`(dao.getFeed(anyString())).thenAnswer { dbEntities }
         doAnswer { invocation ->
@@ -45,16 +52,16 @@ class MovieFeedRepositoryTest : BaseFeedRepositoryTest<Movie>() {
             null
         }.`when`(dao).deleteAndInsert(anyString(), any())
 
-        `when`(api.fetchGenres()).thenReturn(GenresDTO(emptyList()))
+        `when`(api.fetchGenres()).thenReturn(GenresDTO(listOf(com.sample.tmdb.data.response.GenreDTO(1, "Action"))))
 
         val movie = MovieResponse(1, "overview", "2024-01-01", null, null, "title", 8.0, 100)
         val wrapper = NetworkTMDbWrapper(listOf(movie))
 
-        `when`(api.trendingMovies(anyInt(), anyOrNull())).thenReturn(wrapper)
-        `when`(api.popularMovies(anyInt(), anyOrNull())).thenReturn(wrapper)
-        `when`(api.nowPlayingMovies(anyInt(), anyOrNull())).thenReturn(wrapper)
-        `when`(api.upcomingMovies(anyInt(), anyOrNull())).thenReturn(wrapper)
-        `when`(api.topRatedMovies(anyInt(), anyOrNull())).thenReturn(wrapper)
+        `when`(api.trendingMovies(anyInt())).thenReturn(wrapper)
+        `when`(api.popularMovies(anyInt())).thenReturn(wrapper)
+        `when`(api.nowPlayingMovies(anyInt())).thenReturn(wrapper)
+        `when`(api.upcomingMovies(anyInt())).thenReturn(wrapper)
+        `when`(api.topRatedMovies(anyInt())).thenReturn(wrapper)
         `when`(api.discoverMovies(anyInt(), anyOrNull())).thenReturn(wrapper)
         `when`(api.providerMovies(eq(APPLE_TV_PROVIDER_ID), anyInt(), anyOrNull(), anyString())).thenReturn(wrapper)
         `when`(api.providerMovies(eq(NETFLIX_PROVIDER_ID), anyInt(), anyOrNull(), anyString())).thenReturn(wrapper)
@@ -64,6 +71,7 @@ class MovieFeedRepositoryTest : BaseFeedRepositoryTest<Movie>() {
 
     override fun mockFailApiResponse() = runTest {
         `when`(dao.getFeed(anyString())).thenReturn(emptyList())
-        `when`(api.trendingMovies(anyInt(), anyOrNull())).thenThrow(RuntimeException())
+        `when`(dao.getGenres()).thenReturn(emptyList())
+        `when`(api.trendingMovies(anyInt())).thenThrow(RuntimeException())
     }
 }

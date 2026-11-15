@@ -15,9 +15,10 @@ abstract class BaseMainPagingViewModel<T : TMDbItem>(
     repository: PagingRepository<T>,
     id: Int? = null,
     type: SortType? = null,
+    genres: String? = null,
 ) : BasePagingViewModel<T>() {
     override val pagingDataFlow: Flow<PagingData<T>> =
-        repository.fetchResultStream(id = id, type = type).cachedIn(viewModelScope)
+        repository.fetchResultStream(id = id, type = type, genres = genres).cachedIn(viewModelScope)
 
     abstract fun onSearchClick()
 

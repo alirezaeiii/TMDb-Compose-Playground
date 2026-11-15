@@ -3,9 +3,7 @@ package com.sample.tmdb.data.repository
 import app.cash.turbine.test
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.PersonDTO
-import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.data.source.entity.PersonEntity
-import com.sample.tmdb.data.source.entity.asDatabaseModel
 import com.sample.tmdb.data.source.local.PersonDao
 import com.sample.tmdb.domain.model.Person
 import com.sample.tmdb.domain.repository.BaseCacheRepository
@@ -36,29 +34,34 @@ class PersonRepositoryTest : BaseRepositoryTest() {
 
     private lateinit var repository: BaseCacheRepository<Person, Int, Int>
 
-    private val personDto =
-        PersonDTO(
-            "birth",
-            "death",
-            1,
-            "name",
-            "biography",
-            "placeOfBirth",
-            "profilePath",
-        )
-
     override fun initRepository() {
         repository = PersonRepository(api, dao, context, Dispatchers.Main)
     }
 
     override fun mockApiResponse() = runTest {
-        var dbEntity: PersonEntity? = null
-        whenever(dao.getPerson(anyInt())).thenAnswer { dbEntity }
-        doAnswer {
-            dbEntity = personDto.asDomainModel().asDatabaseModel()
+        val dbEntities = mutableMapOf<Int, PersonEntity>()
+        whenever(dao.getPerson(anyInt())).thenAnswer { invocation ->
+            val id = invocation.getArgument<Int>(0)
+            dbEntities[id]
+        }
+        doAnswer { invocation ->
+            val entity = invocation.getArgument<PersonEntity>(0)
+            dbEntities[entity.id] = entity
             null
         }.whenever(dao).insert(any())
-        whenever(api.getPerson(anyInt())).thenReturn(personDto)
+        whenever(api.getPerson(anyInt())).thenAnswer { invocation ->
+            val id = invocation.getArgument<Int>(0)
+            val name = if (id == 1) "name" else "name $id"
+            PersonDTO(
+                "birth",
+                "death",
+                id,
+                name,
+                "biography",
+                "placeOfBirth",
+                "profilePath",
+            )
+        }
     }
 
     override fun mockFailApiResponse() = runTest {
