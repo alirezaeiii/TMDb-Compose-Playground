@@ -20,6 +20,8 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
         _selectedGenres = genres
     }
 
+    override fun getCacheKey(): Any? = selectedGenres.sortedArray().joinToString(",")
+
     protected abstract suspend fun popularItems(isFiltered: Boolean): List<T>
 
     protected abstract suspend fun nowPlayingItems(isFiltered: Boolean): List<T>
