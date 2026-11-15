@@ -8,6 +8,7 @@ import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.data.response.asMovieDomainModel
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.entity.asFeedDatabaseModel
+import com.sample.tmdb.data.source.entity.asMovieGenreDatabaseModel
 import com.sample.tmdb.data.source.local.MovieFeedDao
 import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
@@ -85,11 +86,11 @@ class MovieFeedRepository @Inject constructor(
     override suspend fun query(queryParam: Unit?): List<FeedWrapper> {
         val genresKey = selectedGenres.sortedArray().joinToString(",")
         val dbEntities = movieFeedDao.getFeed(genresKey)
-        if (dbEntities.isEmpty()) return emptyList()
+        val genres = movieFeedDao.getGenres().asDomainModel()
         val itemsBySortType = dbEntities
             .groupBy { it.sortType }
             .mapValues { entry -> entry.value.map { it.asDomainModel() } }
-        return createFeedWrappers(itemsBySortType)
+        return createFeedWrappers(itemsBySortType, genres)
     }
 
     override suspend fun saveFetchResult(item: List<FeedWrapper>) {
@@ -100,5 +101,8 @@ class MovieFeedRepository @Inject constructor(
             }
         }
         movieFeedDao.deleteAndInsert(genresKey, entities)
+        item.firstOrNull()?.genres?.let { genres ->
+            movieFeedDao.deleteAndInsertGenres(genres.asMovieGenreDatabaseModel())
+        }
     }
 }

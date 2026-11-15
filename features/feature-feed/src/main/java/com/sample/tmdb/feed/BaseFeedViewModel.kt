@@ -31,19 +31,11 @@ abstract class BaseFeedViewModel<T : TMDbItem>(
     val selectedGenreIds: StateFlow<Set<Int>> = _selectedGenreIds.asStateFlow()
 
     init {
-        fetchGenres()
-    }
-
-    override fun refresh(isUserRefresh: Boolean, languageCode: String?) {
-        super.refresh(isUserRefresh, languageCode)
-        fetchGenres()
-    }
-
-    private fun fetchGenres() {
         viewModelScope.launch {
-            try {
-                _genres.value = repository.getGenres()
-            } catch (_: Exception) {
+            state.collect { viewState ->
+                viewState.items?.firstOrNull()?.genres?.let {
+                    _genres.value = it
+                }
             }
         }
     }
@@ -69,13 +61,14 @@ abstract class BaseFeedViewModel<T : TMDbItem>(
     fun onMoreClick(event: FeedNavigationEvent) {
         when (event) {
             is FeedNavigationEvent.More -> {
+                val genresKey = selectedGenreIds.value.sorted().joinToString(",")
                 when (event.mediaType) {
                     MediaType.MOVIE -> emitEvent(
-                        UiEvent.Navigate(TMDbNavKey.PagingMovies(event.sortType.asNavSortType())),
+                        UiEvent.Navigate(TMDbNavKey.PagingMovies(event.sortType.asNavSortType(), genresKey)),
                     )
 
                     MediaType.TV_SHOW -> emitEvent(
-                        UiEvent.Navigate(TMDbNavKey.PagingTvShows(event.sortType.asNavSortType())),
+                        UiEvent.Navigate(TMDbNavKey.PagingTvShows(event.sortType.asNavSortType(), genresKey)),
                     )
                 }
             }

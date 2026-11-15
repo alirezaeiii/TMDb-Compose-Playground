@@ -161,9 +161,9 @@ fun TMDbApp() {
             val sortType = key.sortType.asDomainModel()
             MoviePagingScreen(
                 hiltViewModel<MoviePagingViewModel, MoviePagingViewModel.Factory>(
-                    key = "PagingMovies_${sortType.name}",
+                    key = "PagingMovies_${sortType.name}_${key.genres}",
                     creationCallback = { factory ->
-                        factory.create(type = sortType)
+                        factory.create(type = sortType, genres = key.genres)
                     },
                 ),
                 onNavigate,
@@ -176,9 +176,9 @@ fun TMDbApp() {
             val sortType = key.sortType.asDomainModel()
             TVShowPagingScreen(
                 hiltViewModel<TvShowPagingViewModel, TvShowPagingViewModel.Factory>(
-                    key = "PagingTVShows_${sortType.name}",
+                    key = "PagingTVShows_${sortType.name}_${key.genres}",
                     creationCallback = { factory ->
-                        factory.create(type = sortType)
+                        factory.create(type = sortType, genres = key.genres)
                     },
                 ),
                 onNavigate,

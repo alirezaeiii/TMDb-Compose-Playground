@@ -28,12 +28,14 @@ class SimilarMoviesPagingRepository @Inject constructor(
         query: String?,
         id: Int?,
         type: SortType?,
+        genres: String?,
     ): RemoteMediator<Int, SimilarMoviePagingEntity> = SimilarMovieRemoteMediator(database, movieApi, id!!, context)
 
     override fun createPagingSource(
         query: String?,
         id: Int?,
         type: SortType?,
+        genres: String?,
     ): PagingSource<Int, SimilarMoviePagingEntity> = database.similarMoviePagingDao.getPagingMovies(id!!)
 
     override fun mapEntityToDomain(entity: SimilarMoviePagingEntity): Movie = entity.asDomainModel()

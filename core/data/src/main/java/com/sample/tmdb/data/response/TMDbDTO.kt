@@ -80,12 +80,18 @@ fun List<MovieResponse>.asMovieDomainModel() = map(MovieResponse::asMovieDomainM
 
 fun List<TVShowResponse>.asTVShowDomainModel() = map(TVShowResponse::asTVShowDomainModel)
 
-fun List<MovieResponse>.asMoviePagingDatabaseModel(sortType: SortType, page: Int) = mapIndexed { index, movie ->
-    movie.asPagingDatabaseModel(sortType, (page - 1) * NETWORK_PAGE_SIZE + index)
+fun List<MovieResponse>.asMoviePagingDatabaseModel(sortType: SortType, page: Int, genres: String = "") = mapIndexed {
+        index,
+        movie,
+    ->
+    movie.asPagingDatabaseModel(sortType, (page - 1) * NETWORK_PAGE_SIZE + index, genres)
 }
 
-fun List<TVShowResponse>.asTVShowPagingDatabaseModel(sortType: SortType, page: Int) = mapIndexed { index, tvShow ->
-    tvShow.asPagingDatabaseModel(sortType, (page - 1) * NETWORK_PAGE_SIZE + index)
+fun List<TVShowResponse>.asTVShowPagingDatabaseModel(sortType: SortType, page: Int, genres: String = "") = mapIndexed {
+        index,
+        tvShow,
+    ->
+    tvShow.asPagingDatabaseModel(sortType, (page - 1) * NETWORK_PAGE_SIZE + index, genres)
 }
 
 fun List<MovieResponse>.asMovieSearchPagingDatabaseModel(query: String, page: Int) = mapIndexed { index, movie ->
@@ -152,51 +158,55 @@ fun TVShowResponse.asSimilarPagingDatabaseModel(tvShowId: Int, order: Int): Simi
         itemOrder = order,
     )
 
-fun MovieResponse.asPagingDatabaseModel(sortType: SortType, order: Int): MoviePagingEntity = MoviePagingEntity(
-    id = id,
-    sortType = sortType,
-    overview = overview,
-    releaseDate = releaseDate,
-    posterUrl = posterPath?.let { posterPath ->
-        String.format(
-            BASE_WIDTH_342_PATH,
-            posterPath,
-        )
-    },
-    backdropUrl = backdropPath?.let { backdropPath ->
-        String.format(
-            BASE_WIDTH_780_PATH,
-            backdropPath,
-        )
-    },
-    name = name,
-    voteAverage = voteAverage,
-    voteCount = voteCount,
-    itemOrder = order,
-)
+fun MovieResponse.asPagingDatabaseModel(sortType: SortType, order: Int, genres: String = ""): MoviePagingEntity =
+    MoviePagingEntity(
+        id = id,
+        sortType = sortType,
+        overview = overview,
+        releaseDate = releaseDate,
+        posterUrl = posterPath?.let { posterPath ->
+            String.format(
+                BASE_WIDTH_342_PATH,
+                posterPath,
+            )
+        },
+        backdropUrl = backdropPath?.let { backdropPath ->
+            String.format(
+                BASE_WIDTH_780_PATH,
+                backdropPath,
+            )
+        },
+        name = name,
+        voteAverage = voteAverage,
+        voteCount = voteCount,
+        itemOrder = order,
+        genres = genres,
+    )
 
-fun TVShowResponse.asPagingDatabaseModel(sortType: SortType, order: Int): TVShowPagingEntity = TVShowPagingEntity(
-    id = id,
-    sortType = sortType,
-    overview = overview,
-    releaseDate = releaseDate,
-    posterUrl = posterPath?.let { posterPath ->
-        String.format(
-            BASE_WIDTH_342_PATH,
-            posterPath,
-        )
-    },
-    backdropUrl = backdropPath?.let { backdropPath ->
-        String.format(
-            BASE_WIDTH_780_PATH,
-            backdropPath,
-        )
-    },
-    name = name,
-    voteAverage = voteAverage,
-    voteCount = voteCount,
-    itemOrder = order,
-)
+fun TVShowResponse.asPagingDatabaseModel(sortType: SortType, order: Int, genres: String = ""): TVShowPagingEntity =
+    TVShowPagingEntity(
+        id = id,
+        sortType = sortType,
+        overview = overview,
+        releaseDate = releaseDate,
+        posterUrl = posterPath?.let { posterPath ->
+            String.format(
+                BASE_WIDTH_342_PATH,
+                posterPath,
+            )
+        },
+        backdropUrl = backdropPath?.let { backdropPath ->
+            String.format(
+                BASE_WIDTH_780_PATH,
+                backdropPath,
+            )
+        },
+        name = name,
+        voteAverage = voteAverage,
+        voteCount = voteCount,
+        itemOrder = order,
+        genres = genres,
+    )
 
 fun MovieResponse.asSearchPagingDatabaseModel(query: String, order: Int): SearchMoviePagingEntity =
     SearchMoviePagingEntity(

@@ -28,10 +28,15 @@ class MoviesPagingRepository @Inject constructor(
         query: String?,
         id: Int?,
         type: SortType?,
-    ): RemoteMediator<Int, MoviePagingEntity> = MovieRemoteMediator(database, movieApi, type!!, context)
+        genres: String?,
+    ): RemoteMediator<Int, MoviePagingEntity> = MovieRemoteMediator(database, movieApi, type!!, context, genres)
 
-    override fun createPagingSource(query: String?, id: Int?, type: SortType?): PagingSource<Int, MoviePagingEntity> =
-        database.moviePagingDao.getPagingMovies(type!!)
+    override fun createPagingSource(
+        query: String?,
+        id: Int?,
+        type: SortType?,
+        genres: String?,
+    ): PagingSource<Int, MoviePagingEntity> = database.moviePagingDao.getPagingMovies(type!!, genres ?: "")
 
     override fun mapEntityToDomain(entity: MoviePagingEntity): Movie = entity.asDomainModel()
 }

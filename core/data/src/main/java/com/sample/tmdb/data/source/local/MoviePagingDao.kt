@@ -11,12 +11,12 @@ import com.sample.tmdb.domain.model.SortType
 @Dao
 interface MoviePagingDao {
 
-    @Query("SELECT * FROM MoviePaging WHERE sortType = :sortType ORDER BY itemOrder ASC")
-    fun getPagingMovies(sortType: SortType): PagingSource<Int, MoviePagingEntity>
+    @Query("SELECT * FROM MoviePaging WHERE sortType = :sortType AND genres = :genresKey ORDER BY itemOrder ASC")
+    fun getPagingMovies(sortType: SortType, genresKey: String = ""): PagingSource<Int, MoviePagingEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(movies: List<MoviePagingEntity>)
 
-    @Query("DELETE FROM MoviePaging WHERE sortType = :sortType")
-    suspend fun deleteBySortType(sortType: SortType)
+    @Query("DELETE FROM MoviePaging WHERE sortType = :sortType AND genres = :genresKey")
+    suspend fun deleteBySortType(sortType: SortType, genresKey: String = "")
 }

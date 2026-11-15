@@ -48,6 +48,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
 
     override suspend fun fetch(fetchParam: Unit?): List<FeedWrapper> = coroutineScope {
         val genres = selectedGenres
+        val genresDeferred = async { getGenres() }
         val trendingDeferred = async { trendingItems(genres) }
         val nowPlayingDeferred = async { nowPlayingItems(genres) }
         val popularDeferred = async { popularItems(genres) }
@@ -59,21 +60,23 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
         val amazonPrimeDeferred = async { amazonPrimeItems(genres) }
         val googlePlayDeferred = async { googlePlayItems(genres) }
 
+        val fetchedGenres = genresDeferred.await()
+
         listOf(
-            FeedWrapper(trendingDeferred.await(), R.string.text_trending, SortType.TRENDING),
-            FeedWrapper(popularDeferred.await(), R.string.text_popular, SortType.MOST_POPULAR),
-            FeedWrapper(nowPlayingDeferred.await(), getNowPlayingResId(), SortType.NOW_PLAYING),
-            FeedWrapper(discoverDeferred.await(), R.string.text_discover, SortType.DISCOVER),
-            FeedWrapper(latestDeferred.await(), getLatestResId(), SortType.UPCOMING),
-            FeedWrapper(topRatedDeferred.await(), R.string.text_highest_rate, SortType.HIGHEST_RATED),
-            FeedWrapper(appleTVDeferred.await(), R.string.text_apple_tv, SortType.APPLE_TV),
-            FeedWrapper(netflixDeferred.await(), R.string.text_netflix, SortType.NETFLIX),
-            FeedWrapper(amazonPrimeDeferred.await(), R.string.text_amazon_prime, SortType.AMAZON_PRIME),
-            FeedWrapper(googlePlayDeferred.await(), R.string.text_google_play, SortType.GOOGLE_PLAY),
+            FeedWrapper(trendingDeferred.await(), R.string.text_trending, SortType.TRENDING, fetchedGenres),
+            FeedWrapper(popularDeferred.await(), R.string.text_popular, SortType.MOST_POPULAR, fetchedGenres),
+            FeedWrapper(nowPlayingDeferred.await(), getNowPlayingResId(), SortType.NOW_PLAYING, fetchedGenres),
+            FeedWrapper(discoverDeferred.await(), R.string.text_discover, SortType.DISCOVER, fetchedGenres),
+            FeedWrapper(latestDeferred.await(), getLatestResId(), SortType.UPCOMING, fetchedGenres),
+            FeedWrapper(topRatedDeferred.await(), R.string.text_highest_rate, SortType.HIGHEST_RATED, fetchedGenres),
+            FeedWrapper(appleTVDeferred.await(), R.string.text_apple_tv, SortType.APPLE_TV, fetchedGenres),
+            FeedWrapper(netflixDeferred.await(), R.string.text_netflix, SortType.NETFLIX, fetchedGenres),
+            FeedWrapper(amazonPrimeDeferred.await(), R.string.text_amazon_prime, SortType.AMAZON_PRIME, fetchedGenres),
+            FeedWrapper(googlePlayDeferred.await(), R.string.text_google_play, SortType.GOOGLE_PLAY, fetchedGenres),
         )
     }
 
-    protected fun createFeedWrappers(itemsBySortType: Map<SortType, List<T>>): List<FeedWrapper> {
+    protected fun createFeedWrappers(itemsBySortType: Map<SortType, List<T>>, genres: List<Genre>): List<FeedWrapper> {
         val sortTypes = listOf(
             SortType.TRENDING to R.string.text_trending,
             SortType.MOST_POPULAR to R.string.text_popular,
@@ -88,7 +91,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
         )
         return sortTypes.mapNotNull { (sortType, resId) ->
             itemsBySortType[sortType]?.let { feeds ->
-                FeedWrapper(feeds, resId, sortType)
+                FeedWrapper(feeds, resId, sortType, genres)
             }
         }
     }

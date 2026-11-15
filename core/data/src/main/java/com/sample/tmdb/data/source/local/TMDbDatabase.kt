@@ -8,6 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.sample.tmdb.data.source.entity.MovieDetailEntity
 import com.sample.tmdb.data.source.entity.MovieEntity
 import com.sample.tmdb.data.source.entity.MovieFeedEntity
+import com.sample.tmdb.data.source.entity.MovieGenreEntity
 import com.sample.tmdb.data.source.entity.MoviePagingEntity
 import com.sample.tmdb.data.source.entity.MovieRemoteKeyEntity
 import com.sample.tmdb.data.source.entity.PersonEntity
@@ -27,6 +28,7 @@ import com.sample.tmdb.data.source.entity.SimilarTVShowRemoteKeyEntity
 import com.sample.tmdb.data.source.entity.TVShowDetailEntity
 import com.sample.tmdb.data.source.entity.TVShowEntity
 import com.sample.tmdb.data.source.entity.TVShowFeedEntity
+import com.sample.tmdb.data.source.entity.TVShowGenreEntity
 import com.sample.tmdb.data.source.entity.TVShowPagingEntity
 import com.sample.tmdb.data.source.entity.TVShowRemoteKeyEntity
 
@@ -56,6 +58,8 @@ import com.sample.tmdb.data.source.entity.TVShowRemoteKeyEntity
         SearchTVShowRemoteKeyEntity::class,
         SimilarMovieRemoteKeyEntity::class,
         SimilarTVShowRemoteKeyEntity::class,
+        MovieGenreEntity::class,
+        TVShowGenreEntity::class,
     ],
     version = 8,
     exportSchema = true,
@@ -464,6 +468,10 @@ val MIGRATION_7_8 = object : Migration(7, 8) {
     override fun migrate(db: SupportSQLiteDatabase) {
         db.execSQL("DROP TABLE IF EXISTS `MovieFeed` ")
         db.execSQL("DROP TABLE IF EXISTS `TVShowFeed` ")
+        db.execSQL("DROP TABLE IF EXISTS `MoviePaging`")
+        db.execSQL("DROP TABLE IF EXISTS `TVShowPaging`")
+        db.execSQL("DROP TABLE IF EXISTS `MovieRemoteKeys`")
+        db.execSQL("DROP TABLE IF EXISTS `TVShowRemoteKeys`")
         db.execSQL(
             """
             CREATE TABLE IF NOT EXISTS `MovieFeed` (
@@ -497,6 +505,83 @@ val MIGRATION_7_8 = object : Migration(7, 8) {
                 `voteCount` INTEGER NOT NULL,
                 `genres` TEXT NOT NULL DEFAULT '',
                 PRIMARY KEY(`genres`, `sortType`, `id`)
+            )
+            """.trimIndent(),
+        )
+
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `MovieGenres` (
+                `id` INTEGER NOT NULL,
+                `name` TEXT,
+                PRIMARY KEY(`id`)
+            )
+            """.trimIndent(),
+        )
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `TVShowGenres` (
+                `id` INTEGER NOT NULL,
+                `name` TEXT,
+                PRIMARY KEY(`id`)
+            )
+            """.trimIndent(),
+        )
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `MoviePaging` (
+                `id` INTEGER NOT NULL,
+                `sortType` TEXT NOT NULL,
+                `overview` TEXT NOT NULL,
+                `releaseDate` TEXT,
+                `posterUrl` TEXT,
+                `backdropUrl` TEXT,
+                `name` TEXT NOT NULL,
+                `voteAverage` REAL NOT NULL,
+                `voteCount` INTEGER NOT NULL,
+                `itemOrder` INTEGER NOT NULL,
+                `genres` TEXT NOT NULL DEFAULT '',
+                PRIMARY KEY(`genres`, `sortType`, `id`)
+            )
+            """.trimIndent(),
+        )
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `TVShowPaging` (
+                `id` INTEGER NOT NULL,
+                `sortType` TEXT NOT NULL,
+                `overview` TEXT NOT NULL,
+                `releaseDate` TEXT,
+                `posterUrl` TEXT,
+                `backdropUrl` TEXT,
+                `name` TEXT NOT NULL,
+                `voteAverage` REAL NOT NULL,
+                `voteCount` INTEGER NOT NULL,
+                `itemOrder` INTEGER NOT NULL,
+                `genres` TEXT NOT NULL DEFAULT '',
+                PRIMARY KEY(`genres`, `sortType`, `id`)
+            )
+            """.trimIndent(),
+        )
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `MovieRemoteKeys` (
+                `sortType` TEXT NOT NULL,
+                `prevKey` INTEGER,
+                `nextKey` INTEGER,
+                `genres` TEXT NOT NULL DEFAULT '',
+                PRIMARY KEY(`genres`, `sortType`)
+            )
+            """.trimIndent(),
+        )
+        db.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS `TVShowRemoteKeys` (
+                `sortType` TEXT NOT NULL,
+                `prevKey` INTEGER,
+                `nextKey` INTEGER,
+                `genres` TEXT NOT NULL DEFAULT '',
+                PRIMARY KEY(`genres`, `sortType`)
             )
             """.trimIndent(),
         )

@@ -4,7 +4,7 @@ import androidx.room.Entity
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
 
-@Entity(tableName = "TVShowPaging", primaryKeys = ["sortType", "id"])
+@Entity(tableName = "TVShowPaging", primaryKeys = ["genres", "sortType", "id"])
 class TVShowPagingEntity(
     val id: Int,
     val sortType: SortType,
@@ -16,6 +16,7 @@ class TVShowPagingEntity(
     val voteAverage: Double,
     val voteCount: Int,
     val itemOrder: Int = 0,
+    val genres: String = "",
 )
 
 fun List<TVShowPagingEntity>.asDomainModel() = map(TVShowPagingEntity::asDomainModel)

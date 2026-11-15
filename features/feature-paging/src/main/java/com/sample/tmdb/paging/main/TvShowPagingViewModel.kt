@@ -16,13 +16,14 @@ open class TvShowPagingViewModel @AssistedInject constructor(
     @TMDb repository: PagingRepository<TVShow>,
     @Assisted id: Int? = null,
     @Assisted type: SortType,
-) : BaseMainPagingViewModel<TVShow>(repository, id, type) {
+    @Assisted genres: String? = null,
+) : BaseMainPagingViewModel<TVShow>(repository, id, type, genres) {
     override fun onSearchClick() {
         emitEvent(UiEvent.Navigate(TMDbNavKey.SearchTvShows))
     }
 
     @AssistedFactory
     interface Factory {
-        fun create(id: Int? = null, type: SortType): TvShowPagingViewModel
+        fun create(id: Int? = null, type: SortType, genres: String? = null): TvShowPagingViewModel
     }
 }

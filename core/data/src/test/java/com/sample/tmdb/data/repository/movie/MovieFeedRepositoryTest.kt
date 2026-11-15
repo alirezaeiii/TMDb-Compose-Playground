@@ -38,6 +38,13 @@ class MovieFeedRepositoryTest : BaseFeedRepositoryTest<Movie>() {
     }
 
     override fun mockApiResponse() = runTest {
+        var dbGenres = emptyList<com.sample.tmdb.data.source.entity.MovieGenreEntity>()
+        `when`(dao.getGenres()).thenAnswer { dbGenres }
+        doAnswer { invocation ->
+            dbGenres = invocation.getArgument(0)
+            null
+        }.`when`(dao).deleteAndInsertGenres(any())
+
         var dbEntities = emptyList<MovieFeedEntity>()
         `when`(dao.getFeed(anyString())).thenAnswer { dbEntities }
         doAnswer { invocation ->
