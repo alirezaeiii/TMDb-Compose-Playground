@@ -13,34 +13,19 @@ import retrofit2.http.Query
 interface TVShowService {
 
     @GET("3/trending/tv/day")
-    suspend fun trendingTVSeries(
-        @Query("page") page: Int = 1,
-        @Query("genre_ids") genres: String? = null,
-    ): NetworkTMDbWrapper<TVShowResponse>
+    suspend fun trendingTVSeries(@Query("page") page: Int = 1): NetworkTMDbWrapper<TVShowResponse>
 
     @GET("3/tv/popular")
-    suspend fun popularTVSeries(
-        @Query("page") page: Int = 1,
-        @Query("genre_ids") genres: String? = null,
-    ): NetworkTMDbWrapper<TVShowResponse>
+    suspend fun popularTVSeries(@Query("page") page: Int = 1): NetworkTMDbWrapper<TVShowResponse>
 
     @GET("3/tv/airing_today")
-    suspend fun airingTodayTVSeries(
-        @Query("page") page: Int = 1,
-        @Query("genre_ids") genres: String? = null,
-    ): NetworkTMDbWrapper<TVShowResponse>
+    suspend fun airingTodayTVSeries(@Query("page") page: Int = 1): NetworkTMDbWrapper<TVShowResponse>
 
     @GET("3/tv/on_the_air")
-    suspend fun onTheAirTVSeries(
-        @Query("page") page: Int = 1,
-        @Query("genre_ids") genres: String? = null,
-    ): NetworkTMDbWrapper<TVShowResponse>
+    suspend fun onTheAirTVSeries(@Query("page") page: Int = 1): NetworkTMDbWrapper<TVShowResponse>
 
     @GET("3/tv/top_rated")
-    suspend fun topRatedTVSeries(
-        @Query("page") page: Int = 1,
-        @Query("genre_ids") genres: String? = null,
-    ): NetworkTMDbWrapper<TVShowResponse>
+    suspend fun topRatedTVSeries(@Query("page") page: Int = 1): NetworkTMDbWrapper<TVShowResponse>
 
     @GET("3/discover/tv")
     suspend fun discoverTVSeries(

@@ -29,7 +29,8 @@ class TVSeriesPagingRepository @Inject constructor(
         id: Int?,
         type: SortType?,
         genres: String?,
-    ): RemoteMediator<Int, TVShowPagingEntity> = TVShowRemoteMediator(database, tvShowApi, type!!, context, genres)
+    ): RemoteMediator<Int, TVShowPagingEntity> =
+        TVShowRemoteMediator(database, tvShowApi, type!!, context, genres ?: "")
 
     override fun createPagingSource(
         query: String?,

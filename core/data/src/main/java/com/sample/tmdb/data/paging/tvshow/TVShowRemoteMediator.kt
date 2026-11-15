@@ -18,26 +18,26 @@ class TVShowRemoteMediator(
     private val tvShowApi: TVShowService,
     private val sortType: SortType,
     context: Context,
-    private val genres: String? = null,
+    private val genres: String = "",
 ) : BaseRemoteMediator<TVShowPagingEntity, SortType, TVShowRemoteKeyEntity>(database, context) {
 
     override suspend fun fetchItems(page: Int): List<TVShowPagingEntity> = when (sortType) {
-        SortType.TRENDING -> tvShowApi.trendingTVSeries(page, genres)
+        SortType.TRENDING -> tvShowApi.trendingTVSeries(page)
         SortType.DISCOVER -> tvShowApi.discoverTVSeries(page, genres)
-        SortType.MOST_POPULAR -> tvShowApi.popularTVSeries(page, genres)
-        SortType.NOW_PLAYING -> tvShowApi.airingTodayTVSeries(page, genres)
-        SortType.UPCOMING -> tvShowApi.onTheAirTVSeries(page, genres)
-        SortType.HIGHEST_RATED -> tvShowApi.topRatedTVSeries(page, genres)
+        SortType.MOST_POPULAR -> tvShowApi.popularTVSeries(page)
+        SortType.NOW_PLAYING -> tvShowApi.airingTodayTVSeries(page)
+        SortType.UPCOMING -> tvShowApi.onTheAirTVSeries(page)
+        SortType.HIGHEST_RATED -> tvShowApi.topRatedTVSeries(page)
         SortType.APPLE_TV -> tvShowApi.providerTVSeries(APPLE_TV_PROVIDER_ID, page, genres)
         SortType.NETFLIX -> tvShowApi.providerTVSeries(NETFLIX_PROVIDER_ID, page, genres)
         SortType.AMAZON_PRIME -> tvShowApi.providerTVSeries(AMAZON_PRIME_PROVIDER_ID, page, genres)
         SortType.GOOGLE_PLAY -> tvShowApi.providerTVSeries(GOOGLE_PLAY_PROVIDER_ID, page, genres)
-    }.items.asTVShowPagingDatabaseModel(sortType, page, genres ?: "")
+    }.items.asTVShowPagingDatabaseModel(sortType, page, genres)
 
     override fun getRemoteKeyId(item: TVShowPagingEntity): SortType = sortType
 
     override suspend fun getRemoteKey(id: SortType): TVShowRemoteKeyEntity? =
-        database.tvShowRemoteKeyDao.getRemoteKey(sortType, genres ?: "")
+        database.tvShowRemoteKeyDao.getRemoteKey(sortType, genres)
 
     override fun getPrevKey(remoteKey: TVShowRemoteKeyEntity): Int? = remoteKey.prevKey
 
@@ -52,13 +52,13 @@ class TVShowRemoteMediator(
             sortType = sortType,
             prevKey = prevKey,
             nextKey = nextKey,
-            genres = genres ?: "",
+            genres = genres,
         ),
     )
 
     override suspend fun clearLocalData() {
-        database.tvShowPagingDao.deleteBySortType(sortType, genres ?: "")
-        database.tvShowRemoteKeyDao.deleteRemoteKey(sortType, genres ?: "")
+        database.tvShowPagingDao.deleteBySortType(sortType, genres)
+        database.tvShowRemoteKeyDao.deleteRemoteKey(sortType, genres)
     }
 
     override suspend fun saveLocalData(keys: List<TVShowRemoteKeyEntity>, items: List<TVShowPagingEntity>) {

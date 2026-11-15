@@ -20,15 +20,15 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
         _selectedGenres = genres
     }
 
-    protected abstract suspend fun popularItems(genres: Array<Int>): List<T>
+    protected abstract suspend fun popularItems(isFiltered: Boolean): List<T>
 
-    protected abstract suspend fun nowPlayingItems(genres: Array<Int>): List<T>
+    protected abstract suspend fun nowPlayingItems(isFiltered: Boolean): List<T>
 
-    protected abstract suspend fun latestItems(genres: Array<Int>): List<T>
+    protected abstract suspend fun latestItems(isFiltered: Boolean): List<T>
 
-    protected abstract suspend fun topRatedItems(genres: Array<Int>): List<T>
+    protected abstract suspend fun topRatedItems(isFiltered: Boolean): List<T>
 
-    protected abstract suspend fun trendingItems(genres: Array<Int>): List<T>
+    protected abstract suspend fun trendingItems(isFiltered: Boolean): List<T>
 
     protected abstract suspend fun discoverItems(genres: Array<Int>): List<T>
 
@@ -48,12 +48,13 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
 
     override suspend fun fetch(fetchParam: Unit?): List<FeedWrapper> = coroutineScope {
         val genres = selectedGenres
+        val isFiltered = genres.isNotEmpty()
         val genresDeferred = async { getGenres() }
-        val trendingDeferred = async { trendingItems(genres) }
-        val nowPlayingDeferred = async { nowPlayingItems(genres) }
-        val popularDeferred = async { popularItems(genres) }
-        val latestDeferred = async { latestItems(genres) }
-        val topRatedDeferred = async { topRatedItems(genres) }
+        val trendingDeferred = async { trendingItems(isFiltered) }
+        val nowPlayingDeferred = async { nowPlayingItems(isFiltered) }
+        val popularDeferred = async { popularItems(isFiltered) }
+        val latestDeferred = async { latestItems(isFiltered) }
+        val topRatedDeferred = async { topRatedItems(isFiltered) }
         val discoverDeferred = async { discoverItems(genres) }
         val appleTVDeferred = async { appleTVItems(genres) }
         val netflixDeferred = async { netflixItems(genres) }

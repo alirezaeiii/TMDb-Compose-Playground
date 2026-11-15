@@ -52,16 +52,16 @@ class TVShowFeedRepositoryTest : BaseFeedRepositoryTest<TVShow>() {
             null
         }.`when`(dao).deleteAndInsert(anyString(), any())
 
-        `when`(api.fetchGenres()).thenReturn(GenresDTO(emptyList()))
+        `when`(api.fetchGenres()).thenReturn(GenresDTO(listOf(com.sample.tmdb.data.response.GenreDTO(1, "Action"))))
 
         val tvShow = TVShowResponse(1, "overview", "2024-01-01", null, null, "name", 8.0, 100)
         val wrapper = NetworkTMDbWrapper(listOf(tvShow))
 
-        `when`(api.trendingTVSeries(anyInt(), anyOrNull())).thenReturn(wrapper)
-        `when`(api.popularTVSeries(anyInt(), anyOrNull())).thenReturn(wrapper)
-        `when`(api.airingTodayTVSeries(anyInt(), anyOrNull())).thenReturn(wrapper)
-        `when`(api.onTheAirTVSeries(anyInt(), anyOrNull())).thenReturn(wrapper)
-        `when`(api.topRatedTVSeries(anyInt(), anyOrNull())).thenReturn(wrapper)
+        `when`(api.trendingTVSeries(anyInt())).thenReturn(wrapper)
+        `when`(api.popularTVSeries(anyInt())).thenReturn(wrapper)
+        `when`(api.airingTodayTVSeries(anyInt())).thenReturn(wrapper)
+        `when`(api.onTheAirTVSeries(anyInt())).thenReturn(wrapper)
+        `when`(api.topRatedTVSeries(anyInt())).thenReturn(wrapper)
         `when`(api.discoverTVSeries(anyInt(), anyOrNull())).thenReturn(wrapper)
         `when`(api.providerTVSeries(eq(APPLE_TV_PROVIDER_ID), anyInt(), anyOrNull(), anyString())).thenReturn(wrapper)
         `when`(api.providerTVSeries(eq(NETFLIX_PROVIDER_ID), anyInt(), anyOrNull(), anyString())).thenReturn(wrapper)
@@ -75,6 +75,7 @@ class TVShowFeedRepositoryTest : BaseFeedRepositoryTest<TVShow>() {
 
     override fun mockFailApiResponse() = runTest {
         `when`(dao.getFeed(anyString())).thenReturn(emptyList())
-        `when`(api.trendingTVSeries(anyInt(), anyOrNull())).thenThrow(RuntimeException())
+        `when`(dao.getGenres()).thenReturn(emptyList())
+        `when`(api.trendingTVSeries(anyInt())).thenThrow(RuntimeException())
     }
 }

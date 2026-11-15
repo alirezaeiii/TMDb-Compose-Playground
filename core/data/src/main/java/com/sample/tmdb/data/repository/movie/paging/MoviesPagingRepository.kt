@@ -29,7 +29,7 @@ class MoviesPagingRepository @Inject constructor(
         id: Int?,
         type: SortType?,
         genres: String?,
-    ): RemoteMediator<Int, MoviePagingEntity> = MovieRemoteMediator(database, movieApi, type!!, context, genres)
+    ): RemoteMediator<Int, MoviePagingEntity> = MovieRemoteMediator(database, movieApi, type!!, context, genres ?: "")
 
     override fun createPagingSource(
         query: String?,
