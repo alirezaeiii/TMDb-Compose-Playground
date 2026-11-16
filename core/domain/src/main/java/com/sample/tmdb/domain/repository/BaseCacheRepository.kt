@@ -3,6 +3,7 @@ package com.sample.tmdb.domain.repository
 import android.content.Context
 import com.sample.tmdb.domain.R
 import com.sample.tmdb.domain.utils.Async
+import com.sample.tmdb.domain.utils.CacheTimestampDataStore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
@@ -12,14 +13,13 @@ import kotlinx.coroutines.flow.flowOn
 abstract class BaseCacheRepository<DataType, QueryType, FetchType>(
     private val context: Context,
     private val ioDispatcher: CoroutineDispatcher,
+    private val cacheTimestampStore: CacheTimestampDataStore? = null,
     private val cacheDurationMs: Long = 60_000L,
 ) {
 
-    private val lastRefreshTimes = mutableMapOf<Any?, Long>()
-
     protected open fun getCurrentTime(): Long = System.currentTimeMillis()
 
-    protected open fun getCacheKey(): Any? = null
+    protected open fun getCacheKey(): String? = null
 
     protected abstract suspend fun query(queryParam: QueryType?): DataType?
 
@@ -69,7 +69,10 @@ abstract class BaseCacheRepository<DataType, QueryType, FetchType>(
                 // ****** MAKE NETWORK CALL, SAVE RESULT TO CACHE ******
                 refresh(fetchParam)
                 cacheKey?.let {
-                    lastRefreshTimes[it] = getCurrentTime()
+                    cacheTimestampStore?.saveLastRefreshTime(
+                        it,
+                        getCurrentTime(),
+                    )
                 }
                 // ****** VIEW CACHE ******
                 emit(Async.Success(query(queryParam)!!))
@@ -90,8 +93,8 @@ abstract class BaseCacheRepository<DataType, QueryType, FetchType>(
         saveFetchResult(fetch(fetchParam))
     }
 
-    private fun isCacheExpired(cacheKey: Any): Boolean {
-        val lastRefreshTime = lastRefreshTimes[cacheKey] ?: 0L
+    private suspend fun isCacheExpired(cacheKey: String): Boolean {
+        val lastRefreshTime = cacheTimestampStore?.getLastRefreshTime(cacheKey) ?: 0L
         return getCurrentTime() - lastRefreshTime > cacheDurationMs
     }
 }

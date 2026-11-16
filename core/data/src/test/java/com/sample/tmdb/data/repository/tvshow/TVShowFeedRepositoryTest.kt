@@ -36,8 +36,9 @@ class TVShowFeedRepositoryTest : BaseFeedRepositoryTest<TVShow>() {
     private lateinit var tvShowGenreRepository: TVShowGenreRepository
 
     override fun initRepository() {
-        tvShowGenreRepository = TVShowGenreRepository(api, dao, context, Dispatchers.Main)
-        repository = TVShowFeedRepository(context, Dispatchers.Main, api, dao, tvShowGenreRepository)
+        tvShowGenreRepository = TVShowGenreRepository(api, dao, context, Dispatchers.Main, cacheTimestampStore)
+        repository =
+            TVShowFeedRepository(context, Dispatchers.Main, api, dao, tvShowGenreRepository, cacheTimestampStore)
     }
 
     override fun mockApiResponse() = runTest {

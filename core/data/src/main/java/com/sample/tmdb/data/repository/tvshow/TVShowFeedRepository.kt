@@ -17,6 +17,7 @@ import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.utils.Async
+import com.sample.tmdb.domain.utils.CacheTimestampDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,7 +31,8 @@ class TVShowFeedRepository @Inject constructor(
     private val tvShowApi: TVShowService,
     private val tvShowFeedDao: TVShowFeedDao,
     private val tvShowGenreRepository: TVShowGenreRepository,
-) : BaseFeedRepository<TVShow>(context, ioDispatcher) {
+    cacheTimestampStore: CacheTimestampDataStore,
+) : BaseFeedRepository<TVShow>(context, ioDispatcher, cacheTimestampStore) {
     override suspend fun popularItems(isFiltered: Boolean): List<TVShow> = if (isFiltered) {
         emptyList()
     } else {

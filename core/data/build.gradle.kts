@@ -57,6 +57,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    implementation(libs.androidx.datastore)
     testImplementation(project(":test:common-test"))
     testImplementation(libs.junit)
     testImplementation(libs.mockito.kotlin)

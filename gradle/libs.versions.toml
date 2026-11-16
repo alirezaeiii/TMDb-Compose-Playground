@@ -39,6 +39,7 @@ browser = "1.10.0"
 room = "2.8.5"
 annotation = "1.11.0"
 lottie-compose = "6.7.1"
+datastore = "1.1.7"
 mockito = "6.4.0"
 junit = "4.13.2"
 mockk = "1.14.11"
@@ -112,6 +113,7 @@ compose-material3 = { group = "androidx.compose.material3", name = "material3", 
 
 # Other
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 
 # Room
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }

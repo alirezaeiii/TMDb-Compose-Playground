@@ -6,16 +6,21 @@ import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TMDbItem
+import com.sample.tmdb.domain.utils.CacheTimestampDataStore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
-abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: CoroutineDispatcher) :
-    BaseCacheRepository<List<FeedWrapper>, Unit, Unit>(
-        context = context,
-        ioDispatcher = ioDispatcher,
-        cacheDurationMs = 60 * 60 * 1000L,
-    ) {
+abstract class BaseFeedRepository<T : TMDbItem>(
+    context: Context,
+    ioDispatcher: CoroutineDispatcher,
+    cacheTimestampStore: CacheTimestampDataStore,
+) : BaseCacheRepository<List<FeedWrapper>, Unit, Unit>(
+    context = context,
+    ioDispatcher = ioDispatcher,
+    cacheTimestampStore = cacheTimestampStore,
+    cacheDurationMs = 60 * 60 * 1000L,
+) {
 
     private var _selectedGenres: Array<Int> = emptyArray()
     val selectedGenres: Array<Int> get() = _selectedGenres
@@ -24,7 +29,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
         _selectedGenres = genres
     }
 
-    override fun getCacheKey(): Any? = selectedGenres.sortedArray().joinToString(",")
+    override fun getCacheKey(): String? = selectedGenres.sortedArray().joinToString(",")
 
     protected abstract suspend fun popularItems(isFiltered: Boolean): List<T>
 

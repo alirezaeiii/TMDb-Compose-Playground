@@ -4,6 +4,11 @@ import app.cash.turbine.test
 import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.utils.Async
+import com.sample.tmdb.domain.utils.CacheTimestampDataStore
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.just
+import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.last
@@ -16,6 +21,18 @@ import org.mockito.Mockito.`when`
 
 abstract class BaseFeedRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
     protected lateinit var repository: BaseFeedRepository<T>
+
+    protected val cacheTimestampStore = mockk<CacheTimestampDataStore>()
+
+    override fun setup() {
+        super.setup()
+        coEvery {
+            cacheTimestampStore.getLastRefreshTime(any())
+        } returns System.currentTimeMillis()
+        coEvery {
+            cacheTimestampStore.saveLastRefreshTime(any(), any())
+        } just Runs
+    }
 
     @Test
     fun `load feeds success`() {

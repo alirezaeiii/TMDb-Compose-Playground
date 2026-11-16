@@ -7,6 +7,7 @@ import com.sample.tmdb.data.response.GenresDTO
 import com.sample.tmdb.data.source.entity.MovieGenreEntity
 import com.sample.tmdb.data.source.local.MovieFeedDao
 import com.sample.tmdb.domain.utils.Async
+import com.sample.tmdb.domain.utils.CacheTimestampDataStore
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.last
@@ -29,8 +30,11 @@ class MovieGenreRepositoryTest : BaseRepositoryTest() {
 
     private lateinit var repository: MovieGenreRepository
 
+    @Mock
+    private lateinit var cacheTimestampStore: CacheTimestampDataStore
+
     override fun initRepository() {
-        repository = MovieGenreRepository(api, dao, context, Dispatchers.Main)
+        repository = MovieGenreRepository(api, dao, context, Dispatchers.Main, cacheTimestampStore)
     }
 
     override fun mockApiResponse() = runTest {

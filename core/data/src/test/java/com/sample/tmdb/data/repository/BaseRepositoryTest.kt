@@ -22,7 +22,7 @@ abstract class BaseRepositoryTest {
     protected open fun mockFailApiResponse() {}
 
     @Before
-    fun setup() {
+    open fun setup() {
         lenient().`when`(context.getString(anyInt())).thenReturn("Error message")
         initRepository()
     }

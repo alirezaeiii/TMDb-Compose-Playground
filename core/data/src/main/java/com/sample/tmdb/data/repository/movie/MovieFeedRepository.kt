@@ -17,6 +17,7 @@ import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.utils.Async
+import com.sample.tmdb.domain.utils.CacheTimestampDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,7 +31,8 @@ class MovieFeedRepository @Inject constructor(
     private val movieApi: MovieService,
     private val movieFeedDao: MovieFeedDao,
     private val movieGenreRepository: MovieGenreRepository,
-) : BaseFeedRepository<Movie>(context, ioDispatcher) {
+    cacheTimestampStore: CacheTimestampDataStore,
+) : BaseFeedRepository<Movie>(context, ioDispatcher, cacheTimestampStore) {
     override suspend fun popularItems(isFiltered: Boolean): List<Movie> = if (isFiltered) {
         emptyList()
     } else {
