@@ -16,7 +16,7 @@ open class MoviePagingViewModel @AssistedInject constructor(
     @TMDb repository: PagingRepository<Movie>,
     @Assisted id: Int? = null,
     @Assisted type: SortType,
-    @Assisted genres: String? = null,
+    @Assisted genres: String = "",
 ) : BaseMainPagingViewModel<Movie>(repository, id, type, genres) {
     override fun onSearchClick() {
         emitEvent(UiEvent.Navigate(TMDbNavKey.SearchMovies))
@@ -24,6 +24,6 @@ open class MoviePagingViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(id: Int? = null, type: SortType, genres: String? = null): MoviePagingViewModel
+        fun create(id: Int? = null, type: SortType, genres: String = ""): MoviePagingViewModel
     }
 }

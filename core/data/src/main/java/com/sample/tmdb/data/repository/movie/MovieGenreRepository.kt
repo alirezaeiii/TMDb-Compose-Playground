@@ -25,6 +25,8 @@ class MovieGenreRepository @Inject constructor(
     ioDispatcher = ioDispatcher,
     cacheDurationMs = 24 * 60 * 60 * 1000L,
 ) {
+    override fun getCacheKey(): Any = CACHE_KEY
+
     override suspend fun query(queryParam: Unit?): List<Genre>? {
         val dbGenres = movieFeedDao.getGenres()
         return if (dbGenres.isEmpty()) null else dbGenres.asDomainModel()
@@ -34,5 +36,9 @@ class MovieGenreRepository @Inject constructor(
 
     override suspend fun saveFetchResult(item: List<Genre>) {
         movieFeedDao.deleteAndInsertGenres(item.asMovieGenreDatabaseModel())
+    }
+
+    companion object {
+        private const val CACHE_KEY = "Genres_movie"
     }
 }

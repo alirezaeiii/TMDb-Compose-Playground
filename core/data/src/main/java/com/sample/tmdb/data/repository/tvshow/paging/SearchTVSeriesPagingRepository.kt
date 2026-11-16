@@ -26,7 +26,7 @@ class SearchTVSeriesPagingRepository @Inject constructor(
         query: String?,
         id: Int?,
         type: SortType?,
-        genres: String?,
+        genres: String,
     ): RemoteMediator<Int, SearchTVShowPagingEntity> =
         SearchTVSeriesRemoteMediator(database, tvShowApi, query!!, context)
 
@@ -34,7 +34,7 @@ class SearchTVSeriesPagingRepository @Inject constructor(
         query: String?,
         id: Int?,
         type: SortType?,
-        genres: String?,
+        genres: String,
     ): PagingSource<Int, SearchTVShowPagingEntity> = database.searchTVShowPagingDao.getPagingTVShows(query!!)
 
     override fun mapEntityToDomain(entity: SearchTVShowPagingEntity): TVShow = entity.asDomainModel()

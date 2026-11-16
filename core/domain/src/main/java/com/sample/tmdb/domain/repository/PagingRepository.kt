@@ -10,6 +10,6 @@ interface PagingRepository<T : Any> {
         query: String? = null,
         id: Int? = null,
         type: SortType? = null,
-        genres: String? = null,
+        genres: String = "",
     ): Flow<PagingData<T>>
 }

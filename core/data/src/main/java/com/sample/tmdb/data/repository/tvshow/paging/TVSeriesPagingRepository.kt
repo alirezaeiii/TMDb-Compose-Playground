@@ -28,16 +28,15 @@ class TVSeriesPagingRepository @Inject constructor(
         query: String?,
         id: Int?,
         type: SortType?,
-        genres: String?,
-    ): RemoteMediator<Int, TVShowPagingEntity> =
-        TVShowRemoteMediator(database, tvShowApi, type!!, context, genres ?: "")
+        genres: String,
+    ): RemoteMediator<Int, TVShowPagingEntity> = TVShowRemoteMediator(database, tvShowApi, type!!, context, genres)
 
     override fun createPagingSource(
         query: String?,
         id: Int?,
         type: SortType?,
-        genres: String?,
-    ): PagingSource<Int, TVShowPagingEntity> = database.tvShowPagingDao.getPagingTVShows(type!!, genres ?: "")
+        genres: String,
+    ): PagingSource<Int, TVShowPagingEntity> = database.tvShowPagingDao.getPagingTVShows(type!!, genres)
 
     override fun mapEntityToDomain(entity: TVShowPagingEntity): TVShow = entity.asDomainModel()
 }

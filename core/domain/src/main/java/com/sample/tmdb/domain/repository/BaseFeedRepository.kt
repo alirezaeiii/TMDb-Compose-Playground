@@ -102,4 +102,6 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
             }
         }
     }
+
+    protected fun Array<Int>.toQueryString(): String? = if (isEmpty()) null else joinToString(",")
 }

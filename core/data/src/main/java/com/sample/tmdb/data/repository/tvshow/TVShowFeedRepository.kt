@@ -7,7 +7,6 @@ import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.response.asTVShowDomainModel
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.entity.asFeedDatabaseModel
-import com.sample.tmdb.data.source.entity.asTVShowGenreDatabaseModel
 import com.sample.tmdb.data.source.local.TVShowFeedDao
 import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
@@ -23,8 +22,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.last
-
-private fun Array<Int>.toQueryString(): String? = if (isEmpty()) null else joinToString(",")
 
 @Singleton
 class TVShowFeedRepository @Inject constructor(
@@ -112,8 +109,5 @@ class TVShowFeedRepository @Inject constructor(
             }
         }
         tvShowFeedDao.deleteAndInsert(genresKey, entities)
-        item.firstOrNull()?.genres?.let { genres ->
-            tvShowFeedDao.deleteAndInsertGenres(genres.asTVShowGenreDatabaseModel())
-        }
     }
 }

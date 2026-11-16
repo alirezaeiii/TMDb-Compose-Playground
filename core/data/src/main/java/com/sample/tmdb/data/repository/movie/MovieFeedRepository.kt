@@ -7,7 +7,6 @@ import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.response.asMovieDomainModel
 import com.sample.tmdb.data.source.entity.asDomainModel
 import com.sample.tmdb.data.source.entity.asFeedDatabaseModel
-import com.sample.tmdb.data.source.entity.asMovieGenreDatabaseModel
 import com.sample.tmdb.data.source.local.MovieFeedDao
 import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
@@ -23,8 +22,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.last
-
-private fun Array<Int>.toQueryString(): String? = if (isEmpty()) null else joinToString(",")
 
 @Singleton
 class MovieFeedRepository @Inject constructor(
@@ -110,8 +107,5 @@ class MovieFeedRepository @Inject constructor(
             }
         }
         movieFeedDao.deleteAndInsert(genresKey, entities)
-        item.firstOrNull()?.genres?.let { genres ->
-            movieFeedDao.deleteAndInsertGenres(genres.asMovieGenreDatabaseModel())
-        }
     }
 }
