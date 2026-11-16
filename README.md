@@ -1,8 +1,6 @@
 # TMDb-Compose-Playground
 Modular Android architecture using Kotlin, Jetpack Compose, Navigation3 Compose, Paging3 Compose, MVVM, Hilt, Room, Coroutines, Retrofit, Coil-compose and Github Actions which showcases offline-first approach.
 
-### 🚧 Work in progress 👷‍♀️⛏👷🔧️👷🔧 🚧
-Cache is going to implemented for whole app. At the moment feed, detail and pagination screens are supported.
 
 ## Screenshots
 <p float="left">
