@@ -1,6 +1,6 @@
 package com.sample.tmdb.data.di
 
-import com.sample.tmdb.data.utils.DataStoreCacheTimestamp
+import com.sample.tmdb.data.utils.CacheTimestampDataStoreImpl
 import com.sample.tmdb.domain.utils.CacheTimestampDataStore
 import dagger.Binds
 import dagger.Module
@@ -14,5 +14,5 @@ abstract class CacheModule {
 
     @Binds
     @Singleton
-    abstract fun bindCacheTimestampDataStore(implementation: DataStoreCacheTimestamp): CacheTimestampDataStore
+    abstract fun bindCacheTimestampDataStore(implementation: CacheTimestampDataStoreImpl): CacheTimestampDataStore
 }

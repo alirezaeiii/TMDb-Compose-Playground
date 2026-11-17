@@ -11,7 +11,7 @@ import javax.inject.Singleton
 import kotlinx.coroutines.flow.first
 
 @Singleton
-class DataStoreCacheTimestamp @Inject constructor(@ApplicationContext context: Context) : CacheTimestampDataStore {
+class CacheTimestampDataStoreImpl @Inject constructor(@ApplicationContext context: Context) : CacheTimestampDataStore {
 
     private val dataStore = context.cacheTimestampDataStore
 
