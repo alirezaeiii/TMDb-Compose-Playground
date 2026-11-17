@@ -9,12 +9,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -113,9 +116,42 @@ private fun <T : TMDbItem> FeedScreen(
     val genres by viewModel.genres.collectAsState()
     val selectedGenreIds by viewModel.selectedGenreIds.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            TMDbSpacer()
+    Box(Modifier.fillMaxSize()) {
+        CacheContent(
+            viewModel = viewModel,
+            languageViewModel = languageViewModel,
+            onNavigate = onNavigate,
+            scaffoldState = scaffoldState,
+        ) { state ->
+            state.items?.let { feeds ->
+                TMDbSwipeRefresh(
+                    isRefreshing = state.isRefreshing,
+                    onRefresh = {
+                        viewModel.refresh(isUserRefresh = true)
+                    },
+                ) {
+                    FeedCollectionList(
+                        collection = feeds,
+                        navigate = viewModel::onMoreClick,
+                        onFeedClick = viewModel::onTMDbItemClick,
+                    )
+                }
+            }
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.TopCenter),
+        ) {
+            DestinationBar(
+                title = stringResource(
+                    R.string.app_title,
+                    stringResource(resourceId),
+                ),
+                onSearchClicked = viewModel::onSearchClick,
+            )
+
             if (genres.isNotEmpty()) {
                 GenreChipsRow(
                     genres = genres,
@@ -123,35 +159,7 @@ private fun <T : TMDbItem> FeedScreen(
                     onGenreSelected = viewModel::onGenreSelected,
                 )
             }
-            CacheContent(
-                viewModel = viewModel,
-                languageViewModel = languageViewModel,
-                onNavigate = onNavigate,
-                scaffoldState = scaffoldState,
-            ) { state ->
-                state.items?.let { feeds ->
-                    TMDbSwipeRefresh(
-                        isRefreshing = state.isRefreshing,
-                        onRefresh = { viewModel.refresh(isUserRefresh = true) },
-                        indicatorTopPadding = 0.dp,
-                    ) {
-                        FeedCollectionList(
-                            collection = feeds,
-                            navigate = viewModel::onMoreClick,
-                            onFeedClick = viewModel::onTMDbItemClick,
-                        )
-                    }
-                }
-            }
         }
-        DestinationBar(
-            title =
-                stringResource(
-                    R.string.app_title,
-                    stringResource(resourceId),
-                ),
-            onSearchClicked = viewModel::onSearchClick,
-        )
     }
 }
 
@@ -164,7 +172,15 @@ fun FeedCollectionList(
     navigate: (FeedNavigationEvent) -> Unit,
     onFeedClick: (TMDbItem) -> Unit,
 ) {
-    LazyColumn {
+    LazyColumn(
+        contentPadding = PaddingValues(
+            top = WindowInsets.statusBars
+                .asPaddingValues()
+                .calculateTopPadding() +
+                56.dp +
+                48.dp,
+        ),
+    ) {
         if (genres.isNotEmpty()) {
             item {
                 TMDbSpacer()
