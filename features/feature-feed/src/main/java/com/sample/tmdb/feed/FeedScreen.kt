@@ -126,9 +126,9 @@ private fun <T : TMDbItem> FeedScreen(
             state.items?.let { feeds ->
                 TMDbSwipeRefresh(
                     isRefreshing = state.isRefreshing,
-                    onRefresh = {
-                        viewModel.refresh(isUserRefresh = true)
-                    },
+                    onRefresh = { viewModel.refresh(isUserRefresh = true) },
+                    indicatorTopPadding = WindowInsets.statusBars.asPaddingValues()
+                        .calculateTopPadding() + TMDb_56_dp + TMDb_48_dp,
                 ) {
                     FeedCollectionList(
                         collection = feeds,
