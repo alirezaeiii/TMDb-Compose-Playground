@@ -52,6 +52,8 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_220_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_48_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_72_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
@@ -61,10 +63,8 @@ import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.ui.theme.Teal200
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
-import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.domain.model.FeedWrapper
-import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.MediaType
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
@@ -166,9 +166,6 @@ private fun <T : TMDbItem> FeedScreen(
 @Composable
 fun FeedCollectionList(
     collection: List<FeedWrapper>,
-    genres: List<Genre> = emptyList(),
-    selectedGenreIds: Set<Int> = emptySet(),
-    onGenreSelected: (Genre) -> Unit = {},
     navigate: (FeedNavigationEvent) -> Unit,
     onFeedClick: (TMDbItem) -> Unit,
 ) {
@@ -177,22 +174,9 @@ fun FeedCollectionList(
             top = WindowInsets.statusBars
                 .asPaddingValues()
                 .calculateTopPadding() +
-                56.dp +
-                48.dp,
+                TMDb_56_dp + TMDb_48_dp,
         ),
     ) {
-        if (genres.isNotEmpty()) {
-            item {
-                TMDbSpacer()
-            }
-            item {
-                GenreChipsRow(
-                    genres = genres,
-                    selectedGenreIds = selectedGenreIds,
-                    onGenreSelected = onGenreSelected,
-                )
-            }
-        }
         if (collection.isNotEmpty()) {
             item(key = "pager_${collection.first().feeds.firstOrNull()?.id}") {
                 PagerTMDbItemContainer(

@@ -63,9 +63,6 @@ class FeedScreenTest {
                                 SortType.MOST_POPULAR,
                             ),
                         ),
-                    emptyList(),
-                    emptySet(),
-                    {},
                     {},
                     {},
                 )
