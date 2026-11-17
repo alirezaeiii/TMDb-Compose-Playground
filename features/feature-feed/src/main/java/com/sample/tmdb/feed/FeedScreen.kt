@@ -41,7 +41,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.ui.CacheContent
 import com.sample.tmdb.common.ui.Dimens
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
@@ -69,6 +68,7 @@ import com.sample.tmdb.domain.model.TMDbItem
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feed.utils.pagerTransition
 import com.sample.tmdb.navigation.TMDbNavKey
+import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun MovieFeedScreen(
@@ -113,34 +113,45 @@ private fun <T : TMDbItem> FeedScreen(
     val genres by viewModel.genres.collectAsState()
     val selectedGenreIds by viewModel.selectedGenreIds.collectAsState()
 
-    CacheContent(
-        viewModel = viewModel,
-        languageViewModel = languageViewModel,
-        onNavigate = onNavigate,
-        scaffoldState = scaffoldState,
-    ) { state ->
-        state.items?.let { feeds ->
-            Box {
-                TMDbSwipeRefresh(state.isRefreshing, { viewModel.refresh(isUserRefresh = true) }) {
-                    FeedCollectionList(
-                        collection = feeds,
-                        genres = genres,
-                        selectedGenreIds = selectedGenreIds,
-                        onGenreSelected = viewModel::onGenreSelected,
-                        navigate = viewModel::onMoreClick,
-                        onFeedClick = viewModel::onTMDbItemClick,
-                    )
-                }
-                DestinationBar(
-                    title =
-                        stringResource(
-                            R.string.app_title,
-                            stringResource(resourceId),
-                        ),
-                    onSearchClicked = viewModel::onSearchClick,
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            TMDbSpacer()
+            if (genres.isNotEmpty()) {
+                GenreChipsRow(
+                    genres = genres,
+                    selectedGenreIds = selectedGenreIds,
+                    onGenreSelected = viewModel::onGenreSelected,
                 )
             }
+            CacheContent(
+                viewModel = viewModel,
+                languageViewModel = languageViewModel,
+                onNavigate = onNavigate,
+                scaffoldState = scaffoldState,
+            ) { state ->
+                state.items?.let { feeds ->
+                    TMDbSwipeRefresh(
+                        isRefreshing = state.isRefreshing,
+                        onRefresh = { viewModel.refresh(isUserRefresh = true) },
+                        indicatorTopPadding = 0.dp,
+                    ) {
+                        FeedCollectionList(
+                            collection = feeds,
+                            navigate = viewModel::onMoreClick,
+                            onFeedClick = viewModel::onTMDbItemClick,
+                        )
+                    }
+                }
+            }
         }
+        DestinationBar(
+            title =
+                stringResource(
+                    R.string.app_title,
+                    stringResource(resourceId),
+                ),
+            onSearchClicked = viewModel::onSearchClick,
+        )
     }
 }
 
@@ -154,10 +165,10 @@ fun FeedCollectionList(
     onFeedClick: (TMDbItem) -> Unit,
 ) {
     LazyColumn {
-        item {
-            TMDbSpacer()
-        }
         if (genres.isNotEmpty()) {
+            item {
+                TMDbSpacer()
+            }
             item {
                 GenreChipsRow(
                     genres = genres,
