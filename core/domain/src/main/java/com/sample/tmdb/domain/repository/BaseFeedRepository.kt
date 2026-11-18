@@ -31,15 +31,15 @@ abstract class BaseFeedRepository<T : TMDbItem>(
 
     override fun getCacheKey(): String? = selectedGenres.sortedArray().joinToString(",")
 
-    protected abstract suspend fun popularItems(isFiltered: Boolean): List<T>
+    protected abstract suspend fun popularItems(): List<T>
 
-    protected abstract suspend fun nowPlayingItems(isFiltered: Boolean): List<T>
+    protected abstract suspend fun nowPlayingItems(): List<T>
 
-    protected abstract suspend fun latestItems(isFiltered: Boolean): List<T>
+    protected abstract suspend fun latestItems(): List<T>
 
-    protected abstract suspend fun topRatedItems(isFiltered: Boolean): List<T>
+    protected abstract suspend fun topRatedItems(): List<T>
 
-    protected abstract suspend fun trendingItems(isFiltered: Boolean): List<T>
+    protected abstract suspend fun trendingItems(): List<T>
 
     protected abstract suspend fun discoverItems(genres: Array<Int>): List<T>
 
@@ -61,11 +61,21 @@ abstract class BaseFeedRepository<T : TMDbItem>(
         val genres = selectedGenres
         val isFiltered = genres.isNotEmpty()
         val genresDeferred = async { getGenres() }
-        val trendingDeferred = async { trendingItems(isFiltered) }
-        val nowPlayingDeferred = async { nowPlayingItems(isFiltered) }
-        val popularDeferred = async { popularItems(isFiltered) }
-        val latestDeferred = async { latestItems(isFiltered) }
-        val topRatedDeferred = async { topRatedItems(isFiltered) }
+        val trendingDeferred = async {
+            fetchUnfilteredItems(isFiltered) { trendingItems() }
+        }
+        val nowPlayingDeferred = async {
+            fetchUnfilteredItems(isFiltered) { nowPlayingItems() }
+        }
+        val popularDeferred = async {
+            fetchUnfilteredItems(isFiltered) { popularItems() }
+        }
+        val latestDeferred = async {
+            fetchUnfilteredItems(isFiltered) { latestItems() }
+        }
+        val topRatedDeferred = async {
+            fetchUnfilteredItems(isFiltered) { topRatedItems() }
+        }
         val discoverDeferred = async { discoverItems(genres) }
         val appleTVDeferred = async { appleTVItems(genres) }
         val netflixDeferred = async { netflixItems(genres) }
@@ -109,4 +119,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(
     }
 
     protected fun Array<Int>.toQueryString(): String? = if (isEmpty()) null else joinToString(",")
+
+    private suspend fun fetchUnfilteredItems(isFiltered: Boolean, fetch: suspend () -> List<T>): List<T> =
+        if (isFiltered) emptyList() else fetch()
 }

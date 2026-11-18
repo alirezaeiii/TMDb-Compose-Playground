@@ -33,35 +33,15 @@ class TVShowFeedRepository @Inject constructor(
     private val tvShowGenreRepository: TVShowGenreRepository,
     cacheTimestampStore: CacheTimestampDataStore,
 ) : BaseFeedRepository<TVShow>(context, ioDispatcher, cacheTimestampStore) {
-    override suspend fun popularItems(isFiltered: Boolean): List<TVShow> = if (isFiltered) {
-        emptyList()
-    } else {
-        tvShowApi.popularTVSeries().items.asTVShowDomainModel()
-    }
+    override suspend fun popularItems(): List<TVShow> = tvShowApi.popularTVSeries().items.asTVShowDomainModel()
 
-    override suspend fun latestItems(isFiltered: Boolean): List<TVShow> = if (isFiltered) {
-        emptyList()
-    } else {
-        tvShowApi.onTheAirTVSeries().items.asTVShowDomainModel()
-    }
+    override suspend fun latestItems(): List<TVShow> = tvShowApi.onTheAirTVSeries().items.asTVShowDomainModel()
 
-    override suspend fun topRatedItems(isFiltered: Boolean): List<TVShow> = if (isFiltered) {
-        emptyList()
-    } else {
-        tvShowApi.topRatedTVSeries().items.asTVShowDomainModel()
-    }
+    override suspend fun topRatedItems(): List<TVShow> = tvShowApi.topRatedTVSeries().items.asTVShowDomainModel()
 
-    override suspend fun trendingItems(isFiltered: Boolean): List<TVShow> = if (isFiltered) {
-        emptyList()
-    } else {
-        tvShowApi.trendingTVSeries().items.asTVShowDomainModel()
-    }
+    override suspend fun trendingItems(): List<TVShow> = tvShowApi.trendingTVSeries().items.asTVShowDomainModel()
 
-    override suspend fun nowPlayingItems(isFiltered: Boolean): List<TVShow> = if (isFiltered) {
-        emptyList()
-    } else {
-        tvShowApi.airingTodayTVSeries().items.asTVShowDomainModel()
-    }
+    override suspend fun nowPlayingItems(): List<TVShow> = tvShowApi.airingTodayTVSeries().items.asTVShowDomainModel()
 
     override suspend fun discoverItems(genres: Array<Int>): List<TVShow> =
         tvShowApi.discoverTVSeries(genres = genres.toQueryString()).items.asTVShowDomainModel()

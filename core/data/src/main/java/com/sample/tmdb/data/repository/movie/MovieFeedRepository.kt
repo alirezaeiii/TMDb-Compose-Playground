@@ -33,35 +33,15 @@ class MovieFeedRepository @Inject constructor(
     private val movieGenreRepository: MovieGenreRepository,
     cacheTimestampStore: CacheTimestampDataStore,
 ) : BaseFeedRepository<Movie>(context, ioDispatcher, cacheTimestampStore) {
-    override suspend fun popularItems(isFiltered: Boolean): List<Movie> = if (isFiltered) {
-        emptyList()
-    } else {
-        movieApi.popularMovies().items.asMovieDomainModel()
-    }
+    override suspend fun popularItems(): List<Movie> = movieApi.popularMovies().items.asMovieDomainModel()
 
-    override suspend fun latestItems(isFiltered: Boolean): List<Movie> = if (isFiltered) {
-        emptyList()
-    } else {
-        movieApi.upcomingMovies().items.asMovieDomainModel()
-    }
+    override suspend fun latestItems(): List<Movie> = movieApi.upcomingMovies().items.asMovieDomainModel()
 
-    override suspend fun topRatedItems(isFiltered: Boolean): List<Movie> = if (isFiltered) {
-        emptyList()
-    } else {
-        movieApi.topRatedMovies().items.asMovieDomainModel()
-    }
+    override suspend fun topRatedItems(): List<Movie> = movieApi.topRatedMovies().items.asMovieDomainModel()
 
-    override suspend fun trendingItems(isFiltered: Boolean): List<Movie> = if (isFiltered) {
-        emptyList()
-    } else {
-        movieApi.trendingMovies().items.asMovieDomainModel()
-    }
+    override suspend fun trendingItems(): List<Movie> = movieApi.trendingMovies().items.asMovieDomainModel()
 
-    override suspend fun nowPlayingItems(isFiltered: Boolean): List<Movie> = if (isFiltered) {
-        emptyList()
-    } else {
-        movieApi.nowPlayingMovies().items.asMovieDomainModel()
-    }
+    override suspend fun nowPlayingItems(): List<Movie> = movieApi.nowPlayingMovies().items.asMovieDomainModel()
 
     override suspend fun discoverItems(genres: Array<Int>): List<Movie> =
         movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
