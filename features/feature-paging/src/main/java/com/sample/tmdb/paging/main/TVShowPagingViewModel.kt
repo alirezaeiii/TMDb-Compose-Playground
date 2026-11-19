@@ -11,19 +11,18 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 
-@HiltViewModel(assistedFactory = TvShowPagingViewModel.Factory::class)
-open class TvShowPagingViewModel @AssistedInject constructor(
+@HiltViewModel(assistedFactory = TVShowPagingViewModel.Factory::class)
+open class TVShowPagingViewModel @AssistedInject constructor(
     @TMDb repository: PagingRepository<TVShow>,
-    @Assisted id: Int? = null,
     @Assisted type: SortType,
     @Assisted genres: String = "",
-) : BaseMainPagingViewModel<TVShow>(repository, id, type, genres) {
+) : BaseMainPagingViewModel<TVShow>(repository, type = type, genres = genres) {
     override fun onSearchClick() {
         emitEvent(UiEvent.Navigate(TMDbNavKey.SearchTvShows))
     }
 
     @AssistedFactory
     interface Factory {
-        fun create(id: Int? = null, type: SortType, genres: String = ""): TvShowPagingViewModel
+        fun create(type: SortType, genres: String = ""): TVShowPagingViewModel
     }
 }

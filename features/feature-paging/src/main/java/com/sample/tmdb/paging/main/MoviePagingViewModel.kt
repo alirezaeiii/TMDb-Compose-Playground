@@ -14,16 +14,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 @HiltViewModel(assistedFactory = MoviePagingViewModel.Factory::class)
 open class MoviePagingViewModel @AssistedInject constructor(
     @TMDb repository: PagingRepository<Movie>,
-    @Assisted id: Int? = null,
     @Assisted type: SortType,
     @Assisted genres: String = "",
-) : BaseMainPagingViewModel<Movie>(repository, id, type, genres) {
+) : BaseMainPagingViewModel<Movie>(repository, type = type, genres = genres) {
     override fun onSearchClick() {
         emitEvent(UiEvent.Navigate(TMDbNavKey.SearchMovies))
     }
 
     @AssistedFactory
     interface Factory {
-        fun create(id: Int? = null, type: SortType, genres: String = ""): MoviePagingViewModel
+        fun create(type: SortType, genres: String = ""): MoviePagingViewModel
     }
 }

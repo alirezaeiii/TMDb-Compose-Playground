@@ -67,7 +67,6 @@ import com.sample.tmdb.detail.MovieDetailScreen
 import com.sample.tmdb.detail.MovieDetailViewModel
 import com.sample.tmdb.detail.TVShowDetailScreen
 import com.sample.tmdb.detail.TVShowDetailViewModel
-import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.feed.MovieFeedScreen
 import com.sample.tmdb.feed.TVShowFeedScreen
 import com.sample.tmdb.gallery.ImagesScreen
@@ -81,7 +80,7 @@ import com.sample.tmdb.paging.main.SimilarMoviePagingViewModel
 import com.sample.tmdb.paging.main.SimilarTvShowPagingScreen
 import com.sample.tmdb.paging.main.SimilarTvShowPagingViewModel
 import com.sample.tmdb.paging.main.TVShowPagingScreen
-import com.sample.tmdb.paging.main.TvShowPagingViewModel
+import com.sample.tmdb.paging.main.TVShowPagingViewModel
 import com.sample.tmdb.paging.search.SearchMoviesScreen
 import com.sample.tmdb.paging.search.SearchTVSeriesScreen
 import com.sample.tmdb.person.paging.PagingPersonScreen
@@ -175,7 +174,7 @@ fun TMDbApp() {
         entry<TMDbNavKey.PagingTvShows> { key ->
             val sortType = key.sortType.asDomainModel()
             TVShowPagingScreen(
-                hiltViewModel<TvShowPagingViewModel, TvShowPagingViewModel.Factory>(
+                hiltViewModel<TVShowPagingViewModel, TVShowPagingViewModel.Factory>(
                     key = "PagingTVShows_${sortType.name}_${key.genres}",
                     creationCallback = { factory ->
                         factory.create(type = sortType, genres = key.genres)

@@ -33,7 +33,7 @@ fun MoviePagingScreen(
 
 @Composable
 fun TVShowPagingScreen(
-    viewModel: TvShowPagingViewModel,
+    viewModel: TVShowPagingViewModel,
     onNavigate: (TMDbNavKey) -> Unit,
     onNavigateUp: () -> Unit,
     sortType: SortType,
