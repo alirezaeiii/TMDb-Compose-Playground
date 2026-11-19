@@ -70,11 +70,10 @@ class MovieFeedRepository @Inject constructor(
     override suspend fun query(queryParam: Unit?): List<FeedWrapper> {
         val genresKey = selectedGenres.sortedArray().joinToString(",")
         val dbEntities = movieFeedDao.getFeed(genresKey)
-        val dbGenres = movieFeedDao.getGenres()
-        if (dbGenres.isEmpty() || dbEntities.isEmpty()) {
+        if (dbEntities.isEmpty()) {
             return emptyList()
         }
-        val genres = dbGenres.asDomainModel()
+        val genres = movieFeedDao.getGenres().asDomainModel()
         val itemsBySortType = dbEntities
             .groupBy { it.sortType }
             .mapValues { entry -> entry.value.map { it.asDomainModel() } }

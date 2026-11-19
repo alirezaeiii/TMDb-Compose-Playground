@@ -42,6 +42,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sample.tmdb.common.R as commonR
@@ -116,6 +117,8 @@ private fun <T : TMDbItem> FeedScreen(
     val genres by viewModel.genres.collectAsState()
     val selectedGenreIds by viewModel.selectedGenreIds.collectAsState()
 
+    val genresPadding = if (genres.isEmpty()) 0.dp else TMDb_48_dp
+
     Box(Modifier.fillMaxSize()) {
         CacheContent(
             viewModel = viewModel,
@@ -128,12 +131,13 @@ private fun <T : TMDbItem> FeedScreen(
                     isRefreshing = state.isRefreshing,
                     onRefresh = { viewModel.refresh(isUserRefresh = true) },
                     indicatorTopPadding = WindowInsets.statusBars.asPaddingValues()
-                        .calculateTopPadding() + TMDb_56_dp + TMDb_48_dp,
+                        .calculateTopPadding() + TMDb_56_dp + genresPadding,
                 ) {
                     FeedCollectionList(
                         collection = feeds,
                         navigate = viewModel::onMoreClick,
                         onFeedClick = viewModel::onTMDbItemClick,
+                        genresPadding = genresPadding,
                     )
                 }
             }
@@ -168,13 +172,14 @@ fun FeedCollectionList(
     collection: List<FeedWrapper>,
     navigate: (FeedNavigationEvent) -> Unit,
     onFeedClick: (TMDbItem) -> Unit,
+    genresPadding: Dp,
 ) {
     LazyColumn(
         contentPadding = PaddingValues(
             top = WindowInsets.statusBars
                 .asPaddingValues()
                 .calculateTopPadding() +
-                TMDb_56_dp + TMDb_48_dp,
+                TMDb_56_dp + genresPadding,
         ),
     ) {
         if (collection.isNotEmpty()) {

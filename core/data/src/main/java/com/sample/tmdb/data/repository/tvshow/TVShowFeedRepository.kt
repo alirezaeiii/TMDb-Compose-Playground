@@ -72,11 +72,10 @@ class TVShowFeedRepository @Inject constructor(
     override suspend fun query(queryParam: Unit?): List<FeedWrapper> {
         val genresKey = selectedGenres.sortedArray().joinToString(",")
         val dbEntities = tvShowFeedDao.getFeed(genresKey)
-        val dbGenres = tvShowFeedDao.getGenres()
-        if (dbGenres.isEmpty() || dbEntities.isEmpty()) {
+        if (dbEntities.isEmpty()) {
             return emptyList()
         }
-        val genres = dbGenres.asDomainModel()
+        val genres = tvShowFeedDao.getGenres().asDomainModel()
         val itemsBySortType = dbEntities
             .groupBy { it.sortType }
             .mapValues { entry -> entry.value.map { it.asDomainModel() } }

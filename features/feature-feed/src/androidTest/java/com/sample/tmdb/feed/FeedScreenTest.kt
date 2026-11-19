@@ -7,6 +7,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.unit.dp
 import com.sample.tmdb.domain.R as domainR
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
@@ -65,6 +66,7 @@ class FeedScreenTest {
                         ),
                     {},
                     {},
+                    0.dp,
                 )
             }
             onNodeWithText(activity.getString(domainR.string.text_trending)).assertIsDisplayed()
