@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   android_test:
     name: Running Android Tests
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
     continue-on-error: true
     steps:
       - name: Checkout
