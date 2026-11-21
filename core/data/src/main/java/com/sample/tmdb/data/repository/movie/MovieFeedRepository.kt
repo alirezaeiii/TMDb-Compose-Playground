@@ -12,7 +12,7 @@ import com.sample.tmdb.data.utils.Constants.AMAZON_PRIME_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.APPLE_TV_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.GOOGLE_PLAY_PROVIDER_ID
 import com.sample.tmdb.data.utils.Constants.NETFLIX_PROVIDER_ID
-import com.sample.tmdb.domain.model.FeedWrapper
+import com.sample.tmdb.domain.model.Feed
 import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.repository.BaseFeedRepository
@@ -67,11 +67,11 @@ class MovieFeedRepository @Inject constructor(
 
     override fun getLatestResId(): Int = R.string.text_upcoming
 
-    override suspend fun query(queryParam: Unit?): List<FeedWrapper> {
+    override suspend fun query(queryParam: Unit?): Feed? {
         val genresKey = selectedGenres.sortedArray().joinToString(",")
         val dbEntities = movieFeedDao.getFeed(genresKey)
         if (dbEntities.isEmpty()) {
-            return emptyList()
+            return null
         }
         val genres = movieFeedDao.getGenres().asDomainModel()
         val itemsBySortType = dbEntities
@@ -80,9 +80,9 @@ class MovieFeedRepository @Inject constructor(
         return createFeedWrappers(itemsBySortType, genres)
     }
 
-    override suspend fun saveFetchResult(item: List<FeedWrapper>) {
+    override suspend fun saveFetchResult(item: Feed) {
         val genresKey = selectedGenres.sortedArray().joinToString(",")
-        val entities = item.flatMap { feedWrapper ->
+        val entities = item.feedWrapper.flatMap { feedWrapper ->
             feedWrapper.feeds.filterIsInstance<Movie>().mapIndexed { index, movie ->
                 movie.asFeedDatabaseModel(feedWrapper.sortType, index, genresKey)
             }

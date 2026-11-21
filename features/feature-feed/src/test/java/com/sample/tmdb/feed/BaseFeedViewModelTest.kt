@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.common.ui.ViewState
-import com.sample.tmdb.domain.model.FeedWrapper
+import com.sample.tmdb.domain.model.Feed
 import com.sample.tmdb.domain.model.MediaType
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TMDbItem
@@ -56,9 +56,10 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
 
     @Test
     fun `load feeds success`() {
-        every { repository.getResult(null, null, any()) } returns flowOf(Async.Success(emptyList()))
+        val feed = Feed(emptyList(), emptyList())
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Success(feed))
         initViewModel()
-        assertEquals(ViewState(emptyList<FeedWrapper>()), viewModel.state.value)
+        assertEquals(ViewState(feed), viewModel.state.value)
     }
 
     @Test
@@ -70,7 +71,8 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
 
     @Test
     fun `load feeds warning emits showWarningUiEvent`() = runTest {
-        every { repository.getResult(null, null, any()) } returns flowOf(Async.Success(emptyList()))
+        val feed = Feed(emptyList(), emptyList())
+        every { repository.getResult(null, null, any()) } returns flowOf(Async.Success(feed))
         initViewModel()
         every { repository.getResult(null, null, any()) } returns flowOf(
             Async.Error(

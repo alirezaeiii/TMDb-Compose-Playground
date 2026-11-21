@@ -39,7 +39,7 @@ abstract class BaseFeedRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
         mockApiResponse()
         runTest {
             assertThat(repository.getResult().first(), `is`(Async.Loading()))
-            val result = (repository.getResult().last() as Async.Success).data
+            val result = (repository.getResult().last() as Async.Success).data.feedWrapper
             assertThat(result.size, `is`(10))
             assertThat(result[0].feeds.size, `is`(1))
             assertThat(result[1].feeds.size, `is`(1))
@@ -58,12 +58,12 @@ abstract class BaseFeedRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
     fun `load feeds cached`() {
         mockApiResponse()
         runTest {
-            val firstResult = (repository.getResult().last() as Async.Success).data
+            val firstResult = (repository.getResult().last() as Async.Success).data.feedWrapper
             assertThat(firstResult.size, `is`(10))
 
             repository.getResult(forceRefresh = false).test {
                 assertEquals(Async.Loading(), awaitItem())
-                val cachedResult = (awaitItem() as Async.Success).data
+                val cachedResult = (awaitItem() as Async.Success).data.feedWrapper
                 assertThat(cachedResult.size, `is`(10))
                 awaitComplete()
             }
