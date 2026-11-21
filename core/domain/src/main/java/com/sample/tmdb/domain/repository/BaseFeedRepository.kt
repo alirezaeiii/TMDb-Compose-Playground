@@ -23,14 +23,13 @@ abstract class BaseFeedRepository<T : TMDbItem>(
     cacheDurationMs = 60 * 60 * 1000L,
 ) {
 
-    private var _selectedGenres: Array<Int> = emptyArray()
-    val selectedGenres: Array<Int> get() = _selectedGenres
+    private var selectedGenres: Array<Int> = emptyArray()
 
     fun setSelectedGenres(genres: Array<Int>) {
-        _selectedGenres = genres
+        selectedGenres = genres
     }
 
-    override fun getCacheKey(): String? = selectedGenres.sortedArray().joinToString(",")
+    override fun getCacheKey(): String? = getGenresKey()
 
     protected abstract suspend fun popularItems(): List<T>
 
@@ -59,8 +58,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(
     protected abstract fun getLatestResId(): Int
 
     override suspend fun fetch(fetchParam: Unit?): Feed = coroutineScope {
-        val genres = selectedGenres
-        val isFiltered = genres.isNotEmpty()
+        val isFiltered = selectedGenres.isNotEmpty()
         val genresDeferred = async { getGenres() }
         val trendingDeferred = async {
             fetchUnfilteredItems(isFiltered) { trendingItems() }
@@ -77,11 +75,11 @@ abstract class BaseFeedRepository<T : TMDbItem>(
         val topRatedDeferred = async {
             fetchUnfilteredItems(isFiltered) { topRatedItems() }
         }
-        val discoverDeferred = async { discoverItems(genres) }
-        val appleTVDeferred = async { appleTVItems(genres) }
-        val netflixDeferred = async { netflixItems(genres) }
-        val amazonPrimeDeferred = async { amazonPrimeItems(genres) }
-        val googlePlayDeferred = async { googlePlayItems(genres) }
+        val discoverDeferred = async { discoverItems(selectedGenres) }
+        val appleTVDeferred = async { appleTVItems(selectedGenres) }
+        val netflixDeferred = async { netflixItems(selectedGenres) }
+        val amazonPrimeDeferred = async { amazonPrimeItems(selectedGenres) }
+        val googlePlayDeferred = async { googlePlayItems(selectedGenres) }
 
         val fetchedGenres = genresDeferred.await()
 
@@ -124,6 +122,8 @@ abstract class BaseFeedRepository<T : TMDbItem>(
     }
 
     protected fun Array<Int>.toQueryString(): String? = if (isEmpty()) null else joinToString(",")
+
+    protected fun getGenresKey() = selectedGenres.sortedArray().joinToString(",")
 
     private suspend fun fetchUnfilteredItems(isFiltered: Boolean, fetch: suspend () -> List<T>): List<T> =
         if (isFiltered) emptyList() else fetch()

@@ -70,7 +70,7 @@ class TVShowFeedRepository @Inject constructor(
     override fun getLatestResId(): Int = R.string.text_on_the_air
 
     override suspend fun query(queryParam: Unit?): Feed? {
-        val genresKey = selectedGenres.sortedArray().joinToString(",")
+        val genresKey = getGenresKey()
         val dbEntities = tvShowFeedDao.getFeed(genresKey)
         if (dbEntities.isEmpty()) {
             return null
@@ -83,7 +83,7 @@ class TVShowFeedRepository @Inject constructor(
     }
 
     override suspend fun saveFetchResult(item: Feed) {
-        val genresKey = selectedGenres.sortedArray().joinToString(",")
+        val genresKey = getGenresKey()
         val entities = item.feedWrapper.flatMap { feedWrapper ->
             feedWrapper.feeds.filterIsInstance<TVShow>().mapIndexed { index, tvShow ->
                 tvShow.asFeedDatabaseModel(feedWrapper.sortType, index, genresKey)
