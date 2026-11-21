@@ -1,5 +1,6 @@
 package com.sample.tmdb.feed
 
+import androidx.lifecycle.viewModelScope
 import com.sample.tmdb.common.base.BaseCacheViewModel
 import com.sample.tmdb.common.ui.UiEvent
 import com.sample.tmdb.domain.model.Feed
@@ -14,6 +15,8 @@ import com.sample.tmdb.navigation.utils.toDetailNavKey
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 abstract class BaseFeedViewModel<T : TMDbItem>(
     private val repository: BaseFeedRepository<T>,
@@ -22,8 +25,21 @@ abstract class BaseFeedViewModel<T : TMDbItem>(
     repository = repository,
     languageRepository = languageRepository,
 ) {
+    private val _genres = MutableStateFlow<List<Genre>>(emptyList())
+    val genres: StateFlow<List<Genre>> = _genres.asStateFlow()
+
     private val _selectedGenreIds = MutableStateFlow<Set<Int>>(emptySet())
     val selectedGenreIds: StateFlow<Set<Int>> = _selectedGenreIds.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            state.collectLatest { viewState ->
+                viewState.items?.genres?.let {
+                    _genres.value = it
+                }
+            }
+        }
+    }
 
     fun onGenreSelected(genre: Genre) {
         val current = _selectedGenreIds.value.toMutableSet()

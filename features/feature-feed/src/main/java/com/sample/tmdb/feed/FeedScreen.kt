@@ -32,7 +32,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.ui.CacheContent
@@ -114,7 +114,8 @@ private fun <T : TMDbItem> FeedScreen(
     scaffoldState: ScaffoldState,
     @StringRes resourceId: Int,
 ) {
-    val selectedGenreIds by viewModel.selectedGenreIds.collectAsState()
+    val genres by viewModel.genres.collectAsStateWithLifecycle()
+    val selectedGenreIds by viewModel.selectedGenreIds.collectAsStateWithLifecycle()
 
     Box(Modifier.fillMaxSize()) {
         CacheContent(
@@ -124,7 +125,7 @@ private fun <T : TMDbItem> FeedScreen(
             scaffoldState = scaffoldState,
         ) { state ->
             state.items?.let { feeds ->
-                val genresPadding = if (feeds.genres.isEmpty()) 0.dp else TMDb_48_dp
+                val genresPadding = if (genres.isEmpty()) 0.dp else TMDb_48_dp
                 TMDbSwipeRefresh(
                     isRefreshing = state.isRefreshing,
                     onRefresh = { viewModel.refresh(isUserRefresh = true) },
@@ -138,27 +139,27 @@ private fun <T : TMDbItem> FeedScreen(
                         genresPadding = genresPadding,
                     )
                 }
+            }
+        }
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.TopCenter),
-                ) {
-                    DestinationBar(
-                        title = stringResource(
-                            R.string.app_title,
-                            stringResource(resourceId),
-                        ),
-                        onSearchClicked = viewModel::onSearchClick,
-                    )
-                    if (feeds.genres.isNotEmpty()) {
-                        GenreChipsRow(
-                            genres = feeds.genres,
-                            selectedGenreIds = selectedGenreIds,
-                            onGenreSelected = viewModel::onGenreSelected,
-                        )
-                    }
-                }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.TopCenter),
+        ) {
+            DestinationBar(
+                title = stringResource(
+                    R.string.app_title,
+                    stringResource(resourceId),
+                ),
+                onSearchClicked = viewModel::onSearchClick,
+            )
+            if (genres.isNotEmpty()) {
+                GenreChipsRow(
+                    genres = genres,
+                    selectedGenreIds = selectedGenreIds,
+                    onGenreSelected = viewModel::onGenreSelected,
+                )
             }
         }
     }
