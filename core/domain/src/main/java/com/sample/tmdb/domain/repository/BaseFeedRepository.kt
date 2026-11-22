@@ -41,15 +41,15 @@ abstract class BaseFeedRepository<T : TMDbItem>(
 
     protected abstract suspend fun trendingItems(): List<T>
 
-    protected abstract suspend fun discoverItems(genres: Array<Int>): List<T>
+    protected abstract suspend fun discoverItems(genresKey: String?): List<T>
 
-    protected abstract suspend fun appleTVItems(genres: Array<Int>): List<T>
+    protected abstract suspend fun appleTVItems(genresKey: String?): List<T>
 
-    protected abstract suspend fun netflixItems(genres: Array<Int>): List<T>
+    protected abstract suspend fun netflixItems(genresKey: String?): List<T>
 
-    protected abstract suspend fun amazonPrimeItems(genres: Array<Int>): List<T>
+    protected abstract suspend fun amazonPrimeItems(genresKey: String?): List<T>
 
-    protected abstract suspend fun googlePlayItems(genres: Array<Int>): List<T>
+    protected abstract suspend fun googlePlayItems(genresKey: String?): List<T>
 
     abstract suspend fun getGenres(): List<Genre>
 
@@ -59,6 +59,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(
 
     override suspend fun fetch(fetchParam: Unit?): Feed = coroutineScope {
         val isFiltered = selectedGenres.isNotEmpty()
+        val genresKey = selectedGenres.toQueryString()
         val genresDeferred = async { getGenres() }
         val trendingDeferred = async {
             fetchUnfilteredItems(isFiltered) { trendingItems() }
@@ -75,11 +76,11 @@ abstract class BaseFeedRepository<T : TMDbItem>(
         val topRatedDeferred = async {
             fetchUnfilteredItems(isFiltered) { topRatedItems() }
         }
-        val discoverDeferred = async { discoverItems(selectedGenres) }
-        val appleTVDeferred = async { appleTVItems(selectedGenres) }
-        val netflixDeferred = async { netflixItems(selectedGenres) }
-        val amazonPrimeDeferred = async { amazonPrimeItems(selectedGenres) }
-        val googlePlayDeferred = async { googlePlayItems(selectedGenres) }
+        val discoverDeferred = async { discoverItems(genresKey) }
+        val appleTVDeferred = async { appleTVItems(genresKey) }
+        val netflixDeferred = async { netflixItems(genresKey) }
+        val amazonPrimeDeferred = async { amazonPrimeItems(genresKey) }
+        val googlePlayDeferred = async { googlePlayItems(genresKey) }
 
         val fetchedGenres = genresDeferred.await()
 
@@ -121,9 +122,9 @@ abstract class BaseFeedRepository<T : TMDbItem>(
         return Feed(feedWrapper, genres)
     }
 
-    protected fun Array<Int>.toQueryString(): String? = if (isEmpty()) null else joinToString(",")
-
     protected fun getGenresKey() = selectedGenres.sortedArray().joinToString(",")
+
+    private fun Array<Int>.toQueryString(): String? = if (isEmpty()) null else joinToString(",")
 
     private suspend fun fetchUnfilteredItems(isFiltered: Boolean, fetch: suspend () -> List<T>): List<T> =
         if (isFiltered) emptyList() else fetch()

@@ -43,22 +43,22 @@ class TVShowFeedRepository @Inject constructor(
 
     override suspend fun nowPlayingItems(): List<TVShow> = tvShowApi.airingTodayTVSeries().items.asTVShowDomainModel()
 
-    override suspend fun discoverItems(genres: Array<Int>): List<TVShow> =
-        tvShowApi.discoverTVSeries(genres = genres.toQueryString()).items.asTVShowDomainModel()
+    override suspend fun discoverItems(genresKey: String?): List<TVShow> =
+        tvShowApi.discoverTVSeries(genres = genresKey).items.asTVShowDomainModel()
 
-    override suspend fun appleTVItems(genres: Array<Int>): List<TVShow> =
-        tvShowApi.providerTVSeries(APPLE_TV_PROVIDER_ID, genres = genres.toQueryString()).items.asTVShowDomainModel()
+    override suspend fun appleTVItems(genresKey: String?): List<TVShow> =
+        tvShowApi.providerTVSeries(APPLE_TV_PROVIDER_ID, genres = genresKey).items.asTVShowDomainModel()
 
-    override suspend fun netflixItems(genres: Array<Int>): List<TVShow> =
-        tvShowApi.providerTVSeries(NETFLIX_PROVIDER_ID, genres = genres.toQueryString()).items.asTVShowDomainModel()
+    override suspend fun netflixItems(genresKey: String?): List<TVShow> =
+        tvShowApi.providerTVSeries(NETFLIX_PROVIDER_ID, genres = genresKey).items.asTVShowDomainModel()
 
-    override suspend fun amazonPrimeItems(genres: Array<Int>): List<TVShow> = tvShowApi.providerTVSeries(
+    override suspend fun amazonPrimeItems(genresKey: String?): List<TVShow> = tvShowApi.providerTVSeries(
         AMAZON_PRIME_PROVIDER_ID,
-        genres = genres.toQueryString(),
+        genres = genresKey,
     ).items.asTVShowDomainModel()
 
-    override suspend fun googlePlayItems(genres: Array<Int>): List<TVShow> =
-        tvShowApi.providerTVSeries(GOOGLE_PLAY_PROVIDER_ID, genres = genres.toQueryString()).items.asTVShowDomainModel()
+    override suspend fun googlePlayItems(genresKey: String?): List<TVShow> =
+        tvShowApi.providerTVSeries(GOOGLE_PLAY_PROVIDER_ID, genres = genresKey).items.asTVShowDomainModel()
 
     override suspend fun getGenres(): List<Genre> {
         val result = tvShowGenreRepository.getResult(forceRefresh = false).last()

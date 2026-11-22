@@ -43,20 +43,20 @@ class MovieFeedRepository @Inject constructor(
 
     override suspend fun nowPlayingItems(): List<Movie> = movieApi.nowPlayingMovies().items.asMovieDomainModel()
 
-    override suspend fun discoverItems(genres: Array<Int>): List<Movie> =
-        movieApi.discoverMovies(genres = genres.toQueryString()).items.asMovieDomainModel()
+    override suspend fun discoverItems(genresKey: String?): List<Movie> =
+        movieApi.discoverMovies(genres = genresKey).items.asMovieDomainModel()
 
-    override suspend fun appleTVItems(genres: Array<Int>): List<Movie> =
-        movieApi.providerMovies(APPLE_TV_PROVIDER_ID, genres = genres.toQueryString()).items.asMovieDomainModel()
+    override suspend fun appleTVItems(genresKey: String?): List<Movie> =
+        movieApi.providerMovies(APPLE_TV_PROVIDER_ID, genres = genresKey).items.asMovieDomainModel()
 
-    override suspend fun netflixItems(genres: Array<Int>): List<Movie> =
-        movieApi.providerMovies(NETFLIX_PROVIDER_ID, genres = genres.toQueryString()).items.asMovieDomainModel()
+    override suspend fun netflixItems(genresKey: String?): List<Movie> =
+        movieApi.providerMovies(NETFLIX_PROVIDER_ID, genres = genresKey).items.asMovieDomainModel()
 
-    override suspend fun amazonPrimeItems(genres: Array<Int>): List<Movie> =
-        movieApi.providerMovies(AMAZON_PRIME_PROVIDER_ID, genres = genres.toQueryString()).items.asMovieDomainModel()
+    override suspend fun amazonPrimeItems(genresKey: String?): List<Movie> =
+        movieApi.providerMovies(AMAZON_PRIME_PROVIDER_ID, genres = genresKey).items.asMovieDomainModel()
 
-    override suspend fun googlePlayItems(genres: Array<Int>): List<Movie> =
-        movieApi.providerMovies(GOOGLE_PLAY_PROVIDER_ID, genres = genres.toQueryString()).items.asMovieDomainModel()
+    override suspend fun googlePlayItems(genresKey: String?): List<Movie> =
+        movieApi.providerMovies(GOOGLE_PLAY_PROVIDER_ID, genres = genresKey).items.asMovieDomainModel()
 
     override suspend fun getGenres(): List<Genre> {
         val result = movieGenreRepository.getResult(forceRefresh = false).last()
