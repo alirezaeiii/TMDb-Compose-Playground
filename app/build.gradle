@@ -17,11 +17,15 @@ ext.generateVersionCode = { versionName ->
 }
 
 android {
+    compileSdk {
+        version = release(libs.versions.android.compileSdk.get().toInteger()) {
+            minorApiLevel = 2
+        }
+    }
     defaultConfig {
         applicationId "com.sample.tmdb"
         minSdk libs.versions.android.minSdk.get().toInteger()
         targetSdk libs.versions.android.targetSdk.get().toInteger()
-        compileSdk libs.versions.android.compileSdk.get().toInteger()
         versionCode generateVersionCode(appVersion)
         versionName appVersion
         vectorDrawables {

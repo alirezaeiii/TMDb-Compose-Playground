@@ -14,7 +14,7 @@ spotless = "8.12.0"
 hilt = "2.60.1"
 
 # Libraries
-compose = "1.12.1"
+compose = "1.13.0"
 compose-paging = "3.5.3"
 constraint-layout = "1.1.2"
 compose-activity = "1.13.0"
