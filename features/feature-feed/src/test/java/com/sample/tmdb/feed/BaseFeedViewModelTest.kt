@@ -44,6 +44,7 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
     @Before
     fun setup() {
         every { languageRepository.languageCode } returns MutableStateFlow("en")
+        every { repository.getSelectedGenres() } returns emptySet()
         io.mockk.coEvery { repository.getGenres() } returns emptyList()
     }
 
@@ -126,5 +127,15 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> : TMDbItemFixtures<T> {
             assertEquals(UiEvent.Navigate(navKey), awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
+    }
+
+    @Test
+    fun `initializes selectedGenreIds from repository`() {
+        val selectedGenres = setOf(28, 12)
+        every { repository.getSelectedGenres() } returns selectedGenres
+        every { repository.getResult(null, null, any()) } returns flowOf()
+        initViewModel()
+
+        assertEquals(selectedGenres, viewModel.selectedGenreIds.value)
     }
 }

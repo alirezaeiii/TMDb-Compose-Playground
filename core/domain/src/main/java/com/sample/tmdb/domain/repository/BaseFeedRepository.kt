@@ -29,6 +29,8 @@ abstract class BaseFeedRepository<T : TMDbItem>(
         selectedGenres = genres
     }
 
+    fun getSelectedGenres(): Set<Int> = selectedGenres.toSet()
+
     override fun getCacheKey(): String? = getGenresKey()
 
     protected abstract suspend fun popularItems(): List<T>

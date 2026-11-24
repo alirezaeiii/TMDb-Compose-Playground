@@ -28,7 +28,7 @@ abstract class BaseFeedViewModel<T : TMDbItem>(
     private val _genres = MutableStateFlow<List<Genre>>(emptyList())
     val genres: StateFlow<List<Genre>> = _genres.asStateFlow()
 
-    private val _selectedGenreIds = MutableStateFlow<Set<Int>>(emptySet())
+    private val _selectedGenreIds = MutableStateFlow<Set<Int>>(repository.getSelectedGenres())
     val selectedGenreIds: StateFlow<Set<Int>> = _selectedGenreIds.asStateFlow()
 
     init {
