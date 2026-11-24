@@ -6,7 +6,9 @@ plugins {
 android {
     namespace = "com.sample.tmdb.navigation"
     compileSdk {
-        version = release(libs.versions.android.compileSdk.get().toInt())
+        version = release(libs.versions.android.compileSdk.get().toInt()) {
+            minorApiLevel = 2
+        }
     }
 
     defaultConfig {

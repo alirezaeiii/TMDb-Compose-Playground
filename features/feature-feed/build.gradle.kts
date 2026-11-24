@@ -6,7 +6,11 @@ plugins {
 
 android {
     namespace = "com.sample.tmdb.feed"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk {
+        version = release(libs.versions.android.compileSdk.get().toInt()) {
+            minorApiLevel = 2
+        }
+    }
 
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()

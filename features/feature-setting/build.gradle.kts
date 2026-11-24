@@ -7,7 +7,11 @@ val appVersion = (File(project.rootDir, "version.txt")).readText().trim()
 
 android {
     namespace = "com.sample.tmdb.setting"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk {
+        version = release(libs.versions.android.compileSdk.get().toInt()) {
+            minorApiLevel = 2
+        }
+    }
 
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
