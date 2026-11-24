@@ -1,5 +1,6 @@
 package com.sample.tmdb.ui
 
+import androidx.activity.compose.LocalActivity
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -94,9 +95,14 @@ fun TMDbApp() {
     val appState = rememberTMDbAppState()
     val scaffoldState = rememberScaffoldState()
     val languageViewModel: LanguageViewModel = hiltViewModel()
+    val activity = LocalActivity.current
 
     val onNavigate: (TMDbNavKey) -> Unit = { appState.navigator.navigate(it) }
-    val onNavigateUp: () -> Unit = appState.navigator::goBack
+    val onNavigateUp: () -> Unit = {
+        if (!appState.navigator.goBack()) {
+            activity?.finish()
+        }
+    }
 
     val entryProvider = entryProvider {
         entry<TMDbNavKey.MovieNav> {
@@ -299,7 +305,7 @@ fun TMDbApp() {
             )
         NavDisplay(
             entries = appState.navigationState.toEntries(entryProvider),
-            onBack = { appState.navigator.goBack() },
+            onBack = onNavigateUp,
             modifier = Modifier.padding(newPadding),
         )
     }
